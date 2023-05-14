@@ -19,22 +19,6 @@ public class WebHooksController : ControllerBase
     }
 
     [HttpPost("[action]")]
-    public IActionResult TtnWebHook([FromBody] JObject obj)
-    {
-        try
-        {
-            _logger.LogInformation(obj.ToString());
-            return Ok();
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, e.Message);
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                $"Something went wrong in {nameof(TtnWebHook)}");
-        }
-    }
-
-    [HttpPost("[action]")]
     public async Task<IActionResult> AkenzaWebhook([FromBody] JObject obj)
     {
         try
@@ -46,7 +30,7 @@ public class WebHooksController : ControllerBase
         {
             _logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
-                $"Something went wrong in {nameof(TtnWebHook)}");
+                $"Something went wrong in {nameof(AkenzaWebhook)}");
         }
     }
 }
