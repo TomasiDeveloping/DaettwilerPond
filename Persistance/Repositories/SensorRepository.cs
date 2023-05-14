@@ -36,6 +36,16 @@ public class SensorRepository : ISensorRepository
         return sensor;
     }
 
+    public async Task<SensorDto> GetSensorByDevEuiAsync(string devEui)
+    {
+        var sensor = await _context.Sensors
+            .ProjectTo<SensorDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(s => s.DevEui == devEui);
+        return sensor;
+    }
+
+
     public async Task<SensorDto> CreatorSensorAsync(CreateSensorDto createSensorDto)
     {
         var sensor = _mapper.Map<Sensor>(createSensorDto);
