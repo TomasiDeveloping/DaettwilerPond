@@ -6,6 +6,6 @@ public class Lsn50V2Lifecycle
     public Sensor Sensor { get; set; }
     public Guid SensorId { get; set; }
     public DateTime ReceivedAt { get; set; }
-    public double BatteryVoltage { get; set; }
+    public decimal BatteryVoltage { get; set; }
     public int BatteryLevel { get; set; }
 }

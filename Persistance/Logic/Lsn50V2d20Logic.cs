@@ -20,7 +20,7 @@ public class Lsn50V2d20Logic : ILsn50V2d20Logic
         var newLifeCycle = new CreateLsn50V2LifecycleDto()
         {
             BatteryLevel = lifecycle.BatteryLevel,
-            BatteryVoltage = lifecycle.BatteryVoltage,
+            BatteryVoltage = (decimal)lifecycle.BatteryVoltage,
             SensorId = sensorId
         };
         await _lsn50V2LifecycleRepository.CreateLsn50V2LifecycleAsync(newLifeCycle);

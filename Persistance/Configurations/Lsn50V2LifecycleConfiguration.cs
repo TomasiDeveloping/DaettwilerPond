@@ -14,6 +14,6 @@ public class Lsn50V2LifecycleConfiguration : IEntityTypeConfiguration<Lsn50V2Lif
             .OnDelete(DeleteBehavior.NoAction);
         builder.Property(l => l.ReceivedAt).IsRequired();
         builder.Property(l => l.BatteryLevel).IsRequired();
-        builder.Property(l => l.BatteryVoltage).IsRequired().HasPrecision(2, 3);
+        builder.Property(l => l.BatteryVoltage).IsRequired().HasPrecision(5, 3);
     }
 }

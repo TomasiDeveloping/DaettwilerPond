@@ -16,6 +16,6 @@ public class Lsn50V2MeasurementConfiguration : IEntityTypeConfiguration<Lsn50V2M
         builder.Property(l => l.ExtTrigger).IsRequired();
         builder.Property(l => l.Open).IsRequired();
         builder.Property(l => l.ReceivedAt).IsRequired();
-        builder.Property(l => l.Temperature).IsRequired().HasPrecision(3, 2);
+        builder.Property(l => l.Temperature).IsRequired().HasPrecision(5, 2);
     }
 }
