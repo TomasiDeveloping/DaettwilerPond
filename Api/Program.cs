@@ -31,6 +31,7 @@ builder.Services.AddScoped<ILsn50V2d20Logic, Lsn50V2d20Logic>();
 builder.Services.AddScoped<ISensorRepository, SensorRepository>();
 builder.Services.AddScoped<ISensorTypeRepository, SensorTypeRepository>();
 builder.Services.AddScoped<ILsn50V2MeasurementRepository, Lsn50V2MeasurementRepository>();
+builder.Services.AddScoped<ILsn50V2LifecycleRepository, Lsn50V2LifecycleRepository>();
 
 var app = builder.Build();
 
