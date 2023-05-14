@@ -24,6 +24,7 @@ builder.Services.ConfigureCors();
 builder.Services.ConfigureApiVersioning();
 builder.Services.ConfigureHealthChecks();
 builder.Services.ConfigureDatabase(builder.Configuration);
+builder.Services.ConfigureAutoMapper();
 
 // Register custom services to the container
 builder.Services.AddScoped<IWebHookService, WebHookService>();
