@@ -24,7 +24,8 @@ public class WebHooksController : ControllerBase
         try
         {
             var result = await _webHookService.AkenzaCallProcessAsync(obj);
-            return Ok();
+            if (!result) _logger.LogWarning($"Akenza WebHook was not processed successfully. Received Json: {obj}");
+                return Ok();
         }
         catch (Exception e)
         {
