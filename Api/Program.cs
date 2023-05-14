@@ -30,6 +30,7 @@ builder.Services.AddScoped<IWebHookService, WebHookService>();
 builder.Services.AddScoped<ILsn50V2d20Logic, Lsn50V2d20Logic>();
 builder.Services.AddScoped<ISensorRepository, SensorRepository>();
 builder.Services.AddScoped<ISensorTypeRepository, SensorTypeRepository>();
+builder.Services.AddScoped<ILsn50V2MeasurementRepository, Lsn50V2MeasurementRepository>();
 
 var app = builder.Build();
 
