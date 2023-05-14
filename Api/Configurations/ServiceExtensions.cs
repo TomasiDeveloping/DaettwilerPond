@@ -1,9 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Persistence;
 
 namespace Api.Configurations
 {
     public static class ServiceExtensions
     {
+        public static void ConfigureDatabase(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext<DaettwilerPondDbContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("DaettwilerPondConnection"));
+            });
+        }
         public static void ConfigureCors(this IServiceCollection services)
         {
             services.AddCors(options =>

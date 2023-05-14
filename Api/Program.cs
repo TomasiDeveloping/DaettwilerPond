@@ -1,6 +1,9 @@
 using Api.Configurations;
+using Application.Interfaces;
 using HealthChecks.UI.Client;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Persistence.Logic;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +22,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureApiVersioning();
 builder.Services.ConfigureHealthChecks();
+builder.Services.ConfigureDatabase(builder.Configuration);
+
+// Register custom services to the container
+builder.Services.AddScoped<IWebHookService, WebHookService>();
+builder.Services.AddScoped<ILsn50V2d20Logic, Lsn50V2d20Logic>();
 
 var app = builder.Build();
 
