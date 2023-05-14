@@ -29,6 +29,7 @@ builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.AddScoped<IWebHookService, WebHookService>();
 builder.Services.AddScoped<ILsn50V2d20Logic, Lsn50V2d20Logic>();
 builder.Services.AddScoped<ISensorRepository, SensorRepository>();
+builder.Services.AddScoped<ISensorTypeRepository, SensorTypeRepository>();
 
 var app = builder.Build();
 

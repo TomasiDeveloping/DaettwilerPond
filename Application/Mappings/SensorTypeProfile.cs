@@ -9,5 +9,8 @@ public class SensorTypeProfile : Profile
     public SensorTypeProfile()
     {
         CreateMap<SensorType, SensorTypeDto>().ReverseMap();
+
+        CreateMap<CreateSensorTypeDto, SensorTypeDto>()
+            .ForMember(des => des.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
     }
 }
