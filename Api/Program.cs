@@ -4,6 +4,7 @@ using HealthChecks.UI.Client;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Persistence.Logic;
+using Persistence.Repositories;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,7 @@ builder.Services.ConfigureDatabase(builder.Configuration);
 // Register custom services to the container
 builder.Services.AddScoped<IWebHookService, WebHookService>();
 builder.Services.AddScoped<ILsn50V2d20Logic, Lsn50V2d20Logic>();
+builder.Services.AddScoped<ISensorRepository, SensorRepository>();
 
 var app = builder.Build();
 
