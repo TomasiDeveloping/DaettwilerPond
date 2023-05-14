@@ -1,0 +1,13 @@
+﻿using Application.DataTransferObjects.Lsn50V2Measurement;
+using AutoMapper;
+using Domain.Entities;
+
+namespace Application.Mappings;
+
+public class Lsn50V2MeasurementProfile : Profile
+{
+    public Lsn50V2MeasurementProfile()
+    {
+        CreateMap<Lsn50V2Measurement, Lsn50V2MeasurementDto>().ReverseMap();
+    }
+}

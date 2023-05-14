@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Mappings;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -37,6 +38,17 @@ namespace Api.Configurations
         public static void ConfigureHealthChecks(this IServiceCollection services)
         {
             services.AddHealthChecks();
+        }
+
+        public static void ConfigureAutoMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(options =>
+            {
+                options.AddProfile<SensorProfile>();
+                options.AddProfile<SensorTypeProfile>();
+                options.AddProfile<Lsn50V2LifecycleProfile>();
+                options.AddProfile<Lsn50V2MeasurementProfile>();
+            });
         }
     }
 }
