@@ -46,6 +46,28 @@ public class Lsn50V2MeasurementRepository : ILsn50V2MeasurementRepository
         return measurement;
     }
 
+    public async Task<Lsn50V2TemperatureMeasurementDto> GetLatestMeasurementAsync()
+    {
+        var temperatureMeasurement = await _context.Lsn50V2Measurements
+            .OrderByDescending(l => l.ReceivedAt)
+            .ProjectTo<Lsn50V2TemperatureMeasurementDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
+        return temperatureMeasurement;
+    }
+
+    public async Task<List<Lsn50V2TemperatureMeasurementDto>> GetTemperatureMeasurementsByDays(int includeDays)
+    {
+        var filterDate = DateTime.Today.AddDays(-includeDays);
+        var temperatureMeasurements = await _context.Lsn50V2Measurements
+            .Where(l => l.ReceivedAt >= filterDate)
+            .OrderBy(l => l.ReceivedAt)
+            .ProjectTo<Lsn50V2TemperatureMeasurementDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .ToListAsync();
+        return temperatureMeasurements;
+    }
+
     public async Task<Lsn50V2MeasurementDto> CreateLsn50V2MeasurementAsync(
         CreateLsn50V2MeasurementDto createLsn50V2MeasurementDto)
     {
