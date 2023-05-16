@@ -1,0 +1,17 @@
+header {
+  background-image: url("../../../assets/images/Daettwiler_Weiher.jpg");
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  @media screen and (max-width: 427px)  {
+    height: 150px;
+  }
+}
+.temperature-container {
+  display: flex;
+  justify-content: center;
+}

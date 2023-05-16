@@ -1,0 +1,11 @@
+<div class="card text-center" *ngIf="currentTemperature">
+  <div class="card-header">
+    Aktuelle Wassertemperatur
+  </div>
+  <div class="card-body">
+    <h5 class="card-title temperature">{{currentTemperature.temperature.toFixed(2)}} °C</h5>
+  </div>
+  <div class="card-footer text-body-secondary">
+    Messung: {{currentTemperature.receivedAt | date: 'dd.MM.yyyy HH:mm'}}
+  </div>
+</div>
