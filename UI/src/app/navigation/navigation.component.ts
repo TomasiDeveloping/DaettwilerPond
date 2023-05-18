@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
 })
 export class NavigationComponent {
   public isUserLoggedIn: boolean = false;
+  public isShown: boolean = false;
 
 }
