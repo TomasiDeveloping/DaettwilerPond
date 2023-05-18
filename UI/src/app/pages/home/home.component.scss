@@ -7,14 +7,16 @@ header {
   background-size: cover;
   background-position: center;
   margin: 0;
-  @media screen and (max-width: 427px)  {
+  @media screen and (max-width: 427px) {
     height: 150px;
   }
 }
+
 .temperature-container {
   display: flex;
   justify-content: center;
 }
+
 .weather-container {
   display: flex;
   justify-content: center;

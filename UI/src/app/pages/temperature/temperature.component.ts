@@ -3,22 +3,23 @@ import * as Highcharts from 'highcharts';
 import {TemperatureService} from "../../services/temperature.service";
 import {DatePipe} from "@angular/common";
 import {TemperatureMeasurement} from "../../models/temperatureMeasurement.model";
+
 @Component({
   selector: 'app-temperature',
   templateUrl: './temperature.component.html',
   styleUrls: ['./temperature.component.scss']
 })
-export class TemperatureComponent implements OnInit{
+export class TemperatureComponent implements OnInit {
 
   public currentMeasurement!: TemperatureMeasurement;
   public lastMeasurement!: TemperatureMeasurement;
+  public Highcharts: typeof Highcharts = Highcharts;
+  public loadData: boolean = false;
 
   private readonly _temperatureService: TemperatureService = inject(TemperatureService);
   private readonly _datePipe: DatePipe = inject(DatePipe);
-
-  Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {
-    global:{
+    global: {
       months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
     },
     lang: {
@@ -63,7 +64,7 @@ export class TemperatureComponent implements OnInit{
       }
     }]
   };
-  loadData: boolean = false;
+
   ngOnInit() {
     this._temperatureService.getTemperatureMeasurementByDay().subscribe({
       next: ((response) => {
@@ -72,13 +73,14 @@ export class TemperatureComponent implements OnInit{
             // @ts-ignore
             this.chartOptions.series[0].data.push([new Date(measurement.receivedAt).getTime(), measurement.temperature]);
           });
-          this.currentMeasurement = response[response.length -1];
-          this.lastMeasurement = response[response.length -2];
+          this.currentMeasurement = response[response.length - 1];
+          this.lastMeasurement = response[response.length - 2];
           this.loadData = true;
         }
       })
     })
   }
+
   getIcon(): string {
     if (this.currentMeasurement.temperature === this.lastMeasurement.temperature) {
       return 'bi bi-arrow-right';

@@ -7,7 +7,7 @@ import {TemperatureMeasurement} from "../../../models/temperatureMeasurement.mod
   templateUrl: './current-temperature.component.html',
   styleUrls: ['./current-temperature.component.scss']
 })
-export class CurrentTemperatureComponent implements OnInit{
+export class CurrentTemperatureComponent implements OnInit {
 
   public currentTemperature!: TemperatureMeasurement;
 
@@ -22,5 +22,4 @@ export class CurrentTemperatureComponent implements OnInit{
       })
     });
   }
-
 }
