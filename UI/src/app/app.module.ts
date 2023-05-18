@@ -9,6 +9,8 @@ import { CurrentTemperatureComponent } from './pages/temperature/current-tempera
 import {HttpClientModule} from "@angular/common/http";
 import { TemperatureComponent } from './pages/temperature/temperature.component';
 import { HistoryComponent } from './pages/history/history.component';
+import {HighchartsChartModule} from "highcharts-angular";
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -22,9 +24,10 @@ import { HistoryComponent } from './pages/history/history.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    HighchartsChartModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
