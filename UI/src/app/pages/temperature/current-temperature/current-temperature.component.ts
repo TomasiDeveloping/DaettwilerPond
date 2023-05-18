@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {TemperatureService} from "../../services/temperature.service";
-import {TemperatureMeasurement} from "../../models/temperatureMeasurement.model";
+import {TemperatureService} from "../../../services/temperature.service";
+import {TemperatureMeasurement} from "../../../models/temperatureMeasurement.model";
 
 @Component({
   selector: 'app-current-temperature',

@@ -4,6 +4,7 @@
   </div>
   <div class="card-body">
     <h5 class="card-title temperature">{{currentTemperature.temperature.toFixed(2)}} °C</h5>
+    <a href="#" routerLink="/temperatur" class="btn btn-secondary btn-sm">Details</a>
   </div>
   <div class="card-footer text-body-secondary">
     Messung: {{currentTemperature.receivedAt | date: 'dd.MM.yyyy HH:mm'}}
