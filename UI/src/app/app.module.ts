@@ -11,6 +11,7 @@ import { TemperatureComponent } from './pages/temperature/temperature.component'
 import { HistoryComponent } from './pages/history/history.component';
 import {HighchartsChartModule} from "highcharts-angular";
 import {DatePipe} from "@angular/common";
+import { NgxScrollTopModule } from 'ngx-scrolltop';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {DatePipe} from "@angular/common";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    NgxScrollTopModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
