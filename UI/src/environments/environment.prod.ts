@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  version: "1.0.0",
+  version: "1.5.1",
   apiBaseUrl: 'https://daettwiler-pond.azurewebsites.net/api/v1',
 };
