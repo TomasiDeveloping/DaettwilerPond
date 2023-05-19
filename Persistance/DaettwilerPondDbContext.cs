@@ -1,10 +1,13 @@
 ﻿using System.Reflection;
 using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence;
 
-public class DaettwilerPondDbContext : DbContext
+public class DaettwilerPondDbContext : IdentityDbContext<User, UserRole, Guid, IdentityUserClaim<Guid>,
+    IdentityUserRole<Guid>, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
 {
     public DaettwilerPondDbContext(DbContextOptions options) : base(options)
     {
@@ -14,6 +17,7 @@ public class DaettwilerPondDbContext : DbContext
     public DbSet<Lsn50V2Measurement> Lsn50V2Measurements { get; set; }
     public DbSet<Sensor> Sensors { get; set; }
     public DbSet<SensorType> SensorTypes { get; set; }
+    public DbSet<Address> Addresses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

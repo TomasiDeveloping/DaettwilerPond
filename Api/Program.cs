@@ -22,9 +22,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureApiVersioning();
-builder.Services.ConfigureHealthChecks();
+builder.Services.ConfigureHealthChecks(builder.Configuration);
 builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.ConfigureAutoMapper();
+builder.Services.ConfigureIdentity();
 
 // Register custom services to the container
 builder.Services.AddScoped<IWebHookService, WebHookService>();
