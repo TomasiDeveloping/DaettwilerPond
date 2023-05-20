@@ -15,6 +15,8 @@ import { NgxScrollTopModule } from 'ngx-scrolltop';
 import {NgxSpinnerModule} from "ngx-spinner";
 import {SpinnerInterceptor} from "./interceptors/spinner.interceptor";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { LoginComponent } from './authentication/login/login.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     CurrentTemperatureComponent,
     TemperatureComponent,
     HistoryComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     HttpClientModule,
     HighchartsChartModule,
     NgxScrollTopModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ReactiveFormsModule
   ],
   providers: [
     DatePipe,

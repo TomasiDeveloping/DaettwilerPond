@@ -1,0 +1,44 @@
+<div class="container">
+  <h1 class="text-center">Login</h1>
+  <div class="form-container">
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <div class="form-group mt-3">
+        <label class="form-label" for="email">E-Mail</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+          <input [ngClass]="{
+          'is-invalid': email?.invalid && (email?.dirty || email?.touched),
+          'is-valid': email?.valid
+          }" class="form-control" formControlName="email" id="email" type="email">
+          <div *ngIf="email?.errors && (email?.dirty || email?.touched)" class="invalid-feedback">
+            <p *ngIf="email?.hasError('required')">E-Mail ist ein Pflichtfeld</p>
+            <p *ngIf="email?.hasError('email')">Ungültige E-Mail Adresse</p>
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-2">
+        <label class="form-label" for="password">Passwort</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
+          <input [ngClass]="{
+          'is-invalid': password?.invalid && (password?.dirty || password?.touched),
+          'is-valid': password?.valid
+          }" [type]="isText ? 'text': 'password'" class="form-control" formControlName="password" id="password">
+          <span (click)="isText = !isText" class="input-group-text eye-icon"><i [ngClass]="isText ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
+                                                                                class="bi"></i></span>
+          <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="invalid-feedback">
+            <p *ngIf="password?.hasError('required')">Passwort ist ein Pflichfeld</p>
+          </div>
+        </div>
+      </div>
+      <div class="forgot-password">
+        <span class="forgot-password-text">Passwort vergessen?</span>
+      </div>
+      <div class="d-grid gap-2 col-6 mx-auto mt-3">
+        <button [disabled]="loginForm.invalid" class="btn btn-success" type="submit"><i
+          class="bi bi-box-arrow-in-right"></i> Login
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

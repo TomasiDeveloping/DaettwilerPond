@@ -1,0 +1,30 @@
+form {
+  background-color: rgba(190, 207, 243, 0.5);
+  padding: 20px;
+  border-radius: 7px;
+  width: 100%;
+}
+.form-container {
+  max-width : 800px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 100px;
+}
+.forgot-password {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.forgot-password-text {
+  cursor: pointer;
+  color: #4f4fb7;
+  transition: all 0.5s;
+}
+.forgot-password-text:hover {
+  scale: (1.1);
+  color: #2e2eb7;
+}
+.eye-icon {
+  cursor: pointer;
+}
