@@ -56,4 +56,20 @@ public class AuthenticationsController : ControllerBase
                 $"Something went wrong in {nameof(Register)}");
         }
     }
+
+    [HttpPost("[action]")]
+    public async Task<ActionResult<ForgotPasswordResponseDto>> ForgotPassword(ForgotPasswordDto forgotPasswordDto)
+    {
+        try
+        {
+            var response = await _authenticationRepository.SendForgotPasswordEmailAsync(forgotPasswordDto);
+            return Ok(response);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(ForgotPassword)}");
+        }
+    }
 }
