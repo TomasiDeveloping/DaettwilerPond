@@ -21,7 +21,7 @@ public class AuthenticationRepository : IAuthenticationRepository
         _mapper = mapper;
     }
 
-    public async Task<RegistrationResponseDto> Register(RegistrationDto registrationDto, string role)
+    public async Task<RegistrationResponseDto> Register(RegistrationDto registrationDto)
     {
         var user = _mapper.Map<User>(registrationDto);
         var result = await _userManager.CreateAsync(user, registrationDto.Password);
@@ -35,7 +35,7 @@ public class AuthenticationRepository : IAuthenticationRepository
             };
         }
 
-        var roleResult = await _userManager.AddToRoleAsync(user, role);
+        var roleResult = await _userManager.AddToRoleAsync(user, registrationDto.Role);
         if (roleResult.Succeeded)
             return new RegistrationResponseDto
             {

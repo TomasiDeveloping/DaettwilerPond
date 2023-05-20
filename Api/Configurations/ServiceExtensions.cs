@@ -99,6 +99,7 @@ public static class ServiceExtensions
             options.AddProfile<SensorTypeProfile>();
             options.AddProfile<Lsn50V2LifecycleProfile>();
             options.AddProfile<Lsn50V2MeasurementProfile>();
+            options.AddProfile<AuthenticationProfile>();
         });
     }
 }

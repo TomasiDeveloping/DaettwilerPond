@@ -17,4 +17,9 @@ public class RegistrationDto
     public string Email { get; set; }
 
     public string Password { get; set; }
+    [Required(ErrorMessage = "Role ist ein Pflichfeld")]
+    public string Role { get; set; }
+
+    [Required(ErrorMessage = "Aktiv ist ein Pflichfeld")]
+    public bool IsActive { get; set; }
 }
