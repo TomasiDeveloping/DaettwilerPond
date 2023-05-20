@@ -1,9 +1,12 @@
 ﻿using Application.Mappings;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Persistence;
+using System.Text;
 
 namespace Api.Configurations;
 
@@ -64,6 +67,28 @@ public static class ServiceExtensions
         services.AddHealthChecks()
             .AddSqlServer(configuration.GetConnectionString("DaettwilerPondConnection")!)
             .AddDbContextCheck<DaettwilerPondDbContext>();
+    }
+
+    public static void ConfigureAuthentication(this IServiceCollection services, IConfigurationSection jwtSection)
+    {
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters()
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+
+                ValidIssuer = jwtSection["Issuer"],
+                ValidAudience = jwtSection["Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection["Key"]!))
+            };
+        });
     }
 
     public static void ConfigureAutoMapper(this IServiceCollection services)
