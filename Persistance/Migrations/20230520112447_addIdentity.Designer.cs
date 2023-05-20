@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DaettwilerPondDbContext))]
-    partial class DaettwilerPondDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230520112447_addIdentity")]
+    partial class addIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,16 +265,16 @@ namespace Persistence.Migrations
                         {
                             Id = new Guid("1e59351a-d970-428d-b63e-a141578f0184"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b4dd7b3e-36c1-4b75-8921-e8335e62e073",
+                            ConcurrencyStamp = "c95c3382-dbf0-42db-88cd-ebf31b2a8d11",
                             Email = "info@tomasi-developing.ch",
                             EmailConfirmed = true,
                             FirstName = "System",
-                            IsActive = true,
+                            IsActive = false,
                             LastName = "Administrator",
                             LockoutEnabled = false,
                             NormalizedEmail = "info@tomasi-developing.ch",
                             NormalizedUserName = "INFO@TOMASI-DEVELOPING.CH",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEdvxyK457bAiUS7bRmy6dFhrDyY80rr3UPZ3Kn9mR/HDjGE+C8T/BkiMNQqY/uFKA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF3zKwWm70mWjo1xjJ/HXPBMunTeZvqsOd7OUCWZw4N8bv6dK7jbw7qVhzP71cenBg==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "info@tomasi-developing.ch"
