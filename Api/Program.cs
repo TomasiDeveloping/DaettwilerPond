@@ -1,5 +1,6 @@
 using Api.Configurations;
 using Application.Interfaces;
+using Application.Models;
 using HealthChecks.UI.Client;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -36,6 +37,9 @@ builder.Services.AddScoped<ISensorTypeRepository, SensorTypeRepository>();
 builder.Services.AddScoped<ILsn50V2MeasurementRepository, Lsn50V2MeasurementRepository>();
 builder.Services.AddScoped<ILsn50V2LifecycleRepository, Lsn50V2LifecycleRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddSingleton(builder.Configuration.GetSection("EmailSettings").Get<EmailConfiguration>());
+builder.Services.AddSingleton<IEmailService, EmailService>();
+builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
 
 var app = builder.Build();
 
