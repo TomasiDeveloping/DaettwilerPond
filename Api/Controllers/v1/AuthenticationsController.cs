@@ -72,4 +72,22 @@ public class AuthenticationsController : ControllerBase
                 $"Something went wrong in {nameof(ForgotPassword)}");
         }
     }
+
+    [HttpPost("[action]")]
+    public async Task<ActionResult<ResetPasswordResponseDto>> ResetPassword(ResetPasswordDto resetPasswordDto)
+    {
+        try
+        {
+            var resetPasswordResponse = await _authenticationRepository.ResetPasswordAsync(resetPasswordDto);
+            if (resetPasswordResponse.IsSuccessful) return Ok(resetPasswordResponse);
+
+            return BadRequest(resetPasswordResponse);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(ResetPassword)}");
+        }
+    }
 }

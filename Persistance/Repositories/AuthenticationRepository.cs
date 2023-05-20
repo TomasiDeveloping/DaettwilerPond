@@ -108,20 +108,45 @@ public class AuthenticationRepository : IAuthenticationRepository
         };
     }
 
-    public Task<ResetPasswordResponseDto> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
+    public async Task<ResetPasswordResponseDto> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
     {
-        throw new NotImplementedException();
+        var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+        if (user == null)
+        {
+            return new ResetPasswordResponseDto()
+            {
+                IsSuccessful = false,
+                Errors = new[] { "Invalid Request" }
+            };
+        }
+
+        var resetPasswordResult =
+            await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
+        if (resetPasswordResult.Succeeded)
+        {
+            return new ResetPasswordResponseDto()
+            {
+                IsSuccessful = true
+            };
+        }
+
+        var errors = resetPasswordResult.Errors.Select(x => x.Description);
+        return new ResetPasswordResponseDto()
+        {
+            IsSuccessful = false,
+            Errors = errors
+        };
     }
 
     private static string PasswordResetMessage(User user, string callBack)
     {
         return $"<h2>Hallo {user.FirstName} {user.LastName}</h2>" +
-               "<p>Sie haben kürzlich beantragt, " +
-               "das Passwort für das Dättwiler-Weiher Portal zurückzusetzen." +
-               "Klicken Sie auf den Link unten, um fortzufahren.</p>" +
+               "<p>Du hast kürzlich beantragt, " +
+               "das Passwort für das Dättwiler-Weiher Portal zurückzusetzen. " +
+               "Klicke auf den Link unten, um fortzufahren.</p>" +
                $"<a href={callBack}>Passwort zurücksetzen</a>" +
-               "<p>Wenn Sie keine Passwortrücksetzung angefordert haben, " +
-               "ignorieren Sie bitte diese E-Mail oder antworten Sie, um uns dies mitzuteilen.</p>" +
+               "<p>Wenn Du keine Passwortrücksetzung angefordert hast, " +
+               "ignorieren bitte diese E-Mail oder antworten, um uns dies mitzuteilen.</p>" +
                "<p> Dieser Link zum Zurücksetzen des Passworts ist nur für die nächsten <b>2 Stunden gültig</b>.</p>" +
                "<p>Vielen Dank, das Dättwiler-Weiher Portal</p>";
     }
