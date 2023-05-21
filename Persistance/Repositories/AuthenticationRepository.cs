@@ -146,7 +146,7 @@ public class AuthenticationRepository : IAuthenticationRepository
                "Klicke auf den Link unten, um fortzufahren.</p>" +
                $"<a href={callBack}>Passwort zurücksetzen</a>" +
                "<p>Wenn Du keine Passwortrücksetzung angefordert hast, " +
-               "ignorieren bitte diese E-Mail oder antworten, um uns dies mitzuteilen.</p>" +
+               "ignoriere bitte diese E-Mail oder antworte, um uns dies mitzuteilen.</p>" +
                "<p> Dieser Link zum Zurücksetzen des Passworts ist nur für die nächsten <b>2 Stunden gültig</b>.</p>" +
                "<p>Vielen Dank, das Dättwiler-Weiher Portal</p>";
     }

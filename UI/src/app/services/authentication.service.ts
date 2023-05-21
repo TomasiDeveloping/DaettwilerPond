@@ -8,6 +8,7 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 import {Router} from "@angular/router";
 import {BehaviorSubject, Observable} from "rxjs";
 import {ForgotPassword} from "../models/forgotPassword.model";
+import {ResetPassword} from "../models/resetPassword.model";
 
 @Injectable({
   providedIn: 'root'
@@ -77,6 +78,24 @@ export class AuthenticationService {
           this._toastr.info('Der Link wurde gesendet. Bitte überprüfen Sie Ihre E-Mail (Spam), um Ihr Passwort zurückzusetzen.', 'Passwort Reset');
         }
       })
+    });
+  }
+
+  public resetPassword(resetPasswordRequest: ResetPassword) {
+    this._httpClient.post<{isSuccessful: boolean, errorMessage: string[]}>(this._serviceUrl + '/resetPassword', resetPasswordRequest).subscribe({
+      next: ((response) => {
+        if (response.isSuccessful) {
+          this._router.navigate(['/login']).then(() => {
+            this._toastr.success('Passwort erfolgreich zurückgesetzt', 'Passwort zurücksetzen');
+          });
+        } else {
+          this._toastr.error(response.errorMessage.join(), 'Passwort zurücksetzen');
+        }
+      }), error: error => {
+        this._router.navigate(['/login']).then(() => {
+          this._toastr.error(error.error.errors.join() ?? 'Es gab einen Fehler, versuche es erneut', 'Passwort zurücksetzen');
+        });
+      }
     });
   }
 

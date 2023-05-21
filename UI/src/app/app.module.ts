@@ -23,6 +23,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import { ForgotPasswordDialogComponent } from './authentication/forgot-password-dialog/forgot-password-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { PasswordResetComponent } from './authentication/password-reset/password-reset.component';
 
 
 export function tokenGetter() {
@@ -39,6 +40,7 @@ export function tokenGetter() {
     LoginComponent,
     DashboardComponent,
     ForgotPasswordDialogComponent,
+    PasswordResetComponent,
   ],
   imports: [
     BrowserModule,
