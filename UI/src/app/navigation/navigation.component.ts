@@ -1,6 +1,8 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {AuthenticationService} from "../services/authentication.service";
+import {User} from "../models/user.model";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-navigation',
@@ -14,19 +16,38 @@ export class NavigationComponent implements OnInit{
 
   public version: string = environment.version;
 
+  private readonly _userService: UserService = inject(UserService);
   private readonly _authenticationService: AuthenticationService = inject(AuthenticationService);
-  currentUser: any;
+  public currentUser: User | undefined;
 
   ngOnInit(): void {
     this._authenticationService.autoLogin();
     this._authenticationService.authChangeNotification.subscribe({
       next: ((isLoggedIn) => {
         this.isUserLoggedIn = isLoggedIn;
+        const userId = this._authenticationService.getUserIdFromToken();
+        if (userId) {
+          this.getUser(userId);
+        }
       })
     });
   }
 
+  getUser(userId: string) {
+    this._userService.getUserById(userId).subscribe({
+      next: ((response) => {
+        if (response) {
+          this.currentUser = response;
+        }
+      }),
+      error: error => {
+        console.log(error);
+      }
+    });
+  }
+
   onLogout() {
+    this.isShown = false;
     this._authenticationService.logout();
   }
 }

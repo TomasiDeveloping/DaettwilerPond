@@ -20,6 +20,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {ToastrModule} from "ngx-toastr";
 import {JwtModule} from "@auth0/angular-jwt";
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 
 
 export function tokenGetter() {
@@ -56,7 +57,8 @@ export function tokenGetter() {
   ],
   providers: [
     DatePipe,
-    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

@@ -69,6 +69,15 @@ export class AuthenticationService {
     }
   }
 
+  public getUserIdFromToken(): string | null {
+    const token = localStorage.getItem('DaettwilerPondToken');
+    if (token) {
+      const decodedToken = this._jwtHelper.decodeToken<{userId: string}>(token);
+      return decodedToken!.userId;
+    }
+    return null;
+  }
+
   private setToken(token: string) {
     localStorage.setItem('DaettwilerPondToken', token);
   }
