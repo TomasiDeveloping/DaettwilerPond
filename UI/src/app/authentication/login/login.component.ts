@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthenticationService} from "../../services/authentication.service";
+import {LoginRequest} from "../../models/loginRequest.modell";
 
 @Component({
   selector: 'app-login',
@@ -14,6 +16,8 @@ export class LoginComponent {
     password: new FormControl<string>('', [Validators.required])
   });
 
+  private readonly _authenticationService: AuthenticationService = inject(AuthenticationService);
+
   get email() {
     return this.loginForm.get('email');
   }
@@ -26,5 +30,7 @@ export class LoginComponent {
     if (this.loginForm.invalid) {
       return;
     }
+    const loginRequest: LoginRequest = this.loginForm.value as LoginRequest;
+    this._authenticationService.login(loginRequest);
   }
 }

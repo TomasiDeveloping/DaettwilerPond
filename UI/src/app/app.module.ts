@@ -17,7 +17,14 @@ import {SpinnerInterceptor} from "./interceptors/spinner.interceptor";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { LoginComponent } from './authentication/login/login.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {ToastrModule} from "ngx-toastr";
+import {JwtModule} from "@auth0/angular-jwt";
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
+
+export function tokenGetter() {
+  return localStorage.getItem('DaettwilerPondToken');
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +34,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     TemperatureComponent,
     HistoryComponent,
     LoginComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +44,15 @@ import {ReactiveFormsModule} from "@angular/forms";
     HighchartsChartModule,
     NgxScrollTopModule,
     NgxSpinnerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+    }),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter
+      }
+    }),
   ],
   providers: [
     DatePipe,
