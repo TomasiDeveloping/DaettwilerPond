@@ -15,7 +15,20 @@ import { NgxScrollTopModule } from 'ngx-scrolltop';
 import {NgxSpinnerModule} from "ngx-spinner";
 import {SpinnerInterceptor} from "./interceptors/spinner.interceptor";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { LoginComponent } from './authentication/login/login.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ToastrModule} from "ngx-toastr";
+import {JwtModule} from "@auth0/angular-jwt";
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import {JwtInterceptor} from "./interceptors/jwt.interceptor";
+import { ForgotPasswordDialogComponent } from './authentication/forgot-password-dialog/forgot-password-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { PasswordResetComponent } from './authentication/password-reset/password-reset.component';
 
+
+export function tokenGetter() {
+  return localStorage.getItem('DaettwilerPondToken');
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +37,10 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     CurrentTemperatureComponent,
     TemperatureComponent,
     HistoryComponent,
+    LoginComponent,
+    DashboardComponent,
+    ForgotPasswordDialogComponent,
+    PasswordResetComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,11 +49,23 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     HttpClientModule,
     HighchartsChartModule,
     NgxScrollTopModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+    }),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter
+      }
+    }),
+    FormsModule,
   ],
   providers: [
     DatePipe,
-    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

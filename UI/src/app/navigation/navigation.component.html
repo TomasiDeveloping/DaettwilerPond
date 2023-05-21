@@ -13,6 +13,10 @@
           <a (click)="isShown = false" class="nav-link" routerLink="/home" routerLinkActive="active">Home
           </a>
         </li>
+        <li *ngIf="isUserLoggedIn" class="nav-item">
+          <a (click)="isShown = false" class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard
+          </a>
+        </li>
         <li class="nav-item">
           <a (click)="isShown = false" class="nav-link" routerLink="/temperatur" routerLinkActive="active">Temperatur
           </a>
@@ -22,8 +26,26 @@
           </a>
         </li>
       </ul>
+      <div *ngIf="isUserLoggedIn" class="login">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item dropdown">
+            <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+               href="#"
+               role="button">
+              <i class="bi bi-person-circle"></i>
+              {{currentUser?.firstName}}
+            </a>
+            <div class="dropdown-menu dropdown-menu-end">
+              <a (click)="isShown = false" class="dropdown-item user-menu">Konto</a>
+              <a (click)="isShown = false" class="dropdown-item user-menu">Einstellungen</a>
+              <div class="dropdown-divider"></div>
+              <a (click)="onLogout()" class="dropdown-item user-menu">Logout</a>
+            </div>
+          </li>
+        </ul>
+      </div>
       <div *ngIf="!isUserLoggedIn" class="d-flex login" routerLink="/login">
-        <button class="btn btn-secondary">Login</button>
+        <button (click)="isShown = false" class="btn btn-secondary" routerLink="/login">Login</button>
       </div>
     </div>
   </div>
