@@ -22,6 +22,23 @@
           </a>
         </li>
       </ul>
+      <div *ngIf="isUserLoggedIn" class="login">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item dropdown">
+            <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+               href="#"
+               role="button">
+              {{currentUser?.firstName}}
+            </a>
+            <div class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item">Konto</a>
+              <a class="dropdown-item">Einstellungen</a>
+              <div class="dropdown-divider"></div>
+              <a (click)="onLogout()" class="dropdown-item">Logout</a>
+            </div>
+          </li>
+        </ul>
+      </div>
       <div *ngIf="!isUserLoggedIn" class="d-flex login" routerLink="/login">
         <button class="btn btn-secondary" routerLink="/login">Login</button>
       </div>

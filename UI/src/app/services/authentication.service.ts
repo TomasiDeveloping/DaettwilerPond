@@ -54,6 +54,21 @@ export class AuthenticationService {
     return false;
   }
 
+  public autoLogin() {
+    const token = localStorage.getItem('DaettwilerPondToken');
+    if (token) {
+      if (this._jwtHelper.isTokenExpired(token)) {
+        this.removeToken();
+        this._authChangeSubscription$.next(false);
+        this._router.navigate(['/home']).then(() => {
+          this._toastr.info('Sitzung is abgelaufen, bitte erneut einloggen', 'Logout');
+        })
+      } else {
+        this._authChangeSubscription$.next(true);
+      }
+    }
+  }
+
   private setToken(token: string) {
     localStorage.setItem('DaettwilerPondToken', token);
   }
