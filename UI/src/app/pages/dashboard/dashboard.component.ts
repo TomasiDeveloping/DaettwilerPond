@@ -30,7 +30,10 @@ export class DashboardComponent implements OnInit{
         if (response) {
           this.currentUser = response;
         }
-      })
+      }),
+      error: error => {
+        this._toast.error(error.error, 'Error');
+      }
     });
   }
 

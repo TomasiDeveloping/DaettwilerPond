@@ -16,11 +16,13 @@ import {NgxSpinnerModule} from "ngx-spinner";
 import {SpinnerInterceptor} from "./interceptors/spinner.interceptor";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { LoginComponent } from './authentication/login/login.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ToastrModule} from "ngx-toastr";
 import {JwtModule} from "@auth0/angular-jwt";
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
+import { ForgotPasswordDialogComponent } from './authentication/forgot-password-dialog/forgot-password-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 export function tokenGetter() {
@@ -36,6 +38,7 @@ export function tokenGetter() {
     HistoryComponent,
     LoginComponent,
     DashboardComponent,
+    ForgotPasswordDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ export function tokenGetter() {
     NgxScrollTopModule,
     NgxSpinnerModule,
     ReactiveFormsModule,
+    MatDialogModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),
@@ -54,6 +58,7 @@ export function tokenGetter() {
         tokenGetter: tokenGetter
       }
     }),
+    FormsModule,
   ],
   providers: [
     DatePipe,

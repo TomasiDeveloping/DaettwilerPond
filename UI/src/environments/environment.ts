@@ -3,5 +3,6 @@ export const environment = {
   version: "1.5.2 -DEV",
   apiBaseUrl: 'https://localhost:7005/api/v1',
   //apiBaseUrl: 'https://daettwiler-pond.azurewebsites.net/api/v1',
+  resetPasswordUri: 'http://localhost:4200/ResetPassword'
 };
 

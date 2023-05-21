@@ -7,6 +7,7 @@ import {ToastrService} from "ngx-toastr";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {Router} from "@angular/router";
 import {BehaviorSubject, Observable} from "rxjs";
+import {ForgotPassword} from "../models/forgotPassword.model";
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,16 @@ export class AuthenticationService {
         this._authChangeSubscription$.next(true);
       }
     }
+  }
+
+  public forgotPassword(forgotPassword: ForgotPassword): void {
+    this._httpClient.post<{isSuccessful: boolean, errorMessage: string}>(this._serviceUrl + '/ForgotPassword', forgotPassword).subscribe({
+      next: ((response) => {
+        if (response) {
+          this._toastr.info('Der Link wurde gesendet. Bitte überprüfen Sie Ihre E-Mail (Spam), um Ihr Passwort zurückzusetzen.', 'Passwort Reset');
+        }
+      })
+    });
   }
 
   public getUserIdFromToken(): string | null {
