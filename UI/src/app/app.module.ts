@@ -24,6 +24,7 @@ import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import { ForgotPasswordDialogComponent } from './authentication/forgot-password-dialog/forgot-password-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { PasswordResetComponent } from './authentication/password-reset/password-reset.component';
+import { ClosedSeasonComponent } from './pages/dashboard/closed-season/closed-season.component';
 
 
 export function tokenGetter() {
@@ -41,6 +42,7 @@ export function tokenGetter() {
     DashboardComponent,
     ForgotPasswordDialogComponent,
     PasswordResetComponent,
+    ClosedSeasonComponent,
   ],
   imports: [
     BrowserModule,

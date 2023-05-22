@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DaettwilerPondDbContext))]
-    partial class DaettwilerPondDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230522051527_fixFishTypeEntity")]
+    partial class fixFishTypeEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,21 +109,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FishTypes");
-                });
-
-            modelBuilder.Entity("Domain.Entities.FishingRegulation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Regulation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FishingRegulations");
                 });
 
             modelBuilder.Entity("Domain.Entities.Lsn50V2Lifecycle", b =>
@@ -314,7 +302,7 @@ namespace Persistence.Migrations
                         {
                             Id = new Guid("1e59351a-d970-428d-b63e-a141578f0184"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "81b20a47-088f-4de4-9142-cc3b30a78da9",
+                            ConcurrencyStamp = "00c4cff6-f0dd-40f5-af02-ca6666cd5a32",
                             Email = "info@tomasi-developing.ch",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -323,7 +311,7 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "info@tomasi-developing.ch",
                             NormalizedUserName = "INFO@TOMASI-DEVELOPING.CH",
-                            PasswordHash = "AQAAAAIAAYagAAAAELUmnIdC4k9Ew7dcS5BADqldkZoPhET5CJ0b0AW4sS/aVKyYXilLpHPZ9kqzXfC/qQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDxrK8PKkvp05innnDT96XcFS2tqsSMoXX7zTCVx4dqp4OntVOq+nD2LDGI8tzrk7A==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "info@tomasi-developing.ch"

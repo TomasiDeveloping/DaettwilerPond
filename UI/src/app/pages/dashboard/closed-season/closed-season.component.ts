@@ -9,7 +9,7 @@ import * as moment from "moment/moment";
   templateUrl: './closed-season.component.html',
   styleUrls: ['./closed-season.component.scss']
 })
-export class ClosedSeasonComponent implements OnInit{
+export class ClosedSeasonComponent implements OnInit {
   public fishTypes: FishType[] = [];
   public fishTypeWithClosedSeason: FishType[] = [];
 
@@ -33,9 +33,10 @@ export class ClosedSeasonComponent implements OnInit{
       }
     });
   }
+
   private checkFishTypeHasClosedSeason(fishType: FishType) {
     if (fishType.hasClosedSeason) {
-      const today = new Date(2023,2,1);
+      const today = new Date();
       const dateToCheck = new Date(today.getFullYear(), today.getMonth(), today.getDate());
       const closedSeasonFrom = new Date(today.getFullYear(), fishType.closedSeasonFromMonth! - 1, fishType.closedSeasonFromDay!);
       const closedSeasonTo = new Date(today.getFullYear(), fishType.closedSeasonToMonth! - 1, fishType.closedSeasonToDay!);
@@ -43,8 +44,6 @@ export class ClosedSeasonComponent implements OnInit{
       if (moment(dateToCheck).isBetween(closedSeasonFrom, closedSeasonTo, undefined, '[]')) {
         fishType.closedSeasonsInDays = moment(closedSeasonTo).diff(dateToCheck, 'days');
         this.fishTypeWithClosedSeason.push(fishType);
-      } else {
-        console.log('Keine Schonzeit');
       }
     }
   }

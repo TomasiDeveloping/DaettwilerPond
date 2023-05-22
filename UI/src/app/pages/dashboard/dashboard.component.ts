@@ -4,18 +4,20 @@ import {ToastrService} from "ngx-toastr";
 import {User} from "../../models/user.model";
 import {AuthenticationService} from "../../services/authentication.service";
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit {
 
   public currentUser: User | undefined;
 
   private _userService: UserService = inject(UserService);
   private _authenticationService: AuthenticationService = inject(AuthenticationService);
   private _toast: ToastrService = inject(ToastrService);
+
 
   ngOnInit(): void {
     const userId = this._authenticationService.getUserIdFromToken();
@@ -50,4 +52,5 @@ export class DashboardComponent implements OnInit{
     }
     return 'Hy,'
   }
+
 }
