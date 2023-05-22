@@ -28,6 +28,7 @@ public class AuthenticationRepository : IAuthenticationRepository
     public async Task<RegistrationResponseDto> Register(RegistrationDto registrationDto)
     {
         var user = _mapper.Map<User>(registrationDto);
+        registrationDto.Password = $"Welcome${DateTime.Now.Year}";
         var result = await _userManager.CreateAsync(user, registrationDto.Password);
         if (!result.Succeeded)
         {

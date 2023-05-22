@@ -41,6 +41,9 @@ builder.Services.AddSingleton(builder.Configuration.GetSection("EmailSettings").
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IFishTypeRepository, FishTypeRepository>();
+builder.Services.AddScoped<IFishingRegulationRepository, FishingRegulationRepository>();
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 
 var app = builder.Build();
 

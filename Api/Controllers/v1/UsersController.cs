@@ -36,4 +36,21 @@ public class UsersController : ControllerBase
                 $"Something went wrong in {nameof(GetUserById)}");
         }
     }
+
+    [HttpPost("[action]")]
+    public async Task<ActionResult<ChangePasswordResponseDto>> ChangeUserPassword(ChangePasswordDto changePasswordDto)
+    {
+        try
+        {
+            var changePasswordResponse = await _userRepository.ChangeUserPassword(changePasswordDto);
+            if (changePasswordResponse.IsSuccessful) return Ok(changePasswordResponse);
+            return BadRequest(changePasswordResponse.ErrorMessage);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(ChangeUserPassword)}");
+        }
+    }
 }

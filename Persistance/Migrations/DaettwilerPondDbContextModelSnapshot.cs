@@ -71,6 +71,58 @@ namespace Persistence.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("Domain.Entities.FishType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("ClosedSeasonFromDay")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ClosedSeasonFromMonth")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ClosedSeasonToDay")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ClosedSeasonToMonth")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("HasClosedSeason")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasMinimumSize")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("MinimumSize")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FishTypes");
+                });
+
+            modelBuilder.Entity("Domain.Entities.FishingRegulation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Regulation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FishingRegulations");
+                });
+
             modelBuilder.Entity("Domain.Entities.Lsn50V2Lifecycle", b =>
                 {
                     b.Property<Guid>("Id")
@@ -262,7 +314,7 @@ namespace Persistence.Migrations
                         {
                             Id = new Guid("1e59351a-d970-428d-b63e-a141578f0184"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b4dd7b3e-36c1-4b75-8921-e8335e62e073",
+                            ConcurrencyStamp = "81b20a47-088f-4de4-9142-cc3b30a78da9",
                             Email = "info@tomasi-developing.ch",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -271,7 +323,7 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "info@tomasi-developing.ch",
                             NormalizedUserName = "INFO@TOMASI-DEVELOPING.CH",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEdvxyK457bAiUS7bRmy6dFhrDyY80rr3UPZ3Kn9mR/HDjGE+C8T/BkiMNQqY/uFKA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELUmnIdC4k9Ew7dcS5BADqldkZoPhET5CJ0b0AW4sS/aVKyYXilLpHPZ9kqzXfC/qQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "info@tomasi-developing.ch"

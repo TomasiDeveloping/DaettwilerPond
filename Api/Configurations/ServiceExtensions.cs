@@ -101,6 +101,9 @@ public static class ServiceExtensions
             options.AddProfile<Lsn50V2MeasurementProfile>();
             options.AddProfile<AuthenticationProfile>();
             options.AddProfile<UserProfile>();
+            options.AddProfile<FishTypeProfile>();
+            options.AddProfile<FishingRegulationProfile>();
+            options.AddProfile<AddressProfile>();
         });
     }
 }

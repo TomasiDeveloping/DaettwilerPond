@@ -1,0 +1,17 @@
+<h5 class="text-center mt-5 mb-2">Fischereivorschriften</h5>
+<div class="card">
+  <div class="card-header text-center">
+    Vorschriften
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Fischereivorschriften</h5>
+    <p class="card-text">Der Inhaber einer Karte ist berechtigt im Dättwilerweiher vom Ufer aus und
+      mit dem Boot zu fischen und hat folgendes zu beachten:</p>
+    <ul>
+      <li *ngFor="let regulation of fishingRegulations">{{regulation.regulation}}</li>
+    </ul>
+  </div>
+  <div class="card-footer text-body-secondary text-center">
+    Baden, 1. Januar 2018
+  </div>
+</div>

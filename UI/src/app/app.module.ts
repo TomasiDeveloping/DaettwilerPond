@@ -24,6 +24,11 @@ import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import { ForgotPasswordDialogComponent } from './authentication/forgot-password-dialog/forgot-password-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { PasswordResetComponent } from './authentication/password-reset/password-reset.component';
+import { ClosedSeasonComponent } from './pages/dashboard/closed-season/closed-season.component';
+import { FishingRegulationComponent } from './pages/dashboard/fishing-regulation/fishing-regulation.component';
+import { FishTypesComponent } from './pages/dashboard/closed-season/fish-types/fish-types.component';
+import { AccountComponent } from './pages/user/account/account.component';
+import { ChangePasswordComponent } from './pages/user/change-password/change-password.component';
 
 
 export function tokenGetter() {
@@ -41,6 +46,11 @@ export function tokenGetter() {
     DashboardComponent,
     ForgotPasswordDialogComponent,
     PasswordResetComponent,
+    ClosedSeasonComponent,
+    FishingRegulationComponent,
+    FishTypesComponent,
+    AccountComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
