@@ -1,6 +1,9 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.6.2 (2023-05-22)
+- Change user address in account
+- Change user password in account
 ### 1.6.1 (2023-05-22)
 - Fish types in user dashboard
 - Fishing regulations in user dashboard
