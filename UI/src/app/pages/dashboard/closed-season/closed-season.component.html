@@ -1,0 +1,33 @@
+<div class="card mt-3" [ngClass]="fishTypeWithClosedSeason.length > 0 ? 'closed-season' : 'no-closed-season'">
+  <div class="card-header">
+    Schonzeit
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Fische in der Schonzeit</h5>
+    <ng-container *ngIf="fishTypeWithClosedSeason.length > 0; else noClosedSeasons">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Fischart</th>
+            <th scope="col">vom</th>
+            <th scope="col">bis</th>
+            <th scope="col">Endet in</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let fishType of fishTypeWithClosedSeason">
+            <td>{{fishType.name}}</td>
+            <td>{{fishType.closedSeasonFromDay}}.{{fishType.closedSeasonFromMonth}}</td>
+            <td>{{fishType.closedSeasonToDay}}.{{fishType.closedSeasonToMonth}}</td>
+            <td>{{fishType.closedSeasonsInDays}} Tag(e)</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+    <ng-template #noClosedSeasons>
+      <p>Aktuell habe keine Fische eine Schonzeit</p>
+    </ng-template>
+  </div>
+</div>
