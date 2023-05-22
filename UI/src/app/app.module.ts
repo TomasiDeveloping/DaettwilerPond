@@ -27,6 +27,8 @@ import { PasswordResetComponent } from './authentication/password-reset/password
 import { ClosedSeasonComponent } from './pages/dashboard/closed-season/closed-season.component';
 import { FishingRegulationComponent } from './pages/dashboard/fishing-regulation/fishing-regulation.component';
 import { FishTypesComponent } from './pages/dashboard/closed-season/fish-types/fish-types.component';
+import { AccountComponent } from './pages/user/account/account.component';
+import { ChangePasswordComponent } from './pages/user/change-password/change-password.component';
 
 
 export function tokenGetter() {
@@ -47,6 +49,8 @@ export function tokenGetter() {
     ClosedSeasonComponent,
     FishingRegulationComponent,
     FishTypesComponent,
+    AccountComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,

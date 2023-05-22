@@ -36,8 +36,8 @@
               {{currentUser?.firstName}}
             </a>
             <div class="dropdown-menu dropdown-menu-end">
-              <a (click)="isShown = false" class="dropdown-item user-menu"><i class="bi bi-person-gear"></i> Konto</a>
-              <a (click)="isShown = false" class="dropdown-item user-menu"><i class="bi bi-key"></i> Passwort ändern</a>
+              <a (click)="isShown = false" routerLink="/konto" class="dropdown-item user-menu"><i class="bi bi-person-gear"></i> Konto</a>
+              <a (click)="isShown = false" routerLink="/password-aendern" class="dropdown-item user-menu"><i class="bi bi-key"></i> Passwort ändern</a>
               <div class="dropdown-divider"></div>
               <a (click)="onLogout()" class="dropdown-item user-menu"><i class="bi bi-box-arrow-left"></i> Logout</a>
             </div>

@@ -23,4 +23,8 @@ export class AddressService {
   getUserAddresses(userId: string): Observable<Address[]> {
     return this._httpClient.get<Address[]>(this._serviceUrl + `users/${userId}`);
   }
+
+  updateAddress(addressId: string, address: Address): Observable<Address> {
+    return this._httpClient.put<Address>(this._serviceUrl + addressId, address);
+  }
 }
