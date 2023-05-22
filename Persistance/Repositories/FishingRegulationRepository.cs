@@ -30,6 +30,7 @@ public class FishingRegulationRepository : IFishingRegulationRepository
     public async Task<FishingRegulationDto> CreateFishingRegulationAsync(FishingRegulationDto fishingRegulationDto)
     {
         var fishingRegulation = _mapper.Map<FishingRegulation>(fishingRegulationDto);
+        fishingRegulation.Id = Guid.NewGuid();
         await _context.FishingRegulations.AddAsync(fishingRegulation);
         await _context.SaveChangesAsync();
         return _mapper.Map<FishingRegulationDto>(fishingRegulation);

@@ -1,5 +1,5 @@
 <div [ngClass]="fishTypeWithClosedSeason.length > 0 ? 'closed-season' : 'no-closed-season'" class="card mt-3">
-  <div class="card-header">
+  <div class="card-header text-center">
     Schonzeit
   </div>
   <div class="card-body">
@@ -31,3 +31,4 @@
     </ng-template>
   </div>
 </div>
+<app-fish-types [fishTypes]="fishTypes"></app-fish-types>

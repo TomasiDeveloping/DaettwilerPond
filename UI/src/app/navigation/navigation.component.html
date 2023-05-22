@@ -36,16 +36,16 @@
               {{currentUser?.firstName}}
             </a>
             <div class="dropdown-menu dropdown-menu-end">
-              <a (click)="isShown = false" class="dropdown-item user-menu">Konto</a>
-              <a (click)="isShown = false" class="dropdown-item user-menu">Einstellungen</a>
+              <a (click)="isShown = false" class="dropdown-item user-menu"><i class="bi bi-person-gear"></i> Konto</a>
+              <a (click)="isShown = false" class="dropdown-item user-menu"><i class="bi bi-key"></i> Passwort ändern</a>
               <div class="dropdown-divider"></div>
-              <a (click)="onLogout()" class="dropdown-item user-menu">Logout</a>
+              <a (click)="onLogout()" class="dropdown-item user-menu"><i class="bi bi-box-arrow-left"></i> Logout</a>
             </div>
           </li>
         </ul>
       </div>
       <div *ngIf="!isUserLoggedIn" class="d-flex login" routerLink="/login">
-        <button (click)="isShown = false" class="btn btn-secondary" routerLink="/login">Login</button>
+        <button (click)="isShown = false" class="btn btn-secondary" routerLink="/login"><i class="bi bi-box-arrow-right"></i> Login</button>
       </div>
     </div>
   </div>

@@ -25,6 +25,8 @@ import { ForgotPasswordDialogComponent } from './authentication/forgot-password-
 import {MatDialogModule} from "@angular/material/dialog";
 import { PasswordResetComponent } from './authentication/password-reset/password-reset.component';
 import { ClosedSeasonComponent } from './pages/dashboard/closed-season/closed-season.component';
+import { FishingRegulationComponent } from './pages/dashboard/fishing-regulation/fishing-regulation.component';
+import { FishTypesComponent } from './pages/dashboard/closed-season/fish-types/fish-types.component';
 
 
 export function tokenGetter() {
@@ -43,6 +45,8 @@ export function tokenGetter() {
     ForgotPasswordDialogComponent,
     PasswordResetComponent,
     ClosedSeasonComponent,
+    FishingRegulationComponent,
+    FishTypesComponent,
   ],
   imports: [
     BrowserModule,
