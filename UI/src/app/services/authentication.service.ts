@@ -72,7 +72,10 @@ export class AuthenticationService {
   }
 
   public forgotPassword(forgotPassword: ForgotPassword): void {
-    this._httpClient.post<{isSuccessful: boolean, errorMessage: string}>(this._serviceUrl + '/ForgotPassword', forgotPassword).subscribe({
+    this._httpClient.post<{
+      isSuccessful: boolean,
+      errorMessage: string
+    }>(this._serviceUrl + '/ForgotPassword', forgotPassword).subscribe({
       next: ((response) => {
         if (response) {
           this._toastr.info('Der Link wurde gesendet. Bitte überprüfen Sie Ihre E-Mail (Spam), um Ihr Passwort zurückzusetzen.', 'Passwort Reset');
@@ -82,7 +85,10 @@ export class AuthenticationService {
   }
 
   public resetPassword(resetPasswordRequest: ResetPassword) {
-    this._httpClient.post<{isSuccessful: boolean, errorMessage: string[]}>(this._serviceUrl + '/resetPassword', resetPasswordRequest).subscribe({
+    this._httpClient.post<{
+      isSuccessful: boolean,
+      errorMessage: string[]
+    }>(this._serviceUrl + '/resetPassword', resetPasswordRequest).subscribe({
       next: ((response) => {
         if (response.isSuccessful) {
           this._router.navigate(['/login']).then(() => {
@@ -102,7 +108,7 @@ export class AuthenticationService {
   public getUserIdFromToken(): string | null {
     const token = localStorage.getItem('DaettwilerPondToken');
     if (token) {
-      const decodedToken = this._jwtHelper.decodeToken<{userId: string}>(token);
+      const decodedToken = this._jwtHelper.decodeToken<{ userId: string }>(token);
       return decodedToken!.userId;
     }
     return null;

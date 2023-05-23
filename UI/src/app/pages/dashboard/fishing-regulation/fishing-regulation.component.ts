@@ -8,12 +8,13 @@ import {ToastrService} from "ngx-toastr";
   templateUrl: './fishing-regulation.component.html',
   styleUrls: ['./fishing-regulation.component.scss']
 })
-export class FishingRegulationComponent implements OnInit{
+export class FishingRegulationComponent implements OnInit {
 
   public fishingRegulations: FishingRegulation[] = [];
 
   private readonly _fishingRegulationService: FishingRegulationService = inject(FishingRegulationService);
   private readonly _toastr: ToastrService = inject(ToastrService);
+
   ngOnInit(): void {
     this.getFishingRegulations();
   }

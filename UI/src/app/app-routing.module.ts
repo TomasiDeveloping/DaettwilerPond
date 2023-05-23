@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./pages/home/home.component";
 import {TemperatureComponent} from "./pages/temperature/temperature.component";
 import {HistoryComponent} from "./pages/history/history.component";
@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent, canActivate: [authGuard]},
   {path: 'resetPassword', component: PasswordResetComponent},
   {path: 'konto', component: AccountComponent, canActivate: [authGuard]},
-  {path: 'password-aendern', component: ChangePasswordComponent, canActivate:[authGuard]}
+  {path: 'password-aendern', component: ChangePasswordComponent, canActivate: [authGuard]}
   // TODO
   //{ path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
 ];
@@ -28,4 +28,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Persistence.DataSeeding;
 
 namespace Persistence;
 
@@ -31,7 +32,7 @@ public class DaettwilerPondDbContext : IdentityDbContext<User, UserRole, Guid, I
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         // Seeding Data
-        DataSeeding.AddRoles.SeedRoles(modelBuilder);
-        DataSeeding.AddSystemAdministrator.SeedSystemAdministrator(modelBuilder, _configuration.GetSection("SystemAdministrator"));
+        AddRoles.SeedRoles(modelBuilder);
+        AddSystemAdministrator.SeedSystemAdministrator(modelBuilder, _configuration.GetSection("SystemAdministrator"));
     }
 }
