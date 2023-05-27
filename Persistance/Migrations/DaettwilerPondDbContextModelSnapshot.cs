@@ -259,6 +259,9 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("LastActivity")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(250)
@@ -314,7 +317,7 @@ namespace Persistence.Migrations
                         {
                             Id = new Guid("1e59351a-d970-428d-b63e-a141578f0184"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "81b20a47-088f-4de4-9142-cc3b30a78da9",
+                            ConcurrencyStamp = "edf828a8-e99d-4e4b-9158-ee47ac886fb3",
                             Email = "info@tomasi-developing.ch",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -323,7 +326,7 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "info@tomasi-developing.ch",
                             NormalizedUserName = "INFO@TOMASI-DEVELOPING.CH",
-                            PasswordHash = "AQAAAAIAAYagAAAAELUmnIdC4k9Ew7dcS5BADqldkZoPhET5CJ0b0AW4sS/aVKyYXilLpHPZ9kqzXfC/qQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHy5gXokUKSZKHb9h+5vEK3NHOzkLBw0mdQ2S2yEtq83Ur/AvDkvtRIT7wLTmGDiHA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "info@tomasi-developing.ch"

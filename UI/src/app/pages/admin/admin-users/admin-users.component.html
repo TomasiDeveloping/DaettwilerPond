@@ -1,0 +1,18 @@
+<h3 class="text-center mt-4">Mitglieder</h3>
+<div class="d-flex justify-content-end">
+  <button class="btn btn-primary mb-3" (click)="onAddUser()">Mitglied hinzufügen</button>
+</div>
+<ejs-grid *ngIf="users.length > 0" [dataSource]="users" [childGrid]="addressChildGrid" (recordDoubleClick)="onEdit($event)">
+  <e-columns>
+    <e-column field="firstName" headerText="Vorname"></e-column>
+    <e-column field="lastName" headerText="Nachname"></e-column>
+    <e-column field="email" headerText="E-Mail"></e-column>
+    <e-column field="isActive" [displayAsCheckBox]="true" headerText="Aktiv"></e-column>
+    <e-column field="role" headerText="Recht"></e-column>
+    <e-column headerText="Action">
+      <ng-template #template let-data>
+        <i (click)="onDeleteUser(data)" class="bi bi-trash3 delete-icon"></i>
+      </ng-template>
+    </e-column>
+  </e-columns>
+</ejs-grid>

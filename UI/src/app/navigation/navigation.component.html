@@ -25,6 +25,10 @@
           <a (click)="isShown = false" class="nav-link" routerLink="/geschichte" routerLinkActive="active">Geschichte
           </a>
         </li>
+        <li class="nav-item" *ngIf="isUserLoggedIn">
+          <a (click)="isShown = false" class="nav-link" routerLink="/admin" routerLinkActive="active">Administrator
+          </a>
+        </li>
       </ul>
       <div *ngIf="isUserLoggedIn" class="login">
         <ul class="navbar-nav me-auto">

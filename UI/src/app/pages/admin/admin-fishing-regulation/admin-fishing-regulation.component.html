@@ -1,0 +1,11 @@
+<h3 class="text-center mt-4">Fischereivorschriften</h3>
+<div class="card mb-3" *ngFor="let regulation of fishingRegulations">
+  <div class="card-body">
+    <div>{{regulation.regulation}}</div>
+    <hr>
+    <div class="d-flex justify-content-around mt-3">
+      <button class="btn btn-primary btn-sm" (click)="onEdit(regulation)">Bearbeiten</button>
+      <button class="btn btn-danger btn-sm" (click)="onDelete(regulation)">Löschen</button>
+    </div>
+  </div>
+</div>

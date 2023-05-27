@@ -2,6 +2,7 @@
 using Application.Models;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
 
@@ -12,9 +13,9 @@ public class EmailService : IEmailService
     private readonly EmailConfiguration _emailConfiguration;
     private readonly ILogger<EmailService> _logger;
 
-    public EmailService(EmailConfiguration emailConfiguration, ILogger<EmailService> logger)
+    public EmailService(IOptions<EmailConfiguration> emailConfiguration, ILogger<EmailService> logger)
     {
-        _emailConfiguration = emailConfiguration;
+        _emailConfiguration = emailConfiguration.Value;
         _logger = logger;
     }
 

@@ -14,7 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, configuration) =>
 {
     configuration.WriteTo.Console()
-        .ReadFrom.Configuration(context.Configuration);
+        .ReadFrom.Configuration(context.Configuration)
+        .Enrich.WithProperty("ApplicationName", "DättwilerWeiher");
 });
 
 // Add services to the container.
@@ -30,6 +31,7 @@ builder.Services.ConfigureIdentity();
 builder.Services.ConfigureAuthentication(builder.Configuration.GetSection("Jwt"));
 
 // Register custom services to the container
+builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddScoped<IWebHookService, WebHookService>();
 builder.Services.AddScoped<ILsn50V2d20Logic, Lsn50V2d20Logic>();
 builder.Services.AddScoped<ISensorRepository, SensorRepository>();
@@ -37,13 +39,13 @@ builder.Services.AddScoped<ISensorTypeRepository, SensorTypeRepository>();
 builder.Services.AddScoped<ILsn50V2MeasurementRepository, Lsn50V2MeasurementRepository>();
 builder.Services.AddScoped<ILsn50V2LifecycleRepository, Lsn50V2LifecycleRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddSingleton(builder.Configuration.GetSection("EmailSettings").Get<EmailConfiguration>());
-builder.Services.AddSingleton<IEmailService, EmailService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IFishTypeRepository, FishTypeRepository>();
 builder.Services.AddScoped<IFishingRegulationRepository, FishingRegulationRepository>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+
 
 var app = builder.Build();
 

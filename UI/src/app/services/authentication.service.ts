@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {BehaviorSubject, Observable} from "rxjs";
 import {ForgotPassword} from "../models/forgotPassword.model";
 import {ResetPassword} from "../models/resetPassword.model";
+import {Registration} from "../models/registration.model";
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,10 @@ export class AuthenticationService {
         this._toastr.error(error.error ?? 'Error', 'Login');
       }
     });
+  }
+
+  public register(register: Registration): Observable<{isSuccessful: boolean, errors: string[]}> {
+    return this._httpClient.post<{isSuccessful: boolean, errors: string[]}>(this._serviceUrl + '/Register', register);
   }
 
   public logout() {
