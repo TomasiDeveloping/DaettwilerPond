@@ -12,6 +12,7 @@ import {UserService} from "../services/user.service";
 export class NavigationComponent implements OnInit{
   public isUserLoggedIn: boolean = false;
   public isShown: boolean = false;
+  public isAdminUser: boolean = false;
 
 
   public version: string = environment.version;
@@ -25,6 +26,7 @@ export class NavigationComponent implements OnInit{
     this._authenticationService.authChangeNotification.subscribe({
       next: ((isLoggedIn) => {
         this.isUserLoggedIn = isLoggedIn;
+        this.isAdminUser = this._authenticationService.isUserAdministrator();
         const userId = this._authenticationService.getUserIdFromToken();
         if (userId) {
           this.getUser(userId);

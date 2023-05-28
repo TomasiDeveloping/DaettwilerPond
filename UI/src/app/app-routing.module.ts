@@ -10,6 +10,7 @@ import {PasswordResetComponent} from "./authentication/password-reset/password-r
 import {AccountComponent} from "./pages/user/account/account.component";
 import {ChangePasswordComponent} from "./pages/user/change-password/change-password.component";
 import {AdminComponent} from "./pages/admin/admin.component";
+import {adminGuard} from "./guards/admin.guard";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -21,7 +22,7 @@ const routes: Routes = [
   {path: 'resetPassword', component: PasswordResetComponent},
   {path: 'konto', component: AccountComponent, canActivate: [authGuard]},
   {path: 'password-aendern', component: ChangePasswordComponent, canActivate:[authGuard]},
-  {path: 'admin', component: AdminComponent}
+  {path: 'admin', component: AdminComponent, canActivate: [authGuard, adminGuard]}
   // TODO
   //{ path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
 ];

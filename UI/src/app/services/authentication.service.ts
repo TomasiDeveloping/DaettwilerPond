@@ -61,6 +61,15 @@ export class AuthenticationService {
     return false;
   }
 
+  public isUserAdministrator(): boolean {
+    const token: string | null = localStorage.getItem('DaettwilerPondToken');
+    if (token) {
+      const decodedToken = this._jwtHelper.decodeToken(token);
+      return decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Administrator';
+    }
+    return false;
+  }
+
   public autoLogin() {
     const token = localStorage.getItem('DaettwilerPondToken');
     if (token) {
