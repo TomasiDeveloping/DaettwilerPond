@@ -24,6 +24,7 @@ public class DaettwilerPondDbContext : IdentityDbContext<User, UserRole, Guid, I
     public DbSet<Address> Addresses { get; set; }
     public DbSet<FishType> FishTypes { get; set; }
     public DbSet<FishingRegulation> FishingRegulations { get; set; }
+    public DbSet<FishingLicense> FishingLicenses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

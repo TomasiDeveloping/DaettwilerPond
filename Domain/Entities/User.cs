@@ -9,4 +9,5 @@ public class User : IdentityUser<Guid>
     public bool IsActive { get; set; }
     public DateTime? LastActivity { get; set; }
     public ICollection<Address> Addresses { get; set; }
+    public ICollection<FishingLicense> FishingLicenses { get; set; }
 }

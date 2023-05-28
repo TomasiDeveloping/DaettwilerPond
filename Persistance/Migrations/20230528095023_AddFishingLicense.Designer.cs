@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DaettwilerPondDbContext))]
-    partial class DaettwilerPondDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230528095023_AddFishingLicense")]
+    partial class AddFishingLicense
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,7 +127,6 @@ namespace Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsPaid")
-                        .HasMaxLength(200)
                         .HasColumnType("bit");
 
                     b.Property<string>("IssuedBy")
@@ -356,7 +358,7 @@ namespace Persistence.Migrations
                         {
                             Id = new Guid("1e59351a-d970-428d-b63e-a141578f0184"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "99a92c04-2a31-4ad4-8b11-410ced6a5d05",
+                            ConcurrencyStamp = "c0ffefa7-9926-4336-8c46-5559f240296b",
                             Email = "info@tomasi-developing.ch",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -365,7 +367,7 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "info@tomasi-developing.ch",
                             NormalizedUserName = "INFO@TOMASI-DEVELOPING.CH",
-                            PasswordHash = "AQAAAAIAAYagAAAAELbx+ha4zGy5W3xqLDQAzggRT3Z7U67UAxktLEwhrh7CLsJh1LKY07VA8oiEc3fGcA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL25kuTvb7G5+0Lf5GcAMyMxEFfDCKxRn3cKElY3grm81+iw52kgMXdK12Zhx2AoEA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "info@tomasi-developing.ch"
