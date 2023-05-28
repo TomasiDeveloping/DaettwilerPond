@@ -4,7 +4,6 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User, UserWithAddress} from "../models/user.model";
 import {ChangePassword} from "../models/changePassword.model";
-import {renderResponsiveCmenu} from "@syncfusion/ej2-angular-grids";
 
 @Injectable({
   providedIn: 'root'

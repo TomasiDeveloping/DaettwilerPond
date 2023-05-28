@@ -27,9 +27,9 @@ public class FishTypeRepository : IFishTypeRepository
         return fishTypes;
     }
 
-    public async Task<FishTypeDto> CreateFishTypeAsync(FishTypeDto fishTypeDto)
+    public async Task<FishTypeDto> CreateFishTypeAsync(CreateFishTypeDto createFishTypeDto)
     {
-        var fishType = _mapper.Map<FishType>(fishTypeDto);
+        var fishType = _mapper.Map<FishType>(createFishTypeDto);
         fishType.Id = Guid.NewGuid();
         await _context.FishTypes.AddAsync(fishType);
         await _context.SaveChangesAsync();

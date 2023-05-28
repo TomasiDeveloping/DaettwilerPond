@@ -1,6 +1,6 @@
 <h3 class="text-center mt-4">Fischarten</h3>
 <div class="d-flex justify-content-end">
-  <button class="btn btn-primary mb-3">Fischart hinzufügen</button>
+  <button (click)="onAddFishType()" class="btn btn-primary mb-3">Fischart hinzufügen</button>
 </div>
 <ejs-grid [dataSource]="fishTypes" (recordDoubleClick)="onEdit($event)">
   <e-columns>
@@ -30,5 +30,10 @@
     </e-column>
     <e-column field="hasMinimumSize" [displayAsCheckBox]="true" headerText="Hat Schonmass" textAlign="center"></e-column>
     <e-column field="minimumSize" headerText="Schonmass" textAlign="center"></e-column>
+    <e-column headerText="Action">
+      <ng-template #template let-data>
+        <i (click)="onDeleteFishType(data)" class="bi bi-trash3 delete-icon"></i>
+      </ng-template>
+    </e-column>
   </e-columns>
 </ejs-grid>

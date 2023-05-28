@@ -37,11 +37,11 @@ public class FishTypesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<FishTypeDto>> CreateFishType(FishTypeDto fishTypeDto)
+    public async Task<ActionResult<FishTypeDto>> CreateFishType(CreateFishTypeDto createFishTypeDto)
     {
         try
         {
-            var newFishType = await _fishTypeRepository.CreateFishTypeAsync(fishTypeDto);
+            var newFishType = await _fishTypeRepository.CreateFishTypeAsync(createFishTypeDto);
             return newFishType == null
                 ? BadRequest("Neue Fischart konnte nicht erstellt werden")
                 : StatusCode(StatusCodes.Status201Created, newFishType);
