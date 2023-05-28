@@ -39,6 +39,7 @@ import { AdminFishingLicenseComponent } from './pages/admin/admin-fishing-licens
 import {MatCardModule} from "@angular/material/card";
 import { AdminEditUserComponent } from './pages/admin/admin-users/admin-edit-user/admin-edit-user.component';
 import { AdminEditFishTypeComponent } from './pages/admin/admin-fish-types/admin-edit-fish-type/admin-edit-fish-type.component';
+import { AdminEditFishingRegulationComponent } from './pages/admin/admin-fishing-regulation/admin-edit-fishing-regulation/admin-edit-fishing-regulation.component';
 
 
 export function tokenGetter() {
@@ -68,6 +69,7 @@ export function tokenGetter() {
     AdminFishingLicenseComponent,
     AdminEditUserComponent,
     AdminEditFishTypeComponent,
+    AdminEditFishingRegulationComponent,
   ],
   imports: [
     BrowserModule,

@@ -27,10 +27,9 @@ public class FishingRegulationRepository : IFishingRegulationRepository
         return fishingRegulations;
     }
 
-    public async Task<FishingRegulationDto> CreateFishingRegulationAsync(FishingRegulationDto fishingRegulationDto)
+    public async Task<FishingRegulationDto> CreateFishingRegulationAsync(CreateFishingRegulationDto createFishingRegulationDto)
     {
-        var fishingRegulation = _mapper.Map<FishingRegulation>(fishingRegulationDto);
-        fishingRegulation.Id = Guid.NewGuid();
+        var fishingRegulation = _mapper.Map<FishingRegulation>(createFishingRegulationDto);
         await _context.FishingRegulations.AddAsync(fishingRegulation);
         await _context.SaveChangesAsync();
         return _mapper.Map<FishingRegulationDto>(fishingRegulation);
