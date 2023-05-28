@@ -18,9 +18,14 @@ public class FishingLicenseRepository : IFishingLicenseRepository
         _mapper = mapper;
     }
 
-    public Task<List<FishingLicenseDto>> GetFishingLicensesAsync()
+    public async Task<List<FishingLicenseDto>> GetFishingLicensesAsync()
     {
-        throw new NotImplementedException();
+        var licenses = await _context.FishingLicenses
+            .ProjectTo<FishingLicenseDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .OrderByDescending(l => l.Year)
+            .ToListAsync();
+        return licenses;
     }
 
     public async Task<FishingLicenseDto> GetFishingLicenseAsync(Guid fishingLicenseId)
@@ -30,6 +35,7 @@ public class FishingLicenseRepository : IFishingLicenseRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(l => l.Id == fishingLicenseId);
         return license;
+
     }
 
     public async Task<List<FishingLicenseDto>> GetUserFishingLicenses(Guid userId)
@@ -58,6 +64,7 @@ public class FishingLicenseRepository : IFishingLicenseRepository
     {
         var license = _mapper.Map<FishingLicense>(createFishingLicenseDto);
         license.IssuedBy = issuer;
+        license.ExpiresOn = license.ExpiresOn.AddDays(1).AddSeconds(-1);
         await _context.FishingLicenses.AddAsync(license);
         await _context.SaveChangesAsync();
         return await GetFishingLicenseAsync(license.Id);

@@ -10,8 +10,8 @@ public class FishingLicenseProfile : Profile
     {
         CreateMap<FishingLicense, FishingLicenseDto>()
             .ForMember(des => des.UserFullName,
-                opt => opt.MapFrom(scr => $"{scr.User.FirstName} {scr.User.LastName}"));
-        CreateMap<FishingLicense, FishingLicenseDto>();
+                opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"));
+        CreateMap<FishingLicenseDto, FishingLicense>();
 
         CreateMap<CreateFishingLicenseDto, FishingLicense>()
             .ForMember(des => des.CreatedAt, opt => opt.MapFrom(src => DateTime.Now))

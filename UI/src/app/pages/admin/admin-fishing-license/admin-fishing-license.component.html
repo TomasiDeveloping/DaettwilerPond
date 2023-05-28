@@ -1,1 +1,20 @@
-<h3 class="text-center mt-4">Fischereipatente</h3>
+<h3 class="text-center mt-4">Fischerei Lizenzen</h3>
+<div class="d-flex justify-content-end">
+  <button class="btn btn-primary mb-3" (click)="onAddLicense()">Lizenz hinzufügen</button>
+</div>
+<ejs-grid *ngIf="licenses.length > 0" [dataSource]="licenses" (recordDoubleClick)="onEdit($event)">
+  <e-columns>
+    <e-column field="userFullName" headerText="Inhaber"></e-column>
+    <e-column field="createdAt" headerText="Erstellt am" [type]="'dateTime'" [format]="{type: 'date', format: 'dd.MM.yyyy HH:mm'}"></e-column>
+    <e-column field="issuedBy" headerText="Ersteller"></e-column>
+    <e-column field="updatedAt" headerText="Geändert am" [type]="'dateTime'" [format]="{type: 'date', format: 'dd.MM.yyyy HH:mm'}"></e-column>
+    <e-column field="expiresOn" headerText="Gültig bis" [type]="'dateTime'" [format]="{type: 'date', format: 'dd.MM.yyyy'}"></e-column>
+    <e-column field="isActive" [displayAsCheckBox]="true" headerText="Aktiv"></e-column>
+    <e-column field="isPaid" [displayAsCheckBox]="true" headerText="Bezahlt"></e-column>
+    <e-column headerText="Action">
+      <ng-template #template let-data>
+        <i (click)="onDeleteLicense(data)" class="bi bi-trash3 delete-icon"></i>
+      </ng-template>
+    </e-column>
+  </e-columns>
+</ejs-grid>

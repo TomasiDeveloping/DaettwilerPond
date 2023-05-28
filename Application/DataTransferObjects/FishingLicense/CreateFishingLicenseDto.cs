@@ -2,7 +2,6 @@
 
 public class CreateFishingLicenseDto
 {
-    public Guid Id { get; set; }
     public Guid UserId { get; set; }
     public int Year { get; set; }
     public bool IsPaid { get; set; }
