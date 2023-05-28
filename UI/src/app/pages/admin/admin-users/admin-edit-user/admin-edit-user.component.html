@@ -1,0 +1,88 @@
+<h1 mat-dialog-title>Mitglied {{isUpdate ? 'bearbeiten' : 'erstellen'}}</h1>
+<div mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
+    <div class="row">
+      <div class="col-6">
+        <label class="form-label" for="firstName">Vorname</label>
+        <input [ngClass]="{
+        'is-invalid': firstName?.invalid && (firstName?.dirty || firstName?.touched),
+        'is-valid': firstName?.valid
+        }" class="form-control" formControlName="firstName" id="firstName" type="text">
+        <div *ngIf="firstName?.errors && (firstName?.dirty || firstName?.touched)" class="invalid-feedback">
+          <p *ngIf="firstName?.hasError('required')">Vorname ist ein Pflichtfeld</p>
+        </div>
+      </div>
+      <div class="col-6">
+        <label class="form-label" for="lastName">Nachname</label>
+        <input [ngClass]="{
+        'is-invalid': lastName?.invalid && (lastName?.dirty || lastName?.touched),
+        'is-valid': lastName?.valid
+        }" class="form-control" formControlName="lastName" id="lastName" type="text">
+        <div *ngIf="lastName?.errors && (lastName?.dirty || lastName?.touched)" class="invalid-feedback">
+          <p *ngIf="lastName?.hasError('required')">Nachname ist ein Pflichtfeld</p>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="email">E-Mail</label>
+      <input [ngClass]="{
+      'is-invalid': email?.invalid && (email?.dirty || email?.touched),
+      'is-valid': email?.valid
+      }" class="form-control" formControlName="email" id="email" type="email">
+      <div *ngIf="email?.errors && (email?.dirty || email?.touched)" class="invalid-feedback">
+        <p *ngIf="email?.hasError('required')">E-Mail ist ein Pflichtfeld</p>
+        <p *ngIf="email?.hasError('email')">Ungültige E-Mail Adresse</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Plattform Recht</label>
+      <select class="form-select" formControlName="role">
+        <option value="User">User</option>
+        <option value="Aufseher">Aufseher</option>
+        <option value="Administrator">Administrator</option>
+      </select>
+    </div>
+    <div class="form-check mt-3">
+      <input class="form-check-input" formControlName="isActive" id="isActive" type="checkbox">
+      <label class="form-check-label" for="isActive">Aktiv</label>
+    </div>
+    <hr>
+    <h5>Addresse:</h5>
+    <div class="row">
+      <div class="col-8" formGroupName="address">
+        <label class="form-label" for="street">Strasse</label>
+        <input class="form-control" formControlName="street" id="street" type="text">
+      </div>
+      <div class="col-4" formGroupName="address">
+        <label class="form-label" for="houseNumber">Hasunummer</label>
+        <input class="form-control" formControlName="houseNumber" id="houseNumber" type="text">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4" formGroupName="address">
+        <label class="form-label" for="postalCode">PLZ</label>
+        <input class="form-control" formControlName="postalCode" id="postalCode" type="text">
+      </div>
+      <div class="col-8" formGroupName="address">
+        <label class="form-label" for="city">Ort</label>
+        <input class="form-control" formControlName="city" id="city" type="text">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6" formGroupName="address">
+        <label class="form-label" for="phone">Telefon</label>
+        <input class="form-control" formControlName="phone" id="phone" type="text">
+      </div>
+      <div class="col-6" formGroupName="address">
+        <label class="form-label" for="mobile">Natel</label>
+        <input class="form-control" formControlName="mobile" id="mobile" type="text">
+      </div>
+    </div>
+
+  </form>
+</div>
+<div class="d-flex justify-content-end mt-5 mb-3" mat-dialog-actions>
+  <button (click)="onSubmit()" [disabled]="userForm.invalid" class="btn btn-success" type="submit">
+    Mitglied {{isUpdate ? 'updaten' : 'erstellen'}}</button>
+  <button (click)="onClose(false)" class="btn btn-danger ms-3" type="button">Abbrechen</button>
+</div>

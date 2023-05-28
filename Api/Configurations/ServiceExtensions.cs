@@ -104,6 +104,7 @@ public static class ServiceExtensions
             options.AddProfile<FishTypeProfile>();
             options.AddProfile<FishingRegulationProfile>();
             options.AddProfile<AddressProfile>();
+            options.AddProfile<FishingLicenseProfile>();
         });
     }
 }

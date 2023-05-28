@@ -108,6 +108,45 @@ namespace Persistence.Migrations
                     b.ToTable("FishTypes");
                 });
 
+            modelBuilder.Entity("Domain.Entities.FishingLicense", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPaid")
+                        .HasMaxLength(200)
+                        .HasColumnType("bit");
+
+                    b.Property<string>("IssuedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FishingLicenses");
+                });
+
             modelBuilder.Entity("Domain.Entities.FishingRegulation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -259,6 +298,9 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("LastActivity")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(250)
@@ -314,7 +356,7 @@ namespace Persistence.Migrations
                         {
                             Id = new Guid("1e59351a-d970-428d-b63e-a141578f0184"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "81b20a47-088f-4de4-9142-cc3b30a78da9",
+                            ConcurrencyStamp = "99a92c04-2a31-4ad4-8b11-410ced6a5d05",
                             Email = "info@tomasi-developing.ch",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -323,7 +365,7 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "info@tomasi-developing.ch",
                             NormalizedUserName = "INFO@TOMASI-DEVELOPING.CH",
-                            PasswordHash = "AQAAAAIAAYagAAAAELUmnIdC4k9Ew7dcS5BADqldkZoPhET5CJ0b0AW4sS/aVKyYXilLpHPZ9kqzXfC/qQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELbx+ha4zGy5W3xqLDQAzggRT3Z7U67UAxktLEwhrh7CLsJh1LKY07VA8oiEc3fGcA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "info@tomasi-developing.ch"
@@ -499,6 +541,17 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.FishingLicense", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("FishingLicenses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.Entities.Lsn50V2Lifecycle", b =>
                 {
                     b.HasOne("Domain.Entities.Sensor", "Sensor")
@@ -591,6 +644,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("FishingLicenses");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,15 @@
+﻿namespace Application.DataTransferObjects.FishingLicense;
+
+public class FishingLicenseDto
+{
+    public Guid Id { get; set; }
+    public string UserFullName { get; set; }
+    public Guid UserId { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public int Year { get; set; }
+    public bool IsPaid { get; set; }
+    public string IssuedBy { get; set; }
+    public bool IsActive { get; set; }
+    public DateTime ExpiresOn { get; set; }
+}

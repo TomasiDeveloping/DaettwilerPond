@@ -116,7 +116,22 @@ export class AccountComponent implements OnInit {
   }
 
   onSubmitUser() {
-    console.log(this.userForm.value);
+    if (this.userForm.invalid) {
+      return;
+    }
+    const user: User = this.userForm.value as User;
+    this._userService.updateUser(user.id, user).subscribe({
+      next: ((response) => {
+        if (response) {
+          this.currentUser = response;
+          this._toastr.success('Benutzer erfolgreich geupdated', 'Update Benutzer');
+          this.onCancelEditUser();
+        }
+      }),
+      error: error => {
+        this._toastr.error(error.error ?? 'Benutzer konnte nicht geupdated werden', 'Update Benutzer');
+      }
+    });
   }
 
   onCancelEditUser() {

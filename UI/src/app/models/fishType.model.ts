@@ -4,7 +4,7 @@ export interface FishType {
   closedSeasonFromDay?: number;
   closedSeasonFromMonth?: number;
   closedSeasonToDay?: number;
-  closedSeasonToMonth: number;
+  closedSeasonToMonth?: number;
   minimumSize?: number;
   hasClosedSeason: boolean;
   hasMinimumSize: boolean;

@@ -14,22 +14,24 @@ public class AuthenticationRepository : IAuthenticationRepository
     private readonly IEmailService _emailService;
     private readonly IJwtService _jwtService;
     private readonly IMapper _mapper;
+    private readonly DaettwilerPondDbContext _context;
+    private readonly IEmailService _emailService;
     private readonly UserManager<User> _userManager;
 
-    public AuthenticationRepository(UserManager<User> userManager, IJwtService jwtService, IMapper mapper,
+    public AuthenticationRepository(UserManager<User> userManager, IJwtService jwtService, IMapper mapper, DaettwilerPondDbContext context,
         IEmailService emailService)
     {
         _userManager = userManager;
         _jwtService = jwtService;
         _mapper = mapper;
+        _context = context;
         _emailService = emailService;
     }
 
     public async Task<RegistrationResponseDto> Register(RegistrationDto registrationDto)
     {
         var user = _mapper.Map<User>(registrationDto);
-        registrationDto.Password = $"Welcome${DateTime.Now.Year}";
-        var result = await _userManager.CreateAsync(user, registrationDto.Password);
+        var result = await _userManager.CreateAsync(user, $"Welcome${DateTime.Now.Year}");
         if (!result.Succeeded)
         {
             var errors = result.Errors.Select(e => e.Description);
@@ -40,6 +42,10 @@ public class AuthenticationRepository : IAuthenticationRepository
             };
         }
 
+        var address = _mapper.Map<Address>(registrationDto.Address);
+        address.UserId = user.Id;
+        await _context.Addresses.AddAsync(address);
+        await _context.SaveChangesAsync();
         var roleResult = await _userManager.AddToRoleAsync(user, registrationDto.Role);
         if (roleResult.Succeeded)
             return new RegistrationResponseDto
@@ -75,6 +81,8 @@ public class AuthenticationRepository : IAuthenticationRepository
         var claims = await _jwtService.GetClaimsAsync(user);
         var tokenOptions = _jwtService.GenerateTokenOptions(signinCredentials, claims);
         var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+        user.LastActivity = DateTime.Now;
+        await _userManager.UpdateAsync(user);
         return new AuthResponseDto
         {
             IsSuccessful = true,

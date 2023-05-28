@@ -5,7 +5,7 @@ namespace Application.Interfaces;
 public interface IFishingRegulationRepository
 {
     Task<List<FishingRegulationDto>> GetFishingRegulationsAsync();
-    Task<FishingRegulationDto> CreateFishingRegulationAsync(FishingRegulationDto fishingRegulationDto);
+    Task<FishingRegulationDto> CreateFishingRegulationAsync(CreateFishingRegulationDto createFishingRegulationDto);
 
     Task<FishingRegulationDto> UpdateFishingRegulationAsync(Guid fishingRegulationId,
         FishingRegulationDto fishingRegulationDto);

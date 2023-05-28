@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Application.DataTransferObjects.Address;
 
 namespace Application.DataTransferObjects.Authentication;
 
@@ -16,10 +17,11 @@ public class RegistrationDto
     [EmailAddress(ErrorMessage = "Keine gültige Email Adresse")]
     public string Email { get; set; }
 
-    public string Password { get; set; }
     [Required(ErrorMessage = "Role ist ein Pflichfeld")]
     public string Role { get; set; }
 
     [Required(ErrorMessage = "Aktiv ist ein Pflichfeld")]
     public bool IsActive { get; set; }
+
+    public AddressDto Address { get; set; }
 }

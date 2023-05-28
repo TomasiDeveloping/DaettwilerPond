@@ -39,12 +39,12 @@ public class FishingRegulationsController : ControllerBase
 
     [HttpPost]
     public async Task<ActionResult<FishingRegulationDto>> CreateFishingRegulation(
-        FishingRegulationDto fishingRegulationDto)
+        CreateFishingRegulationDto createFishingRegulationDto)
     {
         try
         {
             var newFishingRegulation =
-                await _fishingRegulationRepository.CreateFishingRegulationAsync(fishingRegulationDto);
+                await _fishingRegulationRepository.CreateFishingRegulationAsync(createFishingRegulationDto);
             if (newFishingRegulation == null) return BadRequest("Fischereivorschrift konnte nicht erstellt werden");
             return Ok(newFishingRegulation);
         }

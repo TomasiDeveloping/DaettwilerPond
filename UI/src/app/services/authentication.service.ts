@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {BehaviorSubject, Observable} from "rxjs";
 import {ForgotPassword} from "../models/forgotPassword.model";
 import {ResetPassword} from "../models/resetPassword.model";
+import {Registration} from "../models/registration.model";
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,10 @@ export class AuthenticationService {
     });
   }
 
+  public register(register: Registration): Observable<{isSuccessful: boolean, errors: string[]}> {
+    return this._httpClient.post<{isSuccessful: boolean, errors: string[]}>(this._serviceUrl + '/Register', register);
+  }
+
   public logout() {
     this.removeToken();
     this._authChangeSubscription$.next(false);
@@ -52,6 +57,15 @@ export class AuthenticationService {
     const token: string | null = localStorage.getItem('DaettwilerPondToken');
     if (token) {
       return !this._jwtHelper.isTokenExpired(token);
+    }
+    return false;
+  }
+
+  public isUserAdministrator(): boolean {
+    const token: string | null = localStorage.getItem('DaettwilerPondToken');
+    if (token) {
+      const decodedToken = this._jwtHelper.decodeToken(token);
+      return decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Administrator';
     }
     return false;
   }

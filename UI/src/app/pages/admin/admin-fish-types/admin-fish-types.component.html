@@ -1,0 +1,39 @@
+<h3 class="text-center mt-4">Fischarten</h3>
+<div class="d-flex justify-content-end">
+  <button (click)="onAddFishType()" class="btn btn-primary mb-3">Fischart hinzufügen</button>
+</div>
+<ejs-grid [dataSource]="fishTypes" (recordDoubleClick)="onEdit($event)">
+  <e-columns>
+    <e-column field="name" headerText="Fischart" textAlign="center"></e-column>
+    <e-column field="hasClosedSeason" [displayAsCheckBox]="true" headerText="Hat Schonzeit" textAlign="center"></e-column>
+    <e-column headerText="Schonzeit vom:" textAlign="center">
+      <ng-template #template let-data>
+        <span *ngIf="!data.hasClosedSeason; else closedSeasonFrom"> - </span>
+        <ng-template #closedSeasonFrom>
+          {{("0" + data.closedSeasonFromDay).slice(-2)}}.{{("0" + data.closedSeasonFromMonth).slice(-2)}}
+        </ng-template>
+      </ng-template>
+    </e-column>
+    <e-column headerText="Schonzeit bis:">
+      <ng-template #template let-data>
+        <span *ngIf="!data.hasClosedSeason; else closedSeasonTo"> - </span>
+        <ng-template #closedSeasonTo>
+          {{("0" + data.closedSeasonToDay).slice(-2)}}.{{("0" + data.closedSeasonToMonth).slice(-2)}}
+        </ng-template>
+      </ng-template>
+    </e-column>
+    <e-column headerText="Schonmass:" textAlign="center">
+      <ng-template #template let-data>
+        <span *ngIf="!data.hasMinimumSize; else minimumSize"> - </span>
+        <ng-template #minimumSize>{{data.minimumSize}} cm</ng-template>
+      </ng-template>
+    </e-column>
+    <e-column field="hasMinimumSize" [displayAsCheckBox]="true" headerText="Hat Schonmass" textAlign="center"></e-column>
+    <e-column field="minimumSize" headerText="Schonmass" textAlign="center"></e-column>
+    <e-column headerText="Action">
+      <ng-template #template let-data>
+        <i (click)="onDeleteFishType(data)" class="bi bi-trash3 delete-icon"></i>
+      </ng-template>
+    </e-column>
+  </e-columns>
+</ejs-grid>

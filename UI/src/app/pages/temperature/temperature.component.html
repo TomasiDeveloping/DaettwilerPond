@@ -1,6 +1,6 @@
 <div class="container">
   <h1 class="text-center">Temperatur</h1>
-  <p *ngIf="currentMeasurement">Aktuelle Temperatur <span
+  <p *ngIf="currentMeasurement">Aktuelle Wassertemperatur <span
     class="fw-semibold">{{currentMeasurement.temperature.toFixed(2)}} °C</span>
     <i [ngClass]="getIcon()"></i>
     <br><span class="text-muted">Messung vom: {{currentMeasurement.receivedAt | date: 'dd.MM.yyyy HH:mm'}}</span>

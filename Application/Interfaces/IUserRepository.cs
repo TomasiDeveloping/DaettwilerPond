@@ -4,6 +4,11 @@ namespace Application.Interfaces;
 
 public interface IUserRepository
 {
+    Task<List<UserDto>> GetUsersAsync();
+    Task<List<UserWithAddressDto>> GetUsersWithAddressesAsync();
+    Task<UserDto> UpdateUserAsync(Guid userId, UserDto userDto);
+    Task<UserWithAddressDto> UpdateUserWithAddressAsync(UserWithAddressDto userWithAddressDto);
     Task<UserDto> GetUserByIdAsync(Guid userId);
     Task<ChangePasswordResponseDto> ChangeUserPassword(ChangePasswordDto changePasswordDto);
+    Task<bool> DeleteUserAsync(Guid userId);
 }

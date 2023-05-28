@@ -1,4 +1,5 @@
-﻿using Application.DataTransferObjects.User;
+﻿using Application.DataTransferObjects.Address;
+using Application.DataTransferObjects.User;
 using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -19,6 +20,71 @@ public class UserRepository : IUserRepository
         _context = context;
         _mapper = mapper;
         _userManager = userManager;
+    }
+
+    public async Task<List<UserDto>> GetUsersAsync()
+    {
+        var users = await _context.Users
+            .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .ToListAsync();
+        return users;
+    }
+
+    public async Task<List<UserWithAddressDto>> GetUsersWithAddressesAsync()
+    {
+        var users = await _context.Users.AsNoTracking().ToListAsync();
+        var usersWithAddresses = new List<UserWithAddressDto>();
+        foreach (var user in users.Where(user => !user.FirstName.Equals("System") || !user.LastName.Equals("Administrator")))
+        {
+            var role = await _userManager.GetRolesAsync(user);
+            var address = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(a => a.UserId == user.Id);
+            usersWithAddresses.Add(new UserWithAddressDto()
+            {
+                UserId = user.Id,
+                IsActive = user.IsActive,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Role = role.FirstOrDefault(),
+                Address = _mapper.Map<AddressDto>(address)
+            });
+        }
+        return usersWithAddresses;
+    }
+
+    public async Task<UserDto> UpdateUserAsync(Guid userId, UserDto userDto)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        if (user == null) return null;
+        _mapper.Map(userDto, user);
+        await _context.SaveChangesAsync();
+        return  await GetUserByIdAsync(userId);
+    }
+
+    public async Task<UserWithAddressDto> UpdateUserWithAddressAsync(UserWithAddressDto userWithAddressDto)
+    {
+        var user = await _context.Users
+            .Include(u => u.Addresses)
+            .FirstOrDefaultAsync(u => u.Id == userWithAddressDto.UserId);
+        if (user == null) return null;
+        _mapper.Map(userWithAddressDto, user);
+        var currentRoles = await _userManager.GetRolesAsync(user);
+        if (currentRoles.FirstOrDefault() != userWithAddressDto.Role)
+        {
+            await _userManager.RemoveFromRoleAsync(user, currentRoles.FirstOrDefault() ?? string.Empty);
+            await _userManager.AddToRoleAsync(user, userWithAddressDto.Role);
+        }
+        var address = user.Addresses.FirstOrDefault() ?? new Address();
+        address.City = userWithAddressDto.Address.City;
+        address.Country = userWithAddressDto.Address.Country;
+        address.HouseNumber = userWithAddressDto.Address.HouseNumber;
+        address.Mobile = userWithAddressDto.Address.Mobile;
+        address.Phone = userWithAddressDto.Address.Phone;
+        address.PostalCode = userWithAddressDto.Address.PostalCode;
+        address.Street = userWithAddressDto.Address.Street;
+        await _context.SaveChangesAsync();
+        return userWithAddressDto;
     }
 
     public async Task<UserDto> GetUserByIdAsync(Guid userId)
@@ -62,5 +128,16 @@ public class UserRepository : IUserRepository
             IsSuccessful = false,
             ErrorMessage = "Passwort konnte nicht geändert werden"
         };
+    }
+
+    public async Task<bool> DeleteUserAsync(Guid userId)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        if (user == null) return false;
+        var addresses = await _context.Addresses.Where(a => a.UserId == userId).ToListAsync();
+        if (addresses.Any()) _context.Addresses.RemoveRange(addresses);
+        _context.Users.Remove(user);
+        await _context.SaveChangesAsync();
+        return true;
     }
 }

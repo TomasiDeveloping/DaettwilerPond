@@ -9,5 +9,8 @@ public class FishTypeProfile : Profile
     public FishTypeProfile()
     {
         CreateMap<FishType, FishTypeDto>().ReverseMap();
+
+        CreateMap<CreateFishTypeDto, FishType>()
+            .ForMember(des => des.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
     }
 }

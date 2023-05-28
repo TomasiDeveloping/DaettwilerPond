@@ -23,12 +23,25 @@ import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import {ForgotPasswordDialogComponent} from './authentication/forgot-password-dialog/forgot-password-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import {PasswordResetComponent} from './authentication/password-reset/password-reset.component';
-import {ClosedSeasonComponent} from './pages/dashboard/closed-season/closed-season.component';
-import {FishingRegulationComponent} from './pages/dashboard/fishing-regulation/fishing-regulation.component';
-import {FishTypesComponent} from './pages/dashboard/closed-season/fish-types/fish-types.component';
-import {AccountComponent} from './pages/user/account/account.component';
-import {ChangePasswordComponent} from './pages/user/change-password/change-password.component';
+import { PasswordResetComponent } from './authentication/password-reset/password-reset.component';
+import { ClosedSeasonComponent } from './pages/dashboard/closed-season/closed-season.component';
+import { FishingRegulationComponent } from './pages/dashboard/fishing-regulation/fishing-regulation.component';
+import { FishTypesComponent } from './pages/dashboard/closed-season/fish-types/fish-types.component';
+import { AccountComponent } from './pages/user/account/account.component';
+import { ChangePasswordComponent } from './pages/user/change-password/change-password.component';
+import {DetailRowService, GridModule, GroupService, PagerModule} from '@syncfusion/ej2-angular-grids';
+import { AdminComponent } from './pages/admin/admin.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import { AdminFishTypesComponent } from './pages/admin/admin-fish-types/admin-fish-types.component';
+import { AdminUsersComponent } from './pages/admin/admin-users/admin-users.component';
+import { AdminFishingRegulationComponent } from './pages/admin/admin-fishing-regulation/admin-fishing-regulation.component';
+import { AdminFishingLicenseComponent } from './pages/admin/admin-fishing-license/admin-fishing-license.component';
+import {MatCardModule} from "@angular/material/card";
+import { AdminEditUserComponent } from './pages/admin/admin-users/admin-edit-user/admin-edit-user.component';
+import { AdminEditFishTypeComponent } from './pages/admin/admin-fish-types/admin-edit-fish-type/admin-edit-fish-type.component';
+import { AdminEditFishingRegulationComponent } from './pages/admin/admin-fishing-regulation/admin-edit-fishing-regulation/admin-edit-fishing-regulation.component';
+import { AdminEditFishingLicenseComponent } from './pages/admin/admin-fishing-license/admin-edit-fishing-license/admin-edit-fishing-license.component';
+
 
 
 export function tokenGetter() {
@@ -52,6 +65,15 @@ export function tokenGetter() {
     FishTypesComponent,
     AccountComponent,
     ChangePasswordComponent,
+    AdminComponent,
+    AdminFishTypesComponent,
+    AdminUsersComponent,
+    AdminFishingRegulationComponent,
+    AdminFishingLicenseComponent,
+    AdminEditUserComponent,
+    AdminEditFishTypeComponent,
+    AdminEditFishingRegulationComponent,
+    AdminEditFishingLicenseComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,9 +94,12 @@ export function tokenGetter() {
       }
     }),
     FormsModule,
+    GridModule, PagerModule, MatTabsModule, MatCardModule,
   ],
   providers: [
     DatePipe,
+    GroupService,
+    DetailRowService,
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],

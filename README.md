@@ -1,6 +1,12 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.7.0 (2023-05-28)
+- Administrator Section
+- Add and Update User
+- Add and Update Fishingtypes
+- Add and Update Fishingrules
+- Add and Update Fishinglicenses
 ### 1.6.3 (2023-05-23)
 - Code CleanUp
 - Spelling mistake correction

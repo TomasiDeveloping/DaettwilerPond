@@ -32,7 +32,7 @@ export class TemperatureComponent implements OnInit {
       timezoneOffset: new Date().getTimezoneOffset()
     },
     series: [{
-      name: 'Temperatur',
+      name: 'Wassertemperatur',
       data: [],
       type: 'line'
     }],
