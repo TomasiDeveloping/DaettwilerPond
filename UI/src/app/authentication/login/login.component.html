@@ -24,8 +24,9 @@
           'is-invalid': password?.invalid && (password?.dirty || password?.touched),
           'is-valid': password?.valid
           }" [type]="isText ? 'text': 'password'" class="form-control" formControlName="password" id="password">
-          <span (click)="isText = !isText" class="input-group-text eye-icon"><i [ngClass]="isText ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
-                                                                                class="bi"></i></span>
+          <span (click)="isText = !isText" class="input-group-text eye-icon"><i
+            [ngClass]="isText ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
+            class="bi"></i></span>
           <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="invalid-feedback">
             <p *ngIf="password?.hasError('required')">Passwort ist ein Pflichfeld</p>
           </div>

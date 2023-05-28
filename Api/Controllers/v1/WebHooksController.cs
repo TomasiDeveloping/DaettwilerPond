@@ -9,8 +9,8 @@ namespace Api.Controllers.v1;
 [ApiVersion("1.0")]
 public class WebHooksController : ControllerBase
 {
-    private readonly IWebHookService _webHookService;
     private readonly ILogger<WebHooksController> _logger;
+    private readonly IWebHookService _webHookService;
 
     public WebHooksController(IWebHookService webHookService, ILogger<WebHooksController> logger)
     {
@@ -25,7 +25,7 @@ public class WebHooksController : ControllerBase
         {
             var result = await _webHookService.AkenzaCallProcessAsync(obj);
             if (!result) _logger.LogWarning($"Akenza WebHook was not processed successfully. Received Json: {obj}");
-                return Ok();
+            return Ok();
         }
         catch (Exception e)
         {

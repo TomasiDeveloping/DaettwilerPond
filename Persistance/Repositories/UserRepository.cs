@@ -100,35 +100,30 @@ public class UserRepository : IUserRepository
     {
         var user = await _userManager.FindByIdAsync(changePasswordDto.UserId.ToString());
         if (user == null)
-        {
-            return new ChangePasswordResponseDto()
+            return new ChangePasswordResponseDto
             {
                 IsSuccessful = false,
                 ErrorMessage = "Passwort konnte nicht geändert werden"
             };
-        }
 
         var checkPassword = await _userManager.CheckPasswordAsync(user, changePasswordDto.CurrentPassword);
         if (!checkPassword)
-        {
-            return new ChangePasswordResponseDto()
+            return new ChangePasswordResponseDto
             {
                 IsSuccessful = false,
                 ErrorMessage = "Aktuelles Passwort ist nicht korrekt"
             };
-        }
 
-        var checkChangePassword = await _userManager.ChangePasswordAsync(user, changePasswordDto.CurrentPassword, changePasswordDto.Password);
+        var checkChangePassword =
+            await _userManager.ChangePasswordAsync(user, changePasswordDto.CurrentPassword, changePasswordDto.Password);
         if (checkChangePassword.Succeeded)
-        {
-            return new ChangePasswordResponseDto()
+            return new ChangePasswordResponseDto
             {
                 IsSuccessful = true,
                 ErrorMessage = null
             };
-        }
 
-        return new ChangePasswordResponseDto()
+        return new ChangePasswordResponseDto
         {
             IsSuccessful = false,
             ErrorMessage = "Passwort konnte nicht geändert werden"

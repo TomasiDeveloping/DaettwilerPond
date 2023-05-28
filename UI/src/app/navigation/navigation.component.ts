@@ -9,17 +9,16 @@ import {UserService} from "../services/user.service";
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent implements OnInit{
+export class NavigationComponent implements OnInit {
   public isUserLoggedIn: boolean = false;
   public isShown: boolean = false;
   public isAdminUser: boolean = false;
 
 
   public version: string = environment.version;
-
+  public currentUser: User | undefined;
   private readonly _userService: UserService = inject(UserService);
   private readonly _authenticationService: AuthenticationService = inject(AuthenticationService);
-  public currentUser: User | undefined;
 
   ngOnInit(): void {
     this._authenticationService.autoLogin();

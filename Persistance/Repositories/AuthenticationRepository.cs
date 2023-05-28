@@ -11,6 +11,7 @@ namespace Persistence.Repositories;
 
 public class AuthenticationRepository : IAuthenticationRepository
 {
+    private readonly IEmailService _emailService;
     private readonly IJwtService _jwtService;
     private readonly IMapper _mapper;
     private readonly DaettwilerPondDbContext _context;
@@ -93,21 +94,20 @@ public class AuthenticationRepository : IAuthenticationRepository
     {
         var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
         if (user == null)
-        {
-            return new ForgotPasswordResponseDto()
+            return new ForgotPasswordResponseDto
             {
                 IsSuccessful = false,
                 ErrorMessage = "Invalid Request"
             };
-        }
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-        var param = new Dictionary<string, string>()
+        var param = new Dictionary<string, string>
         {
             {"token", token},
             {"email", forgotPasswordDto.Email}
         };
         var callback = QueryHelpers.AddQueryString(forgotPasswordDto.ClientUri, param);
-        var message = new EmailMessage(new[] { user.Email }, "Passwort zurücksetzen", PasswordResetMessage(user, callback));
+        var message = new EmailMessage(new[] {user.Email}, "Passwort zurücksetzen",
+            PasswordResetMessage(user, callback));
 
         await _emailService.SendEmailAsync(message);
         return new ForgotPasswordResponseDto
@@ -120,26 +120,22 @@ public class AuthenticationRepository : IAuthenticationRepository
     {
         var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
         if (user == null)
-        {
-            return new ResetPasswordResponseDto()
+            return new ResetPasswordResponseDto
             {
                 IsSuccessful = false,
-                Errors = new[] { "Invalid Request" }
+                Errors = new[] {"Invalid Request"}
             };
-        }
 
         var resetPasswordResult =
             await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
         if (resetPasswordResult.Succeeded)
-        {
-            return new ResetPasswordResponseDto()
+            return new ResetPasswordResponseDto
             {
                 IsSuccessful = true
             };
-        }
 
         var errors = resetPasswordResult.Errors.Select(x => x.Description);
-        return new ResetPasswordResponseDto()
+        return new ResetPasswordResponseDto
         {
             IsSuccessful = false,
             Errors = errors

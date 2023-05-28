@@ -14,10 +14,6 @@ import Swal from "sweetalert2";
 })
 export class ChangePasswordComponent {
 
-  private readonly _AuthenticationService: AuthenticationService = inject(AuthenticationService);
-  private readonly _userService: UserService = inject(UserService);
-  private readonly _toastr: ToastrService = inject(ToastrService);
-
   public changePasswordForm: FormGroup = new FormGroup({
     userId: new FormControl<string>(''),
     currentPassword: new FormControl<string>('', [Validators.required]),
@@ -34,6 +30,9 @@ export class ChangePasswordComponent {
     validators: PasswordValidators.passwordMatch('password', 'confirmPassword')
   });
   public isInputText: boolean = false;
+  private readonly _AuthenticationService: AuthenticationService = inject(AuthenticationService);
+  private readonly _userService: UserService = inject(UserService);
+  private readonly _toastr: ToastrService = inject(ToastrService);
 
   get password() {
     return this.changePasswordForm.get('password');

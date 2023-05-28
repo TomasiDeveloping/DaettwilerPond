@@ -15,6 +15,7 @@ export class TemperatureService {
   getCurrentTemperature(): Observable<TemperatureMeasurement> {
     return this._httpClient.get<TemperatureMeasurement>(this._serviceUrl + '/GetLatestTemperatureMeasurement');
   }
+
   getTemperatureMeasurementByDay(days: number = 0): Observable<TemperatureMeasurement[]> {
     return this._httpClient.get<TemperatureMeasurement[]>(this._serviceUrl + '/GetTemperatureMeasurementByDay/' + days);
   }

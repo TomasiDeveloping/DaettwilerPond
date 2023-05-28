@@ -11,14 +11,7 @@ import {AuthenticationService} from "../../services/authentication.service";
   templateUrl: './password-reset.component.html',
   styleUrls: ['./password-reset.component.scss']
 })
-export class PasswordResetComponent implements OnInit{
-
-  private _email: string | undefined;
-  private _token: string | undefined;
-  private readonly _route: ActivatedRoute = inject(ActivatedRoute);
-  private readonly _toastr: ToastrService = inject(ToastrService);
-  private readonly _router: Router = inject(Router);
-  private readonly _authenticationService: AuthenticationService = inject(AuthenticationService);
+export class PasswordResetComponent implements OnInit {
 
   public resetForm: FormGroup = new FormGroup({
     confirmPassword: new FormControl<string>('', [Validators.required]),
@@ -34,6 +27,12 @@ export class PasswordResetComponent implements OnInit{
     validators: PasswordValidators.passwordMatch('password', 'confirmPassword')
   });
   public isInputText: boolean = false;
+  private _email: string | undefined;
+  private _token: string | undefined;
+  private readonly _route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly _toastr: ToastrService = inject(ToastrService);
+  private readonly _router: Router = inject(Router);
+  private readonly _authenticationService: AuthenticationService = inject(AuthenticationService);
 
   get password() {
     return this.resetForm.get('password');
@@ -42,6 +41,7 @@ export class PasswordResetComponent implements OnInit{
   get confirmPassword() {
     return this.resetForm.get('confirmPassword');
   }
+
   ngOnInit(): void {
     this._email = this._route.snapshot.queryParams['email'];
     this._token = this._route.snapshot.queryParams['token'];

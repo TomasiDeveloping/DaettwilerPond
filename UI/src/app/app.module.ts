@@ -1,27 +1,27 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { HomeComponent } from './pages/home/home.component';
-import { CurrentTemperatureComponent } from './pages/temperature/current-temperature/current-temperature.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {NavigationComponent} from './navigation/navigation.component';
+import {HomeComponent} from './pages/home/home.component';
+import {CurrentTemperatureComponent} from './pages/temperature/current-temperature/current-temperature.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import { TemperatureComponent } from './pages/temperature/temperature.component';
-import { HistoryComponent } from './pages/history/history.component';
+import {TemperatureComponent} from './pages/temperature/temperature.component';
+import {HistoryComponent} from './pages/history/history.component';
 import {HighchartsChartModule} from "highcharts-angular";
 import {DatePipe} from "@angular/common";
-import { NgxScrollTopModule } from 'ngx-scrolltop';
+import {NgxScrollTopModule} from 'ngx-scrolltop';
 import {NgxSpinnerModule} from "ngx-spinner";
 import {SpinnerInterceptor} from "./interceptors/spinner.interceptor";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { LoginComponent } from './authentication/login/login.component';
+import {LoginComponent} from './authentication/login/login.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ToastrModule} from "ngx-toastr";
 import {JwtModule} from "@auth0/angular-jwt";
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
-import { ForgotPasswordDialogComponent } from './authentication/forgot-password-dialog/forgot-password-dialog.component';
+import {ForgotPasswordDialogComponent} from './authentication/forgot-password-dialog/forgot-password-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { PasswordResetComponent } from './authentication/password-reset/password-reset.component';
 import { ClosedSeasonComponent } from './pages/dashboard/closed-season/closed-season.component';
@@ -43,9 +43,11 @@ import { AdminEditFishingRegulationComponent } from './pages/admin/admin-fishing
 import { AdminEditFishingLicenseComponent } from './pages/admin/admin-fishing-license/admin-edit-fishing-license/admin-edit-fishing-license.component';
 
 
+
 export function tokenGetter() {
   return localStorage.getItem('DaettwilerPondToken');
 }
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -103,4 +105,5 @@ export function tokenGetter() {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

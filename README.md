@@ -7,6 +7,9 @@
 - Add and Update Fishingtypes
 - Add and Update Fishingrules
 - Add and Update Fishinglicenses
+### 1.6.3 (2023-05-23)
+- Code CleanUp
+- Spelling mistake correction
 ### 1.6.2 (2023-05-22)
 - Change user address in account
 - Change user password in account
