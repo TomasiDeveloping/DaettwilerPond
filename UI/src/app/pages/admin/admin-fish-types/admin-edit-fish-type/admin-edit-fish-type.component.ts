@@ -16,7 +16,7 @@ export class AdminEditFishTypeComponent {
   public currentFishType: FishType;
   public fihTypeForm: FormGroup;
   public days: number[] = [];
-  public months: {name: string, value: number}[] = [];
+  public months: { name: string, value: number }[] = [];
 
   private readonly _fishTypeService: FishTypeService = inject(FishTypeService);
   private readonly _toastr: ToastrService = inject(ToastrService);
@@ -52,7 +52,7 @@ export class AdminEditFishTypeComponent {
     return this.fihTypeForm.get('hasMinimumSize')?.value;
   }
 
-  createMonths(){
+  createMonths() {
     this.months.push({name: 'Januar', value: 1});
     this.months.push({name: 'Februar', value: 2});
     this.months.push({name: 'März', value: 3});
@@ -67,11 +67,12 @@ export class AdminEditFishTypeComponent {
     this.months.push({name: 'Dezember', value: 12});
   }
 
-  createDays(){
-    for (let i = 1; i <= 31; i++){
+  createDays() {
+    for (let i = 1; i <= 31; i++) {
       this.days.push(i);
     }
   }
+
   onSubmit() {
     if (this.fihTypeForm.invalid) {
       return;

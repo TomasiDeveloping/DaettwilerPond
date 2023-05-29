@@ -41,8 +41,7 @@ export class NavigationComponent implements OnInit {
           this.currentUser = response;
         }
       }),
-      error: error => {
-        console.log(error);
+      error: _ => {
       }
     });
   }

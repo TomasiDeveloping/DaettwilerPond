@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent, canActivate: [authGuard]},
   {path: 'resetPassword', component: PasswordResetComponent},
   {path: 'konto', component: AccountComponent, canActivate: [authGuard]},
-  {path: 'password-aendern', component: ChangePasswordComponent, canActivate:[authGuard]},
+  {path: 'password-aendern', component: ChangePasswordComponent, canActivate: [authGuard]},
   {path: 'admin', component: AdminComponent, canActivate: [authGuard, adminGuard]}
   // TODO
   //{ path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page

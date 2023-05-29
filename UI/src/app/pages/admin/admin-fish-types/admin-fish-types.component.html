@@ -2,10 +2,11 @@
 <div class="d-flex justify-content-end">
   <button (click)="onAddFishType()" class="btn btn-primary mb-3">Fischart hinzufügen</button>
 </div>
-<ejs-grid [dataSource]="fishTypes" (recordDoubleClick)="onEdit($event)">
+<ejs-grid (recordDoubleClick)="onEdit($event)" [dataSource]="fishTypes">
   <e-columns>
     <e-column field="name" headerText="Fischart" textAlign="center"></e-column>
-    <e-column field="hasClosedSeason" [displayAsCheckBox]="true" headerText="Hat Schonzeit" textAlign="center"></e-column>
+    <e-column [displayAsCheckBox]="true" field="hasClosedSeason" headerText="Hat Schonzeit"
+              textAlign="center"></e-column>
     <e-column headerText="Schonzeit vom:" textAlign="center">
       <ng-template #template let-data>
         <span *ngIf="!data.hasClosedSeason; else closedSeasonFrom"> - </span>
@@ -28,7 +29,8 @@
         <ng-template #minimumSize>{{data.minimumSize}} cm</ng-template>
       </ng-template>
     </e-column>
-    <e-column field="hasMinimumSize" [displayAsCheckBox]="true" headerText="Hat Schonmass" textAlign="center"></e-column>
+    <e-column [displayAsCheckBox]="true" field="hasMinimumSize" headerText="Hat Schonmass"
+              textAlign="center"></e-column>
     <e-column field="minimumSize" headerText="Schonmass" textAlign="center"></e-column>
     <e-column headerText="Action">
       <ng-template #template let-data>

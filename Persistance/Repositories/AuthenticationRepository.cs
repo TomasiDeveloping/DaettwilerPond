@@ -15,7 +15,6 @@ public class AuthenticationRepository : IAuthenticationRepository
     private readonly IJwtService _jwtService;
     private readonly IMapper _mapper;
     private readonly DaettwilerPondDbContext _context;
-    private readonly IEmailService _emailService;
     private readonly UserManager<User> _userManager;
 
     public AuthenticationRepository(UserManager<User> userManager, IJwtService jwtService, IMapper mapper, DaettwilerPondDbContext context,

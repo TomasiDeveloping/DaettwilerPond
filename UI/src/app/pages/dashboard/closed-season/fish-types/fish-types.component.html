@@ -12,7 +12,7 @@
     <tr *ngFor="let fishType of fishTypes">
       <td>{{fishType.name}}</td>
       <td>{{fishType.hasMinimumSize ? fishType.minimumSize + ' cm' : '-'}}</td>
-      <td>{{fishType.hasClosedSeason ? fishType.closedSeasonFromDay + '.' + fishType.closedSeasonFromMonth + ' - ' + fishType.closedSeasonToDay + '.' + fishType.closedSeasonToMonth : ' - '}}</td>
+      <td>{{fishType.hasClosedSeason ? ("0" + fishType.closedSeasonFromDay).slice(-2) + '.' + ("0" + fishType.closedSeasonFromMonth).slice(-2) + ' - ' + ("0" + fishType.closedSeasonToDay).slice(-2) + '.' + ("0" + fishType.closedSeasonToMonth).slice(-2) : ' - '}}</td>
     </tr>
     </tbody>
   </table>

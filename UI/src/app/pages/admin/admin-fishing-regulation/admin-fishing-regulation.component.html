@@ -2,13 +2,13 @@
 <div class="d-flex justify-content-end">
   <button (click)="onAddFishingRegulation()" class="btn btn-primary mb-3">Vorschrift hinzufügen</button>
 </div>
-<div class="card mb-3" *ngFor="let regulation of fishingRegulations">
+<div *ngFor="let regulation of fishingRegulations" class="card mb-3">
   <div class="card-body">
     <div>{{regulation.regulation}}</div>
     <hr>
     <div class="d-flex justify-content-around mt-3">
-      <button class="btn btn-primary btn-sm" (click)="onEdit(regulation)">Bearbeiten</button>
-      <button class="btn btn-danger btn-sm" (click)="onDelete(regulation)">Löschen</button>
+      <button (click)="onEdit(regulation)" class="btn btn-primary btn-sm">Bearbeiten</button>
+      <button (click)="onDelete(regulation)" class="btn btn-danger btn-sm">Löschen</button>
     </div>
   </div>
 </div>

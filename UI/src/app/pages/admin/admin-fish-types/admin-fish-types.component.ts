@@ -11,7 +11,7 @@ import {ToastrService} from "ngx-toastr";
   templateUrl: './admin-fish-types.component.html',
   styleUrls: ['./admin-fish-types.component.scss']
 })
-export class AdminFishTypesComponent implements OnInit{
+export class AdminFishTypesComponent implements OnInit {
 
   public fishTypes: FishType[] = [];
 
@@ -61,7 +61,7 @@ export class AdminFishTypesComponent implements OnInit{
       disableClose: true,
       data: {isUpdate: isUpdate, fishType: fishType}
     });
-    dialogRef.afterClosed().subscribe((result: {reload: boolean}) => {
+    dialogRef.afterClosed().subscribe((result: { reload: boolean }) => {
       if (result.reload) {
         this.getFishTypes();
       }

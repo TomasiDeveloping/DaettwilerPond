@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
   templateUrl: './admin-fishing-regulation.component.html',
   styleUrls: ['./admin-fishing-regulation.component.scss']
 })
-export class AdminFishingRegulationComponent implements OnInit{
+export class AdminFishingRegulationComponent implements OnInit {
 
   public fishingRegulations: FishingRegulation[] = [];
 
@@ -45,6 +45,7 @@ export class AdminFishingRegulationComponent implements OnInit{
     };
     this.openEditFishingRegulationDialog(false, regulation);
   }
+
   onEdit(regulation: FishingRegulation) {
     this.openEditFishingRegulationDialog(true, regulation);
   }
@@ -84,7 +85,7 @@ export class AdminFishingRegulationComponent implements OnInit{
       disableClose: true,
       data: {isUpdate: isUpdate, fishingRegulation: fishingRegulation}
     });
-    dialogRef.afterClosed().subscribe((result: {reload: boolean}) => {
+    dialogRef.afterClosed().subscribe((result: { reload: boolean }) => {
       if (result.reload) {
         this.getFishingRegulations();
       }

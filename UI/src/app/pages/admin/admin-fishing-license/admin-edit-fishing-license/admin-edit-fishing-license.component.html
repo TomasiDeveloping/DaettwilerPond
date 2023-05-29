@@ -1,15 +1,15 @@
 <h1 mat-dialog-title>Lizenz {{isUpdate ? 'bearbeiten' : 'erstellen'}}</h1>
 <div mat-dialog-content>
-  <form [formGroup]="licenseForm" (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()" [formGroup]="licenseForm">
     <div class="form-group">
-      <label for="userId" class="form-label">Inhaber</label>
-      <select class="form-select" id="userId" formControlName="userId">
+      <label class="form-label" for="userId">Inhaber</label>
+      <select class="form-select" formControlName="userId" id="userId">
         <option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="year" class="form-label">Gültig für das Jahr</label>
-      <input class="form-control" id="year" formControlName="year" type="number">
+      <label class="form-label" for="year">Gültig für das Jahr</label>
+      <input class="form-control" formControlName="year" id="year" type="number">
     </div>
     <div class="form-group">
       <label class="form-label" for="expiresOn">Gültig bis</label>

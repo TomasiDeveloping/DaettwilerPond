@@ -40,7 +40,6 @@ export class ClosedSeasonComponent implements OnInit {
       const dateToCheck = new Date(today.getFullYear(), today.getMonth(), today.getDate());
       const closedSeasonFrom = new Date(today.getFullYear(), fishType.closedSeasonFromMonth! - 1, fishType.closedSeasonFromDay!);
       const closedSeasonTo = new Date(today.getFullYear(), fishType.closedSeasonToMonth! - 1, fishType.closedSeasonToDay!);
-      console.log(moment(closedSeasonTo).diff(dateToCheck, 'days'));
       if (moment(dateToCheck).isBetween(closedSeasonFrom, closedSeasonTo, undefined, '[]')) {
         fishType.closedSeasonsInDays = moment(closedSeasonTo).diff(dateToCheck, 'days');
         this.fishTypeWithClosedSeason.push(fishType);

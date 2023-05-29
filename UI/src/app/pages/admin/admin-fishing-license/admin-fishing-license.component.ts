@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
   templateUrl: './admin-fishing-license.component.html',
   styleUrls: ['./admin-fishing-license.component.scss']
 })
-export class AdminFishingLicenseComponent implements OnInit{
+export class AdminFishingLicenseComponent implements OnInit {
   public licenses: FishingLicense[] = [];
 
   private readonly _fishingLicenseService: FishingLicenseService = inject(FishingLicenseService);
@@ -34,11 +34,12 @@ export class AdminFishingLicenseComponent implements OnInit{
       }
     });
   }
+
   onAddLicense() {
     const licence: FishingLicense = {
       isPaid: false,
       isActive: false,
-      expiresOn: new Date(new Date().getFullYear(), 11,31),
+      expiresOn: new Date(new Date().getFullYear(), 11, 31),
       year: new Date().getFullYear(),
       userId: '',
       id: '',
@@ -90,7 +91,7 @@ export class AdminFishingLicenseComponent implements OnInit{
       disableClose: true,
       data: {isUpdate: isUpdate, license: fishingLicence}
     });
-    dialogRef.afterClosed().subscribe((result: {reload: boolean}) => {
+    dialogRef.afterClosed().subscribe((result: { reload: boolean }) => {
       if (result.reload) {
         this.getFishingLicenses();
       }

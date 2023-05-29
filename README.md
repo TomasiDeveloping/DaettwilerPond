@@ -1,6 +1,10 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.7.1 (2023-05-29)
+- Bug Fix
+- Code CleanUp
+- Dashboard Closed Season the leading 0 are displayed in date
 ### 1.7.0 (2023-05-28)
 - Administrator Section
 - Add and Update User

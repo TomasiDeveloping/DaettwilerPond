@@ -18,8 +18,9 @@
           <tbody>
           <tr *ngFor="let fishType of fishTypeWithClosedSeason">
             <td>{{fishType.name}}</td>
-            <td>{{fishType.closedSeasonFromDay}}.{{fishType.closedSeasonFromMonth}}</td>
-            <td>{{fishType.closedSeasonToDay}}.{{fishType.closedSeasonToMonth}}</td>
+            <td>{{("0" + fishType.closedSeasonFromDay).slice(-2)}}
+              .{{("0" + fishType.closedSeasonFromMonth).slice(-2)}}</td>
+            <td>{{("0" + fishType.closedSeasonToDay).slice(-2)}}.{{("0" + fishType.closedSeasonToMonth).slice(-2)}}</td>
             <td>{{fishType.closedSeasonsInDays}} Tag(e)</td>
           </tr>
           </tbody>
