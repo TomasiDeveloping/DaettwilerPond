@@ -29,7 +29,14 @@ import {FishingRegulationComponent} from './pages/dashboard/fishing-regulation/f
 import {FishTypesComponent} from './pages/dashboard/closed-season/fish-types/fish-types.component';
 import {AccountComponent} from './pages/user/account/account.component';
 import {ChangePasswordComponent} from './pages/user/change-password/change-password.component';
-import {DetailRowService, GridModule, GroupService, PagerModule} from '@syncfusion/ej2-angular-grids';
+import {
+  DetailRowService,
+  GridModule,
+  GroupService,
+  PagerModule,
+  PageService, ResizeService,
+  SearchService, SortService, ToolbarService
+} from '@syncfusion/ej2-angular-grids';
 import {AdminComponent} from './pages/admin/admin.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {AdminFishTypesComponent} from './pages/admin/admin-fish-types/admin-fish-types.component';
@@ -107,6 +114,11 @@ export function tokenGetter() {
     DatePipe,
     GroupService,
     DetailRowService,
+    PageService,
+    SearchService,
+    ToolbarService,
+    SortService,
+    ResizeService,
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],

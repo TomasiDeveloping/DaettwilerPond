@@ -13,10 +13,12 @@ import Swal from "sweetalert2";
 })
 export class AdminFishingLicenseComponent implements OnInit {
   public licenses: FishingLicense[] = [];
+  public pageSettings: {pageSizes: boolean, pageSize: number} = {pageSizes: true, pageSize: 10};
 
   private readonly _fishingLicenseService: FishingLicenseService = inject(FishingLicenseService);
   private readonly _toastr: ToastrService = inject(ToastrService);
   private readonly _dialog: MatDialog = inject(MatDialog);
+
 
   ngOnInit() {
     this.getFishingLicenses();

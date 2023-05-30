@@ -10,8 +10,10 @@ html,body {
   background-color: #eef1ff;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// #################################
+// CUSTOM STYLES
+// #################################
 
 .delete-icon {
   color: red;
@@ -21,4 +23,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: #ff0202;
     font-size: larger;
   }
+}
+
+// ##############################
+// SYNCFUSION CUSTOM STYLES
+// ##############################
+
+// Button in pager
+.e-grid .e-gridpager .e-currentitem {
+  background-color: #0078d7;
 }

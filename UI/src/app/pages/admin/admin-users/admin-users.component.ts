@@ -4,7 +4,7 @@ import {UserService} from "../../../services/user.service";
 import {ToastrService} from "ngx-toastr";
 import {MatDialog} from "@angular/material/dialog";
 import {AdminEditUserComponent} from "./admin-edit-user/admin-edit-user.component";
-import {GridModel} from "@syncfusion/ej2-angular-grids";
+import {GridModel, ToolbarItems} from "@syncfusion/ej2-angular-grids";
 import Swal from "sweetalert2";
 
 
@@ -16,6 +16,8 @@ import Swal from "sweetalert2";
 export class AdminUsersComponent implements OnInit {
   public users: UserWithAddress[] = [];
   public addressChildGrid!: GridModel;
+  public pageSettings = {pageSizes: true, pageSize: 10};
+  public toolbarOptions: ToolbarItems[] = ['Search'];
 
   private readonly _userService: UserService = inject(UserService);
   private readonly _toastr: ToastrService = inject(ToastrService);
@@ -49,12 +51,12 @@ export class AdminUsersComponent implements OnInit {
       dataSource: users,
       queryString: 'userId',
       columns: [
-        {field: 'address.street', headerText: 'Strasse'},
-        {field: 'address.houseNumber', headerText: 'Hausnummer'},
-        {field: 'address.postalCode', headerText: 'PLZ'},
-        {field: 'address.city', headerText: 'Ort'},
-        {field: 'address.phone', headerText: 'Telefon'},
-        {field: 'address.mobile', headerText: 'Natel'}
+        {field: 'address.street', headerText: 'Strasse', textAlign: 'Center'},
+        {field: 'address.houseNumber', headerText: 'Hausnummer', textAlign: 'Center'},
+        {field: 'address.postalCode', headerText: 'PLZ', textAlign: 'Center'},
+        {field: 'address.city', headerText: 'Ort', textAlign: 'Center'},
+        {field: 'address.phone', headerText: 'Telefon', textAlign: 'Center'},
+        {field: 'address.mobile', headerText: 'Natel', textAlign: 'Center'}
       ]
     };
   }
@@ -90,7 +92,7 @@ export class AdminUsersComponent implements OnInit {
       disableClose: true,
       data: {isUpdate: isUpdate, user: user}
     });
-    dialogRef.afterClosed().subscribe((result: {reload: boolean}) => {
+    dialogRef.afterClosed().subscribe((result: { reload: boolean }) => {
       if (result.reload) {
         this.getUsers();
       }

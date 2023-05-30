@@ -2,7 +2,14 @@
 <div class="d-flex justify-content-end">
   <button (click)="onAddFishType()" class="btn btn-primary mb-3">Fischart hinzufügen</button>
 </div>
-<ejs-grid (recordDoubleClick)="onEdit($event)" [dataSource]="fishTypes">
+<ejs-grid (recordDoubleClick)="onEdit($event)"
+          [enableColumnVirtualization]="true"
+          [allowPaging]="true"
+          [allowResizing]="true"
+          [allowSorting]="true"
+          [dataSource]="fishTypes"
+          [pageSettings]="pageSettings"
+          [toolbar]="['Search']">
   <e-columns>
     <e-column field="name" headerText="Fischart" textAlign="center"></e-column>
     <e-column [displayAsCheckBox]="true" field="hasClosedSeason" headerText="Hat Schonzeit"

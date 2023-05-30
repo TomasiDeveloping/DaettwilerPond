@@ -1,6 +1,11 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.7.3 (2023-05-30)
+- Tables Responsive
+### 1.7.2 (2023-05-30)
+- Syncfusion table translated into German
+- Tables in admin area customized (paging, sorting, resize, search)
 ### 1.7.1 (2023-05-29)
 - Bug Fix
 - Code CleanUp
