@@ -1,11 +1,10 @@
 using Api.Configurations;
-using Application.Interfaces;
+using Application;
 using Application.Models;
 using HealthChecks.UI.Client;
-using Infrastructure.Services;
+using Infrastructure;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Persistence.Logic;
-using Persistence.Repositories;
+using Persistence;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +17,11 @@ builder.Host.UseSerilog((context, configuration) =>
         .Enrich.WithProperty("ApplicationName", "DättwilerWeiher");
 });
 
+// Register Projects
+builder.Services.ConfigurePersistenceServices(builder.Configuration);
+builder.Services.ConfigureApplicationServices();
+builder.Services.ConfigureInfrastructureServices();
+
 // Add services to the container.
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
@@ -25,27 +29,10 @@ builder.Services.ConfigureSwagger();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureApiVersioning();
 builder.Services.ConfigureHealthChecks(builder.Configuration);
-builder.Services.ConfigureDatabase(builder.Configuration);
-builder.Services.ConfigureAutoMapper();
-builder.Services.ConfigureIdentity();
 builder.Services.ConfigureAuthentication(builder.Configuration.GetSection("Jwt"));
 
 // Register custom services to the container
 builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailSettings"));
-builder.Services.AddScoped<IWebHookService, WebHookService>();
-builder.Services.AddScoped<ILsn50V2d20Logic, Lsn50V2d20Logic>();
-builder.Services.AddScoped<ISensorRepository, SensorRepository>();
-builder.Services.AddScoped<ISensorTypeRepository, SensorTypeRepository>();
-builder.Services.AddScoped<ILsn50V2MeasurementRepository, Lsn50V2MeasurementRepository>();
-builder.Services.AddScoped<ILsn50V2LifecycleRepository, Lsn50V2LifecycleRepository>();
-builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IFishTypeRepository, FishTypeRepository>();
-builder.Services.AddScoped<IFishingRegulationRepository, FishingRegulationRepository>();
-builder.Services.AddScoped<IAddressRepository, AddressRepository>();
-builder.Services.AddScoped<IFishingLicenseRepository, FishingLicenseRepository>();
 
 
 var app = builder.Build();
