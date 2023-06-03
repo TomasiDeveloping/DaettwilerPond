@@ -1,6 +1,10 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.7.4 (2023-06-03)
+- Refactoring Backend
+- Refactoring Frontend
+- Angular Lazy loading
 ### 1.7.3 (2023-05-30)
 - Tables Responsive
 ### 1.7.2 (2023-05-30)
