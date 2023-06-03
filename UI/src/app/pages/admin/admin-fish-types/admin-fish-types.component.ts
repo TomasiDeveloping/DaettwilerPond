@@ -14,7 +14,7 @@ import {ToastrService} from "ngx-toastr";
 export class AdminFishTypesComponent implements OnInit {
 
   public fishTypes: FishType[] = [];
-  public pageSettings: {pageSizes: boolean, pageSize: number}  = {pageSizes: true, pageSize: 10};
+  public pageSettings: { pageSizes: boolean, pageSize: number } = {pageSizes: true, pageSize: 10};
 
   private readonly _fishTypeService: FishTypeService = inject(FishTypeService);
   private readonly _dialog: MatDialog = inject(MatDialog);

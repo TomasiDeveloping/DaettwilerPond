@@ -3,11 +3,11 @@
   <button (click)="onAddFishType()" class="btn btn-primary mb-3">Fischart hinzufügen</button>
 </div>
 <ejs-grid (recordDoubleClick)="onEdit($event)"
-          [enableColumnVirtualization]="true"
           [allowPaging]="true"
           [allowResizing]="true"
           [allowSorting]="true"
           [dataSource]="fishTypes"
+          [enableColumnVirtualization]="true"
           [pageSettings]="pageSettings"
           [toolbar]="['Search']">
   <e-columns>

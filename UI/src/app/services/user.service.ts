@@ -20,6 +20,7 @@ export class UserService {
   getUsersWithAddresses(): Observable<UserWithAddress[]> {
     return this._httpClient.get<UserWithAddress[]>(this._serviceUrl + 'Addresses');
   }
+
   getUserById(userId: string): Observable<User> {
     return this._httpClient.get<User>(this._serviceUrl + userId);
   }

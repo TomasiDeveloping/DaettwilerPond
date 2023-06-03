@@ -2,14 +2,14 @@
 <div class="d-flex justify-content-end">
   <button (click)="onAddLicense()" class="btn btn-primary mb-3">Lizenz hinzufügen</button>
 </div>
-<ejs-grid [allowPaging]="true"
-          [enableColumnVirtualization]="true"
-          [pageSettings]="pageSettings"
-          [toolbar]="['Search']"
+<ejs-grid (recordDoubleClick)="onEdit($event)"
+          [allowPaging]="true"
           [allowResizing]="true"
           [allowSorting]="true"
-          (recordDoubleClick)="onEdit($event)"
-          [dataSource]="licenses">
+          [dataSource]="licenses"
+          [enableColumnVirtualization]="true"
+          [pageSettings]="pageSettings"
+          [toolbar]="['Search']">
   <e-columns>
     <e-column field="userFullName" headerText="Inhaber"></e-column>
     <e-column [format]="{type: 'date', format: 'dd.MM.yyyy HH:mm'}" [type]="'dateTime'" field="createdAt"

@@ -43,8 +43,8 @@ export class AuthenticationService {
     });
   }
 
-  public register(register: Registration): Observable<{isSuccessful: boolean, errors: string[]}> {
-    return this._httpClient.post<{isSuccessful: boolean, errors: string[]}>(this._serviceUrl + '/Register', register);
+  public register(register: Registration): Observable<{ isSuccessful: boolean, errors: string[] }> {
+    return this._httpClient.post<{ isSuccessful: boolean, errors: string[] }>(this._serviceUrl + '/Register', register);
   }
 
   public logout() {

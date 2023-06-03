@@ -3,7 +3,7 @@ import {environment} from "../../environments/environment";
 import {AuthenticationService} from "../services/authentication.service";
 import {User} from "../models/user.model";
 import {UserService} from "../services/user.service";
-import {L10n, setCulture, loadCldr} from '@syncfusion/ej2-base';
+import {L10n, loadCldr, setCulture} from '@syncfusion/ej2-base';
 import * as syncfusionGridTranslateDe from "../../assets/i18n/grid/de.json";
 
 loadCldr(syncfusionGridTranslateDe);
