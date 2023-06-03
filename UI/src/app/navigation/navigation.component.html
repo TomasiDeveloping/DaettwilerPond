@@ -25,7 +25,7 @@
           <a (click)="isShown = false" class="nav-link" routerLink="/geschichte" routerLinkActive="active">Geschichte
           </a>
         </li>
-        <li class="nav-item" *ngIf="isUserLoggedIn && isAdminUser">
+        <li *ngIf="isUserLoggedIn && isAdminUser" class="nav-item">
           <a (click)="isShown = false" class="nav-link" routerLink="/admin" routerLinkActive="active">Administrator
           </a>
         </li>

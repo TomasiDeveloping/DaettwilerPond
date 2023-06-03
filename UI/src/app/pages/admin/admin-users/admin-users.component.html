@@ -3,13 +3,13 @@
   <button (click)="onAddUser()" class="btn btn-primary mb-3">Mitglied hinzufügen</button>
 </div>
 <ejs-grid (recordDoubleClick)="onEdit($event)"
-          [enableColumnVirtualization]="true"
           *ngIf="users.length > 0"
           [allowPaging]="true"
           [allowResizing]="true"
           [allowSorting]="true"
           [childGrid]="addressChildGrid"
           [dataSource]="users"
+          [enableColumnVirtualization]="true"
           [pageSettings]="pageSettings"
           [toolbar]="toolbarOptions">
   <e-columns>
