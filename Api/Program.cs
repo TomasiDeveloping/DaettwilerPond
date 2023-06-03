@@ -37,26 +37,39 @@ builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection(
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-
-app.UseSwagger();
-app.UseSwaggerUI();
-
-app.UseCors("CorsPolicy");
-
-app.UseSerilogRequestLogging();
-
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.MapHealthChecks("/health", new HealthCheckOptions
+try
 {
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
+    Log.Logger.Information("Starting web host");
+    // Configure the HTTP request pipeline.
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
+    app.UseCors("CorsPolicy");
+
+    app.UseSerilogRequestLogging();
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.MapHealthChecks("/health", new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 
 
-app.Run();
+    app.Run();
+}
+catch (Exception e)
+{
+    Log.Fatal(e, "Host terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
+
