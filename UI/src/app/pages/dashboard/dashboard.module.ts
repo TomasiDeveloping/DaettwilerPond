@@ -5,6 +5,7 @@ import {DashboardComponent} from "./dashboard.component";
 import {ClosedSeasonComponent} from "./closed-season/closed-season.component";
 import {FishingRegulationComponent} from "./fishing-regulation/fishing-regulation.component";
 import {FishTypesComponent} from "./closed-season/fish-types/fish-types.component";
+import { FishingLicenseComponent } from './fishing-license/fishing-license.component';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import {FishTypesComponent} from "./closed-season/fish-types/fish-types.componen
     ClosedSeasonComponent,
     FishingRegulationComponent,
     FishTypesComponent,
+    FishingLicenseComponent,
   ],
   imports: [
     CommonModule,
