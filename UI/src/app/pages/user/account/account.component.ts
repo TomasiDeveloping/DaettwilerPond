@@ -6,6 +6,9 @@ import {ToastrService} from "ngx-toastr";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Address} from "../../../models/address.model";
 import {AddressService} from "../../../services/address.service";
+import {ToolbarItems} from "@syncfusion/ej2-angular-grids";
+import {FishingLicense} from "../../../models/fishingLicense.model";
+import {FishingLicenseService} from "../../../services/fishing-license.service";
 
 @Component({
   selector: 'app-account',
@@ -19,11 +22,15 @@ export class AccountComponent implements OnInit {
   public addressForm!: FormGroup;
   public isEditUser: boolean = false;
   public isEditAddress: boolean = false;
+  public licenses: FishingLicense[] = [];
+  public pageSettings = {pageSizes: true, pageSize: 5};
+  public toolbarOptions: ToolbarItems[] = ['Search'];
 
   private readonly _authenticationService: AuthenticationService = inject(AuthenticationService);
   private readonly _userService: UserService = inject(UserService);
   private readonly _addressService: AddressService = inject(AddressService);
   private readonly _toastr: ToastrService = inject(ToastrService);
+  private readonly _fishingLicenseService: FishingLicenseService = inject(FishingLicenseService);
 
   get firstName() {
     return this.userForm.get('firstName');
@@ -60,6 +67,7 @@ export class AccountComponent implements OnInit {
       return;
     }
     this.getUser(currentUserId);
+    this.getFishingLicenses(currentUserId);
   }
 
   getUser(userId: string) {
@@ -69,6 +77,16 @@ export class AccountComponent implements OnInit {
           this.currentUser = response;
           this.createUserForm(response, userId);
           this.getUserAddress(userId);
+        }
+      })
+    });
+  }
+
+  getFishingLicenses(userId: string) {
+    this._fishingLicenseService.getUserLicenses(userId).subscribe({
+      next: ((response) => {
+        if (response) {
+          this.licenses = response;
         }
       })
     });

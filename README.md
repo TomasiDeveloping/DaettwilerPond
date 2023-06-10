@@ -1,6 +1,11 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.8.1 (2023-06-10)
+- Fix Show Remaining Days of License
+### 1.8.0 (2023-06-10)
+- Show Current Fishinglicense in Dashboard
+- Show All Fishinglicenses in User Account
 ### 1.7.4 (2023-06-03)
 - Refactoring Backend
 - Refactoring Frontend

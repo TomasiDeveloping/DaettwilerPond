@@ -1,0 +1,32 @@
+.license-container {
+  display: flex;
+  justify-content: space-between;
+  @media screen and (max-width: 427px) {
+    flex-direction: column;
+  }
+}
+
+.bi-check-square {
+  color: green;
+}
+
+.bi-x-square {
+  color: red;
+}
+
+.active-paid {
+  @media screen and (max-width: 427px) {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.title {
+  font-weight: bold;
+  font-size: small;
+}
+
+.license-text {
+  font-size: small;
+  color: #4f4fb7;
+}

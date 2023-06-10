@@ -21,6 +21,7 @@ import {AccountComponent} from './pages/user/account/account.component';
 import {ChangePasswordComponent} from './pages/user/change-password/change-password.component';
 import {MaterialModule} from "./sharedModules/material.module";
 import {ThirdPartyModule} from "./sharedModules/third-party.module";
+import {SyncfusionModule} from "./sharedModules/syncfusion.module";
 
 
 @NgModule({
@@ -37,15 +38,16 @@ import {ThirdPartyModule} from "./sharedModules/third-party.module";
     AccountComponent,
     ChangePasswordComponent,
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    ThirdPartyModule,
-    MaterialModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        ThirdPartyModule,
+        MaterialModule,
+        SyncfusionModule
+    ],
   providers: [
     DatePipe,
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},

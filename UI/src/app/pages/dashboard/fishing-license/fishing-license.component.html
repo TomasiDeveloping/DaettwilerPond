@@ -1,0 +1,32 @@
+<div class="card mt-3">
+  <div class="card-header text-center">
+    Fischerlizenz <br>
+    <span *ngIf="expiresInDays" class="text-muted">Verbleibende Tage: <span
+      class="text-success fw-bold">{{expiresInDays}}</span></span>
+  </div>
+  <div class="card-body">
+    <div *ngIf="fishingLicence; else noLicense" class="license-container">
+      <div>
+        <div><span class="title">Inhaber: </span> <span class="license-text">{{fishingLicence.userFullName}}</span>
+        </div>
+        <div><span class="title">Ausgestellt durch: </span> <span
+          class="license-text">{{fishingLicence.issuedBy}}</span></div>
+      </div>
+      <div class="active-paid">
+        <div><span class="title">Bezahlt: </span> <i
+          [ngClass]="fishingLicence.isPaid ? 'bi-check-square' : 'bi-x-square'" class="bi"></i></div>
+        <div><span class="title">Aktiv: </span><i
+          [ngClass]="fishingLicence.isActive ? 'bi-check-square' : 'bi-x-square'" class="bi"></i></div>
+      </div>
+      <div>
+        <div><span class="title">Ausgestellt am: </span> <span
+          class="license-text">{{fishingLicence.createdAt | date: 'dd.MM.yyyy'}}</span></div>
+        <div><span class="title">Gültig bis: </span><span
+          class="license-text">{{fishingLicence.expiresOn | date: 'dd.MM.yyyy'}}</span></div>
+      </div>
+    </div>
+    <ng-template #noLicense>
+      <p class="text-center text-danger">Keine aktuelle Lizenz verfügbar</p>
+    </ng-template>
+  </div>
+</div>

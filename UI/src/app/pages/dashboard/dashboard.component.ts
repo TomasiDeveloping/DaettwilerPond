@@ -3,6 +3,8 @@ import {UserService} from "../../services/user.service";
 import {ToastrService} from "ngx-toastr";
 import {User} from "../../models/user.model";
 import {AuthenticationService} from "../../services/authentication.service";
+import {FishingLicense} from "../../models/fishingLicense.model";
+import {FishingLicenseService} from "../../services/fishing-license.service";
 
 
 @Component({
@@ -13,16 +15,19 @@ import {AuthenticationService} from "../../services/authentication.service";
 export class DashboardComponent implements OnInit {
 
   public currentUser: User | undefined;
+  public currentFishingLicence: FishingLicense | undefined;
 
-  private _userService: UserService = inject(UserService);
-  private _authenticationService: AuthenticationService = inject(AuthenticationService);
-  private _toast: ToastrService = inject(ToastrService);
+  private readonly _userService: UserService = inject(UserService);
+  private readonly _authenticationService: AuthenticationService = inject(AuthenticationService);
+  private readonly _toast: ToastrService = inject(ToastrService);
+  private readonly _fishingLicenceService: FishingLicenseService = inject(FishingLicenseService);
 
 
   ngOnInit(): void {
     const userId = this._authenticationService.getUserIdFromToken();
     if (userId) {
       this.getUser(userId);
+      this.getCurrentFishingLicence(userId);
     }
   }
 
@@ -36,6 +41,19 @@ export class DashboardComponent implements OnInit {
       error: error => {
         this._toast.error(error.error, 'Error');
       }
+    });
+  }
+
+  getCurrentFishingLicence(userId: string) {
+    this._fishingLicenceService.getCurrentUserLicence(userId).subscribe({
+      next: ((response) => {
+        if (response) {
+          this.currentFishingLicence = response;
+        }
+      }),
+      error: error => {
+        this._toast.error(error.error ?? 'Fischerlizenz konnte nicht geladen werden');
+    }
     });
   }
 
