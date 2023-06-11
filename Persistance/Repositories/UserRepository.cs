@@ -33,13 +33,14 @@ public class UserRepository : IUserRepository
 
     public async Task<List<UserWithAddressDto>> GetUsersWithAddressesAsync()
     {
-        var users = await _context.Users.AsNoTracking().ToListAsync();
+        var users = await _context.Users.AsNoTracking().OrderBy(u => u.LastName).ToListAsync();
         var usersWithAddresses = new List<UserWithAddressDto>();
-        foreach (var user in users.Where(user => !user.FirstName.Equals("System") || !user.LastName.Equals("Administrator")))
+        foreach (var user in users.Where(user =>
+                     !user.FirstName.Equals("System") || !user.LastName.Equals("Administrator")))
         {
             var role = await _userManager.GetRolesAsync(user);
             var address = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(a => a.UserId == user.Id);
-            usersWithAddresses.Add(new UserWithAddressDto()
+            usersWithAddresses.Add(new UserWithAddressDto
             {
                 UserId = user.Id,
                 IsActive = user.IsActive,
@@ -50,6 +51,7 @@ public class UserRepository : IUserRepository
                 Address = _mapper.Map<AddressDto>(address)
             });
         }
+
         return usersWithAddresses;
     }
 
@@ -59,7 +61,7 @@ public class UserRepository : IUserRepository
         if (user == null) return null;
         _mapper.Map(userDto, user);
         await _context.SaveChangesAsync();
-        return  await GetUserByIdAsync(userId);
+        return await GetUserByIdAsync(userId);
     }
 
     public async Task<UserWithAddressDto> UpdateUserWithAddressAsync(UserWithAddressDto userWithAddressDto)
@@ -75,6 +77,7 @@ public class UserRepository : IUserRepository
             await _userManager.RemoveFromRoleAsync(user, currentRoles.FirstOrDefault() ?? string.Empty);
             await _userManager.AddToRoleAsync(user, userWithAddressDto.Role);
         }
+
         var address = user.Addresses.FirstOrDefault() ?? new Address();
         address.City = userWithAddressDto.Address.City;
         address.Country = userWithAddressDto.Address.Country;
