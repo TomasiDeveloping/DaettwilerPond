@@ -12,9 +12,10 @@ public class PdfService : IPdfService
     {
         _userRepository = userRepository;
     }
-    public byte[] CreateMemberPdf()
+    public async Task<byte[]> CreateMemberPdf()
     {
-        var document = new MemberDocument(_userRepository);
+        var userWithAddresses = await _userRepository.GetUsersWithAddressesAsync();
+        var document = new MemberDocument(userWithAddresses);
         return document.GeneratePdf();
     }
 }

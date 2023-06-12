@@ -18,11 +18,11 @@ public class ServicesController : ControllerBase
     }
 
     [HttpGet("[action]")]
-    public IActionResult GetMemberPdf()
+    public async Task<IActionResult> GetMemberPdf()
     {
         try
         {
-            var memberDocument = _pdfService.CreateMemberPdf();
+            var memberDocument = await _pdfService.CreateMemberPdf();
             return File(memberDocument, "application/pdf", "Mitglieder Fischerclub Dättwiler Weiher.pdf");
         }
         catch (Exception e)

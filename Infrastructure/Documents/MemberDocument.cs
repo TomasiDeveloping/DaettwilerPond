@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.DataTransferObjects.User;
 using Infrastructure.Documents.Resources;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
@@ -8,29 +8,34 @@ namespace Infrastructure.Documents;
 
 public class MemberDocument : IDocument
 {
-    private readonly IUserRepository _userRepository;
-    private const int TableHeaderPadding = 1;
-    private const string TableHeaderColor = Colors.Grey.Lighten1;
-    // 
-    private const int TableBodyPadding = 1;
+    private readonly List<UserWithAddressDto> _usersWithAddresses;
 
-
-    public MemberDocument(IUserRepository userRepository)
+    public MemberDocument(List<UserWithAddressDto> usersWithAddresses)
     {
-        _userRepository = userRepository;
+        _usersWithAddresses = usersWithAddresses;
     }
+
+    private static TextStyle TableBodyTextStyle => TextStyle
+        .Default
+        .FontSize(11);
+
+    private static TextStyle TableHeaderTextStyle => TextStyle
+        .Default
+        .FontSize(14)
+        .Bold();
 
     public void Compose(IDocumentContainer container)
     {
         container.Page(page =>
         {
+            // Document settings
             page.Margin(20);
             page.Size(PageSizes.A4.Landscape());
-
+            // Create Document Header
             page.Header().Element(ComposeHeader);
-
+            // Create Document Content Table
             page.Content().Element(ComposeContent);
-
+            // Create Document Footer
             page.Footer().AlignCenter().Text($"Stand: {DateTime.Now:dd.MM.yyyy}");
         });
     }
@@ -46,7 +51,7 @@ public class MemberDocument : IDocument
 
     private void ComposeContent(IContainer container)
     {
-        var usersWithAddresses = _userRepository.GetUsersWithAddressesAsync().GetAwaiter().GetResult();
+        // Table Column Definition
         container.Table(table =>
         {
             table.ColumnsDefinition(columns =>
@@ -66,40 +71,49 @@ public class MemberDocument : IDocument
                 // Mobile
                 columns.ConstantColumn(100);
             });
+            // Configure Table Header 
             table.Header(header =>
             {
-                header.Cell().Border(1).Background(TableHeaderColor).Padding(TableHeaderPadding).AlignCenter().Text("Name")
-                    .FontSize(14).Bold();
-                header.Cell().Border(1).Background(TableHeaderColor).Padding(TableHeaderPadding).AlignCenter().Text("Vorname")
-                    .FontSize(14).Bold();
-                header.Cell().Border(1).Background(TableHeaderColor).Padding(TableHeaderPadding).AlignCenter().Text("E-Mail")
-                    .FontSize(14).Bold();
-                header.Cell().Border(1).Background(TableHeaderColor).Padding(TableHeaderPadding).AlignCenter().Text("Adresse")
-                    .FontSize(14).Bold();
-                header.Cell().Border(1).Background(TableHeaderColor).Padding(TableHeaderPadding).AlignCenter().Text("Ort")
-                    .FontSize(14).Bold();
-                header.Cell().Border(1).Background(TableHeaderColor).Padding(TableHeaderPadding).AlignCenter().Text("Telefon")
-                    .FontSize(14).Bold();
-                header.Cell().Border(1).Background(TableHeaderColor).Padding(TableHeaderPadding).AlignCenter().Text("Natel")
-                    .FontSize(14).Bold();
+                header.Cell().Element(TableHeaderStyle).Text("Name").Style(TableHeaderTextStyle);
+                header.Cell().Element(TableHeaderStyle).Text("Vorname").Style(TableBodyTextStyle);
+                header.Cell().Element(TableHeaderStyle).Text("E-Mail").Style(TableHeaderTextStyle);
+                header.Cell().Element(TableHeaderStyle).Text("Adresse").Style(TableHeaderTextStyle);
+                header.Cell().Element(TableHeaderStyle).Text("Ort").Style(TableHeaderTextStyle);
+                header.Cell().Element(TableHeaderStyle).Text("Telefon").Style(TableHeaderTextStyle);
+                header.Cell().Element(TableHeaderStyle).Text("Natel").Style(TableHeaderTextStyle);
+
+                static IContainer TableHeaderStyle(IContainer container)
+                {
+                    return container.Border(1).Background(Colors.Grey.Lighten1).Padding(1).AlignCenter();
+                }
             });
-            foreach (var user in usersWithAddresses)
+            // Create Table Body Content
+            foreach (var user in _usersWithAddresses)
             {
-                table.Cell().Border(1).MinHeight(30).Background(Colors.Grey.Lighten5).PaddingLeft(2).Padding(TableBodyPadding)
-                    .AlignLeft().AlignMiddle().Text(user.LastName).FontSize(11);
-                table.Cell().Border(1).Background(Colors.Grey.Lighten5).PaddingLeft(2).Padding(TableBodyPadding).AlignLeft()
-                    .AlignMiddle().Text(user.FirstName).FontSize(11);
-                table.Cell().Border(1).Background(Colors.Grey.Lighten5).PaddingLeft(2).Padding(TableBodyPadding).AlignLeft()
-                    .AlignMiddle().Hyperlink($"mailto:{user.Email}").Text(user.Email).FontSize(11)
+                // LastName
+                table.Cell().Element(TableBodyStyle).Text(user.LastName).Style(TableBodyTextStyle);
+                // FirstName
+                table.Cell().Element(TableBodyStyle).Text(user.FirstName).Style(TableBodyTextStyle);
+                // Email
+                table.Cell().Element(TableBodyStyle).Hyperlink($"mailto:{user.Email}").Text(user.Email)
+                    .Style(TableBodyTextStyle)
                     .FontColor(Colors.Blue.Accent3).Underline();
-                table.Cell().Border(1).Background(Colors.Grey.Lighten5).PaddingLeft(2).Padding(TableBodyPadding).AlignLeft()
-                    .AlignMiddle().Text($"{user.Address.Street} {user.Address.HouseNumber}").FontSize(11);
-                table.Cell().Border(1).Background(Colors.Grey.Lighten5).PaddingLeft(2).Padding(TableBodyPadding).AlignLeft()
-                    .AlignMiddle().Text($"{user.Address.PostalCode} {user.Address.City}").FontSize(11);
-                table.Cell().Border(1).Background(Colors.Grey.Lighten5).PaddingLeft(2).Padding(TableBodyPadding).AlignLeft()
-                    .AlignMiddle().Text(user.Address.Phone).FontSize(11);
-                table.Cell().Border(1).Background(Colors.Grey.Lighten5).PaddingLeft(2).Padding(TableBodyPadding).AlignLeft()
-                    .AlignMiddle().Text(user.Address.Mobile).FontSize(11);
+                // Street and HouseNumber
+                table.Cell().Element(TableBodyStyle).Text($"{user.Address.Street} {user.Address.HouseNumber}")
+                    .Style(TableBodyTextStyle);
+                // PostalCode and City
+                table.Cell().Element(TableBodyStyle).Text($"{user.Address.PostalCode} {user.Address.City}")
+                    .Style(TableBodyTextStyle);
+                // Phone
+                table.Cell().Element(TableBodyStyle).Text(user.Address.Phone).Style(TableBodyTextStyle);
+                // Mobile
+                table.Cell().Element(TableBodyStyle).Text(user.Address.Mobile).Style(TableBodyTextStyle);
+
+                static IContainer TableBodyStyle(IContainer container)
+                {
+                    return container.Border(1).MinHeight(30).Background(Colors.Grey.Lighten5).PaddingLeft(2).Padding(1)
+                        .AlignLeft().AlignMiddle();
+                }
             }
         });
     }
