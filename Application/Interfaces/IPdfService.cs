@@ -3,4 +3,5 @@
 public interface IPdfService
 {
     Task<byte[]> CreateMemberPdf();
+    Task<byte[]> CreateFishingRulesPdf();
 }

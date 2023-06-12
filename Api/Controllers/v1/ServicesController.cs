@@ -32,4 +32,20 @@ public class ServicesController : ControllerBase
                 $"Something went wrong in {nameof(GetMemberPdf)}");
         }
     }
+
+    [HttpGet("[action]")]
+    public async Task<IActionResult> GetFishingRulesPdf()
+    {
+        try
+        {
+            var fishingRuleDocument = await _pdfService.CreateFishingRulesPdf();
+            return File(fishingRuleDocument, "application/pdf", "Vorschriften.pdf");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(GetFishingRulesPdf)}");
+        }
+    }
 }
