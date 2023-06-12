@@ -48,4 +48,20 @@ public class ServicesController : ControllerBase
                 $"Something went wrong in {nameof(GetFishingRulesPdf)}");
         }
     }
+
+    [HttpGet("[action]")]
+    public async Task<IActionResult> CreateFishOpenSeasonPdf()
+    {
+        try
+        {
+            var fishOpenSeasonDocument = await _pdfService.CreateFishOpenSeasonPdf();
+            return File(fishOpenSeasonDocument, "application/pdf", "Schonmass_und_Schonzeiten.pdf");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(CreateFishOpenSeasonPdf)}");
+        }
+    }
 }
