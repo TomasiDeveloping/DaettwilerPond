@@ -1,6 +1,12 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.9.0 (2023-06-13)
+- Download Section
+- Members list PDF
+- Closed season PDF
+- Fishing rules PDF
+- Crab plaque measures PDF
 ### 1.8.1 (2023-06-10)
 - Fix Show Remaining Days of License
 ### 1.8.0 (2023-06-10)
