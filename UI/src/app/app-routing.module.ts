@@ -9,6 +9,7 @@ import {PasswordResetComponent} from "./authentication/password-reset/password-r
 import {AccountComponent} from "./pages/user/account/account.component";
 import {ChangePasswordComponent} from "./pages/user/change-password/change-password.component";
 import {adminGuard} from "./guards/admin.guard";
+import {DownloadComponent} from "./pages/download/download.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'temperatur', component: TemperatureComponent},
   {path: 'geschichte', component: HistoryComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'downloads', component: DownloadComponent, canActivate:[authGuard]},
   {
     path: 'dashboard',
     loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),

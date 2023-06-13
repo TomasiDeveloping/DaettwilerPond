@@ -1,0 +1,34 @@
+<div class="container">
+  <h1 class="text-center">Downloads</h1>
+  <p>Hier findest Du eine Auswahl an PDF-Downloads rund um den Fischerclub Dättwilerweiher</p>
+  <div class="card-container">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Mitglieder</h5>
+        <p class="card-text">Aktuelle Mitgliederliste mit Adresse</p>
+        <a (click)="onDownloadMember()" class="btn btn-secondary"><i class="bi bi-file-earmark-pdf-fill pdf-icon"></i> Download Mitgliederliste</a>
+      </div>
+    </div>
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Schonmasse und Schonzeiten</h5>
+        <p class="card-text">Aktuelle Liste mit Schonmassen und Schonzeiten</p>
+        <a (click)="onDownloadOpenSeason()" class="btn btn-secondary"><i class="bi bi-file-earmark-pdf-fill pdf-icon"></i> Download Schonmasse</a>
+      </div>
+    </div>
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Vorschriften</h5>
+        <p class="card-text">Aktuelles Dokument mit allen Vorschriften</p>
+        <a (click)="onDownloadFishingRules()" class="btn btn-secondary"><i class="bi bi-file-earmark-pdf-fill pdf-icon"></i> Download Vorschriften</a>
+      </div>
+    </div>
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Krebspest</h5>
+        <p class="card-text">Vorsichtsmassnamen gegen die Krebspest</p>
+        <a (click)="onDownloadCrabPlague()" class="btn btn-secondary"><i class="bi bi-file-earmark-pdf-fill pdf-icon"></i> Download Massnamen Krebspest</a>
+      </div>
+    </div>
+  </div>
+</div>

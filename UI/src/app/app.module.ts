@@ -22,6 +22,7 @@ import {ChangePasswordComponent} from './pages/user/change-password/change-passw
 import {MaterialModule} from "./sharedModules/material.module";
 import {ThirdPartyModule} from "./sharedModules/third-party.module";
 import {SyncfusionModule} from "./sharedModules/syncfusion.module";
+import { DownloadComponent } from './pages/download/download.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {SyncfusionModule} from "./sharedModules/syncfusion.module";
     PasswordResetComponent,
     AccountComponent,
     ChangePasswordComponent,
+    DownloadComponent,
   ],
     imports: [
         BrowserModule,
