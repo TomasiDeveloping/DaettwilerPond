@@ -1,0 +1,16 @@
+.card-container {
+  padding-bottom: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-auto-rows: auto;
+  grid-row-gap: 20px;
+
+  @media screen and (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pdf-icon {
+  color: #ff0202;
+}

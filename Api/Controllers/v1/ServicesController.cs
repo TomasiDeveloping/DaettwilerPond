@@ -23,7 +23,10 @@ public class ServicesController : ControllerBase
         try
         {
             var memberDocument = await _pdfService.CreateMemberPdf();
-            return File(memberDocument, "application/pdf", "Mitglieder Fischerclub Dättwiler Weiher.pdf");
+            const string fileName = "Mitglieder_Fischerclub_Daettwiler_Weiher.pdf";
+            Response.Headers.Add("x-file-name", fileName);
+            Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
+            return File(memberDocument, "application/pdf", fileName);
         }
         catch (Exception e)
         {
@@ -39,7 +42,10 @@ public class ServicesController : ControllerBase
         try
         {
             var fishingRuleDocument = await _pdfService.CreateFishingRulesPdf();
-            return File(fishingRuleDocument, "application/pdf", "Vorschriften.pdf");
+            const string fileName = "Vorschriften.pdf";
+            Response.Headers.Add("x-file-name", fileName);
+            Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
+            return File(fishingRuleDocument, "application/pdf", fileName);
         }
         catch (Exception e)
         {
@@ -50,18 +56,21 @@ public class ServicesController : ControllerBase
     }
 
     [HttpGet("[action]")]
-    public async Task<IActionResult> CreateFishOpenSeasonPdf()
+    public async Task<IActionResult> GetFishOpenSeasonPdf()
     {
         try
         {
             var fishOpenSeasonDocument = await _pdfService.CreateFishOpenSeasonPdf();
-            return File(fishOpenSeasonDocument, "application/pdf", "Schonmass_und_Schonzeiten.pdf");
+            const string fileName = "Schonmass_und_Schonzeiten.pdf";
+            Response.Headers.Add("x-file-name", fileName);
+            Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
+            return File(fishOpenSeasonDocument, "application/pdf", fileName);
         }
         catch (Exception e)
         {
             _logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
-                $"Something went wrong in {nameof(CreateFishOpenSeasonPdf)}");
+                $"Something went wrong in {nameof(GetFishOpenSeasonPdf)}");
         }
     }
 }
