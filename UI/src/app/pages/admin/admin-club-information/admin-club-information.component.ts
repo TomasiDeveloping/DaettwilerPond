@@ -88,7 +88,7 @@ export class AdminClubInformationComponent implements OnInit {
     }
     this.isEdit = false;
     const fishingClub: FishingClub = this.fishingClubForm.value as FishingClub;
-    this, this.isNewClub ? this.createFishingClub(fishingClub) : this.updateFishingClub(fishingClub.id, fishingClub);
+    this.isNewClub ? this.createFishingClub(fishingClub) : this.updateFishingClub(fishingClub.id, fishingClub);
   }
 
   onEdit() {
