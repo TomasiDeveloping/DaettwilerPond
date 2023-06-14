@@ -5,6 +5,7 @@ import {ToastrModule} from "ngx-toastr";
 import {HighchartsChartModule} from "highcharts-angular";
 import {NgxScrollTopModule} from "ngx-scrolltop";
 import {NgxSpinnerModule} from "ngx-spinner";
+import {NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask} from "ngx-mask";
 
 
 export function tokenGetter() {
@@ -25,6 +26,8 @@ export function tokenGetter() {
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
   exports: [
     HighchartsChartModule,
@@ -32,6 +35,9 @@ export function tokenGetter() {
     NgxSpinnerModule,
     JwtModule,
     ToastrModule,
+  ],
+  providers:[
+    provideEnvironmentNgxMask()
   ]
 })
 export class ThirdPartyModule { }

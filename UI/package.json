@@ -23,20 +23,21 @@
     "@auth0/angular-jwt": "^5.1.2",
     "@popperjs/core": "^2.11.7",
     "@syncfusion/ej2-angular-grids": "^21.2.5",
+    "@syncfusion/ej2-material-theme": "~21.2.5",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.5",
     "bootswatch": "^5.2.3",
     "highcharts": "^11.0.1",
     "highcharts-angular": "^3.1.2",
     "moment": "^2.29.4",
+    "ngx-mask": "^16.1.4",
     "ngx-scrolltop": "^6.0.0",
     "ngx-spinner": "^15.0.1",
     "ngx-toastr": "^17.0.2",
     "rxjs": "~7.8.1",
     "sweetalert2": "^11.7.5",
     "tslib": "^2.3.0",
-    "zone.js": "~0.13.0",
-    "@syncfusion/ej2-material-theme": "~21.2.5"
+    "zone.js": "~0.13.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.0.0",

@@ -17,6 +17,8 @@ import {
 } from "./admin-fishing-license/admin-edit-fishing-license/admin-edit-fishing-license.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "../../sharedModules/material.module";
+import { AdminClubInformationComponent } from './admin-club-information/admin-club-information.component';
+import {NgxMaskDirective} from "ngx-mask";
 
 
 @NgModule({
@@ -30,16 +32,18 @@ import {MaterialModule} from "../../sharedModules/material.module";
     AdminEditFishTypeComponent,
     AdminEditFishingRegulationComponent,
     AdminEditFishingLicenseComponent,
+    AdminClubInformationComponent,
   ],
-  imports: [
-    CommonModule,
-    SyncfusionModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([
-      {path: '', component: AdminComponent}
-    ]),
-  ]
+    imports: [
+        CommonModule,
+        SyncfusionModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        RouterModule.forChild([
+            {path: '', component: AdminComponent}
+        ]),
+        NgxMaskDirective,
+    ]
 })
 export class AdminModule {
 }

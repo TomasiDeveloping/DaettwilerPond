@@ -79,8 +79,6 @@ public class ServicesController : ControllerBase
         }
     }
 
-
-    [AllowAnonymous]
     [HttpPost("[action]")]
     public async Task<ActionResult<bool>>SendFishingLicenseInvoice(CreateFishingLicenseBillDto createFishingLicenseBillDto)
     {
