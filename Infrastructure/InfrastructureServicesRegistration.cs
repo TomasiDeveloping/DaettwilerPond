@@ -16,6 +16,7 @@ public static class InfrastructureServicesRegistration
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IWebHookService, WebHookService>();
         services.AddScoped<IPdfService, PdfService>();
+        services.AddTransient<ISwissQrBillService, SwissQrBillService>();
 
         return services;
     }

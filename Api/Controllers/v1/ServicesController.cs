@@ -11,12 +11,14 @@ namespace Api.Controllers.v1;
 public class ServicesController : ControllerBase
 {
     private readonly ILogger<ServicesController> _logger;
+    private readonly ISwissQrBillService _swissQrBillService;
     private readonly IPdfService _pdfService;
 
-    public ServicesController(IPdfService pdfService, ILogger<ServicesController> logger)
+    public ServicesController(IPdfService pdfService, ILogger<ServicesController> logger, ISwissQrBillService swissQrBillService)
     {
         _pdfService = pdfService;
         _logger = logger;
+        _swissQrBillService = swissQrBillService;
     }
 
     [HttpGet("[action]")]
@@ -73,6 +75,40 @@ public class ServicesController : ControllerBase
             _logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetFishOpenSeasonPdf)}");
+        }
+    }
+
+    [AllowAnonymous]
+    [HttpPost("[action]")]
+    public IActionResult SwissQrBill()
+    {
+        try
+        {
+            var bill = _swissQrBillService.CreateFishingLicenseBill();
+            return File(bill, "application/pdf", "Rechnung.pdf");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(SwissQrBill)}");
+        }
+    }
+
+    [AllowAnonymous]
+    [HttpPost("[action]")]
+    public async Task<IActionResult>GetFishingLicenseBill()
+    {
+        try
+        {
+            var bill = await _pdfService.CreateFishingLicenseBill();
+            return File(bill, "application/pdf", "Rechnung.pdf");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(GetFishingLicenseBill)}");
         }
     }
 }
