@@ -1,6 +1,8 @@
-﻿namespace Application.Interfaces;
+﻿using Application.Models;
+
+namespace Application.Interfaces;
 
 public interface ISwissQrBillService
 {
-    byte[] CreateFishingLicenseBill();
+    byte[] CreateFishingLicenseBill(FishingLicenseBill fishingLicenseBill);
 }

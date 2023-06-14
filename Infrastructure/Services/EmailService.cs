@@ -25,6 +25,21 @@ public class EmailService : IEmailService
         return await SendMailAsync(mimeMessage);
     }
 
+    public async Task<bool> SendFishingLicenseBill(int fishingLicenseYear, string userEmail, string mailContent, byte[] qrBill)
+    {
+        var emailMessage = new MimeMessage();
+        emailMessage.From.Add(new MailboxAddress("Dättwiler Weiher", _emailConfiguration.From));
+        emailMessage.To.Add(new MailboxAddress(userEmail, userEmail));
+        emailMessage.Subject = $"Rechnung Fischerkarte {fishingLicenseYear}";
+        var bodyBuilder = new BodyBuilder()
+        {
+            HtmlBody = mailContent,
+        };
+        bodyBuilder.Attachments.Add($"Rechnung_Fischerkarte_{fishingLicenseYear}.pdf", qrBill, new ContentType("application", "pdf"));
+        emailMessage.Body = bodyBuilder.ToMessageBody();
+        return await SendMailAsync(emailMessage);
+    }
+
     private async Task<bool> SendMailAsync(MimeMessage message)
     {
         using var client = new SmtpClient();

@@ -31,6 +31,15 @@ public class UserRepository : IUserRepository
         return users;
     }
 
+    public async Task<UserDto> GetUserByEmail(string userEmail)
+    {
+        var user = await _context.Users
+            .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Email == userEmail);
+        return user;
+    }
+
     public async Task<List<UserWithAddressDto>> GetUsersWithAddressesAsync()
     {
         var users = await _context.Users.AsNoTracking().OrderBy(u => u.LastName).ToListAsync();
@@ -53,6 +62,14 @@ public class UserRepository : IUserRepository
         }
 
         return usersWithAddresses;
+    }
+
+    public async Task<UserWithAddressDto> GetUserWithAddressByUserId(Guid userId)
+    {
+        var userWithAddress = await _context.Users
+            .ProjectTo<UserWithAddressDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(u => u.UserId == userId);
+        return userWithAddress;
     }
 
     public async Task<UserDto> UpdateUserAsync(Guid userId, UserDto userDto)

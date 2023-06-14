@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.DataTransferObjects.FishingLicense;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -78,37 +79,21 @@ public class ServicesController : ControllerBase
         }
     }
 
-    [AllowAnonymous]
-    [HttpPost("[action]")]
-    public IActionResult SwissQrBill()
-    {
-        try
-        {
-            var bill = _swissQrBillService.CreateFishingLicenseBill();
-            return File(bill, "application/pdf", "Rechnung.pdf");
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, e.Message);
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                $"Something went wrong in {nameof(SwissQrBill)}");
-        }
-    }
 
     [AllowAnonymous]
     [HttpPost("[action]")]
-    public async Task<IActionResult>GetFishingLicenseBill()
+    public async Task<ActionResult<bool>>SendFishingLicenseInvoice(CreateFishingLicenseBillDto createFishingLicenseBillDto)
     {
         try
         {
-            var bill = await _pdfService.CreateFishingLicenseBill();
-            return File(bill, "application/pdf", "Rechnung.pdf");
+            var response = await _pdfService.SendFishingLicenseBill(createFishingLicenseBillDto);
+            return response ? Ok(true) : BadRequest("Error in send QRBill");
         }
         catch (Exception e)
         {
             _logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
-                $"Something went wrong in {nameof(GetFishingLicenseBill)}");
+                $"Something went wrong in {nameof(SendFishingLicenseInvoice)}");
         }
     }
 }

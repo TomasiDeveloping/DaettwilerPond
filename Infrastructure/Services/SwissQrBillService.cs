@@ -1,39 +1,40 @@
 ﻿using Application.Interfaces;
+using Application.Models;
 using Codecrete.SwissQRBill.Generator;
 
 namespace Infrastructure.Services;
 
 public class SwissQrBillService : ISwissQrBillService
 {
-    public byte[] CreateFishingLicenseBill()
+    public byte[] CreateFishingLicenseBill(FishingLicenseBill fishingLicenseBill)
     {
         var bill = new Bill
         {
             // creditor data
-            Account = "CH2400232232514607M1P",
+            Account = fishingLicenseBill.Account,
             Creditor = new Address
             {
-                Name = "Friedrich Alexander Wanner",
-                AddressLine1 = "Obere Kehlstrasse 10",
-                AddressLine2 = "5400 Baden",
+                Name = fishingLicenseBill.CreditorName,
+                AddressLine1 = fishingLicenseBill.CreditorAddress,
+                AddressLine2 = fishingLicenseBill.CreditorCity,
                 CountryCode = "CH"
             },
 
             // payment data
-            Amount = 500.00m,
+            Amount = fishingLicenseBill.Amount,
             Currency = "CHF",
 
             // debtor data
             Debtor = new Address
             {
-                Name = "Tomasi Patrick",
-                AddressLine1 = "Bühlstrasse 190",
-                AddressLine2 = "4468 Kienberg",
+                Name = fishingLicenseBill.DebtorName,
+                AddressLine1 = fishingLicenseBill.DebtorAddress,
+                AddressLine2 = fishingLicenseBill.DebtorCity,
                 CountryCode = "CH"
             },
 
             // more payment data
-            UnstructuredMessage = "Fischerkarte für 2023",
+            UnstructuredMessage = fishingLicenseBill.ReferenceMessage,
 
 
             // output format
