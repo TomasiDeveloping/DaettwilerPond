@@ -25,7 +25,7 @@ public class EmailService : IEmailService
         return await SendMailAsync(mimeMessage);
     }
 
-    public async Task<bool> SendFishingLicenseBill(int fishingLicenseYear, string userEmail, string mailContent,
+    public async Task<bool> SendFishingLicenseBillAsync(int fishingLicenseYear, string userEmail, string mailContent,
         byte[] qrBill)
     {
         var emailMessage = new MimeMessage();

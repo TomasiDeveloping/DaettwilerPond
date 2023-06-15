@@ -26,7 +26,7 @@ public class ServicesController : ControllerBase
     {
         try
         {
-            var memberDocument = await _pdfService.CreateMemberPdf();
+            var memberDocument = await _pdfService.CreateMemberPdfAsync();
             const string fileName = "Mitglieder_Fischerclub_Daettwiler_Weiher.pdf";
             Response.Headers.Add("x-file-name", fileName);
             Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
@@ -45,7 +45,7 @@ public class ServicesController : ControllerBase
     {
         try
         {
-            var fishingRuleDocument = await _pdfService.CreateFishingRulesPdf();
+            var fishingRuleDocument = await _pdfService.CreateFishingRulesPdfAsync();
             const string fileName = "Vorschriften.pdf";
             Response.Headers.Add("x-file-name", fileName);
             Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
@@ -64,7 +64,7 @@ public class ServicesController : ControllerBase
     {
         try
         {
-            var fishOpenSeasonDocument = await _pdfService.CreateFishOpenSeasonPdf();
+            var fishOpenSeasonDocument = await _pdfService.CreateFishOpenSeasonPdfAsync();
             const string fileName = "Schonmass_und_Schonzeiten.pdf";
             Response.Headers.Add("x-file-name", fileName);
             Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
@@ -84,7 +84,7 @@ public class ServicesController : ControllerBase
     {
         try
         {
-            var response = await _pdfService.SendFishingLicenseBill(createFishingLicenseBillDto, GetUserEmail());
+            var response = await _pdfService.SendFishingLicenseBillAsync(createFishingLicenseBillDto, GetUserEmail());
             return response ? Ok(true) : BadRequest("Error in send QRBill");
         }
         catch (Exception e)
@@ -100,7 +100,7 @@ public class ServicesController : ControllerBase
     {
         try
         {
-            var fishingLicenseInvoice = await _pdfService.GetUserFishingLicenseInvoice(fishingLicenseId);
+            var fishingLicenseInvoice = await _pdfService.GetUserFishingLicenseInvoiceAsync(fishingLicenseId);
             const string fileName = "Rechnung_Fischerkarte.pdf";
             Response.Headers.Add("x-file-name", fileName);
             Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
