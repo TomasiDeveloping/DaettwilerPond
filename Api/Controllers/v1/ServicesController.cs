@@ -1,8 +1,8 @@
-﻿using Application.DataTransferObjects.FishingLicense;
+﻿using System.Security.Claims;
+using Application.DataTransferObjects.FishingLicense;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Api.Controllers.v1;
 
@@ -79,7 +79,8 @@ public class ServicesController : ControllerBase
     }
 
     [HttpPost("[action]")]
-    public async Task<ActionResult<bool>>SendFishingLicenseInvoice(CreateFishingLicenseBillDto createFishingLicenseBillDto)
+    public async Task<ActionResult<bool>> SendFishingLicenseInvoice(
+        CreateFishingLicenseBillDto createFishingLicenseBillDto)
     {
         try
         {

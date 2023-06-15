@@ -1,5 +1,4 @@
 ﻿using Application.DataTransferObjects.User;
-using Domain.Entities;
 
 namespace Application.Interfaces;
 

@@ -107,7 +107,8 @@ public class PdfService : IPdfService
             DebtorAddress = $"{userWithAddressDto.Address.Street} {userWithAddressDto.Address.HouseNumber}",
             DebtorCity = $"{userWithAddressDto.Address.PostalCode} {userWithAddressDto.Address.City}",
             LicenseYear = licenseYear.ToString(),
-            ReferenceMessage = $"Fischerkarte {licenseYear}, {userWithAddressDto.FirstName} {userWithAddressDto.LastName}",
+            ReferenceMessage =
+                $"Fischerkarte {licenseYear}, {userWithAddressDto.FirstName} {userWithAddressDto.LastName}",
             FishingClubName = fishingClubDto.Name,
             Account = fishingClubDto.IbanNumber,
             InvoiceDate = invoiceDate

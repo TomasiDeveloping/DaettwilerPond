@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Application.DataTransferObjects.FishingLicense;
+﻿using Application.DataTransferObjects.FishingLicense;
 
 namespace Application.Interfaces;
 

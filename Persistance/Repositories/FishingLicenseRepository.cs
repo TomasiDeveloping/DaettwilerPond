@@ -35,7 +35,6 @@ public class FishingLicenseRepository : IFishingLicenseRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(l => l.Id == fishingLicenseId);
         return license;
-
     }
 
     public async Task<List<FishingLicenseDto>> GetUserFishingLicenses(Guid userId)
