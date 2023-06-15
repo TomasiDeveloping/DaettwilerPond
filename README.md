@@ -1,6 +1,9 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.10.0 (2023-06-15)
+- Download fishing license in dashboard if is not markt as paid
+- Admin section create invoice with swiss qr bill for licenses
 ### 1.9.0 (2023-06-13)
 - Download Section
 - Members list PDF

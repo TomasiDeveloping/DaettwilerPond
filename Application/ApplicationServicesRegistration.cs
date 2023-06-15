@@ -20,6 +20,7 @@ public static class ApplicationServicesRegistration
             options.AddProfile<FishingRegulationProfile>();
             options.AddProfile<AddressProfile>();
             options.AddProfile<FishingLicenseProfile>();
+            options.AddProfile<FishingClubProfile>();
         });
 
         return services;

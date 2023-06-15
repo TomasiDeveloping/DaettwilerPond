@@ -14,7 +14,9 @@
       </div>
       <div class="active-paid">
         <div><span class="title">Bezahlt: </span> <i
-          [ngClass]="fishingLicence.isPaid ? 'bi-check-square' : 'bi-x-square'" class="bi"></i></div>
+          [ngClass]="fishingLicence.isPaid ? 'bi-check-square' : 'bi-x-square'" class="bi"><span
+          (click)="onDownloadInvoice(fishingLicence.id)" *ngIf="!fishingLicence.isPaid"
+          class="invoice-text">Rechnung herunterladen</span></i></div>
         <div><span class="title">Aktiv: </span><i
           [ngClass]="fishingLicence.isActive ? 'bi-check-square' : 'bi-x-square'" class="bi"></i></div>
       </div>

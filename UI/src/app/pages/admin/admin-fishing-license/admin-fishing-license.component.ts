@@ -5,6 +5,8 @@ import {ToastrService} from "ngx-toastr";
 import {MatDialog} from "@angular/material/dialog";
 import {AdminEditFishingLicenseComponent} from "./admin-edit-fishing-license/admin-edit-fishing-license.component";
 import Swal from "sweetalert2";
+import {FishingLicenseCreateBill} from "../../../models/fishingLicenseCreateBill.model";
+import {CreateLicenseBillComponent} from "./create-license-bill/create-license-bill.component";
 
 @Component({
   selector: 'app-admin-fishing-license',
@@ -95,6 +97,27 @@ export class AdminFishingLicenseComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result: { reload: boolean }) => {
       if (result.reload) {
+        this.getFishingLicenses();
+      }
+    });
+  }
+
+  onCreateFishingLicenseBillEmail() {
+    const fishingLicenceCreateBill: FishingLicenseCreateBill = {
+      userIds: [],
+      emailMessage: '',
+      licenseYear: undefined,
+      createLicense: false
+    };
+    const dialogRef = this._dialog.open(CreateLicenseBillComponent, {
+      width: '80%',
+      height: 'auto',
+      autoFocus: false,
+      disableClose: true,
+      data: {licenseCreateBill: fishingLicenceCreateBill}
+    });
+    dialogRef.afterClosed().subscribe((response: { reload: boolean }) => {
+      if (response.reload) {
         this.getFishingLicenses();
       }
     });

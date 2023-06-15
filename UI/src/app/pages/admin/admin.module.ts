@@ -17,6 +17,9 @@ import {
 } from "./admin-fishing-license/admin-edit-fishing-license/admin-edit-fishing-license.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "../../sharedModules/material.module";
+import {AdminClubInformationComponent} from './admin-club-information/admin-club-information.component';
+import {CreateLicenseBillComponent} from './admin-fishing-license/create-license-bill/create-license-bill.component';
+import {ThirdPartyModule} from "../../sharedModules/third-party.module";
 
 
 @NgModule({
@@ -30,11 +33,14 @@ import {MaterialModule} from "../../sharedModules/material.module";
     AdminEditFishTypeComponent,
     AdminEditFishingRegulationComponent,
     AdminEditFishingLicenseComponent,
+    AdminClubInformationComponent,
+    CreateLicenseBillComponent,
   ],
   imports: [
     CommonModule,
     SyncfusionModule,
     MaterialModule,
+    ThirdPartyModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       {path: '', component: AdminComponent}

@@ -1,0 +1,87 @@
+<h3 class="text-center mt-4">Daten</h3>
+<form (ngSubmit)="onSubmit()" *ngIf="fishingClubForm" [formGroup]="fishingClubForm">
+  <div class="form-group">
+    <label class="form-label" for="name">Fischerclub Name</label>
+    <input [ngClass]="{
+    'is-invalid': name?.invalid && (name?.dirty || name?.touched),
+    'is-valid': name?.valid
+    }" class="form-control" formControlName="name" id="name" type="text">
+    <div *ngIf="name?.errors && (name?.dirty || name?.touched)" class="invalid-feedback">
+      <p *ngIf="name?.hasError('required')">Name ist ein Pflichtfeld</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="licensePrice">Fischerkarte Preis</label>
+    <input [ngClass]="{
+    'is-invalid': licensePrice?.invalid && (licensePrice?.dirty || licensePrice?.touched),
+    'is-valid': licensePrice?.valid
+    }" class="form-control" formControlName="licensePrice" id="licensePrice" type="number">
+    <div *ngIf="licensePrice?.errors && (licensePrice?.dirty || licensePrice?.touched)" class="invalid-feedback">
+      <p *ngIf="licensePrice?.hasError('required')">Fischerkarte Preis ist ein Pflichfeld</p>
+    </div>
+  </div>
+  <h4 class="mt-3">Rechnungsadresse:</h4>
+  <div class="form-group">
+    <label class="form-label" for="billAddressName">Inhaber</label>
+    <input [ngClass]="{
+    'is-invalid': billAddressName?.invalid && (billAddressName?.dirty || billAddressName?.touched),
+    'is-valid': billAddressName?.valid
+    }" class="form-control" formControlName="billAddressName" id="billAddressName" type="text">
+    <div *ngIf="billAddressName?.errors && (billAddressName?.dirty || billAddressName?.touched)"
+         class="invalid-feedback">
+      <p *ngIf="billAddressName?.hasError('required')">Inhaber ist ein Pflichtfeld</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="billAddress">Adresse</label>
+    <input [ngClass]="{
+    'is-invalid': billAddress?.invalid && (billAddress?.dirty || billAddress?.touched),
+    'is-valid': billAddress?.valid
+    }" class="form-control" formControlName="billAddress" id="billAddress" type="text">
+    <div *ngIf="billAddress?.errors && (billAddress?.dirty || billAddress?.touched)" class="invalid-feedback">
+      <p *ngIf="billAddress?.hasError('required')">Adresse ist ein Pflichtfeld</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <label class="form-label" for="billPostalCode">Postleitzahl</label>
+      <input [ngClass]="{
+      'is-invalid': billPostalCode?.invalid && (billPostalCode?.dirty || billPostalCode?.touched),
+      'is-valid': billPostalCode?.valid
+      }" class="form-control" formControlName="billPostalCode" id="billPostalCode" type="text">
+      <div *ngIf="billPostalCode?.errors && (billPostalCode?.dirty || billPostalCode?.touched)"
+           class="invalid-feedback">
+        <p *ngIf="billPostalCode?.hasError('required')">Postleitzahl ist ein Pflichtfeld</p>
+      </div>
+    </div>
+    <div class="col-8">
+      <label class="form-label" for="billCity">Ort</label>
+      <input [ngClass]="{
+      'is-invalid': billCity?.invalid && (billCity?.dirty || billCity?.touched),
+      'is-valid': billCity?.valid
+      }" class="form-control" formControlName="billCity" id="billCity" type="text">
+      <div *ngIf="billCity?.errors && (billCity?.dirty || billCity?.touched)" class="invalid-feedback">
+        <p *ngIf="billCity?.hasError('required')">Ort ist ein Pflichtfeld</p>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="ibanNumber">IBAN Nummer</label>
+    <input [ngClass]="{
+    'is-invalid': ibanNumber?.invalid && (ibanNumber?.dirty || ibanNumber?.touched),
+    'is-valid': ibanNumber?.valid
+    }" [showMaskTyped]="true" class="form-control" formControlName="ibanNumber" id="ibanNumber"
+           mask="UU00 AAAA AAAA AAAA AAAA A" type="text">
+    <div *ngIf="ibanNumber?.errors && (ibanNumber?.dirty || ibanNumber?.touched)" class="invalid-feedback">
+      <p *ngIf="ibanNumber?.hasError('required')">IBAN Nummer ist ein Pflichfeld</p>
+      <p *ngIf="ibanNumber?.hasError('mask')">IBAN Nummer ist Ungültig</p>
+    </div>
+  </div>
+  <div *ngIf="!isEdit" class="d-grid gap-2 col-6 mx-auto mt-4">
+    <button (click)="onEdit()" class="btn btn-primary" type="button">Bearbeiten</button>
+  </div>
+  <div *ngIf="isEdit" class="d-flex mt-4 justify-content-end">
+    <button (click)="onCancel()" class="btn btn-warning me-4" type="button">Abbrechen</button>
+    <button [disabled]="fishingClubForm.invalid" class="btn btn-success" type="submit">Speichern</button>
+  </div>
+</form>

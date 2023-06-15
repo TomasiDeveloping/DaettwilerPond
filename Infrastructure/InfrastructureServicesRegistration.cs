@@ -15,7 +15,8 @@ public static class InfrastructureServicesRegistration
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IWebHookService, WebHookService>();
-        services.AddScoped<IPdfService, PdfService>();
+        services.AddTransient<IPdfService, PdfService>();
+        services.AddTransient<ISwissQrBillService, SwissQrBillService>();
 
         return services;
     }

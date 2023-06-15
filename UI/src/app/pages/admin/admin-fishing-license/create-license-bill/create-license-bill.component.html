@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Rechnung erstellen</h1>
+<div mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="createBillForm">
+    <mat-form-field>
+      <mat-label>Mitglieder</mat-label>
+      <mat-select formControlName="userIds" multiple>
+        <mat-option *ngFor="let user of users" [value]="user.userId">{{user.name}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="userIds?.hasError('required')">Mindestens 1 Mitglied muss ausgewählt werden</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Lizenz für das Jahr</mat-label>
+      <input formControlName="licenseYear" id="licenseYear" matInput>
+      <mat-error *ngIf="licenseYear?.hasError('required')">Jahr für die Lizenz ist ein Pflichfeld</mat-error>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="createLicense">Lizenz(en) erstellen ?</mat-checkbox>
+    <mat-form-field>
+      <mat-label>E-Mail Text</mat-label>
+      <textarea formControlName="emailMessage" matInput rows="5"></textarea>
+      <mat-error *ngIf="emailMessage?.hasError('required')">E-Mail Text ist ein Pflichtfeld</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div class="d-flex justify-content-end mt-5 mb-3" mat-dialog-actions>
+  <button (click)="onSubmit()" [disabled]="createBillForm.invalid" class="btn btn-success" type="submit">Email(s)
+    senden
+  </button>
+  <button (click)="onClose(false)" class="btn btn-danger ms-3" type="button">Abbrechen</button>
+</div>

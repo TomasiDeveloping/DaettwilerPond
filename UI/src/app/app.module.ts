@@ -22,7 +22,8 @@ import {ChangePasswordComponent} from './pages/user/change-password/change-passw
 import {MaterialModule} from "./sharedModules/material.module";
 import {ThirdPartyModule} from "./sharedModules/third-party.module";
 import {SyncfusionModule} from "./sharedModules/syncfusion.module";
-import { DownloadComponent } from './pages/download/download.component';
+import {DownloadComponent} from './pages/download/download.component';
+import {JwtModule} from "@auth0/angular-jwt";
 
 
 @NgModule({
@@ -40,16 +41,23 @@ import { DownloadComponent } from './pages/download/download.component';
     ChangePasswordComponent,
     DownloadComponent,
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        AppRoutingModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        ThirdPartyModule,
-        MaterialModule,
-        SyncfusionModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    ThirdPartyModule,
+    MaterialModule,
+    SyncfusionModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('DaettwilerPondToken')
+        }
+      }
+    }),
+  ],
   providers: [
     DatePipe,
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},

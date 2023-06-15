@@ -49,6 +49,7 @@ public static class PersistenceServicesRegistration
         services.AddScoped<IFishingRegulationRepository, FishingRegulationRepository>();
         services.AddScoped<IAddressRepository, AddressRepository>();
         services.AddScoped<IFishingLicenseRepository, FishingLicenseRepository>();
+        services.AddScoped<IFishingClubRepository, FishingClubRepository>();
 
         return services;
     }
