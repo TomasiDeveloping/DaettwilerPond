@@ -17,12 +17,9 @@ import {
 } from "./admin-fishing-license/admin-edit-fishing-license/admin-edit-fishing-license.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "../../sharedModules/material.module";
-import { AdminClubInformationComponent } from './admin-club-information/admin-club-information.component';
-import {NgxMaskDirective} from "ngx-mask";
-import { CreateLicenseBillComponent } from './admin-fishing-license/create-license-bill/create-license-bill.component';
-import {MatInputModule} from "@angular/material/input";
-import {MatSelectModule} from "@angular/material/select";
-import {MatCheckboxModule} from "@angular/material/checkbox";
+import {AdminClubInformationComponent} from './admin-club-information/admin-club-information.component';
+import {CreateLicenseBillComponent} from './admin-fishing-license/create-license-bill/create-license-bill.component';
+import {ThirdPartyModule} from "../../sharedModules/third-party.module";
 
 
 @NgModule({
@@ -39,19 +36,16 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     AdminClubInformationComponent,
     CreateLicenseBillComponent,
   ],
-    imports: [
-        CommonModule,
-        SyncfusionModule,
-        MaterialModule,
-        ReactiveFormsModule,
-        RouterModule.forChild([
-            {path: '', component: AdminComponent}
-        ]),
-        NgxMaskDirective,
-        MatInputModule,
-        MatSelectModule,
-        MatCheckboxModule,
-    ]
+  imports: [
+    CommonModule,
+    SyncfusionModule,
+    MaterialModule,
+    ThirdPartyModule,
+    ReactiveFormsModule,
+    RouterModule.forChild([
+      {path: '', component: AdminComponent}
+    ]),
+  ]
 })
 export class AdminModule {
 }

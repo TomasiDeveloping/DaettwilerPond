@@ -70,7 +70,8 @@
     <input [ngClass]="{
     'is-invalid': ibanNumber?.invalid && (ibanNumber?.dirty || ibanNumber?.touched),
     'is-valid': ibanNumber?.valid
-    }" [showMaskTyped]="true" class="form-control" formControlName="ibanNumber" id="ibanNumber" mask="UU00 AAAA AAAA AAAA AAAA A" type="text">
+    }" [showMaskTyped]="true" class="form-control" formControlName="ibanNumber" id="ibanNumber"
+           mask="UU00 AAAA AAAA AAAA AAAA A" type="text">
     <div *ngIf="ibanNumber?.errors && (ibanNumber?.dirty || ibanNumber?.touched)" class="invalid-feedback">
       <p *ngIf="ibanNumber?.hasError('required')">IBAN Nummer ist ein Pflichfeld</p>
       <p *ngIf="ibanNumber?.hasError('mask')">IBAN Nummer ist Ungültig</p>

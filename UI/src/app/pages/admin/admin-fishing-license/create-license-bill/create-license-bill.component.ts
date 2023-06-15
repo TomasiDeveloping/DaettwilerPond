@@ -1,5 +1,5 @@
 import {Component, inject, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FishingLicenseCreateBill} from "../../../../models/fishingLicenseCreateBill.model";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../../services/user.service";
@@ -11,16 +11,17 @@ import {PdfService} from "../../../../services/pdf.service";
   templateUrl: './create-license-bill.component.html',
   styleUrls: ['./create-license-bill.component.scss']
 })
-export class CreateLicenseBillComponent implements OnInit{
+export class CreateLicenseBillComponent implements OnInit {
 
   public createBillForm: FormGroup;
-  public users: {userId: string, name: string}[] = [];
+  public users: { userId: string, name: string }[] = [];
 
   private readonly _userService: UserService = inject(UserService);
   private readonly _toastr: ToastrService = inject(ToastrService);
   private readonly _dialogRef: MatDialogRef<CreateLicenseBillComponent> = inject(MatDialogRef<CreateLicenseBillComponent>);
   private readonly _pdfService: PdfService = inject(PdfService);
-  constructor(@Inject(MAT_DIALOG_DATA) public data: {licenseCreateBill: FishingLicenseCreateBill}) {
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { licenseCreateBill: FishingLicenseCreateBill }) {
     const licenceCreateBill: FishingLicenseCreateBill = this.data.licenseCreateBill;
     this.createBillForm = new FormGroup({
       userIds: new FormControl<string[]>(licenceCreateBill.userIds, [Validators.required]),
@@ -30,15 +31,18 @@ export class CreateLicenseBillComponent implements OnInit{
     });
   }
 
-  get userIds(){
+  get userIds() {
     return this.createBillForm.get('userIds');
   }
-  get licenseYear(){
+
+  get licenseYear() {
     return this.createBillForm.get('licenseYear');
   }
+
   get emailMessage() {
     return this.createBillForm.get('emailMessage');
   }
+
   ngOnInit() {
     this._userService.getUsers().subscribe({
       next: ((response) => {
@@ -75,7 +79,7 @@ export class CreateLicenseBillComponent implements OnInit{
   }
 
   onClose(reload: boolean) {
-    const response: {reload: boolean} = {reload: reload}
+    const response: { reload: boolean } = {reload: reload}
     this._dialogRef.close(response);
   }
 }

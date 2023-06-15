@@ -13,14 +13,12 @@ namespace Api.Controllers.v1;
 public class ServicesController : ControllerBase
 {
     private readonly ILogger<ServicesController> _logger;
-    private readonly ISwissQrBillService _swissQrBillService;
     private readonly IPdfService _pdfService;
 
-    public ServicesController(IPdfService pdfService, ILogger<ServicesController> logger, ISwissQrBillService swissQrBillService)
+    public ServicesController(IPdfService pdfService, ILogger<ServicesController> logger)
     {
         _pdfService = pdfService;
         _logger = logger;
-        _swissQrBillService = swissQrBillService;
     }
 
     [HttpGet("[action]")]

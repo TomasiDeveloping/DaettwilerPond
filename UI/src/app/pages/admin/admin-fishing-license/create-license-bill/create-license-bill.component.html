@@ -10,19 +10,21 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Lizenz für das Jahr</mat-label>
-      <input matInput formControlName="licenseYear" id="licenseYear">
+      <input formControlName="licenseYear" id="licenseYear" matInput>
       <mat-error *ngIf="licenseYear?.hasError('required')">Jahr für die Lizenz ist ein Pflichfeld</mat-error>
     </mat-form-field>
 
-      <mat-checkbox formControlName="createLicense">Lizenz(en) erstellen ?</mat-checkbox>
+    <mat-checkbox formControlName="createLicense">Lizenz(en) erstellen ?</mat-checkbox>
     <mat-form-field>
       <mat-label>E-Mail Text</mat-label>
-      <textarea  matInput formControlName="emailMessage" rows="5"></textarea>
+      <textarea formControlName="emailMessage" matInput rows="5"></textarea>
       <mat-error *ngIf="emailMessage?.hasError('required')">E-Mail Text ist ein Pflichtfeld</mat-error>
     </mat-form-field>
   </form>
 </div>
 <div class="d-flex justify-content-end mt-5 mb-3" mat-dialog-actions>
-  <button [disabled]="createBillForm.invalid" (click)="onSubmit()" class="btn btn-success" type="submit">Email(s) senden</button>
+  <button (click)="onSubmit()" [disabled]="createBillForm.invalid" class="btn btn-success" type="submit">Email(s)
+    senden
+  </button>
   <button (click)="onClose(false)" class="btn btn-danger ms-3" type="button">Abbrechen</button>
 </div>

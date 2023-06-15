@@ -27,7 +27,7 @@ export class FishingLicenseComponent implements OnChanges {
 
   onDownloadInvoice(fishingLicenseId: string) {
     this._pdfService.getUserInvoiceFishingLicense(fishingLicenseId).subscribe({
-      next: ((response: {image: Blob, filename: string | null}) => {
+      next: ((response: { image: Blob, filename: string | null }) => {
         const fileUrl = URL.createObjectURL(response.image);
         const anchorElement = document.createElement('a');
         anchorElement.href = fileUrl;
@@ -36,7 +36,7 @@ export class FishingLicenseComponent implements OnChanges {
         document.body.appendChild(anchorElement);
         anchorElement.click();
       }),
-      error: () =>{
+      error: () => {
         this._toastr.error('Fehler beim Download', 'PDF Rechnung');
       }
     });

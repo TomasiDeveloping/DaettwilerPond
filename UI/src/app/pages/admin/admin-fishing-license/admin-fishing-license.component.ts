@@ -116,7 +116,7 @@ export class AdminFishingLicenseComponent implements OnInit {
       disableClose: true,
       data: {licenseCreateBill: fishingLicenceCreateBill}
     });
-    dialogRef.afterClosed().subscribe((response: {reload: boolean}) => {
+    dialogRef.afterClosed().subscribe((response: { reload: boolean }) => {
       if (response.reload) {
         this.getFishingLicenses();
       }

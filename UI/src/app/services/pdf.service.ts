@@ -1,10 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {map, Observable} from "rxjs";
-import {
-  CreateLicenseBillComponent
-} from "../pages/admin/admin-fishing-license/create-license-bill/create-license-bill.component";
 import {FishingLicenseCreateBill} from "../models/fishingLicenseCreateBill.model";
 
 @Injectable({
@@ -15,7 +12,7 @@ export class PdfService {
   private readonly _serviceUrl: string = environment.apiBaseUrl + '/Services/';
   private readonly _httpClient: HttpClient = inject(HttpClient);
 
-  getMemberPdf(): Observable<{image: Blob, filename: string | null}> {
+  getMemberPdf(): Observable<{ image: Blob, filename: string | null }> {
     return this._httpClient.get(this._serviceUrl + 'GetMemberPdf/', {observe: 'response', responseType: 'blob'})
       .pipe(map((response: HttpResponse<Blob>) => {
         return {
@@ -25,7 +22,7 @@ export class PdfService {
       }));
   }
 
-  getFishingRulesPdf(): Observable<{image: Blob, filename: string | null}>{
+  getFishingRulesPdf(): Observable<{ image: Blob, filename: string | null }> {
     return this._httpClient.get(this._serviceUrl + 'GetFishingRulesPdf/', {observe: 'response', responseType: 'blob'})
       .pipe(map((response: HttpResponse<Blob>) => {
         return {
@@ -35,7 +32,7 @@ export class PdfService {
       }));
   }
 
-  getFishOpenSeasonPdf(): Observable<{image: Blob, filename: string | null}> {
+  getFishOpenSeasonPdf(): Observable<{ image: Blob, filename: string | null }> {
     return this._httpClient.get(this._serviceUrl + 'GetFishOpenSeasonPdf/', {observe: 'response', responseType: 'blob'})
       .pipe(map((response: HttpResponse<Blob>) => {
         return {
@@ -45,8 +42,11 @@ export class PdfService {
       }));
   }
 
-  getUserInvoiceFishingLicense(fishingLicenseId: string): Observable<{image: Blob, filename: string | null}> {
-    return this._httpClient.get(this._serviceUrl + 'GetUserInvoiceFishingLicense/' + fishingLicenseId, {observe: 'response', responseType: 'blob'})
+  getUserInvoiceFishingLicense(fishingLicenseId: string): Observable<{ image: Blob, filename: string | null }> {
+    return this._httpClient.get(this._serviceUrl + 'GetUserInvoiceFishingLicense/' + fishingLicenseId, {
+      observe: 'response',
+      responseType: 'blob'
+    })
       .pipe(map((response: HttpResponse<Blob>) => {
         return {
           image: new Blob([response.body!], {type: response.headers.get('Content-Type')!}),
