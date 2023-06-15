@@ -41,12 +41,12 @@ public class FishingLicenseBillDocument : IDocument
                 column.Item().Text(text =>
                 {
                     text.Span("Rechnungsdatum: ").SemiBold();
-                    text.Span($"{DateTime.Now:dd.MM.yyyy}");
+                    text.Span($"{_fishingLicenseBill.InvoiceDate:dd.MM.yyyy}");
                 });
                 column.Item().Text(text =>
                 {
                     text.Span("Zahlbar bis: ").SemiBold();
-                    text.Span($"{DateTime.Now.AddDays(30):dd.MM.yyyy}");
+                    text.Span($"{_fishingLicenseBill.InvoiceDate.AddDays(30):dd.MM.yyyy}");
                 });
             });
         });

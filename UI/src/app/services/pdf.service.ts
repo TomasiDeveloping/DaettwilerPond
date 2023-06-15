@@ -2,6 +2,10 @@ import {inject, Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {map, Observable} from "rxjs";
+import {
+  CreateLicenseBillComponent
+} from "../pages/admin/admin-fishing-license/create-license-bill/create-license-bill.component";
+import {FishingLicenseCreateBill} from "../models/fishingLicenseCreateBill.model";
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +43,19 @@ export class PdfService {
           filename: response.headers.get('x-file-name')
         }
       }));
+  }
+
+  getUserInvoiceFishingLicense(fishingLicenseId: string): Observable<{image: Blob, filename: string | null}> {
+    return this._httpClient.get(this._serviceUrl + 'GetUserInvoiceFishingLicense/' + fishingLicenseId, {observe: 'response', responseType: 'blob'})
+      .pipe(map((response: HttpResponse<Blob>) => {
+        return {
+          image: new Blob([response.body!], {type: response.headers.get('Content-Type')!}),
+          filename: response.headers.get('x-file-name')
+        }
+      }));
+  }
+
+  sendFishingLicenseBill(createFishingLicenseBill: FishingLicenseCreateBill): Observable<boolean> {
+    return this._httpClient.post<boolean>(this._serviceUrl + 'SendFishingLicenseInvoice', createFishingLicenseBill);
   }
 }

@@ -1,6 +1,7 @@
 <h3 class="text-center mt-4">Fischerei Lizenzen</h3>
-<div class="d-flex justify-content-end">
-  <button (click)="onAddLicense()" class="btn btn-primary mb-3">Lizenz hinzufügen</button>
+<div class="d-flex justify-content-between mb-3">
+  <button (click)="onCreateFishingLicenseBillEmail()" class="btn btn-primary">Rechnung per Email senden</button>
+  <button (click)="onAddLicense()" class="btn btn-primary">Lizenz hinzufügen</button>
 </div>
 <ejs-grid (recordDoubleClick)="onEdit($event)"
           [allowPaging]="true"

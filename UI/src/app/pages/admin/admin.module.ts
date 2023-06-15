@@ -19,6 +19,10 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "../../sharedModules/material.module";
 import { AdminClubInformationComponent } from './admin-club-information/admin-club-information.component';
 import {NgxMaskDirective} from "ngx-mask";
+import { CreateLicenseBillComponent } from './admin-fishing-license/create-license-bill/create-license-bill.component';
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -33,6 +37,7 @@ import {NgxMaskDirective} from "ngx-mask";
     AdminEditFishingRegulationComponent,
     AdminEditFishingLicenseComponent,
     AdminClubInformationComponent,
+    CreateLicenseBillComponent,
   ],
     imports: [
         CommonModule,
@@ -43,6 +48,9 @@ import {NgxMaskDirective} from "ngx-mask";
             {path: '', component: AdminComponent}
         ]),
         NgxMaskDirective,
+        MatInputModule,
+        MatSelectModule,
+        MatCheckboxModule,
     ]
 })
 export class AdminModule {

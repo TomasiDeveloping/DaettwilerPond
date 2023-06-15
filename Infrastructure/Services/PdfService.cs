@@ -12,6 +12,7 @@ public class PdfService : IPdfService
 {
     private readonly IEmailService _emailService;
     private readonly IFishingClubRepository _fishingClubRepository;
+    private readonly IFishingLicenseRepository _fishingLicenseRepository;
     private readonly IFishingRegulationRepository _fishingRegulationRepository;
     private readonly IFishTypeRepository _fishTypeRepository;
     private readonly ISwissQrBillService _qrBillService;
@@ -19,7 +20,8 @@ public class PdfService : IPdfService
 
     public PdfService(IUserRepository userRepository, IFishingRegulationRepository fishingRegulationRepository,
         IFishTypeRepository fishTypeRepository, ISwissQrBillService qrBillService,
-        IFishingClubRepository fishingClubRepository, IEmailService emailService)
+        IFishingClubRepository fishingClubRepository, IEmailService emailService,
+        IFishingLicenseRepository fishingLicenseRepository)
     {
         _userRepository = userRepository;
         _fishingRegulationRepository = fishingRegulationRepository;
@@ -27,6 +29,7 @@ public class PdfService : IPdfService
         _qrBillService = qrBillService;
         _fishingClubRepository = fishingClubRepository;
         _emailService = emailService;
+        _fishingLicenseRepository = fishingLicenseRepository;
     }
 
     public async Task<byte[]> CreateMemberPdf()
@@ -50,7 +53,8 @@ public class PdfService : IPdfService
         return document.GeneratePdf();
     }
 
-    public async Task<bool> SendFishingLicenseBill(CreateFishingLicenseBillDto createFishingLicenseBillDto)
+    public async Task<bool> SendFishingLicenseBill(CreateFishingLicenseBillDto createFishingLicenseBillDto,
+        string creatorEmail)
     {
         var fishingClub = await _fishingClubRepository.GetFishingClubsAsync();
         foreach (var userId in createFishingLicenseBillDto.UserIds)
@@ -62,14 +66,36 @@ public class PdfService : IPdfService
             var document = new FishingLicenseBillDocument(qrBill, fishingLicenseBill);
             var invoice = document.GeneratePdf();
             await _emailService.SendFishingLicenseBill(createFishingLicenseBillDto.LicenseYear,
-                    userWithAddress.Email, createFishingLicenseBillDto.EmailMessage, invoice);
+                userWithAddress.Email, createFishingLicenseBillDto.EmailMessage, invoice);
+            if (!createFishingLicenseBillDto.CreateLicense) continue;
+            var createLicenseDto = new CreateFishingLicenseDto
+            {
+                ExpiresOn = new DateTime(createFishingLicenseBillDto.LicenseYear, 12, 31),
+                IsActive = true,
+                IsPaid = false,
+                UserId = userId,
+                Year = createFishingLicenseBillDto.LicenseYear
+            };
+            await _fishingLicenseRepository.CreateFishingLicenseAsync(createLicenseDto, creatorEmail);
         }
 
         return true;
     }
 
+    public async Task<byte[]> GetUserFishingLicenseInvoice(Guid fishingLicenseId)
+    {
+        var fishingLicense = await _fishingLicenseRepository.GetFishingLicenseAsync(fishingLicenseId);
+        var fishingClub = await _fishingClubRepository.GetFishingClubsAsync();
+        var userWithAddress = await _userRepository.GetUserWithAddressByUserId(fishingLicense.UserId);
+        var fishingLicenseBill = CreateFishingLicenseBill(userWithAddress, fishingClub.FirstOrDefault()!,
+            fishingLicense.Year, fishingLicense.CreatedAt);
+        var qrBill = _qrBillService.CreateFishingLicenseBill(fishingLicenseBill);
+        var document = new FishingLicenseBillDocument(qrBill, fishingLicenseBill);
+        return document.GeneratePdf();
+    }
+
     private static FishingLicenseBill CreateFishingLicenseBill(UserWithAddressDto userWithAddressDto,
-        FishingClubDto fishingClubDto, int licenseYear)
+        FishingClubDto fishingClubDto, int licenseYear, DateTime invoiceDate = new())
     {
         return new FishingLicenseBill
         {
@@ -81,9 +107,10 @@ public class PdfService : IPdfService
             DebtorAddress = $"{userWithAddressDto.Address.Street} {userWithAddressDto.Address.HouseNumber}",
             DebtorCity = $"{userWithAddressDto.Address.PostalCode} {userWithAddressDto.Address.City}",
             LicenseYear = licenseYear.ToString(),
-            ReferenceMessage = $"Fischerkarte {licenseYear}",
+            ReferenceMessage = $"Fischerkarte {licenseYear}, {userWithAddressDto.FirstName} {userWithAddressDto.LastName}",
             FishingClubName = fishingClubDto.Name,
-            Account = fishingClubDto.IbanNumber
+            Account = fishingClubDto.IbanNumber,
+            InvoiceDate = invoiceDate
         };
     }
 }

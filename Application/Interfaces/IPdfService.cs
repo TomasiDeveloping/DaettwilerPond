@@ -8,5 +8,6 @@ public interface IPdfService
     Task<byte[]> CreateMemberPdf();
     Task<byte[]> CreateFishingRulesPdf();
     Task<byte[]> CreateFishOpenSeasonPdf();
-    Task<bool> SendFishingLicenseBill(CreateFishingLicenseBillDto createFishingLicenseBillDto);
+    Task<bool> SendFishingLicenseBill(CreateFishingLicenseBillDto createFishingLicenseBillDto, string creatorEmail);
+    Task<byte[]> GetUserFishingLicenseInvoice(Guid fishingLicenseId);
 }

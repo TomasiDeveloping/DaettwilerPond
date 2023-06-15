@@ -13,4 +13,5 @@ public class FishingLicenseBill
     public string ReferenceMessage { get; set; }
     public string FishingClubName { get; set; }
     public string LicenseYear { get; set; }
+    public DateTime InvoiceDate { get; set; } = DateTime.Now;
 }

@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Api.Controllers.v1;
 
@@ -84,7 +85,7 @@ public class ServicesController : ControllerBase
     {
         try
         {
-            var response = await _pdfService.SendFishingLicenseBill(createFishingLicenseBillDto);
+            var response = await _pdfService.SendFishingLicenseBill(createFishingLicenseBillDto, GetUserEmail());
             return response ? Ok(true) : BadRequest("Error in send QRBill");
         }
         catch (Exception e)
@@ -93,5 +94,32 @@ public class ServicesController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(SendFishingLicenseInvoice)}");
         }
+    }
+
+    [HttpGet("[action]/{fishingLicenseId:guid}")]
+    public async Task<IActionResult> GetUserInvoiceFishingLicense(Guid fishingLicenseId)
+    {
+        try
+        {
+            var fishingLicenseInvoice = await _pdfService.GetUserFishingLicenseInvoice(fishingLicenseId);
+            const string fileName = "Rechnung_Fischerkarte.pdf";
+            Response.Headers.Add("x-file-name", fileName);
+            Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
+            return File(fishingLicenseInvoice, "application/pdf", fileName);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(GetUserInvoiceFishingLicense)}");
+        }
+    }
+
+    private string GetUserEmail()
+    {
+        var email = HttpContext.User.Identity is ClaimsIdentity identity
+            ? identity.FindFirst(ClaimTypes.Email)?.Value ?? "Unknown"
+            : "Unknown";
+        return email;
     }
 }

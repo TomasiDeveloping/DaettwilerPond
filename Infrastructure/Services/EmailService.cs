@@ -33,7 +33,7 @@ public class EmailService : IEmailService
         emailMessage.Subject = $"Rechnung Fischerkarte {fishingLicenseYear}";
         var bodyBuilder = new BodyBuilder()
         {
-            HtmlBody = mailContent,
+            TextBody = mailContent
         };
         bodyBuilder.Attachments.Add($"Rechnung_Fischerkarte_{fishingLicenseYear}.pdf", qrBill, new ContentType("application", "pdf"));
         emailMessage.Body = bodyBuilder.ToMessageBody();
