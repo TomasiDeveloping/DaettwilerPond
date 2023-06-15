@@ -32,28 +32,28 @@ public class PdfService : IPdfService
         _fishingLicenseRepository = fishingLicenseRepository;
     }
 
-    public async Task<byte[]> CreateMemberPdf()
+    public async Task<byte[]> CreateMemberPdfAsync()
     {
         var userWithAddresses = await _userRepository.GetUsersWithAddressesAsync();
         var document = new MemberDocument(userWithAddresses);
         return document.GeneratePdf();
     }
 
-    public async Task<byte[]> CreateFishingRulesPdf()
+    public async Task<byte[]> CreateFishingRulesPdfAsync()
     {
         var fishingRules = await _fishingRegulationRepository.GetFishingRegulationsAsync();
         var document = new FishingRulesDocument(fishingRules);
         return document.GeneratePdf();
     }
 
-    public async Task<byte[]> CreateFishOpenSeasonPdf()
+    public async Task<byte[]> CreateFishOpenSeasonPdfAsync()
     {
         var fishTypes = await _fishTypeRepository.GetFishTypesAsync();
         var document = new FishOpenSeasonDocument(fishTypes);
         return document.GeneratePdf();
     }
 
-    public async Task<bool> SendFishingLicenseBill(CreateFishingLicenseBillDto createFishingLicenseBillDto,
+    public async Task<bool> SendFishingLicenseBillAsync(CreateFishingLicenseBillDto createFishingLicenseBillDto,
         string creatorEmail)
     {
         var fishingClub = await _fishingClubRepository.GetFishingClubsAsync();
@@ -61,11 +61,11 @@ public class PdfService : IPdfService
         {
             var userWithAddress = await _userRepository.GetUserWithAddressByUserId(userId);
             var fishingLicenseBill = CreateFishingLicenseBill(userWithAddress, fishingClub.FirstOrDefault()!,
-                createFishingLicenseBillDto.LicenseYear);
+                createFishingLicenseBillDto.LicenseYear, DateTime.Now);
             var qrBill = _qrBillService.CreateFishingLicenseBill(fishingLicenseBill);
             var document = new FishingLicenseBillDocument(qrBill, fishingLicenseBill);
             var invoice = document.GeneratePdf();
-            await _emailService.SendFishingLicenseBill(createFishingLicenseBillDto.LicenseYear,
+            await _emailService.SendFishingLicenseBillAsync(createFishingLicenseBillDto.LicenseYear,
                 userWithAddress.Email, createFishingLicenseBillDto.EmailMessage, invoice);
             if (!createFishingLicenseBillDto.CreateLicense) continue;
             var createLicenseDto = new CreateFishingLicenseDto
@@ -82,7 +82,7 @@ public class PdfService : IPdfService
         return true;
     }
 
-    public async Task<byte[]> GetUserFishingLicenseInvoice(Guid fishingLicenseId)
+    public async Task<byte[]> GetUserFishingLicenseInvoiceAsync(Guid fishingLicenseId)
     {
         var fishingLicense = await _fishingLicenseRepository.GetFishingLicenseAsync(fishingLicenseId);
         var fishingClub = await _fishingClubRepository.GetFishingClubsAsync();
@@ -95,7 +95,7 @@ public class PdfService : IPdfService
     }
 
     private static FishingLicenseBill CreateFishingLicenseBill(UserWithAddressDto userWithAddressDto,
-        FishingClubDto fishingClubDto, int licenseYear, DateTime invoiceDate = new())
+        FishingClubDto fishingClubDto, int licenseYear, DateTime invoiceDate)
     {
         return new FishingLicenseBill
         {
