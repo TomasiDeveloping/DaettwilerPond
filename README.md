@@ -1,6 +1,10 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.10.2 (2023-06-28)
+- Update NuGet Packges
+- Update NPM Packages
+- Fix vulnerable: Vite Server Options (server.fs.deny) can be bypassed using double forward-slash (//)
 ### 1.10.1 (2023-06-15)
 - Bugfix invoice date
 ### 1.10.0 (2023-06-15)
