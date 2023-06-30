@@ -1,3 +1,20 @@
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
+
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=TomasiDeveloping_DaettwilerPond&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=TomasiDeveloping_DaettwilerPond&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=TomasiDeveloping_DaettwilerPond&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=TomasiDeveloping_DaettwilerPond&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=TomasiDeveloping_DaettwilerPond&metric=coverage)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=TomasiDeveloping_DaettwilerPond&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=TomasiDeveloping_DaettwilerPond&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=TomasiDeveloping_DaettwilerPond&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=TomasiDeveloping_DaettwilerPond&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=TomasiDeveloping_DaettwilerPond&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=TomasiDeveloping_DaettwilerPond&metric=bugs)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
+
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=TomasiDeveloping_DaettwilerPond)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
+
+
 # DaettwilerPond
 
 ## Changelog
