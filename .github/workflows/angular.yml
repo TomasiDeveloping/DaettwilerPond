@@ -12,7 +12,7 @@ jobs:
     working-directory: ./UI
 
   steps:
-   - name: Get latest code
+   - name: Get latest code for UI
      uses: actions/checkout@v3
      
    - name: Set up node.js
