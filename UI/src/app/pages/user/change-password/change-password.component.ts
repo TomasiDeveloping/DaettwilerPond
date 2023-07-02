@@ -20,10 +20,10 @@ export class ChangePasswordComponent {
     confirmPassword: new FormControl<string>('', [Validators.required]),
     password: new FormControl<string>('', Validators.compose([
       Validators.required,
-      PasswordValidators.patternValidator(new RegExp("(?=.*[0-9])"), {hasNumber: true}),
-      PasswordValidators.patternValidator(new RegExp("(?=.*[A-Z])"), {hasCapitalCase: true}),
-      PasswordValidators.patternValidator(new RegExp("(?=.*[a-z])"), {hasSmallCase: true}),
-      PasswordValidators.patternValidator(new RegExp("(?=.*[$@^!%*?&+])"), {hasSpecialCharacters: true}),
+      PasswordValidators.patternValidator(RegExp("(?=.*[0-9])"), {hasNumber: true}),
+      PasswordValidators.patternValidator(RegExp("(?=.*[A-Z])"), {hasCapitalCase: true}),
+      PasswordValidators.patternValidator(RegExp("(?=.*[a-z])"), {hasSmallCase: true}),
+      PasswordValidators.patternValidator(RegExp("(?=.*[$@^!%*?&+])"), {hasSpecialCharacters: true}),
       Validators.minLength(8)
     ]))
   }, {
