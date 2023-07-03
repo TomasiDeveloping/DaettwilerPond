@@ -14,7 +14,7 @@
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=TomasiDeveloping_DaettwilerPond)](https://sonarcloud.io/summary/new_code?id=TomasiDeveloping_DaettwilerPond)
 
-[![CI / CD for Angular](https://github.com/TomasiDeveloping/DaettwilerPond/actions/workflows/angular.yml/badge.svg?branch=master)](https://github.com/TomasiDeveloping/DaettwilerPond/actions/workflows/angular.yml)
+[![CI/CD for DaettwilerPond](https://github.com/TomasiDeveloping/DaettwilerPond/actions/workflows/deploy.yml/badge.svg)](https://github.com/TomasiDeveloping/DaettwilerPond/actions/workflows/deploy.yml)
 [![SonarCloud](https://github.com/TomasiDeveloping/DaettwilerPond/actions/workflows/sonarCloud.yml/badge.svg)](https://github.com/TomasiDeveloping/DaettwilerPond/actions/workflows/sonarCloud.yml)
 
 # DaettwilerPond
