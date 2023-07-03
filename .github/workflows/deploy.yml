@@ -63,7 +63,7 @@ jobs:
      uses: actions/upload-artifact@v3
      with:
       name: Angular-UI
-      path: dist
+      path: ./UI/dist/ui
 
  deploy-backend:
   runs-on: windows-latest
