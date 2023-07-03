@@ -5,8 +5,7 @@ on:
   branches:
    - master
  workflow_dispatch:
-  
-   
+    
 jobs:
  backend-build:
   runs-on: windows-latest
@@ -16,7 +15,7 @@ jobs:
     
   steps:
    - name: Checkout .NET
-   - uses: actions/checkot@v3
+     uses: actions/checkot@v3
    
    - name: Set up .NET
      uses: actions/setup-dotnet@v3
