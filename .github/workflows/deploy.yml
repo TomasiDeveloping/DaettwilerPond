@@ -21,18 +21,19 @@ jobs:
      uses: actions/setup-dotnet@v3
      with:
       dotnet-version: '7.x'
+      include-prerelease: true
       
    - name: Build .NET
      run: dotnet build --configuration Release
      
    - name: Publish .NET
-     run: dotnet publish -c Release -property:PublishDir=${{env.DOTNET_ROOT}}/myapp
+     run: dotnet publish -c Release -o "${{env.GITHUB_WORKSPACE}}\myapp"
      
    - name: Upload .NET artifact
      uses: actions/upload-artifact@v3
      with:
       name: .NET-Api
-      path: ${{env.DOTNET_ROOT}}/myapp
+      path: ${{env.GITHUB_WORKSPACE}}\myapp
       
 
  frontend-build:
