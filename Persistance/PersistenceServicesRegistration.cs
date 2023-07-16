@@ -19,7 +19,7 @@ public static class PersistenceServicesRegistration
             options.UseSqlServer(configuration.GetConnectionString("DaettwilerPondConnection"));
         });
 
-        services.AddIdentity<User, UserRole>(options =>
+        services.AddIdentityCore<User>(options =>
             {
                 options.Password.RequiredLength = 7;
 
@@ -28,14 +28,11 @@ public static class PersistenceServicesRegistration
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.Lockout.AllowedForNewUsers = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            })
-            .AddEntityFrameworkStores<DaettwilerPondDbContext>()
-            .AddDefaultTokenProviders();
 
-        services.Configure<DataProtectionTokenProviderOptions>(options =>
-        {
-            options.TokenLifespan = TimeSpan.FromHours(5);
-        });
+            })
+            .AddRoles<UserRole>()
+            .AddTokenProvider<EmailTokenProvider<User>>(TokenOptions.DefaultProvider)
+            .AddEntityFrameworkStores<DaettwilerPondDbContext>();
 
         services.AddScoped<ILsn50V2d20Logic, Lsn50V2d20Logic>();
         services.AddScoped<ISensorRepository, SensorRepository>();
