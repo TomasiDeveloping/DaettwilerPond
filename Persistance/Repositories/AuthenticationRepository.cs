@@ -5,7 +5,7 @@ using Application.Models;
 using AutoMapper;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.WebUtilities;
+using Persistence.Helpers;
 
 namespace Persistence.Repositories;
 
@@ -99,14 +99,12 @@ public class AuthenticationRepository : IAuthenticationRepository
                 ErrorMessage = "Invalid Request"
             };
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-        var param = new Dictionary<string, string>
-        {
-            {"token", token},
-            {"email", forgotPasswordDto.Email}
-        };
-        var callback = QueryHelpers.AddQueryString(forgotPasswordDto.ClientUri, param);
+
+        var callback = new Uri(forgotPasswordDto.ClientUri)
+            .AddQuery("token", token)
+            .AddQuery("email", forgotPasswordDto.Email);
         var message = new EmailMessage(new[] {user.Email}, "Passwort zurücksetzen",
-            PasswordResetMessage(user, callback));
+            PasswordResetMessage(user, callback.ToString()));
 
         await _emailService.SendEmailAsync(message);
         return new ForgotPasswordResponseDto
@@ -153,4 +151,6 @@ public class AuthenticationRepository : IAuthenticationRepository
                "<p> Dieser Link zum Zurücksetzen des Passworts ist nur für die nächsten <b>2 Stunden gültig</b>.</p>" +
                "<p>Vielen Dank, das Dättwiler-Weiher Portal</p>";
     }
+
+  
 }

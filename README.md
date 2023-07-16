@@ -20,6 +20,10 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.10.4 (2023-07-16)
+- Fix CVE-2022-34716
+- Update NuGet packages
+- Bug Fix Reset Password
 ### 1.10.3 (2023-07-02)
 - CleanUp
 - Refactoring
