@@ -20,6 +20,8 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.10.5 (2023-07-25)
+- Fix Akenza Payload
 ### 1.10.4 (2023-07-16)
 - Fix CVE-2022-34716
 - Update NuGet packages

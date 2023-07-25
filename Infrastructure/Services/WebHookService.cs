@@ -39,10 +39,13 @@ public class WebHookService : IWebHookService
                                                                          throw new InvalidOperationException());
                 await _lsn50V2d20Logic.HandleLifecycleAsync(lifecycle, sensor.Id);
                 break;
-            case "ds":
+            case "default":
                 var payload = JsonConvert.DeserializeObject<Payload>(jObject.SelectToken("data")?.ToString() ??
                                                                      throw new InvalidOperationException());
                 await _lsn50V2d20Logic.HandleDataPayloadAsync(payload, sensor.Id);
+                break;
+            case "ds":
+                _logger.LogInformation("ds Payload received");
                 break;
             default:
                 _logger.LogWarning($"Unsupported topic: {topic}");
