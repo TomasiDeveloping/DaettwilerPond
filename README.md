@@ -20,6 +20,10 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.11.0 (2023-11-25)
+- Update Backend to .NET 8
+- Refactoring
+- Security Fix
 ### 1.10.5 (2023-07-25)
 - Fix Akenza Payload
 ### 1.10.4 (2023-07-16)
