@@ -2,7 +2,7 @@
 <div class="d-flex justify-content-end">
   <button (click)="onAddUser()" class="btn btn-primary mb-3">Mitglied hinzufügen</button>
 </div>
-<ejs-grid (recordDoubleClick)="onEdit($event)"
+<ejs-grid  (recordDoubleClick)="onEdit($event)"
           *ngIf="users.length > 0"
           [allowPaging]="true"
           [allowResizing]="true"
