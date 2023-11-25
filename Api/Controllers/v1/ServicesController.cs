@@ -20,8 +20,8 @@ public class ServicesController(IPdfService pdfService, ILogger<ServicesControll
         {
             var memberDocument = await pdfService.CreateMemberPdfAsync();
             const string fileName = "Mitglieder_Fischerclub_Daettwiler_Weiher.pdf";
-            Response.Headers.Add("x-file-name", fileName);
-            Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
+            Response.Headers.Append("x-file-name", fileName);
+            Response.Headers.Append("Access-Control-Expose-Headers", "x-file-name");
             return File(memberDocument, "application/pdf", fileName);
         }
         catch (Exception e)
@@ -39,8 +39,8 @@ public class ServicesController(IPdfService pdfService, ILogger<ServicesControll
         {
             var fishingRuleDocument = await pdfService.CreateFishingRulesPdfAsync();
             const string fileName = "Vorschriften.pdf";
-            Response.Headers.Add("x-file-name", fileName);
-            Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
+            Response.Headers.Append("x-file-name", fileName);
+            Response.Headers.Append("Access-Control-Expose-Headers", "x-file-name");
             return File(fishingRuleDocument, "application/pdf", fileName);
         }
         catch (Exception e)
@@ -58,8 +58,8 @@ public class ServicesController(IPdfService pdfService, ILogger<ServicesControll
         {
             var fishOpenSeasonDocument = await pdfService.CreateFishOpenSeasonPdfAsync();
             const string fileName = "Schonmass_und_Schonzeiten.pdf";
-            Response.Headers.Add("x-file-name", fileName);
-            Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
+            Response.Headers.Append("x-file-name", fileName);
+            Response.Headers.Append("Access-Control-Expose-Headers", "x-file-name");
             return File(fishOpenSeasonDocument, "application/pdf", fileName);
         }
         catch (Exception e)
@@ -94,8 +94,8 @@ public class ServicesController(IPdfService pdfService, ILogger<ServicesControll
         {
             var fishingLicenseInvoice = await pdfService.GetUserFishingLicenseInvoiceAsync(fishingLicenseId);
             const string fileName = "Rechnung_Fischerkarte.pdf";
-            Response.Headers.Add("x-file-name", fileName);
-            Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
+            Response.Headers.Append("x-file-name", fileName);
+            Response.Headers.Append("Access-Control-Expose-Headers", "x-file-name");
             return File(fishingLicenseInvoice, "application/pdf", fileName);
         }
         catch (Exception e)
