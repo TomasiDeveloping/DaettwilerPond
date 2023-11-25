@@ -30,7 +30,7 @@
     "highcharts": "^11.2.0",
     "highcharts-angular": "^4.0.0",
     "moment": "^2.29.4",
-    "ngx-mask": "^16.1.5",
+    "ngx-mask": "^17.0.0",
     "ngx-scrolltop": "^6.0.0",
     "ngx-spinner": "^16.0.2",
     "ngx-toastr": "^18.0.0",
