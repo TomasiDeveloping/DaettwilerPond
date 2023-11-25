@@ -5,17 +5,8 @@ using QuestPDF.Infrastructure;
 
 namespace Infrastructure.Documents;
 
-public class FishingLicenseBillDocument : IDocument
+public class FishingLicenseBillDocument(byte[] qrBill, FishingLicenseBill fishingLicenseBill) : IDocument
 {
-    private readonly FishingLicenseBill _fishingLicenseBill;
-    private readonly byte[] _qrBill;
-
-    public FishingLicenseBillDocument(byte[] qrBill, FishingLicenseBill fishingLicenseBill)
-    {
-        _qrBill = qrBill;
-        _fishingLicenseBill = fishingLicenseBill;
-    }
-
     public void Compose(IDocumentContainer container)
     {
         container.Page(page =>
@@ -25,7 +16,7 @@ public class FishingLicenseBillDocument : IDocument
 
             page.Header().PaddingTop(50).PaddingLeft(50).PaddingRight(50).Element(ComposeHeader);
             page.Content().PaddingLeft(50).PaddingRight(50).Element(ComposeContent);
-            page.Footer().Image(_qrBill);
+            page.Footer().Image(qrBill);
         });
     }
 
@@ -35,18 +26,18 @@ public class FishingLicenseBillDocument : IDocument
         {
             row.RelativeItem().Column(column =>
             {
-                column.Item().Text($"Rechnung Fischerkarte {_fishingLicenseBill.LicenseYear}").FontSize(20).SemiBold()
+                column.Item().Text($"Rechnung Fischerkarte {fishingLicenseBill.LicenseYear}").FontSize(20).SemiBold()
                     .FontColor(Colors.Blue.Medium);
 
                 column.Item().Text(text =>
                 {
                     text.Span("Rechnungsdatum: ").SemiBold();
-                    text.Span($"{_fishingLicenseBill.InvoiceDate:dd.MM.yyyy}");
+                    text.Span($"{fishingLicenseBill.InvoiceDate:dd.MM.yyyy}");
                 });
                 column.Item().Text(text =>
                 {
                     text.Span("Zahlbar bis: ").SemiBold();
-                    text.Span($"{_fishingLicenseBill.InvoiceDate.AddDays(30):dd.MM.yyyy}");
+                    text.Span($"{fishingLicenseBill.InvoiceDate.AddDays(30):dd.MM.yyyy}");
                 });
             });
         });
@@ -67,7 +58,7 @@ public class FishingLicenseBillDocument : IDocument
 
             column.Item().PaddingTop(20).Element(ComposeTable);
 
-            column.Item().AlignRight().Text($"Rechnungsbetrag: CHF {_fishingLicenseBill.Amount:##.00}").FontSize(14);
+            column.Item().AlignRight().Text($"Rechnungsbetrag: CHF {fishingLicenseBill.Amount:##.00}").FontSize(14);
 
             column.Item().PaddingTop(25).Element(ComposeComments);
         });
@@ -113,10 +104,10 @@ public class FishingLicenseBillDocument : IDocument
             });
 
             table.Cell().Element(CellStyle).Text("1");
-            table.Cell().Element(CellStyle).Text($"Fischerkarte {_fishingLicenseBill.LicenseYear}");
+            table.Cell().Element(CellStyle).Text($"Fischerkarte {fishingLicenseBill.LicenseYear}");
             table.Cell().Element(CellStyle).AlignRight().Text("1");
-            table.Cell().Element(CellStyle).AlignRight().Text(_fishingLicenseBill.Amount.ToString("##.00"));
-            table.Cell().Element(CellStyle).AlignRight().Text(_fishingLicenseBill.Amount.ToString("##.00"));
+            table.Cell().Element(CellStyle).AlignRight().Text(fishingLicenseBill.Amount.ToString("##.00"));
+            table.Cell().Element(CellStyle).AlignRight().Text(fishingLicenseBill.Amount.ToString("##.00"));
 
             static IContainer CellStyle(IContainer container)
             {
@@ -133,10 +124,10 @@ public class FishingLicenseBillDocument : IDocument
 
             column.Item().BorderBottom(1).PaddingBottom(5).Text("VON").SemiBold();
 
-            column.Item().Text(_fishingLicenseBill.FishingClubName);
-            column.Item().Text(_fishingLicenseBill.CreditorName);
-            column.Item().Text(_fishingLicenseBill.CreditorAddress);
-            column.Item().Text(_fishingLicenseBill.CreditorCity);
+            column.Item().Text(fishingLicenseBill.FishingClubName);
+            column.Item().Text(fishingLicenseBill.CreditorName);
+            column.Item().Text(fishingLicenseBill.CreditorAddress);
+            column.Item().Text(fishingLicenseBill.CreditorCity);
         });
     }
 
@@ -148,9 +139,9 @@ public class FishingLicenseBillDocument : IDocument
 
             column.Item().BorderBottom(1).PaddingBottom(5).Text("AN").SemiBold();
 
-            column.Item().Text(_fishingLicenseBill.DebtorName);
-            column.Item().Text(_fishingLicenseBill.DebtorAddress);
-            column.Item().Text(_fishingLicenseBill.DebtorCity);
+            column.Item().Text(fishingLicenseBill.DebtorName);
+            column.Item().Text(fishingLicenseBill.DebtorAddress);
+            column.Item().Text(fishingLicenseBill.DebtorCity);
         });
     }
 }
