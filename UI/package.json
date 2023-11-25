@@ -22,7 +22,7 @@
     "@angular/router": "^17.0.4",
     "@auth0/angular-jwt": "^5.2.0",
     "@popperjs/core": "^2.11.8",
-    "@syncfusion/ej2-angular-grids": "^21.2.10",
+    "@syncfusion/ej2-angular-grids": "^23.2.4",
     "@syncfusion/ej2-material-theme": "~21.2.10",
     "bootstrap": "^5.3.0",
     "bootstrap-icons": "^1.10.5",
