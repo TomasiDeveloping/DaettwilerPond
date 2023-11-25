@@ -9,23 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repositories;
 
-public class UserRepository : IUserRepository
+public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, UserManager<User> userManager) : IUserRepository
 {
-    private readonly DaettwilerPondDbContext _context;
-    private readonly IMapper _mapper;
-    private readonly UserManager<User> _userManager;
-
-    public UserRepository(DaettwilerPondDbContext context, IMapper mapper, UserManager<User> userManager)
-    {
-        _context = context;
-        _mapper = mapper;
-        _userManager = userManager;
-    }
-
     public async Task<List<UserDto>> GetUsersAsync()
     {
-        var users = await _context.Users
-            .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+        var users = await context.Users
+            .ProjectTo<UserDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .ToListAsync();
         return users;
@@ -33,8 +22,8 @@ public class UserRepository : IUserRepository
 
     public async Task<UserDto> GetUserByEmail(string userEmail)
     {
-        var user = await _context.Users
-            .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+        var user = await context.Users
+            .ProjectTo<UserDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .FirstOrDefaultAsync(u => u.Email == userEmail);
         return user;
@@ -42,13 +31,13 @@ public class UserRepository : IUserRepository
 
     public async Task<List<UserWithAddressDto>> GetUsersWithAddressesAsync()
     {
-        var users = await _context.Users.AsNoTracking().OrderBy(u => u.LastName).ToListAsync();
+        var users = await context.Users.AsNoTracking().OrderBy(u => u.LastName).ToListAsync();
         var usersWithAddresses = new List<UserWithAddressDto>();
         foreach (var user in users.Where(user =>
                      !user.FirstName.Equals("System") || !user.LastName.Equals("Administrator")))
         {
-            var role = await _userManager.GetRolesAsync(user);
-            var address = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(a => a.UserId == user.Id);
+            var role = await userManager.GetRolesAsync(user);
+            var address = await context.Addresses.AsNoTracking().FirstOrDefaultAsync(a => a.UserId == user.Id);
             usersWithAddresses.Add(new UserWithAddressDto
             {
                 UserId = user.Id,
@@ -57,7 +46,7 @@ public class UserRepository : IUserRepository
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Role = role.FirstOrDefault(),
-                Address = _mapper.Map<AddressDto>(address)
+                Address = mapper.Map<AddressDto>(address)
             });
         }
 
@@ -66,33 +55,33 @@ public class UserRepository : IUserRepository
 
     public async Task<UserWithAddressDto> GetUserWithAddressByUserId(Guid userId)
     {
-        var userWithAddress = await _context.Users
-            .ProjectTo<UserWithAddressDto>(_mapper.ConfigurationProvider)
+        var userWithAddress = await context.Users
+            .ProjectTo<UserWithAddressDto>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(u => u.UserId == userId);
         return userWithAddress;
     }
 
     public async Task<UserDto> UpdateUserAsync(Guid userId, UserDto userDto)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
         if (user == null) return null;
-        _mapper.Map(userDto, user);
-        await _context.SaveChangesAsync();
+        mapper.Map(userDto, user);
+        await context.SaveChangesAsync();
         return await GetUserByIdAsync(userId);
     }
 
     public async Task<UserWithAddressDto> UpdateUserWithAddressAsync(UserWithAddressDto userWithAddressDto)
     {
-        var user = await _context.Users
+        var user = await context.Users
             .Include(u => u.Addresses)
             .FirstOrDefaultAsync(u => u.Id == userWithAddressDto.UserId);
         if (user == null) return null;
-        _mapper.Map(userWithAddressDto, user);
-        var currentRoles = await _userManager.GetRolesAsync(user);
+        mapper.Map(userWithAddressDto, user);
+        var currentRoles = await userManager.GetRolesAsync(user);
         if (currentRoles.FirstOrDefault() != userWithAddressDto.Role)
         {
-            await _userManager.RemoveFromRoleAsync(user, currentRoles.FirstOrDefault() ?? string.Empty);
-            await _userManager.AddToRoleAsync(user, userWithAddressDto.Role);
+            await userManager.RemoveFromRoleAsync(user, currentRoles.FirstOrDefault() ?? string.Empty);
+            await userManager.AddToRoleAsync(user, userWithAddressDto.Role);
         }
 
         var address = user.Addresses.FirstOrDefault() ?? new Address();
@@ -103,14 +92,14 @@ public class UserRepository : IUserRepository
         address.Phone = userWithAddressDto.Address.Phone;
         address.PostalCode = userWithAddressDto.Address.PostalCode;
         address.Street = userWithAddressDto.Address.Street;
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return userWithAddressDto;
     }
 
     public async Task<UserDto> GetUserByIdAsync(Guid userId)
     {
-        var user = await _context.Users
-            .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+        var user = await context.Users
+            .ProjectTo<UserDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .FirstOrDefaultAsync(u => u.Id == userId);
         return user;
@@ -118,7 +107,7 @@ public class UserRepository : IUserRepository
 
     public async Task<ChangePasswordResponseDto> ChangeUserPassword(ChangePasswordDto changePasswordDto)
     {
-        var user = await _userManager.FindByIdAsync(changePasswordDto.UserId.ToString());
+        var user = await userManager.FindByIdAsync(changePasswordDto.UserId.ToString());
         if (user == null)
             return new ChangePasswordResponseDto
             {
@@ -126,7 +115,7 @@ public class UserRepository : IUserRepository
                 ErrorMessage = "Passwort konnte nicht geändert werden"
             };
 
-        var checkPassword = await _userManager.CheckPasswordAsync(user, changePasswordDto.CurrentPassword);
+        var checkPassword = await userManager.CheckPasswordAsync(user, changePasswordDto.CurrentPassword);
         if (!checkPassword)
             return new ChangePasswordResponseDto
             {
@@ -135,7 +124,7 @@ public class UserRepository : IUserRepository
             };
 
         var checkChangePassword =
-            await _userManager.ChangePasswordAsync(user, changePasswordDto.CurrentPassword, changePasswordDto.Password);
+            await userManager.ChangePasswordAsync(user, changePasswordDto.CurrentPassword, changePasswordDto.Password);
         if (checkChangePassword.Succeeded)
             return new ChangePasswordResponseDto
             {
@@ -152,12 +141,12 @@ public class UserRepository : IUserRepository
 
     public async Task<bool> DeleteUserAsync(Guid userId)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
         if (user == null) return false;
-        var addresses = await _context.Addresses.Where(a => a.UserId == userId).ToListAsync();
-        if (addresses.Any()) _context.Addresses.RemoveRange(addresses);
-        _context.Users.Remove(user);
-        await _context.SaveChangesAsync();
+        var addresses = await context.Addresses.Where(a => a.UserId == userId).ToListAsync();
+        if (addresses.Any()) context.Addresses.RemoveRange(addresses);
+        context.Users.Remove(user);
+        await context.SaveChangesAsync();
         return true;
     }
 }

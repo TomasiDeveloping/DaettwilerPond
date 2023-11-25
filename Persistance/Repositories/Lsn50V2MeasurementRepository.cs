@@ -7,21 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repositories;
 
-public class Lsn50V2MeasurementRepository : ILsn50V2MeasurementRepository
+public class Lsn50V2MeasurementRepository(DaettwilerPondDbContext context, IMapper mapper) : ILsn50V2MeasurementRepository
 {
-    private readonly DaettwilerPondDbContext _context;
-    private readonly IMapper _mapper;
-
-    public Lsn50V2MeasurementRepository(DaettwilerPondDbContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
-
     public async Task<List<Lsn50V2MeasurementDto>> GetLsn50V2MeasurementsAsync()
     {
-        var measurements = await _context.Lsn50V2Measurements
-            .ProjectTo<Lsn50V2MeasurementDto>(_mapper.ConfigurationProvider)
+        var measurements = await context.Lsn50V2Measurements
+            .ProjectTo<Lsn50V2MeasurementDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .ToListAsync();
         return measurements;
@@ -29,8 +20,8 @@ public class Lsn50V2MeasurementRepository : ILsn50V2MeasurementRepository
 
     public async Task<List<Lsn50V2MeasurementDto>> GetLsn50V2MeasurementsBySensorIdAsync(Guid sensorId)
     {
-        var measurements = await _context.Lsn50V2Measurements
-            .ProjectTo<Lsn50V2MeasurementDto>(_mapper.ConfigurationProvider)
+        var measurements = await context.Lsn50V2Measurements
+            .ProjectTo<Lsn50V2MeasurementDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .Where(l => l.SensorId == sensorId)
             .ToListAsync();
@@ -39,8 +30,8 @@ public class Lsn50V2MeasurementRepository : ILsn50V2MeasurementRepository
 
     public async Task<Lsn50V2MeasurementDto> GetLsn50V2MeasurementByIdAsync(Guid measurementId)
     {
-        var measurement = await _context.Lsn50V2Measurements
-            .ProjectTo<Lsn50V2MeasurementDto>(_mapper.ConfigurationProvider)
+        var measurement = await context.Lsn50V2Measurements
+            .ProjectTo<Lsn50V2MeasurementDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .FirstOrDefaultAsync(l => l.Id == measurementId);
         return measurement;
@@ -48,9 +39,9 @@ public class Lsn50V2MeasurementRepository : ILsn50V2MeasurementRepository
 
     public async Task<Lsn50V2TemperatureMeasurementDto> GetLatestMeasurementAsync()
     {
-        var temperatureMeasurement = await _context.Lsn50V2Measurements
+        var temperatureMeasurement = await context.Lsn50V2Measurements
             .OrderByDescending(l => l.ReceivedAt)
-            .ProjectTo<Lsn50V2TemperatureMeasurementDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<Lsn50V2TemperatureMeasurementDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .FirstOrDefaultAsync();
         return temperatureMeasurement;
@@ -59,10 +50,10 @@ public class Lsn50V2MeasurementRepository : ILsn50V2MeasurementRepository
     public async Task<List<Lsn50V2TemperatureMeasurementDto>> GetTemperatureMeasurementsByDays(int includeDays)
     {
         var filterDate = DateTime.Today.AddDays(-includeDays);
-        var temperatureMeasurements = await _context.Lsn50V2Measurements
+        var temperatureMeasurements = await context.Lsn50V2Measurements
             .Where(l => l.ReceivedAt >= filterDate)
             .OrderBy(l => l.ReceivedAt)
-            .ProjectTo<Lsn50V2TemperatureMeasurementDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<Lsn50V2TemperatureMeasurementDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .ToListAsync();
         return temperatureMeasurements;
@@ -71,9 +62,9 @@ public class Lsn50V2MeasurementRepository : ILsn50V2MeasurementRepository
     public async Task<Lsn50V2MeasurementDto> CreateLsn50V2MeasurementAsync(
         CreateLsn50V2MeasurementDto createLsn50V2MeasurementDto)
     {
-        var measurement = _mapper.Map<Lsn50V2Measurement>(createLsn50V2MeasurementDto);
-        await _context.AddAsync(measurement);
-        await _context.SaveChangesAsync();
-        return _mapper.Map<Lsn50V2MeasurementDto>(measurement);
+        var measurement = mapper.Map<Lsn50V2Measurement>(createLsn50V2MeasurementDto);
+        await context.AddAsync(measurement);
+        await context.SaveChangesAsync();
+        return mapper.Map<Lsn50V2MeasurementDto>(measurement);
     }
 }

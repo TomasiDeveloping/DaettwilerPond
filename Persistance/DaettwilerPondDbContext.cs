@@ -8,16 +8,9 @@ using Persistence.DataSeeding;
 
 namespace Persistence;
 
-public class DaettwilerPondDbContext : IdentityDbContext<User, UserRole, Guid, IdentityUserClaim<Guid>,
-    IdentityUserRole<Guid>, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
+public class DaettwilerPondDbContext(DbContextOptions options, IConfiguration configuration) : IdentityDbContext<User, UserRole, Guid, IdentityUserClaim<Guid>,
+    IdentityUserRole<Guid>, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>(options)
 {
-    private readonly IConfiguration _configuration;
-
-    public DaettwilerPondDbContext(DbContextOptions options, IConfiguration configuration) : base(options)
-    {
-        _configuration = configuration;
-    }
-
     public DbSet<Lsn50V2Lifecycle> Lsn50V2Lifecycles { get; set; }
     public DbSet<Lsn50V2Measurement> Lsn50V2Measurements { get; set; }
     public DbSet<Sensor> Sensors { get; set; }
@@ -35,6 +28,6 @@ public class DaettwilerPondDbContext : IdentityDbContext<User, UserRole, Guid, I
 
         // Seeding Data
         AddRoles.SeedRoles(modelBuilder);
-        AddSystemAdministrator.SeedSystemAdministrator(modelBuilder, _configuration.GetSection("SystemAdministrator"));
+        AddSystemAdministrator.SeedSystemAdministrator(modelBuilder, configuration.GetSection("SystemAdministrator"));
     }
 }
