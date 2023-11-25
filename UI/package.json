@@ -20,7 +20,7 @@
     "@angular/platform-browser": "^17.0.4",
     "@angular/platform-browser-dynamic": "^17.0.4",
     "@angular/router": "^17.0.4",
-    "@auth0/angular-jwt": "^5.1.2",
+    "@auth0/angular-jwt": "^5.2.0",
     "@popperjs/core": "^2.11.8",
     "@syncfusion/ej2-angular-grids": "^21.2.10",
     "@syncfusion/ej2-material-theme": "~21.2.10",
