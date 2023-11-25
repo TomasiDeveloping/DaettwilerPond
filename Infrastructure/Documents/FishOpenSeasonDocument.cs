@@ -5,15 +5,8 @@ using QuestPDF.Infrastructure;
 
 namespace Infrastructure.Documents;
 
-public class FishOpenSeasonDocument : IDocument
+public class FishOpenSeasonDocument(List<FishTypeDto> fishTypes) : IDocument
 {
-    private readonly List<FishTypeDto> _fishTypes;
-
-    public FishOpenSeasonDocument(List<FishTypeDto> fishTypes)
-    {
-        _fishTypes = fishTypes;
-    }
-
     private static TextStyle TableHeaderTextStyle => TextStyle
         .Default
         .FontSize(14)
@@ -57,7 +50,7 @@ public class FishOpenSeasonDocument : IDocument
                 return container.Border(1).Background(Colors.Grey.Lighten3).Padding(1).AlignCenter();
             }
 
-            foreach (var fishType in _fishTypes)
+            foreach (var fishType in fishTypes)
             {
                 table.Cell().Element(TableBodyStyle).Text(fishType.Name).Style(TableBodyTextStyle);
                 table.Cell().Element(TableBodyStyle).Text($"{fishType.MinimumSize} cm").Style(TableBodyTextStyle);

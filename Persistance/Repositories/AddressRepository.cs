@@ -7,21 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repositories;
 
-public class AddressRepository : IAddressRepository
+public class AddressRepository(DaettwilerPondDbContext context, IMapper mapper) : IAddressRepository
 {
-    private readonly DaettwilerPondDbContext _context;
-    private readonly IMapper _mapper;
-
-    public AddressRepository(DaettwilerPondDbContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
-
     public async Task<List<AddressDto>> GetAddressesAsync()
     {
-        var addresses = await _context.Addresses
-            .ProjectTo<AddressDto>(_mapper.ConfigurationProvider)
+        var addresses = await context.Addresses
+            .ProjectTo<AddressDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .ToListAsync();
         return addresses;
@@ -29,8 +20,8 @@ public class AddressRepository : IAddressRepository
 
     public async Task<List<AddressDto>> GetUserAddressesAsync(Guid userId)
     {
-        var userAddresses = await _context.Addresses
-            .ProjectTo<AddressDto>(_mapper.ConfigurationProvider)
+        var userAddresses = await context.Addresses
+            .ProjectTo<AddressDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .Where(a => a.UserId == userId)
             .ToListAsync();
@@ -39,8 +30,8 @@ public class AddressRepository : IAddressRepository
 
     public async Task<AddressDto> GetAddressAsync(Guid addressId)
     {
-        var address = await _context.Addresses
-            .ProjectTo<AddressDto>(_mapper.ConfigurationProvider)
+        var address = await context.Addresses
+            .ProjectTo<AddressDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .FirstOrDefaultAsync(a => a.Id == addressId);
         return address;
@@ -48,28 +39,28 @@ public class AddressRepository : IAddressRepository
 
     public async Task<AddressDto> CreateAddressAsync(AddressDto addressDto)
     {
-        var address = _mapper.Map<Address>(addressDto);
+        var address = mapper.Map<Address>(addressDto);
         address.Id = Guid.NewGuid();
-        await _context.Addresses.AddAsync(address);
-        await _context.SaveChangesAsync();
-        return _mapper.Map<AddressDto>(address);
+        await context.Addresses.AddAsync(address);
+        await context.SaveChangesAsync();
+        return mapper.Map<AddressDto>(address);
     }
 
     public async Task<AddressDto> UpdateAddressAsync(Guid addressId, AddressDto addressDto)
     {
-        var address = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == addressId);
+        var address = await context.Addresses.FirstOrDefaultAsync(a => a.Id == addressId);
         if (address == null) return null;
-        _mapper.Map(addressDto, address);
-        await _context.SaveChangesAsync();
-        return _mapper.Map<AddressDto>(address);
+        mapper.Map(addressDto, address);
+        await context.SaveChangesAsync();
+        return mapper.Map<AddressDto>(address);
     }
 
     public async Task<bool> DeleteAddressAsync(Guid addressId)
     {
-        var address = await _context.Addresses.FirstOrDefaultAsync(a => a.Id == addressId);
+        var address = await context.Addresses.FirstOrDefaultAsync(a => a.Id == addressId);
         if (address == null) return false;
-        _context.Addresses.Remove(address);
-        await _context.SaveChangesAsync();
+        context.Addresses.Remove(address);
+        await context.SaveChangesAsync();
         return true;
     }
 }

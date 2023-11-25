@@ -8,16 +8,9 @@ using MimeKit.Text;
 
 namespace Infrastructure.Services;
 
-public class EmailService : IEmailService
+public class EmailService(IOptions<EmailConfiguration> emailConfiguration, ILogger<EmailService> logger) : IEmailService
 {
-    private readonly EmailConfiguration _emailConfiguration;
-    private readonly ILogger<EmailService> _logger;
-
-    public EmailService(IOptions<EmailConfiguration> emailConfiguration, ILogger<EmailService> logger)
-    {
-        _emailConfiguration = emailConfiguration.Value;
-        _logger = logger;
-    }
+    private readonly EmailConfiguration _emailConfiguration = emailConfiguration.Value;
 
     public async Task<bool> SendEmailAsync(EmailMessage message)
     {
@@ -54,7 +47,7 @@ public class EmailService : IEmailService
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return false;
         }
         finally

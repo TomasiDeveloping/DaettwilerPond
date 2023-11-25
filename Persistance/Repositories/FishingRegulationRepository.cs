@@ -7,21 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repositories;
 
-public class FishingRegulationRepository : IFishingRegulationRepository
+public class FishingRegulationRepository(DaettwilerPondDbContext context, IMapper mapper) : IFishingRegulationRepository
 {
-    private readonly DaettwilerPondDbContext _context;
-    private readonly IMapper _mapper;
-
-    public FishingRegulationRepository(DaettwilerPondDbContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
-
     public async Task<List<FishingRegulationDto>> GetFishingRegulationsAsync()
     {
-        var fishingRegulations = await _context.FishingRegulations
-            .ProjectTo<FishingRegulationDto>(_mapper.ConfigurationProvider)
+        var fishingRegulations = await context.FishingRegulations
+            .ProjectTo<FishingRegulationDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .ToListAsync();
         return fishingRegulations;
@@ -29,30 +20,30 @@ public class FishingRegulationRepository : IFishingRegulationRepository
 
     public async Task<FishingRegulationDto> CreateFishingRegulationAsync(CreateFishingRegulationDto createFishingRegulationDto)
     {
-        var fishingRegulation = _mapper.Map<FishingRegulation>(createFishingRegulationDto);
-        await _context.FishingRegulations.AddAsync(fishingRegulation);
-        await _context.SaveChangesAsync();
-        return _mapper.Map<FishingRegulationDto>(fishingRegulation);
+        var fishingRegulation = mapper.Map<FishingRegulation>(createFishingRegulationDto);
+        await context.FishingRegulations.AddAsync(fishingRegulation);
+        await context.SaveChangesAsync();
+        return mapper.Map<FishingRegulationDto>(fishingRegulation);
     }
 
     public async Task<FishingRegulationDto> UpdateFishingRegulationAsync(Guid fishingRegulationId,
         FishingRegulationDto fishingRegulationDto)
     {
         var fishingRegulation =
-            await _context.FishingRegulations.FirstOrDefaultAsync(fr => fr.Id == fishingRegulationId);
+            await context.FishingRegulations.FirstOrDefaultAsync(fr => fr.Id == fishingRegulationId);
         if (fishingRegulation == null) return null;
-        _mapper.Map(fishingRegulationDto, fishingRegulation);
-        await _context.SaveChangesAsync();
-        return _mapper.Map<FishingRegulationDto>(fishingRegulation);
+        mapper.Map(fishingRegulationDto, fishingRegulation);
+        await context.SaveChangesAsync();
+        return mapper.Map<FishingRegulationDto>(fishingRegulation);
     }
 
     public async Task<bool> DeleteFishingRegulationAsync(Guid fishingRegulationId)
     {
         var fishingRegulation =
-            await _context.FishingRegulations.FirstOrDefaultAsync(fr => fr.Id == fishingRegulationId);
+            await context.FishingRegulations.FirstOrDefaultAsync(fr => fr.Id == fishingRegulationId);
         if (fishingRegulation == null) return false;
-        _context.FishingRegulations.Remove(fishingRegulation);
-        await _context.SaveChangesAsync();
+        context.FishingRegulations.Remove(fishingRegulation);
+        await context.SaveChangesAsync();
         return true;
     }
 }

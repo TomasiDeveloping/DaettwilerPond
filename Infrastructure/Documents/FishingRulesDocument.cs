@@ -5,15 +5,8 @@ using QuestPDF.Infrastructure;
 
 namespace Infrastructure.Documents;
 
-public class FishingRulesDocument : IDocument
+public class FishingRulesDocument(List<FishingRegulationDto> fishingRegulations) : IDocument
 {
-    private readonly List<FishingRegulationDto> _fishingRegulations;
-
-    public FishingRulesDocument(List<FishingRegulationDto> fishingRegulations)
-    {
-        _fishingRegulations = fishingRegulations;
-    }
-
     public void Compose(IDocumentContainer container)
     {
         container.Page(page =>
@@ -36,7 +29,7 @@ public class FishingRulesDocument : IDocument
         container.Column(column =>
         {
             var index = 1;
-            foreach (var rule in _fishingRegulations)
+            foreach (var rule in fishingRegulations)
                 column.Item().Row(row =>
                 {
                     row.AutoItem().PaddingLeft(20).Text($"{index}. ").Bold();

@@ -6,15 +6,8 @@ using QuestPDF.Infrastructure;
 
 namespace Infrastructure.Documents;
 
-public class MemberDocument : IDocument
+public class MemberDocument(List<UserWithAddressDto> usersWithAddresses) : IDocument
 {
-    private readonly List<UserWithAddressDto> _usersWithAddresses;
-
-    public MemberDocument(List<UserWithAddressDto> usersWithAddresses)
-    {
-        _usersWithAddresses = usersWithAddresses;
-    }
-
     private static TextStyle TableBodyTextStyle => TextStyle
         .Default
         .FontSize(11);
@@ -88,7 +81,7 @@ public class MemberDocument : IDocument
                 }
             });
             // Create Table Body Content
-            foreach (var user in _usersWithAddresses)
+            foreach (var user in usersWithAddresses)
             {
                 // LastName
                 table.Cell().Element(TableBodyStyle).Text(user.LastName).Style(TableBodyTextStyle);

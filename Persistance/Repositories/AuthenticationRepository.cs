@@ -9,28 +9,13 @@ using Persistence.Helpers;
 
 namespace Persistence.Repositories;
 
-public class AuthenticationRepository : IAuthenticationRepository
+public class AuthenticationRepository(UserManager<User> userManager, IJwtService jwtService, IMapper mapper, DaettwilerPondDbContext context,
+    IEmailService emailService) : IAuthenticationRepository
 {
-    private readonly IEmailService _emailService;
-    private readonly IJwtService _jwtService;
-    private readonly IMapper _mapper;
-    private readonly DaettwilerPondDbContext _context;
-    private readonly UserManager<User> _userManager;
-
-    public AuthenticationRepository(UserManager<User> userManager, IJwtService jwtService, IMapper mapper, DaettwilerPondDbContext context,
-        IEmailService emailService)
-    {
-        _userManager = userManager;
-        _jwtService = jwtService;
-        _mapper = mapper;
-        _context = context;
-        _emailService = emailService;
-    }
-
     public async Task<RegistrationResponseDto> Register(RegistrationDto registrationDto)
     {
-        var user = _mapper.Map<User>(registrationDto);
-        var result = await _userManager.CreateAsync(user, $"Welcome${DateTime.Now.Year}");
+        var user = mapper.Map<User>(registrationDto);
+        var result = await userManager.CreateAsync(user, $"Welcome${DateTime.Now.Year}");
         if (!result.Succeeded)
         {
             var errors = result.Errors.Select(e => e.Description);
@@ -41,11 +26,11 @@ public class AuthenticationRepository : IAuthenticationRepository
             };
         }
 
-        var address = _mapper.Map<Address>(registrationDto.Address);
+        var address = mapper.Map<Address>(registrationDto.Address);
         address.UserId = user.Id;
-        await _context.Addresses.AddAsync(address);
-        await _context.SaveChangesAsync();
-        var roleResult = await _userManager.AddToRoleAsync(user, registrationDto.Role);
+        await context.Addresses.AddAsync(address);
+        await context.SaveChangesAsync();
+        var roleResult = await userManager.AddToRoleAsync(user, registrationDto.Role);
         if (roleResult.Succeeded)
             return new RegistrationResponseDto
             {
@@ -63,8 +48,8 @@ public class AuthenticationRepository : IAuthenticationRepository
 
     public async Task<AuthResponseDto> LoginAsync(LoginDto loginDto)
     {
-        var user = await _userManager.FindByEmailAsync(loginDto.Email);
-        if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
+        var user = await userManager.FindByEmailAsync(loginDto.Email);
+        if (user == null || !await userManager.CheckPasswordAsync(user, loginDto.Password))
             return new AuthResponseDto
             {
                 ErrorMessage = "E-Mail oder Passwort nicht korrekt",
@@ -76,12 +61,12 @@ public class AuthenticationRepository : IAuthenticationRepository
                 ErrorMessage = "Dein Account ist inaktiv",
                 IsSuccessful = false
             };
-        var signinCredentials = _jwtService.GetSigningCredentials();
-        var claims = await _jwtService.GetClaimsAsync(user);
-        var tokenOptions = _jwtService.GenerateTokenOptions(signinCredentials, claims);
+        var signinCredentials = jwtService.GetSigningCredentials();
+        var claims = await jwtService.GetClaimsAsync(user);
+        var tokenOptions = jwtService.GenerateTokenOptions(signinCredentials, claims);
         var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         user.LastActivity = DateTime.Now;
-        await _userManager.UpdateAsync(user);
+        await userManager.UpdateAsync(user);
         return new AuthResponseDto
         {
             IsSuccessful = true,
@@ -91,14 +76,14 @@ public class AuthenticationRepository : IAuthenticationRepository
 
     public async Task<ForgotPasswordResponseDto> SendForgotPasswordEmailAsync(ForgotPasswordDto forgotPasswordDto)
     {
-        var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
+        var user = await userManager.FindByEmailAsync(forgotPasswordDto.Email);
         if (user == null)
             return new ForgotPasswordResponseDto
             {
                 IsSuccessful = false,
                 ErrorMessage = "Invalid Request"
             };
-        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
         var callback = new Uri(forgotPasswordDto.ClientUri)
             .AddQuery("token", token)
@@ -106,7 +91,7 @@ public class AuthenticationRepository : IAuthenticationRepository
         var message = new EmailMessage(new[] {user.Email}, "Passwort zurücksetzen",
             PasswordResetMessage(user, callback.ToString()));
 
-        await _emailService.SendEmailAsync(message);
+        await emailService.SendEmailAsync(message);
         return new ForgotPasswordResponseDto
         {
             IsSuccessful = true
@@ -115,7 +100,7 @@ public class AuthenticationRepository : IAuthenticationRepository
 
     public async Task<ResetPasswordResponseDto> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
     {
-        var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+        var user = await userManager.FindByEmailAsync(resetPasswordDto.Email);
         if (user == null)
             return new ResetPasswordResponseDto
             {
@@ -124,7 +109,7 @@ public class AuthenticationRepository : IAuthenticationRepository
             };
 
         var resetPasswordResult =
-            await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
+            await userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
         if (resetPasswordResult.Succeeded)
             return new ResetPasswordResponseDto
             {

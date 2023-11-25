@@ -9,16 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Services;
 
-public class JwtService : IJwtService
+public class JwtService(IConfiguration configuration, UserManager<User> userManager) : IJwtService
 {
-    private readonly IConfigurationSection _jwtSection;
-    private readonly UserManager<User> _userManager;
-
-    public JwtService(IConfiguration configuration, UserManager<User> userManager)
-    {
-        _jwtSection = configuration.GetSection("Jwt");
-        _userManager = userManager;
-    }
+    private readonly IConfigurationSection _jwtSection = configuration.GetSection("Jwt");
 
     public SigningCredentials GetSigningCredentials()
     {
@@ -35,7 +28,7 @@ public class JwtService : IJwtService
             new("email", user.Email!),
             new("userId", user.Id.ToString().ToUpper())
         };
-        var roles = await _userManager.GetRolesAsync(user);
+        var roles = await userManager.GetRolesAsync(user);
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
         return claims;
     }

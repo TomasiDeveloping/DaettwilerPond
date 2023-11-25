@@ -1,5 +1,6 @@
 ﻿using Application.DataTransferObjects.FishingClub;
 using Application.Interfaces;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,45 +10,36 @@ namespace Api.Controllers.v1;
 [ApiController]
 [ApiVersion("1.0")]
 [Authorize]
-public class FishingClubsController : ControllerBase
+public class FishingClubsController(IFishingClubRepository fishingClubRepository, ILogger<FishingClubsController> logger) : ControllerBase
 {
-    private readonly IFishingClubRepository _fishingClubRepository;
-    private readonly ILogger<FishingClubsController> _logger;
-
-    public FishingClubsController(IFishingClubRepository fishingClubRepository, ILogger<FishingClubsController> logger)
-    {
-        _fishingClubRepository = fishingClubRepository;
-        _logger = logger;
-    }
-
     [HttpGet]
     public async Task<ActionResult<List<FishingClubDto>>> GetFishingClubs()
     {
         try
         {
-            var fishingClubs = await _fishingClubRepository.GetFishingClubsAsync();
+            var fishingClubs = await fishingClubRepository.GetFishingClubsAsync();
             return fishingClubs.Any() ? Ok(fishingClubs) : NoContent();
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetFishingClubs)}");
         }
     }
 
-    [HttpGet("{fishingClubId:guid}")]
+    [HttpGet("{fishingClubId}")]
     public async Task<ActionResult<FishingClubDto>> GetFishingClub(Guid fishingClubId)
     {
         try
         {
-            var fishingClub = await _fishingClubRepository.GetFishingClubByIdAsync(fishingClubId);
+            var fishingClub = await fishingClubRepository.GetFishingClubByIdAsync(fishingClubId);
             if (fishingClub == null) return NotFound($"No fishingClub found with id: {fishingClubId}");
             return Ok(fishingClub);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetFishingClub)}");
         }
@@ -58,19 +50,19 @@ public class FishingClubsController : ControllerBase
     {
         try
         {
-            var newFishingClub = await _fishingClubRepository.CreateFishingClubAsync(createFishingClubDto);
+            var newFishingClub = await fishingClubRepository.CreateFishingClubAsync(createFishingClubDto);
             if (newFishingClub == null) return BadRequest("Could not create new fishing club");
             return Ok(newFishingClub);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(CreateFishingClub)}");
         }
     }
 
-    [HttpPut("{fishingClubId:guid}")]
+    [HttpPut("{fishingClubId}")]
     public async Task<ActionResult<FishingClubDto>> UpdateFishingClub(Guid fishingClubId,
         FishingClubDto fishingClubDto)
     {
@@ -78,30 +70,30 @@ public class FishingClubsController : ControllerBase
         {
             if (fishingClubId != fishingClubDto.Id) return BadRequest("Mismatch in Ids");
             var updatedFishingClub =
-                await _fishingClubRepository.UpdateFishingClubAsync(fishingClubId, fishingClubDto);
+                await fishingClubRepository.UpdateFishingClubAsync(fishingClubId, fishingClubDto);
             if (updatedFishingClub == null)
                 return BadRequest($"Could not update fishing club with id: {fishingClubId}");
             return Ok(updatedFishingClub);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(UpdateFishingClub)}");
         }
     }
 
-    [HttpDelete("{fishingClubId:guid}")]
+    [HttpDelete("{fishingClubId}")]
     public async Task<ActionResult<bool>> DeleteFishingClub(Guid fishingClubId)
     {
         try
         {
-            var response = await _fishingClubRepository.DeleteFishingClubAsync(fishingClubId);
+            var response = await fishingClubRepository.DeleteFishingClubAsync(fishingClubId);
             return response ? Ok(true) : BadRequest($"Could not delete fishing club with id: {fishingClubId}");
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(DeleteFishingClub)}");
         }

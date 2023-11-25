@@ -7,21 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repositories;
 
-public class FishingClubRepository : IFishingClubRepository
+public class FishingClubRepository(DaettwilerPondDbContext context, IMapper mapper) : IFishingClubRepository
 {
-    private readonly DaettwilerPondDbContext _context;
-    private readonly IMapper _mapper;
-
-    public FishingClubRepository(DaettwilerPondDbContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
-
     public async Task<List<FishingClubDto>> GetFishingClubsAsync()
     {
-        var fishingClubs = await _context.FishingClubs
-            .ProjectTo<FishingClubDto>(_mapper.ConfigurationProvider)
+        var fishingClubs = await context.FishingClubs
+            .ProjectTo<FishingClubDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .ToListAsync();
         return fishingClubs;
@@ -29,8 +20,8 @@ public class FishingClubRepository : IFishingClubRepository
 
     public async Task<FishingClubDto> GetFishingClubByIdAsync(Guid fishingClubId)
     {
-        var fishingClub = await _context.FishingClubs
-            .ProjectTo<FishingClubDto>(_mapper.ConfigurationProvider)
+        var fishingClub = await context.FishingClubs
+            .ProjectTo<FishingClubDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .FirstOrDefaultAsync(fc => fc.Id == fishingClubId);
         return fishingClub;
@@ -38,27 +29,27 @@ public class FishingClubRepository : IFishingClubRepository
 
     public async Task<FishingClubDto> CreateFishingClubAsync(CreateFishingClubDto createFishingClubDto)
     {
-        var fishingClub = _mapper.Map<FishingClub>(createFishingClubDto);
-        await _context.FishingClubs.AddAsync(fishingClub);
-        await _context.SaveChangesAsync();
-        return _mapper.Map<FishingClubDto>(fishingClub);
+        var fishingClub = mapper.Map<FishingClub>(createFishingClubDto);
+        await context.FishingClubs.AddAsync(fishingClub);
+        await context.SaveChangesAsync();
+        return mapper.Map<FishingClubDto>(fishingClub);
     }
 
     public async Task<FishingClubDto> UpdateFishingClubAsync(Guid fishingClubId, FishingClubDto fishingClubDto)
     {
-        var fishingClub = await _context.FishingClubs.FirstOrDefaultAsync(fc => fc.Id == fishingClubId);
+        var fishingClub = await context.FishingClubs.FirstOrDefaultAsync(fc => fc.Id == fishingClubId);
         if (fishingClub == null) return null;
-        _mapper.Map(fishingClubDto, fishingClub);
-        await _context.SaveChangesAsync();
-        return _mapper.Map<FishingClubDto>(fishingClub);
+        mapper.Map(fishingClubDto, fishingClub);
+        await context.SaveChangesAsync();
+        return mapper.Map<FishingClubDto>(fishingClub);
     }
 
     public async Task<bool> DeleteFishingClubAsync(Guid fishingClubId)
     {
-        var fishingClub = await _context.FishingClubs.FirstOrDefaultAsync(fc => fc.Id == fishingClubId);
+        var fishingClub = await context.FishingClubs.FirstOrDefaultAsync(fc => fc.Id == fishingClubId);
         if (fishingClub == null) return false;
-        _context.FishingClubs.Remove(fishingClub);
-        await _context.SaveChangesAsync();
+        context.FishingClubs.Remove(fishingClub);
+        await context.SaveChangesAsync();
         return true;
     }
 }
