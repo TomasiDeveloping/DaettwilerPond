@@ -1,5 +1,6 @@
 ﻿using Application.DataTransferObjects.Sensor;
 using Application.Interfaces;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;

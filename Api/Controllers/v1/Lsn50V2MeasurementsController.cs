@@ -1,5 +1,6 @@
 ﻿using Application.DataTransferObjects.Lsn50V2Measurement;
 using Application.Interfaces;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;

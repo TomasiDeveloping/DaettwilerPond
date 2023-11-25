@@ -1,5 +1,6 @@
 ﻿using Application.DataTransferObjects.FishingRegulation;
 using Application.Interfaces;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
