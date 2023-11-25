@@ -20,6 +20,10 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.12.0 (2023-11-25)
+- Update Angular to version 17
+- NPM packages update
+- Security Fix
 ### 1.11.0 (2023-11-25)
 - Update Backend to .NET 8
 - Refactoring
