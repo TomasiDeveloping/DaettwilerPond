@@ -11,79 +11,70 @@ namespace Api.Controllers.v1;
 [ApiController]
 [ApiVersion("1.0")]
 [Authorize]
-public class FishingLicensesController : ControllerBase
+public class FishingLicensesController(IFishingLicenseRepository fishingLicenseRepository,
+    ILogger<FishingLicensesController> logger) : ControllerBase
 {
-    private readonly IFishingLicenseRepository _fishingLicenseRepository;
-    private readonly ILogger<FishingLicensesController> _logger;
-
-    public FishingLicensesController(IFishingLicenseRepository fishingLicenseRepository,
-        ILogger<FishingLicensesController> logger)
-    {
-        _fishingLicenseRepository = fishingLicenseRepository;
-        _logger = logger;
-    }
-
     [HttpGet]
     public async Task<ActionResult<List<FishingLicenseDto>>> GetFishingLicenses()
     {
         try
         {
-            var licenses = await _fishingLicenseRepository.GetFishingLicensesAsync();
+            var licenses = await fishingLicenseRepository.GetFishingLicensesAsync();
             return licenses.Any() ? Ok(licenses) : NoContent();
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetFishingLicenses)}");
         }
     }
 
-    [HttpGet("{fishingLicenseId:guid}")]
+    [HttpGet("{fishingLicenseId}")]
     public async Task<ActionResult<FishingLicenseDto>> GetFishingLicense(Guid fishingLicenseId)
     {
         try
         {
-            var license = await _fishingLicenseRepository.GetFishingLicenseAsync(fishingLicenseId);
+            var license = await fishingLicenseRepository.GetFishingLicenseAsync(fishingLicenseId);
             if (license == null) return BadRequest($"Keine Lizenz mit der Id: {fishingLicenseId} gefunden");
             return Ok(license);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetFishingLicense)}");
         }
     }
 
-    [HttpGet("Users/{userId:guid}")]
+    [HttpGet("Users/{userId}")]
     public async Task<ActionResult<List<FishingLicenseDto>>> GetUserFishingLicenses(Guid userId)
     {
         try
         {
-            var userLicenses = await _fishingLicenseRepository.GetUserFishingLicenses(userId);
+            var userLicenses = await fishingLicenseRepository.GetUserFishingLicenses(userId);
             return userLicenses.Any() ? Ok(userLicenses) : NoContent();
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetUserFishingLicenses)}");
         }
     }
 
-    [HttpGet("Users/[action]/{userId:guid}")]
+    [HttpGet("Users/[action]/{userId}")]
     public async Task<ActionResult<FishingLicenseDto>> GetCurrentUserLicense(Guid userId)
     {
         try
         {
-            var currentUserLicense = await _fishingLicenseRepository.GetUserFishingLicenseForCurrentYear(userId);
+            var currentUserLicense = await fishingLicenseRepository.GetUserFishingLicenseForCurrentYear(userId);
             if (currentUserLicense == null) return BadRequest("Keine Aktuelle Lizenz vorhanden");
             return Ok(currentUserLicense);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetCurrentUserLicense)}");
         }
@@ -96,48 +87,48 @@ public class FishingLicensesController : ControllerBase
         try
         {
             var newLicense =
-                await _fishingLicenseRepository.CreateFishingLicenseAsync(createFishingLicenseDto, GetUserEmail());
+                await fishingLicenseRepository.CreateFishingLicenseAsync(createFishingLicenseDto, GetUserEmail());
             if (newLicense == null) return BadRequest("Lizenz konnte nicht erstellt werden");
             return Ok(newLicense);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(CreateFishingLicense)}");
         }
     }
 
-    [HttpPut("{fishingLicenseId:guid}")]
+    [HttpPut("{fishingLicenseId}")]
     public async Task<ActionResult<FishingLicenseDto>> UpdateFishingLicense(Guid fishingLicenseId,
         FishingLicenseDto fishingLicenseDto)
     {
         try
         {
             if (fishingLicenseId != fishingLicenseDto.Id) return BadRequest("Fehler in Id's");
-            var updatedLicense = await _fishingLicenseRepository.UpdateFishingLicenseAsync(fishingLicenseDto);
+            var updatedLicense = await fishingLicenseRepository.UpdateFishingLicenseAsync(fishingLicenseDto);
             if (updatedLicense == null) return BadRequest("Lizenz konnte nicht geupdated werden");
             return Ok(updatedLicense);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(UpdateFishingLicense)}");
         }
     }
 
-    [HttpDelete("{fishingLicenseId:guid}")]
+    [HttpDelete("{fishingLicenseId}")]
     public async Task<ActionResult<bool>> DeleteFishingLicense(Guid fishingLicenseId)
     {
         try
         {
-            var result = await _fishingLicenseRepository.DeleteFishingLicenseAsync(fishingLicenseId);
+            var result = await fishingLicenseRepository.DeleteFishingLicenseAsync(fishingLicenseId);
             return result ? Ok(true) : BadRequest("Lizenz konnte nicht gelöscht werden");
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(DeleteFishingLicense)}");
         }

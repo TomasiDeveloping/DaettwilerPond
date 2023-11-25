@@ -10,61 +10,52 @@ namespace Api.Controllers.v1;
 [ApiController]
 [ApiVersion("1.0")]
 [Authorize]
-public class AddressesController : ControllerBase
+public class AddressesController(IAddressRepository addressRepository, ILogger<AddressesController> logger) : ControllerBase
 {
-    private readonly IAddressRepository _addressRepository;
-    private readonly ILogger<AddressesController> _logger;
-
-    public AddressesController(IAddressRepository addressRepository, ILogger<AddressesController> logger)
-    {
-        _addressRepository = addressRepository;
-        _logger = logger;
-    }
-
     [HttpGet]
     public async Task<ActionResult<List<AddressDto>>> GetAddresses()
     {
         try
         {
-            var addresses = await _addressRepository.GetAddressesAsync();
+            var addresses = await addressRepository.GetAddressesAsync();
             return addresses.Any() ? Ok(addresses) : NoContent();
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetAddresses)}");
         }
     }
 
-    [HttpGet("{addressId:guid}")]
+    [HttpGet("{addressId}")]
     public async Task<ActionResult<AddressDto>> GetAddress(Guid addressId)
     {
         try
         {
-            var address = await _addressRepository.GetAddressAsync(addressId);
+            var address = await addressRepository.GetAddressAsync(addressId);
             if (address == null) return BadRequest($"Keine Adresse gefunden mit der Id: {addressId}");
             return Ok(address);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetAddress)}");
         }
     }
 
-    [HttpGet("users/{userId:guid}")]
+    [HttpGet("users/{userId}")]
     public async Task<ActionResult<List<AddressDto>>> GetUserAddresses(Guid userId)
     {
         try
         {
-            var userAddresses = await _addressRepository.GetUserAddressesAsync(userId);
+            var userAddresses = await addressRepository.GetUserAddressesAsync(userId);
             return userAddresses.Any() ? Ok(userAddresses) : NoContent();
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetUserAddresses)}");
         }
@@ -75,31 +66,31 @@ public class AddressesController : ControllerBase
     {
         try
         {
-            var newAddress = await _addressRepository.CreateAddressAsync(addressDto);
+            var newAddress = await addressRepository.CreateAddressAsync(addressDto);
             if (newAddress == null) return BadRequest("Neue Adresse konnte nicht erstellt werden");
             return StatusCode(StatusCodes.Status201Created, newAddress);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(CreateAddress)}");
         }
     }
 
-    [HttpPut("{addressId:guid}")]
+    [HttpPut("{addressId}")]
     public async Task<ActionResult<AddressDto>> UpdateAddress(Guid addressId, AddressDto addressDto)
     {
         try
         {
             if (addressId != addressDto.Id) return BadRequest("Fehler in Id's");
-            var updatedAddress = await _addressRepository.UpdateAddressAsync(addressId, addressDto);
+            var updatedAddress = await addressRepository.UpdateAddressAsync(addressId, addressDto);
             if (updatedAddress == null) return BadRequest("Adresse konnte nicht geupdated werden");
             return Ok(updatedAddress);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(UpdateAddress)}");
         }

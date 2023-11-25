@@ -37,12 +37,12 @@ public class WebHookService : IWebHookService
             case "lifecycle":
                 var lifecycle = JsonConvert.DeserializeObject<Lifecycle>(jObject.SelectToken("data")?.ToString() ??
                                                                          throw new InvalidOperationException());
-                await _lsn50V2d20Logic.HandleLifecycleAsync(lifecycle, sensor.Id);
+                if (sensor is not null) await _lsn50V2d20Logic.HandleLifecycleAsync(lifecycle, sensor.Id);
                 break;
             case "default":
                 var payload = JsonConvert.DeserializeObject<Payload>(jObject.SelectToken("data")?.ToString() ??
                                                                      throw new InvalidOperationException());
-                await _lsn50V2d20Logic.HandleDataPayloadAsync(payload, sensor.Id);
+                if (sensor is not null) await _lsn50V2d20Logic.HandleDataPayloadAsync(payload, sensor.Id);
                 break;
             case "ds":
                 _logger.LogInformation("ds Payload received");

@@ -10,29 +10,20 @@ namespace Api.Controllers.v1;
 [ApiController]
 [ApiVersion("1.0")]
 [Authorize]
-public class FishingRegulationsController : ControllerBase
+public class FishingRegulationsController(IFishingRegulationRepository fishingRegulationRepository,
+    ILogger<FishingRegulationsController> logger) : ControllerBase
 {
-    private readonly IFishingRegulationRepository _fishingRegulationRepository;
-    private readonly ILogger<FishingRegulationsController> _logger;
-
-    public FishingRegulationsController(IFishingRegulationRepository fishingRegulationRepository,
-        ILogger<FishingRegulationsController> logger)
-    {
-        _fishingRegulationRepository = fishingRegulationRepository;
-        _logger = logger;
-    }
-
     [HttpGet]
     public async Task<ActionResult<List<FishingRegulationDto>>> GetFishingRegulations()
     {
         try
         {
-            var fishingRegulations = await _fishingRegulationRepository.GetFishingRegulationsAsync();
+            var fishingRegulations = await fishingRegulationRepository.GetFishingRegulationsAsync();
             return fishingRegulations.Any() ? Ok(fishingRegulations) : NoContent();
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetFishingRegulations)}");
         }
@@ -45,19 +36,19 @@ public class FishingRegulationsController : ControllerBase
         try
         {
             var newFishingRegulation =
-                await _fishingRegulationRepository.CreateFishingRegulationAsync(createFishingRegulationDto);
+                await fishingRegulationRepository.CreateFishingRegulationAsync(createFishingRegulationDto);
             if (newFishingRegulation == null) return BadRequest("Fischereivorschrift konnte nicht erstellt werden");
             return Ok(newFishingRegulation);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(CreateFishingRegulation)}");
         }
     }
 
-    [HttpPut("{fishingRegulationId:guid}")]
+    [HttpPut("{fishingRegulationId}")]
     public async Task<ActionResult<FishingRegulationDto>> UpdateFishingRegulation(Guid fishingRegulationId,
         FishingRegulationDto fishingRegulationDto)
     {
@@ -65,7 +56,7 @@ public class FishingRegulationsController : ControllerBase
         {
             if (fishingRegulationId != fishingRegulationDto.Id) return BadRequest("Fehler mit Id's");
             var updatedFishingRegulation =
-                await _fishingRegulationRepository.UpdateFishingRegulationAsync(fishingRegulationId,
+                await fishingRegulationRepository.UpdateFishingRegulationAsync(fishingRegulationId,
                     fishingRegulationDto);
             if (updatedFishingRegulation == null)
                 return BadRequest("Fischereivorschrift konnte nicht geupdatet werden");
@@ -73,23 +64,23 @@ public class FishingRegulationsController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(UpdateFishingRegulation)}");
         }
     }
 
-    [HttpDelete("{fishingRegulationId:guid}")]
+    [HttpDelete("{fishingRegulationId}")]
     public async Task<ActionResult<bool>> DeleteFishingRegulation(Guid fishingRegulationId)
     {
         try
         {
-            var response = await _fishingRegulationRepository.DeleteFishingRegulationAsync(fishingRegulationId);
+            var response = await fishingRegulationRepository.DeleteFishingRegulationAsync(fishingRegulationId);
             return response ? Ok(true) : BadRequest("Fischereivorschrift konnte nicht gelöscht werden");
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(DeleteFishingRegulation)}");
         }

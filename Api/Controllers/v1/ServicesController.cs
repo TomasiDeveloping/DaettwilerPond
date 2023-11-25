@@ -11,23 +11,14 @@ namespace Api.Controllers.v1;
 [ApiController]
 [ApiVersion("1.0")]
 [Authorize]
-public class ServicesController : ControllerBase
+public class ServicesController(IPdfService pdfService, ILogger<ServicesController> logger) : ControllerBase
 {
-    private readonly ILogger<ServicesController> _logger;
-    private readonly IPdfService _pdfService;
-
-    public ServicesController(IPdfService pdfService, ILogger<ServicesController> logger)
-    {
-        _pdfService = pdfService;
-        _logger = logger;
-    }
-
     [HttpGet("[action]")]
     public async Task<IActionResult> GetMemberPdf()
     {
         try
         {
-            var memberDocument = await _pdfService.CreateMemberPdfAsync();
+            var memberDocument = await pdfService.CreateMemberPdfAsync();
             const string fileName = "Mitglieder_Fischerclub_Daettwiler_Weiher.pdf";
             Response.Headers.Add("x-file-name", fileName);
             Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
@@ -35,7 +26,7 @@ public class ServicesController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetMemberPdf)}");
         }
@@ -46,7 +37,7 @@ public class ServicesController : ControllerBase
     {
         try
         {
-            var fishingRuleDocument = await _pdfService.CreateFishingRulesPdfAsync();
+            var fishingRuleDocument = await pdfService.CreateFishingRulesPdfAsync();
             const string fileName = "Vorschriften.pdf";
             Response.Headers.Add("x-file-name", fileName);
             Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
@@ -54,7 +45,7 @@ public class ServicesController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetFishingRulesPdf)}");
         }
@@ -65,7 +56,7 @@ public class ServicesController : ControllerBase
     {
         try
         {
-            var fishOpenSeasonDocument = await _pdfService.CreateFishOpenSeasonPdfAsync();
+            var fishOpenSeasonDocument = await pdfService.CreateFishOpenSeasonPdfAsync();
             const string fileName = "Schonmass_und_Schonzeiten.pdf";
             Response.Headers.Add("x-file-name", fileName);
             Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
@@ -73,7 +64,7 @@ public class ServicesController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetFishOpenSeasonPdf)}");
         }
@@ -85,23 +76,23 @@ public class ServicesController : ControllerBase
     {
         try
         {
-            var response = await _pdfService.SendFishingLicenseBillAsync(createFishingLicenseBillDto, GetUserEmail());
+            var response = await pdfService.SendFishingLicenseBillAsync(createFishingLicenseBillDto, GetUserEmail());
             return response ? Ok(true) : BadRequest("Error in send QRBill");
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(SendFishingLicenseInvoice)}");
         }
     }
 
-    [HttpGet("[action]/{fishingLicenseId:guid}")]
+    [HttpGet("[action]/{fishingLicenseId}")]
     public async Task<IActionResult> GetUserInvoiceFishingLicense(Guid fishingLicenseId)
     {
         try
         {
-            var fishingLicenseInvoice = await _pdfService.GetUserFishingLicenseInvoiceAsync(fishingLicenseId);
+            var fishingLicenseInvoice = await pdfService.GetUserFishingLicenseInvoiceAsync(fishingLicenseId);
             const string fileName = "Rechnung_Fischerkarte.pdf";
             Response.Headers.Add("x-file-name", fileName);
             Response.Headers.Add("Access-Control-Expose-Headers", "x-file-name");
@@ -109,7 +100,7 @@ public class ServicesController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
+            logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetUserInvoiceFishingLicense)}");
         }
