@@ -28,8 +28,8 @@ public class SwissQrBillService : ISwissQrBillService
             Debtor = new Address
             {
                 Name = fishingLicenseBill.DebtorName,
-                AddressLine1 = fishingLicenseBill.DebtorAddress,
-                AddressLine2 = fishingLicenseBill.DebtorCity,
+                AddressLine1 = string.IsNullOrEmpty(fishingLicenseBill.DebtorAddress) ? null : fishingLicenseBill.DebtorAddress,
+                AddressLine2 = string.IsNullOrEmpty(fishingLicenseBill.DebtorCity) ? null : fishingLicenseBill.DebtorCity,
                 CountryCode = "CH"
             },
 
@@ -45,6 +45,12 @@ public class SwissQrBillService : ISwissQrBillService
                 OutputSize = OutputSize.QrBillExtraSpace
             }
         };
+        if (!string.IsNullOrWhiteSpace(fishingLicenseBill.DebtorAddress) &&
+            !string.IsNullOrWhiteSpace(fishingLicenseBill.DebtorCity)) return QRBill.Generate(bill);
+        bill.Debtor.Name = null;
+        bill.Debtor.AddressLine1 = null;
+        bill.Debtor.AddressLine2 = null;
+        bill.Debtor.CountryCode = null;
 
         return QRBill.Generate(bill);
     }
