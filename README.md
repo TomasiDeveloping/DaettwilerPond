@@ -20,6 +20,10 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.12.2 (2023-12-16)
+- Rollback Syncfusion version due to bug in table
+- NPM Update
+- Security Fix
 ### 1.12.0 (2023-11-25)
 - Update Angular to version 17
 - NPM packages update
