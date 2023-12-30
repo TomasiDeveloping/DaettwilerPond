@@ -13,6 +13,7 @@ export class FishingLicenseComponent implements OnChanges {
 
   @Input() public fishingLicence: FishingLicense | undefined;
   public expiresInDays: number | undefined;
+  public expiresInHours: number | undefined;
 
   private readonly _pdfService: PdfService = inject(PdfService);
   private readonly _toastr: ToastrService = inject(ToastrService);
@@ -21,6 +22,9 @@ export class FishingLicenseComponent implements OnChanges {
     if (this.fishingLicence) {
       if (new Date(this.fishingLicence.expiresOn) > new Date()) {
         this.expiresInDays = moment(this.fishingLicence?.expiresOn).diff(Date.now(), 'days');
+        if (this.expiresInDays === 0) {
+          this.expiresInHours = moment(this.fishingLicence?.expiresOn).diff(new Date(), 'hours');
+        }
       }
     }
   }

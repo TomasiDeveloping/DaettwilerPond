@@ -6,6 +6,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {AdminEditUserComponent} from "./admin-edit-user/admin-edit-user.component";
 import {GridModel, ToolbarItems} from "@syncfusion/ej2-angular-grids";
 import Swal from "sweetalert2";
+import {AdminSendEmailComponent} from "./admin-send-email/admin-send-email.component";
 
 
 @Component({
@@ -124,5 +125,19 @@ export class AdminUsersComponent implements OnInit {
         });
       }
     });
+  }
+
+  onSendEmails() {
+    const memberEmails: {email: string, fullName: string}[] = [];
+    this.users.forEach((user) => {
+      memberEmails.push({email: user.email, fullName: `${user.firstName} ${user.lastName}`})
+    });
+    const dialogRef = this._dialog.open(AdminSendEmailComponent, {
+      width: '80%',
+      height: 'auto',
+      autoFocus: false,
+      disableClose: true,
+      data: {memberEmails: memberEmails}
+    })
   }
 }

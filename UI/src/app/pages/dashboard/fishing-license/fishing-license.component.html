@@ -3,6 +3,8 @@
     Fischerlizenz <br>
     <span *ngIf="expiresInDays" class="text-muted">Verbleibende Tage: <span
       class="text-success fw-bold">{{expiresInDays}}</span></span>
+    <span *ngIf="expiresInHours" class="text-muted">Verbleibende Stunde(n): <span
+      class="text-success fw-bold">{{expiresInHours}}</span></span>
   </div>
   <div class="card-body">
     <div *ngIf="fishingLicence; else noLicense" class="license-container">
