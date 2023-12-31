@@ -20,6 +20,9 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.13.0 (2023-12-31)
+- NPM Update
+- Members email service
 ### 1.12.2 (2023-12-16)
 - Rollback Syncfusion version due to bug in table
 - NPM Update
