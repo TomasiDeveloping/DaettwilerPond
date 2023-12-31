@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
@@ -35,6 +36,38 @@ public class EmailService(IOptions<EmailConfiguration> emailConfiguration, ILogg
         return await SendMailAsync(emailMessage);
     }
 
+    public async Task<bool> SendEmailToMembersAsync(List<string> recipientAddresses, string subject, string mailContent,
+        IFormFileCollection? attachments)
+    {
+        var mailMessage = new MimeMessage();
+        mailMessage.From.Add(new MailboxAddress("Dättwiler Weiher", _emailConfiguration.From));
+        mailMessage.Subject = subject;
+        mailMessage.To.AddRange(recipientAddresses.Select(x => new MailboxAddress(x, x)));
+        const string infoText =
+            "<b style=\"color: red;\">Bitte beachte, dass diese E-Mail von einer automatischen Absenderadresse versandt wird. Auf Antworten an diese Nachricht wird nicht reagiert.</b> ";
+
+        var bodyBuilder = new BodyBuilder
+        {
+            HtmlBody = $"{mailContent.ReplaceLineEndings("<br>")} <br><br> {infoText}"
+        };
+        if (attachments is not null && attachments.Any())
+            foreach (var attachment in attachments)
+            {
+                byte[] fileBytes;
+                using (var ms = new MemoryStream())
+                {
+                    await attachment.CopyToAsync(ms);
+                    fileBytes = ms.ToArray();
+                }
+
+                bodyBuilder.Attachments.Add(attachment.FileName, fileBytes, ContentType.Parse(attachment.ContentType));
+            }
+
+        mailMessage.Body = bodyBuilder.ToMessageBody();
+
+        return await SendMailAsync(mailMessage);
+    }
+
     private async Task<bool> SendMailAsync(MimeMessage message)
     {
         using var client = new SmtpClient();
@@ -53,7 +86,6 @@ public class EmailService(IOptions<EmailConfiguration> emailConfiguration, ILogg
         finally
         {
             await client.DisconnectAsync(true);
-            client.Dispose();
         }
 
         return true;

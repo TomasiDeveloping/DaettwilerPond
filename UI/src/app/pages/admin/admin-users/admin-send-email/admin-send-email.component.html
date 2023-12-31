@@ -1,0 +1,46 @@
+<h1 mat-dialog-title>Email(s) versenden</h1>
+<div mat-dialog-content>
+  <form [formGroup]="emailSendForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Mitglieder</mat-label>
+      <mat-select formControlName="emails" multiple>
+        <mat-option *ngFor="let user of memberEmails" [value]="user.email">{{ user.fullName }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="emails?.hasError('required')">Mindestens 1 Mitglied muss ausgewählt werden</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Betreff</mat-label>
+      <input formControlName="subject" id="subject" matInput>
+      <mat-error *ngIf="subject?.hasError('required')">Betreff ist ein Pflichfeld</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>E-Mail Text</mat-label>
+      <textarea formControlName="content" matInput rows="5"></textarea>
+      <mat-error *ngIf="content?.hasError('required')">E-Mail Text ist ein Pflichtfeld</mat-error>
+    </mat-form-field>
+  </form>
+  <div class="container">
+    <input type="file" id="fileDropRef" multiple (change)="fileBrowseHandler($event)"/>
+    <img src="assets/upload/ic-upload-file.svg" alt="">
+    <h3></h3>
+    <label for="fileDropRef">Datei auswählen</label>
+  </div>
+  <div class="files-list">
+    <div class="single-file" *ngFor="let file of files; let i = index">
+      <img src="assets/upload/ic-file.svg" width="45px" alt="file">
+      <div class="info">
+        <h4 class="name">
+          {{ file?.name }}
+        </h4>
+        <p class="size">
+          {{ formatBytes(file?.size) }}
+        </p>
+      </div>
+      <img src="assets/upload/ic-delete-file.svg" class="delete" width="20px" alt="file" (click)="deleteFile(i)">
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-end mt-5 mb-3" mat-dialog-actions>
+  <button (click)="onSubmit()" class="btn btn-success" type="submit">Senden</button>
+  <button (click)="onClose()" class="btn btn-danger ms-3" type="button">Abbrechen</button>
+</div>

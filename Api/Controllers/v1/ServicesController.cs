@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Application.DataTransferObjects.FishingLicense;
+using Application.DataTransferObjects.Services;
 using Application.Interfaces;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +12,7 @@ namespace Api.Controllers.v1;
 [ApiController]
 [ApiVersion("1.0")]
 [Authorize]
-public class ServicesController(IPdfService pdfService, ILogger<ServicesController> logger) : ControllerBase
+public class ServicesController(IPdfService pdfService, ILogger<ServicesController> logger, IEmailService emailService) : ControllerBase
 {
     [HttpGet("[action]")]
     public async Task<IActionResult> GetMemberPdf()
@@ -84,6 +85,24 @@ public class ServicesController(IPdfService pdfService, ILogger<ServicesControll
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(SendFishingLicenseInvoice)}");
+        }
+    }
+
+    [AllowAnonymous]
+    [HttpPost("[action]")]
+    public async Task<ActionResult<bool>> SendMembersEmail([FromForm] MembersEmailDto membersEmailDto)
+    {
+        try
+        {
+            var response = await emailService.SendEmailToMembersAsync(membersEmailDto.ReceiverAddresses,
+                membersEmailDto.Subject, membersEmailDto.MailContent, membersEmailDto.Attachments);
+            return response ? Ok(true) : BadRequest("Error send email to members");
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(SendMembersEmail)}");
         }
     }
 

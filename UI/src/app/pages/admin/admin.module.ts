@@ -20,6 +20,7 @@ import {MaterialModule} from "../../sharedModules/material.module";
 import {AdminClubInformationComponent} from './admin-club-information/admin-club-information.component';
 import {CreateLicenseBillComponent} from './admin-fishing-license/create-license-bill/create-license-bill.component';
 import {ThirdPartyModule} from "../../sharedModules/third-party.module";
+import { AdminSendEmailComponent } from './admin-users/admin-send-email/admin-send-email.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import {ThirdPartyModule} from "../../sharedModules/third-party.module";
     AdminEditFishingLicenseComponent,
     AdminClubInformationComponent,
     CreateLicenseBillComponent,
+    AdminSendEmailComponent,
   ],
   imports: [
     CommonModule,
