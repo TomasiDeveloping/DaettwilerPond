@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using System.Text;
+using Application.Interfaces;
 using Application.Models;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Http;
@@ -42,10 +43,11 @@ public class EmailService(IOptions<EmailConfiguration> emailConfiguration, ILogg
         mailMessage.From.Add(new MailboxAddress("Dättwiler Weiher", _emailConfiguration.From));
         mailMessage.Subject = subject;
         mailMessage.To.AddRange(recipientAddresses.Select(x => new MailboxAddress(x, x)));
+        const string infoText = "<b style=\"color: red;\">Bitte beachte, dass diese E-Mail von einer automatischen Absenderadresse versandt wird. Auf Antworten an diese Nachricht wird nicht reagiert.</b> ";
 
         var bodyBuilder = new BodyBuilder()
         {
-            TextBody = mailContent
+            HtmlBody = $"{mailContent.ReplaceLineEndings("<br>")} <br><br> {infoText}"
         };
         if (attachments is not null && attachments.Any())
         {

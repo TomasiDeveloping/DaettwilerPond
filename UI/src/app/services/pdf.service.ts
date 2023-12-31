@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {FishingLicenseCreateBill} from "../models/fishingLicenseCreateBill.model";
+import {MembersEmailModel} from "../models/membersEmail.model";
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +58,18 @@ export class PdfService {
 
   sendFishingLicenseBill(createFishingLicenseBill: FishingLicenseCreateBill): Observable<boolean> {
     return this._httpClient.post<boolean>(this._serviceUrl + 'SendFishingLicenseInvoice', createFishingLicenseBill);
+  }
+
+  sendMemberEmails(membersEmail: MembersEmailModel): Observable<boolean> {
+    const formData = new FormData();
+    formData.append('MailContent', membersEmail.mailContent);
+    formData.append('Subject', membersEmail.subject);
+    membersEmail.receiverAddresses.forEach((address) => {
+      formData.append('ReceiverAddresses', address)
+    });
+    membersEmail.attachments.forEach((file) => {
+      formData.append('Attachments', file, file.name)
+    });
+    return this._httpClient.post<boolean>(this._serviceUrl + 'SendMembersEmail', formData);
   }
 }
