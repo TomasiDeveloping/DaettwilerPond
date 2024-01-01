@@ -20,6 +20,10 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.14.0 (2024-01-01)
+- Historical temperature data
+- Lowest, highest and average for current year and month
+- Lowest, highest since start of measurement
 ### 1.13.0 (2023-12-31)
 - NPM Update
 - Members email service
