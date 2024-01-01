@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {TemperatureMeasurement} from "../models/temperatureMeasurement.model";
+import {TemperatureHistoryModel} from "../models/temperatureHistory.model";
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,9 @@ export class TemperatureService {
 
   getTemperatureMeasurementByDay(days: number = 0): Observable<TemperatureMeasurement[]> {
     return this._httpClient.get<TemperatureMeasurement[]>(this._serviceUrl + '/GetTemperatureMeasurementByDay/' + days);
+  }
+
+  getHistoryData(): Observable<TemperatureHistoryModel> {
+    return this._httpClient.get<TemperatureHistoryModel>(this._serviceUrl + '/GetHistoryData');
   }
 }

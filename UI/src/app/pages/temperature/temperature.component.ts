@@ -3,6 +3,7 @@ import * as Highcharts from 'highcharts';
 import {TemperatureService} from "../../services/temperature.service";
 import {DatePipe} from "@angular/common";
 import {TemperatureMeasurement} from "../../models/temperatureMeasurement.model";
+import {TemperatureHistoryModel} from "../../models/temperatureHistory.model";
 
 @Component({
   selector: 'app-temperature',
@@ -15,6 +16,9 @@ export class TemperatureComponent implements OnInit {
   public lastMeasurement!: TemperatureMeasurement;
   public Highcharts: typeof Highcharts = Highcharts;
   public loadData: boolean = false;
+  public historyData: TemperatureHistoryModel | undefined;
+  public currentYear: number = new Date().getFullYear();
+  public currentMonth: number = new Date().getMonth();
 
   private readonly _temperatureService: TemperatureService = inject(TemperatureService);
   private readonly _datePipe: DatePipe = inject(DatePipe);
@@ -78,7 +82,14 @@ export class TemperatureComponent implements OnInit {
           this.loadData = true;
         }
       })
-    })
+    });
+    this._temperatureService.getHistoryData().subscribe({
+      next: ((response) => {
+        if (response) {
+          this.historyData = response;
+        }
+      })
+    });
   }
 
   getIcon(): string {

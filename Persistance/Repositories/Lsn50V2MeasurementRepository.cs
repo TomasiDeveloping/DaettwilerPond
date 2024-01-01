@@ -1,4 +1,6 @@
-﻿using Application.DataTransferObjects.Lsn50V2Measurement;
+﻿using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using Application.DataTransferObjects.Lsn50V2Measurement;
 using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -66,5 +68,46 @@ public class Lsn50V2MeasurementRepository(DaettwilerPondDbContext context, IMapp
         await context.AddAsync(measurement);
         await context.SaveChangesAsync();
         return mapper.Map<Lsn50V2MeasurementDto>(measurement);
+    }
+
+    public async Task<TemperatureHistoryDto> GetTemperatureHistoryAsync()
+    {
+        var date = DateTime.Today;
+        var maxRecord = await context.Lsn50V2Measurements.OrderByDescending(x => x.Temperature).FirstOrDefaultAsync();
+        var minRecord = await context.Lsn50V2Measurements.OrderBy(x => x.Temperature).FirstOrDefaultAsync();
+        var maxMonthTemperature = await context.Lsn50V2Measurements
+            .Where(x => x.ReceivedAt.Year == date.Year && x.ReceivedAt.Month == date.Month)
+            .MaxAsync(x => x.Temperature);
+        var minMonthTemperature = await context.Lsn50V2Measurements
+            .Where(x => x.ReceivedAt.Year == date.Year && x.ReceivedAt.Month == date.Month)
+            .MinAsync(x => x.Temperature);
+        var averageMonthTemperature = await context.Lsn50V2Measurements
+            .Where(x => x.ReceivedAt.Year == date.Year && x.ReceivedAt.Month == date.Month)
+            .AverageAsync(x => x.Temperature);
+
+
+        var maxYearTemperature = await context.Lsn50V2Measurements
+            .Where(x => x.ReceivedAt.Year == date.Year)
+            .MaxAsync(x => x.Temperature);
+        var minYearTemperature = await context.Lsn50V2Measurements
+            .Where(x => x.ReceivedAt.Year == date.Year)
+            .MinAsync(x => x.Temperature);
+        var averageYearTemperature = await context.Lsn50V2Measurements
+            .Where(x => x.ReceivedAt.Year == date.Year)
+            .AverageAsync(x => x.Temperature);
+
+        return new TemperatureHistoryDto()
+        {
+            MaximumTemperatureReceivedTime = maxRecord.ReceivedAt,
+            MaximumTemperature = maxRecord.Temperature,
+            MinimumTemperatureReceivedTime = minRecord.ReceivedAt,
+            MinimumTemperature = minRecord.Temperature,
+            MaximumTemperatureYear = maxYearTemperature,
+            MaximumTemperatureMonth = maxMonthTemperature,
+            MinimumTemperatureYear = minYearTemperature,
+            MinimumTemperatureMonth = minMonthTemperature,
+            TemperatureAverageYear = averageYearTemperature,
+            TemperatureAverageMonth = averageMonthTemperature,
+        };
     }
 }

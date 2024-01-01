@@ -13,4 +13,5 @@ public interface ILsn50V2MeasurementRepository
 
     Task<Lsn50V2MeasurementDto> CreateLsn50V2MeasurementAsync(
         CreateLsn50V2MeasurementDto createLsn50V2MeasurementDto);
+    Task<TemperatureHistoryDto> GetTemperatureHistoryAsync();
 }
