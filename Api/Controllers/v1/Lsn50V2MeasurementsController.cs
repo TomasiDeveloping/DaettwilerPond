@@ -45,4 +45,20 @@ public class Lsn50V2MeasurementsController(ILsn50V2MeasurementRepository lsn50V2
                 $"Something went wrong in {nameof(GetTemperatureMeasurementByDay)}");
         }
     }
+
+    [HttpGet("[action]")]
+    public async Task<ActionResult<TemperatureHistoryDto>> GetHistoryData()
+    {
+        try
+        {
+            var historyData = await lsn50V2MeasurementRepository.GetTemperatureHistoryAsync();
+            return historyData is not null ? Ok(historyData) : NoContent();
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(GetHistoryData)}");
+        }
+    }
 }

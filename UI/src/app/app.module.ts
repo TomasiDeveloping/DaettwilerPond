@@ -24,6 +24,7 @@ import {ThirdPartyModule} from "./sharedModules/third-party.module";
 import {SyncfusionModule} from "./sharedModules/syncfusion.module";
 import {DownloadComponent} from './pages/download/download.component';
 import {JwtModule} from "@auth0/angular-jwt";
+import {GermanMonthPipe} from "./pipes/german-month.pipe";
 
 
 @NgModule({
@@ -41,23 +42,24 @@ import {JwtModule} from "@auth0/angular-jwt";
     ChangePasswordComponent,
     DownloadComponent,
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    ThirdPartyModule,
-    MaterialModule,
-    SyncfusionModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: () => {
-          return localStorage.getItem('DaettwilerPondToken')
-        }
-      }
-    }),
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        ThirdPartyModule,
+        MaterialModule,
+        SyncfusionModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: () => {
+                    return localStorage.getItem('DaettwilerPondToken')
+                }
+            }
+        }),
+        GermanMonthPipe,
+    ],
   providers: [
     DatePipe,
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},

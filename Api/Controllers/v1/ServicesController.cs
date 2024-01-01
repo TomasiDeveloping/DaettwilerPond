@@ -88,7 +88,6 @@ public class ServicesController(IPdfService pdfService, ILogger<ServicesControll
         }
     }
 
-    [AllowAnonymous]
     [HttpPost("[action]")]
     public async Task<ActionResult<bool>> SendMembersEmail([FromForm] MembersEmailDto membersEmailDto)
     {

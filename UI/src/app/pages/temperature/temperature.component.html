@@ -13,6 +13,32 @@
                     style="width: 100%; height: 400px; display: block;"
   ></highcharts-chart>
 
+  <ng-container *ngIf="historyData">
+    <h3 class="mt-3 text-center">Rekordwerte und Durchschnittswerte</h3>
+    <div class="history-container">
+      <div class="history-box">
+        <h5 class="text-center">Monat {{currentMonth | germanMonth}}</h5>
+        <div>Höchste Temperatur: <span class="warm">{{historyData.maximumTemperatureMonth.toFixed(2)}}</span> °C</div>
+        <div>Niedrigste Temperatur: <span class="cold">{{historyData.minimumTemperatureMonth.toFixed(2)}}</span> °C</div>
+        <div>Durchschnittstemperatur: {{historyData.temperatureAverageMonth.toFixed(2)}} °C</div>
+      </div>
+      <div class="history-box">
+        <h5 class="text-center">Jahr {{currentYear}}</h5>
+        <div>Höchste Temperatur: <span class="warm">{{historyData.maximumTemperatureYear.toFixed(2)}}</span> °C</div>
+        <div>Niedrigste Temperatur: <span class="cold">{{historyData.minimumTemperatureYear.toFixed(2)}}</span> °C</div>
+        <div>Durchschnittstemperatur: {{historyData.temperatureAverageYear.toFixed(2)}} °C</div>
+      </div>
+      <div class="history-box">
+        <h5 class="text-center">Seit Beginn der Aufzeichnungen</h5>
+        <div>Höchste Temperatur: <span class="warm">{{historyData.maximumTemperature.toFixed(2)}}</span> °C</div>
+        <div>Gemessen am: {{historyData.maximumTemperatureReceivedTime | date: 'dd.MM.yyyy HH:mm:ss'}}</div>
+        <div>Niedrigste Temperatur: <span class="cold">{{historyData.minimumTemperature.toFixed(2)}}</span> °C</div>
+        <div>Gemessen am: {{historyData.minimumTemperatureReceivedTime | date: 'dd.MM.yyyy HH:mm:ss'}}</div>
+      </div>
+    </div>
+  </ng-container>
+
+
   <div class="weather-widget-container">
     <iframe
       title="Wetter Dättwil"
