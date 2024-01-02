@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	  <NoWarn>ASP0023</NoWarn>
     <UserSecretsId>2761ebe9-081b-442f-8195-97b88434d81e</UserSecretsId>
   </PropertyGroup>
 
