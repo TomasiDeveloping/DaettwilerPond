@@ -16,7 +16,7 @@ public class FishingLicenseConfiguration : IEntityTypeConfiguration<FishingLicen
         builder.Property(l => l.CreatedAt).IsRequired();
         builder.Property(l => l.ExpiresOn).IsRequired();
         builder.Property(l => l.IsPaid).IsRequired().HasMaxLength(200);
-        builder.Property(l => l.IssuedBy).IsRequired();
+        builder.Property(l => l.IssuedBy).HasMaxLength(100).IsRequired();
         builder.Property(l => l.UpdatedAt).IsRequired(false);
         builder.Property(l => l.Year).IsRequired();
         builder.Property(l => l.IsActive).IsRequired();
