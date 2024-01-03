@@ -11,6 +11,8 @@ public class CatchConfiguration : IEntityTypeConfiguration<Catch>
         builder.HasKey(cs => cs.Id);
         builder.Property(cs => cs.CatchDate).IsRequired();
         builder.Property(cs => cs.HoursSpent).IsRequired();
+        builder.Property(c => c.StartFishing).IsRequired(false);
+        builder.Property(c => c.EndFishing).IsRequired(false);
         builder.HasOne(cs => cs.FishingLicense)
             .WithMany(l => l.Catches)
             .HasForeignKey(cs => cs.FishingLicenseId);
