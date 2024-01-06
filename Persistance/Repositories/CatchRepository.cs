@@ -1,4 +1,5 @@
-﻿using Application.DataTransferObjects.Catch;
+﻿using System.Runtime.InteropServices.JavaScript;
+using Application.DataTransferObjects.Catch;
 using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -27,6 +28,33 @@ public class CatchRepository(DaettwilerPondDbContext context, IMapper mapper) : 
         return fishCatch;
     }
 
+    public async Task<CatchDto> GetCatchForCurrentDayAsync(Guid licenceId)
+    {
+        var date = DateTime.Now;
+        var fishCatch = await context.Catches
+            .ProjectTo<CatchDto>(mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(c =>
+                c.FishingLicenseId == licenceId && c.CatchDate.Year == date.Year && c.CatchDate.Month == date.Month &&
+                c.CatchDate.Day == date.Day);
+        return fishCatch;
+    }
+
+    public async Task<YearlyCatch> GetYearlyCatchAsync(Guid licenceId)
+    {
+        var currentYear = DateTime.Now.Year;
+        var yearlyCatch = await context.FishingLicenses
+            .Include(l => l.Catches)
+            .ThenInclude(c => c.CatchDetails)
+            .Where(l => l.Id == licenceId && l.Year == currentYear)
+            .Select(x => new YearlyCatch()
+            {
+                HoursSpent = x.Catches.Sum(c => c.HoursSpent),
+                FishCatches = x.Catches.SelectMany(d => d.CatchDetails).Count()
+            })
+            .FirstOrDefaultAsync();
+        return yearlyCatch;
+    }
+
     public async Task<CatchDto> UpdateCatchAsync(UpdateCatchDto updateCatchDto)
     {
         var catchToUpdate = await context.Catches.FirstOrDefaultAsync(c => c.Id == updateCatchDto.Id);
@@ -52,6 +80,44 @@ public class CatchRepository(DaettwilerPondDbContext context, IMapper mapper) : 
         await context.Catches.AddAsync(newCatch);
         await context.SaveChangesAsync();
         return mapper.Map<CatchDto>(newCatch);
+    }
+
+    public async Task<CatchDto> StartCatchDayAsync(Guid licenceId)
+    {
+        var newCatch = new Catch()
+        {
+            CatchDate = DateTime.Now,
+            FishingLicenseId = licenceId,
+            HoursSpent = 0,
+            StartFishing = DateTime.Now,
+        };
+        await context.Catches.AddAsync(newCatch);
+        await context.SaveChangesAsync();
+        return mapper.Map<CatchDto>(newCatch);
+    }
+
+    public async Task<CatchDto> StopCatchDayAsync(Guid catchId)
+    {
+        var currentCatch = await context.Catches.FirstOrDefaultAsync(c => c.Id == catchId);
+        if (currentCatch is null) return null;
+        if (!currentCatch.StartFishing.HasValue) throw new ArgumentException("No Start date");
+        currentCatch.EndFishing = DateTime.Now;
+        currentCatch.HoursSpent += CalculateHoursSpent(currentCatch.StartFishing.Value, DateTime.Now);
+        await context.SaveChangesAsync();
+        return mapper.Map<CatchDto>(currentCatch);
+    }
+
+    public async Task<CatchDto> ContinueFishingDayAsync(Guid catchId)
+    {
+        var currentCatch = await context.Catches.FirstOrDefaultAsync(c => c.Id == catchId);
+        if (currentCatch is null) return null;
+        var currentDate = DateTime.Now;
+        if (currentCatch.CatchDate.Year != currentDate.Year ||
+            currentCatch.CatchDate.Day != currentDate.Day) return null;
+        currentCatch.StartFishing = currentDate;
+        currentCatch.EndFishing = null;
+        await context.SaveChangesAsync();
+        return mapper.Map<CatchDto>(currentCatch);
     }
 
     public async Task<bool> DeleteCatchAsync(Guid catchId)

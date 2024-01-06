@@ -25,6 +25,9 @@ import {SyncfusionModule} from "./sharedModules/syncfusion.module";
 import {DownloadComponent} from './pages/download/download.component';
 import {JwtModule} from "@auth0/angular-jwt";
 import {GermanMonthPipe} from "./pipes/german-month.pipe";
+import { StatisticComponent } from './pages/statistic/statistic.component';
+import { StatisticAddCatchComponent } from './pages/statistic/statistic-add-catch/statistic-add-catch.component';
+import { StatisticManualRecordingComponent } from './pages/statistic/statistic-manual-recording/statistic-manual-recording.component';
 
 
 @NgModule({
@@ -41,6 +44,9 @@ import {GermanMonthPipe} from "./pipes/german-month.pipe";
     AccountComponent,
     ChangePasswordComponent,
     DownloadComponent,
+    StatisticComponent,
+    StatisticAddCatchComponent,
+    StatisticManualRecordingComponent,
   ],
     imports: [
         BrowserModule,

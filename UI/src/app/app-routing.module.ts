@@ -10,6 +10,7 @@ import {AccountComponent} from "./pages/user/account/account.component";
 import {ChangePasswordComponent} from "./pages/user/change-password/change-password.component";
 import {adminGuard} from "./guards/admin.guard";
 import {DownloadComponent} from "./pages/download/download.component";
+import {StatisticComponent} from "./pages/statistic/statistic.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -23,6 +24,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [authGuard]
   },
+  {path: 'statistik', component: StatisticComponent, canActivate:[authGuard]},
   {path: 'resetPassword', component: PasswordResetComponent},
   {path: 'konto', component: AccountComponent, canActivate: [authGuard]},
   {path: 'password-aendern', component: ChangePasswordComponent, canActivate: [authGuard]},

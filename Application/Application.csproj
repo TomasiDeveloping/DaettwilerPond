@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataTransferObjects\Catch\" />
     <Folder Include="DataTransferObjects\CatchDetail\" />
   </ItemGroup>
 

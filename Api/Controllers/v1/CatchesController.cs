@@ -30,6 +30,86 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
         }
     }
 
+    [HttpGet("[action]/{licenceId:guid}")]
+    public async Task<ActionResult<CatchDto>> GetCatchForCurrentDay(Guid licenceId)
+    {
+        try
+        {
+            var currentCatch = await catchRepository.GetCatchForCurrentDayAsync(licenceId);
+            return currentCatch is null ? NoContent() : Ok(currentCatch);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(GetCatchForCurrentDay)}");
+        }
+    }
+
+    [HttpGet("[action]/{licenceId:guid}")]
+    public async Task<ActionResult<CatchDto>> StartFishingDay(Guid licenceId)
+    {
+        try
+        {
+            var currentFishDay = await catchRepository.StartCatchDayAsync(licenceId);
+            return currentFishDay is null ? BadRequest("Fischertag konnte nicht erstellt werden") : Ok(currentFishDay);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(StartFishingDay)}");
+        }
+    }
+
+    [HttpGet("[action]/{catchId:guid}")]
+    public async Task<ActionResult<CatchDto>> StopFishingDay(Guid catchId)
+    {
+        try
+        {
+            var currentFishDay = await catchRepository.StopCatchDayAsync(catchId);
+            return currentFishDay is null ? BadRequest("Fischertag konnte nicht gestoppt werden") : Ok(currentFishDay);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(StopFishingDay)}");
+        }
+    }
+
+    [HttpGet("[action]/{catchId:guid}")]
+    public async Task<ActionResult<CatchDto>> ContinueFishingDay(Guid catchId)
+    {
+        try
+        {
+            var currentFishDay = await catchRepository.ContinueFishingDayAsync(catchId);
+            return currentFishDay is null ? BadRequest("Fischertag konnte nicht neu gestartet werden") : Ok(currentFishDay);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(ContinueFishingDay)}");
+        }
+    }
+
+    [HttpGet("[action]/{licenceId:guid}")]
+    public async Task<ActionResult<YearlyCatch>> GetYearlyCatch(Guid licenceId)
+    {
+        try
+        {
+            var yearlyCatch = await catchRepository.GetYearlyCatchAsync(licenceId);
+            return yearlyCatch is null ? NoContent() : Ok(yearlyCatch);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(GetYearlyCatch)}");
+        }
+    }
+
     [HttpPost]
     public async Task<ActionResult<CatchDto>> CreateCatch(CreateCatchDto createCatchDto)
     {
@@ -47,6 +127,7 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
                 $"Something went wrong in {nameof(CreateCatch)}");
         }
     }
+
 
     [HttpPut("{catchId:guid}")]
     public async Task<ActionResult<CatchDto>> UpdateCatch(Guid catchId, UpdateCatchDto updateCatchDto)

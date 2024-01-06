@@ -1,0 +1,30 @@
+<div class="container">
+  <h1 class="text-center">Fangstatistik</h1>
+  <div class="user-statistic-container">
+    <div>Angelstunden 2024: {{yearlyCatch.hoursSpent}} Stunden</div>
+    <div>Gefangene Fische 2024: {{yearlyCatch.fishCatches}} Stück</div>
+  </div>
+  @if (!dayStart) {
+    <div class="d-grid gap-2 col-6 mx-auto mt-5">
+      <button class="btn btn-success" type="button" (click)="onStartDay()">Fischertag starten</button>
+      <button class="btn btn-primary" type="button" (click)="onAddManual()">Manuell erfassen</button>
+    </div>
+  } @else if (isDayStopped) {
+    <div class="d-grid gap-2 col-6 mx-auto mt-5">
+      <button class="btn btn-success" type="button" (click)="onContinue()">Weiter Angeln</button>
+    </div>
+  }
+  @else {
+    <div class="d-grid gap-2 col-6 mx-auto mt-5">
+      <button class="btn btn-warning" type="button" (click)="onStopDay()">Fischertag stoppen</button>
+      <button class="btn btn-primary" type="button" (click)="onAddCatch()">Fang hinzufügen</button>
+    </div>
+  }
+  @if (currentCatch) {
+    <div class="current-catch">
+      <h3>Detail für {{currentCatch.catchDate | date: 'dd.MM.yyyy'}}</h3>
+      <div>Stunden am Wasser: {{currentCatch.hoursSpent}}</div>
+      <div>Gefangene Fische: {{currentCatch.amountFishCatch}}</div>
+    </div>
+  }
+</div>
