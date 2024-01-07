@@ -1,4 +1,6 @@
-﻿namespace Application.DataTransferObjects.Catch;
+﻿using Application.DataTransferObjects.CatchDetail;
+
+namespace Application.DataTransferObjects.Catch;
 
 public class CatchDto
 {
@@ -9,4 +11,5 @@ public class CatchDto
     public DateTime? EndFishing { get; set; }
     public Guid FishingLicenseId { get; set; }
     public int AmountFishCatch { get; set; }
+    public ICollection<CatchDetailDto> CatchDetails{ get; set; }
 }

@@ -13,7 +13,7 @@ export class StatisticManualRecordingComponent {
 
   public manualCatchForm: FormGroup;
   public hours: number[] = [];
-  public minutes: number[] = [0, 25, 30, 45];
+  public minutes: number[] = [0, 25, 50, 75];
   public maxDateAllowed = new Date().toISOString().substring(0,10);
   public minDateAllowed = new Date(new Date().getFullYear(), 0, 1).toISOString().substring(0,10);
   private readonly _fishCatchService = inject(FishCatchService);
@@ -51,6 +51,4 @@ export class StatisticManualRecordingComponent {
   onClose() {
     this._dialogRef.close();
   }
-
-  protected readonly Date = Date;
 }

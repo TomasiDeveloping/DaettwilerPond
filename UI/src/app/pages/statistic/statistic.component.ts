@@ -66,7 +66,7 @@ ngOnInit() {
   this._catchService.stopFishingCatch(this.currentCatch?.id).subscribe({
     next: ((response) => {
       if (response) {
-        this.currentCatch = response;
+        this.currentCatch!.hoursSpent = response.hoursSpent;
         this.isDayStopped = true;
       }
     }),
@@ -95,6 +95,13 @@ ngOnInit() {
       autoFocus: false,
       data: {catchId: this.currentCatch.id}
     });
+  dialogRef.afterClosed().subscribe({
+    next: ((newCatch: boolean) => {
+      if (newCatch) {
+        this.currentCatch!.amountFishCatch!++;
+      }
+    })
+  });
   }
 
   onContinue() {
@@ -104,11 +111,18 @@ ngOnInit() {
     this._catchService.continueFishingCatch(this.currentCatch.id).subscribe({
       next: ((response) => {
         if (response) {
-          this.currentCatch = response;
           this.isDayStopped = false;
           this.dayStart = true;
         }
       })
     });
+  }
+
+  onDeleteCatch() {
+
+  }
+
+  onEditCatch() {
+
   }
 }

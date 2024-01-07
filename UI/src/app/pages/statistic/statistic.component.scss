@@ -18,3 +18,25 @@
   margin-top: 50px;
   align-items: center;
 }
+.catch-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.time-icon {
+  font-size: larger;
+}
+.catch-amount {
+  font-size: larger;
+}
+.fish-detail-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 500px;
+  margin: auto;
+  border: 1px solid black;
+  padding: 5px;
+}
+.icon-edit {
+  cursor: pointer;
+}

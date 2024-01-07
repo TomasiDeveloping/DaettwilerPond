@@ -11,5 +11,5 @@ public class FishType
     public bool HasClosedSeason { get; set; }
     public int? MinimumSize { get; set; }
     public bool HasMinimumSize { get; set; }
-    public CatchDetail CatchDetail { get; set; }
+    public ICollection<CatchDetail> CatchDetails { get; set; }
 }

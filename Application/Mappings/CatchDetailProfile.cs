@@ -8,7 +8,8 @@ public class CatchDetailProfile : Profile
 {
     public CatchDetailProfile()
     {
-        CreateMap<CatchDetail, CatchDetailDto>();
+        CreateMap<CatchDetail, CatchDetailDto>()
+            .ForMember(des => des.FishTypeName, opt => opt.MapFrom(src => src.FishType.Name));
 
         CreateMap<CreateCatchDetailDto, CatchDetail>()
             .ForMember(des => des.Id, opt => opt.MapFrom(src => new Guid()));

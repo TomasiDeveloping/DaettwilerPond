@@ -15,8 +15,9 @@ public class CatchDetailConfiguration : IEntityTypeConfiguration<CatchDetail>
             .WithMany(cs => cs.CatchDetails)
             .HasForeignKey(cd => cd.CatchId)
             .OnDelete(DeleteBehavior.NoAction);
-        builder.HasOne(cs => cs.FishType)
-            .WithOne(ft => ft.CatchDetail)
-            .HasForeignKey<CatchDetail>(cd => cd.FishTypeId);
+        builder.HasOne(cd => cd.FishType)
+            .WithMany(ft => ft.CatchDetails)
+            .HasForeignKey(cd => cd.FishTypeId)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

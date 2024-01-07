@@ -54,7 +54,7 @@ export class StatisticAddCatchComponent {
     });
   }
 
-  onClose(b: boolean) {
-    this._dialogRef.close();
+  onClose(newCatch: boolean) {
+    this._dialogRef.close(newCatch);
   }
 }
