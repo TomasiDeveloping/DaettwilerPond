@@ -25,9 +25,12 @@ import {SyncfusionModule} from "./sharedModules/syncfusion.module";
 import {DownloadComponent} from './pages/download/download.component';
 import {JwtModule} from "@auth0/angular-jwt";
 import {GermanMonthPipe} from "./pipes/german-month.pipe";
-import { StatisticComponent } from './pages/statistic/statistic.component';
-import { StatisticAddCatchComponent } from './pages/statistic/statistic-add-catch/statistic-add-catch.component';
-import { StatisticManualRecordingComponent } from './pages/statistic/statistic-manual-recording/statistic-manual-recording.component';
+import {CatchDayComponent} from "./pages/catchDay/catchDay.component";
+import {CatchDayAddCatchComponent} from "./pages/catchDay/catchDay-add-catch/catchDay-add-catch.component";
+import {
+  CatchDayManualRecordingComponent
+} from "./pages/catchDay/catchDay-manual-recording/catchDay-manual-recording.component";
+import { CatchDayEditCatchComponent } from './pages/catchDay/catch-day-edit-catch/catch-day-edit-catch.component';
 
 
 @NgModule({
@@ -44,9 +47,10 @@ import { StatisticManualRecordingComponent } from './pages/statistic/statistic-m
     AccountComponent,
     ChangePasswordComponent,
     DownloadComponent,
-    StatisticComponent,
-    StatisticAddCatchComponent,
-    StatisticManualRecordingComponent,
+    CatchDayComponent,
+    CatchDayAddCatchComponent,
+    CatchDayManualRecordingComponent,
+    CatchDayEditCatchComponent,
   ],
     imports: [
         BrowserModule,

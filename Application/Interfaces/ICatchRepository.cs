@@ -5,6 +5,7 @@ namespace Application.Interfaces;
 public interface ICatchRepository
 {
     Task<List<CatchDto>> GetCatchesByLicenceIdAsync(Guid licenceId);
+    Task<bool> CheckCatchDateExistsAsync(Guid licenceId, DateTime catchDate);
     Task<CatchDto> GetCatchAsync(Guid catchId);
     Task<CatchDto> GetCatchForCurrentDayAsync(Guid licenceId);
     Task<YearlyCatch> GetYearlyCatchAsync(Guid licenceId);

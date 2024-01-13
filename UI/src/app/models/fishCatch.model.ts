@@ -1,3 +1,5 @@
+import {CatchDetailModel} from "./catchDetail.model";
+
 export interface FishCatchModel{
   id: string;
   catchDate: Date;
@@ -6,4 +8,5 @@ export interface FishCatchModel{
   endFishing?: Date;
   fishingLicenseId: string;
   amountFishCatch?: number;
+  catchDetails?: CatchDetailModel[];
 }

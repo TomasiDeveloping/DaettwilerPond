@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-using Application.DataTransferObjects.Catch;
+﻿using Application.DataTransferObjects.Catch;
 using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -18,6 +17,16 @@ public class CatchRepository(DaettwilerPondDbContext context, IMapper mapper) : 
             .Where(c => c.FishingLicenseId == licenceId)
             .ToListAsync();
         return catches;
+    }
+
+    public async Task<bool> CheckCatchDateExistsAsync(Guid licenceId, DateTime catchDate)
+    {
+        var catchDay = await context.Catches
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c =>
+                c.FishingLicenseId == licenceId && c.CatchDate.Year == catchDate.Year &&
+                c.CatchDate.Day == catchDate.Day);
+        return catchDay != null;
     }
 
     public async Task<CatchDto> GetCatchAsync(Guid catchId)

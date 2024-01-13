@@ -110,6 +110,22 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
         }
     }
 
+    [HttpGet("[action]/{licenceId:guid}/{catchDate}")]
+    public async Task<ActionResult<bool>> CheckCatchDateExists(Guid licenceId, string catchDate)
+    {
+        try
+        {
+            var date = DateTime.Parse(catchDate);
+            return await catchRepository.CheckCatchDateExistsAsync(licenceId, date);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(CheckCatchDateExists)}");
+        }
+    }
+
     [HttpPost]
     public async Task<ActionResult<CatchDto>> CreateCatch(CreateCatchDto createCatchDto)
     {

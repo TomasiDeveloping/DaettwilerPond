@@ -8,19 +8,20 @@ import {CatchDetailModel} from "../../../models/catchDetail.model";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-statistic-add-catch',
-  templateUrl: './statistic-add-catch.component.html',
-  styleUrl: './statistic-add-catch.component.scss'
+  selector: 'app-catchDay-add-catch',
+  templateUrl: './catchDay-add-catch.component.html',
+  styleUrl: './catchDay-add-catch.component.scss'
 })
-export class StatisticAddCatchComponent {
+export class CatchDayAddCatchComponent {
 
-  private readonly _dialogRef: MatDialogRef<StatisticAddCatchComponent> = inject(MatDialogRef<StatisticAddCatchComponent>);
+  catchForm!: FormGroup;
+  public fishTypes: FishType[] = [];
+  private readonly _dialogRef: MatDialogRef<CatchDayAddCatchComponent> = inject(MatDialogRef<CatchDayAddCatchComponent>);
   private readonly _fishTypeService: FishTypeService = inject(FishTypeService);
   private readonly _catchDetailService: CatchDetailService = inject(CatchDetailService);
   private readonly _toastr: ToastrService = inject(ToastrService);
-  catchForm!: FormGroup;
-  public fishTypes: FishType[] = [];
-  constructor(@Inject(MAT_DIALOG_DATA) public data: {catchId: string}) {
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { catchId: string }) {
     this.catchForm = new FormGroup({
       catchId: new FormControl<string>(data.catchId, [Validators.required]),
       fishTypeId: new FormControl<string>('', [Validators.required]),
@@ -54,7 +55,7 @@ export class StatisticAddCatchComponent {
     });
   }
 
-  onClose(newCatch: boolean) {
-    this._dialogRef.close(newCatch);
+  onClose(reload: boolean) {
+    this._dialogRef.close(reload);
   }
 }

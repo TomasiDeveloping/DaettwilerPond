@@ -1,4 +1,6 @@
-﻿namespace Application.DataTransferObjects.Catch;
+﻿using Application.DataTransferObjects.CatchDetail;
+
+namespace Application.DataTransferObjects.Catch;
 
 public class CreateCatchDto
 {

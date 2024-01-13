@@ -15,4 +15,12 @@ export class CatchDetailService {
   createCatchDetail(catchDetail: CatchDetailModel): Observable<CatchDetailModel> {
     return this._httpClient.post<CatchDetailModel>(this._serviceUrl, catchDetail);
   }
+
+  updateCatchDetail(catchDetailId: string, catchDetail: CatchDetailModel): Observable<CatchDetailModel> {
+    return this._httpClient.put<CatchDetailModel>(this._serviceUrl + catchDetailId, catchDetail);
+  }
+
+  deleteCatchDetail(catchDetailId: string): Observable<boolean> {
+    return this._httpClient.delete<boolean>(this._serviceUrl + catchDetailId);
+  }
 }
