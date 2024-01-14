@@ -1,4 +1,5 @@
-﻿using Application.DataTransferObjects.Catch;
+﻿using System.Globalization;
+using Application.DataTransferObjects.Catch;
 using Application.Interfaces;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
@@ -115,7 +116,7 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
     {
         try
         {
-            var date = DateTime.Parse(catchDate);
+            var date = DateTime.ParseExact(catchDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             return await catchRepository.CheckCatchDateExistsAsync(licenceId, date);
         }
         catch (Exception e)
@@ -123,6 +124,38 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(CheckCatchDateExists)}");
+        }
+    }
+
+    [HttpGet("[action]/{licenceId:guid}")]
+    public async Task<ActionResult<List<DetailYearlyCatch>>> GetDetailYearlyCatches(Guid licenceId)
+    {
+        try
+        {
+            var detailCatches = await catchRepository.GetDetailYearlyCatchAsync(licenceId);
+            return detailCatches.Any() ? Ok(detailCatches) : NoContent();
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(GetDetailYearlyCatches)}");
+        }
+    }
+
+    [HttpGet("[action]/{licenceId:guid}/{month:int}")]
+    public async Task<ActionResult<List<CatchDto>>> GetCatchesForMonth(Guid licenceId, int month)
+    {
+        try
+        {
+            var monthCatches = await catchRepository.GetCatchesForMonthAsync(licenceId, month);
+            return monthCatches.Any() ? Ok(monthCatches) : NoContent();
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(GetCatchesForMonth)}");
         }
     }
 

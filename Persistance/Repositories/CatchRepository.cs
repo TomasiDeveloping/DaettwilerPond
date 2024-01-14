@@ -25,7 +25,7 @@ public class CatchRepository(DaettwilerPondDbContext context, IMapper mapper) : 
             .AsNoTracking()
             .FirstOrDefaultAsync(c =>
                 c.FishingLicenseId == licenceId && c.CatchDate.Year == catchDate.Year &&
-                c.CatchDate.Day == catchDate.Day);
+                c.CatchDate.Month == catchDate.Month && c.CatchDate.Day == catchDate.Day);
         return catchDay != null;
     }
 
@@ -35,6 +35,16 @@ public class CatchRepository(DaettwilerPondDbContext context, IMapper mapper) : 
             .ProjectTo<CatchDto>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(c => c.Id == catchId);
         return fishCatch;
+    }
+
+    public async Task<List<CatchDto>> GetCatchesForMonthAsync(Guid licenceId, int month)
+    {
+        var monthCatches = await context.Catches
+            .ProjectTo<CatchDto>(mapper.ConfigurationProvider)
+            .Where(c => c.FishingLicenseId == licenceId && c.CatchDate.Month == month)
+            .OrderBy(c => c.CatchDate)
+            .ToListAsync();
+        return monthCatches;
     }
 
     public async Task<CatchDto> GetCatchForCurrentDayAsync(Guid licenceId)
@@ -62,6 +72,22 @@ public class CatchRepository(DaettwilerPondDbContext context, IMapper mapper) : 
             })
             .FirstOrDefaultAsync();
         return yearlyCatch;
+    }
+
+    public async Task<List<DetailYearlyCatch>> GetDetailYearlyCatchAsync(Guid licenceId)
+    {
+        var detailCatches = await context.Catches
+            .Include(c => c.CatchDetails)
+            .Where(c => c.FishingLicenseId == licenceId)
+            .GroupBy(x => x.CatchDate.Month)
+            .Select(group => new DetailYearlyCatch()
+            {
+                Month = group.Key,
+                HoursSpent = group.Sum(c => c.HoursSpent),
+                Fishes = group.SelectMany(c => c.CatchDetails).Count()
+            })
+            .ToListAsync();
+        return detailCatches;
     }
 
     public async Task<CatchDto> UpdateCatchAsync(UpdateCatchDto updateCatchDto)

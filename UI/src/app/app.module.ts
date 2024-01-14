@@ -31,6 +31,8 @@ import {
   CatchDayManualRecordingComponent
 } from "./pages/catchDay/catchDay-manual-recording/catchDay-manual-recording.component";
 import { CatchDayEditCatchComponent } from './pages/catchDay/catch-day-edit-catch/catch-day-edit-catch.component';
+import { CatchStatisticsComponent } from './pages/catch-statistics/catch-statistics.component';
+import { CatchStatisticsMonthDetailComponent } from './pages/catch-statistics/catch-statistics-month-detail/catch-statistics-month-detail.component';
 
 
 @NgModule({
@@ -51,6 +53,8 @@ import { CatchDayEditCatchComponent } from './pages/catchDay/catch-day-edit-catc
     CatchDayAddCatchComponent,
     CatchDayManualRecordingComponent,
     CatchDayEditCatchComponent,
+    CatchStatisticsComponent,
+    CatchStatisticsMonthDetailComponent,
   ],
     imports: [
         BrowserModule,

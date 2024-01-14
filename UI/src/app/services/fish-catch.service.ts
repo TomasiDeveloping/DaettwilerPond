@@ -5,6 +5,7 @@ import {FishCatchModel} from "../models/fishCatch.model";
 import {Observable} from "rxjs";
 import {YearlyCatchModel} from "../models/yearlyCatch.model";
 import {ManualCatchModel} from "../models/manualCatch.model";
+import {DetailYearlyCatchModel} from "../models/detailYearlyCatch.model";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,14 @@ export class FishCatchService {
 
   getYearlyCatch(licenceId: string): Observable<YearlyCatchModel> {
     return this._httpClient.get<YearlyCatchModel>(this._serviceUrl + 'GetYearlyCatch/' + licenceId);
+  }
+
+  getDetailYearlyCatches(licenceId: string): Observable<DetailYearlyCatchModel[]> {
+    return this._httpClient.get<DetailYearlyCatchModel[]>(this._serviceUrl + 'GetDetailYearlyCatches/' + licenceId);
+  }
+
+  getCatchesForMonth(licenceId: string, month: number): Observable<FishCatchModel[]> {
+    return this._httpClient.get<FishCatchModel[]>(this._serviceUrl + 'GetCatchesForMonth/' + licenceId + '/' + month);
   }
 
   updateCatch(fishCatch: FishCatchModel): Observable<FishCatchModel> {

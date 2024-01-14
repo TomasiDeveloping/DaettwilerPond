@@ -22,6 +22,10 @@
           </a>
         </li>
         <li *ngIf="isUserLoggedIn" class="nav-item">
+          <a (click)="isShown = false" class="nav-link" routerLink="/fangstatistik" routerLinkActive="active">Fangstatistik
+          </a>
+        </li>
+        <li *ngIf="isUserLoggedIn" class="nav-item">
           <a (click)="isShown = false" class="nav-link" routerLink="/downloads" routerLinkActive="active">Downloads
           </a>
         </li>

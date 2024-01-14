@@ -7,8 +7,10 @@ public interface ICatchRepository
     Task<List<CatchDto>> GetCatchesByLicenceIdAsync(Guid licenceId);
     Task<bool> CheckCatchDateExistsAsync(Guid licenceId, DateTime catchDate);
     Task<CatchDto> GetCatchAsync(Guid catchId);
+    Task<List<CatchDto>> GetCatchesForMonthAsync(Guid licenceId, int month);
     Task<CatchDto> GetCatchForCurrentDayAsync(Guid licenceId);
     Task<YearlyCatch> GetYearlyCatchAsync(Guid licenceId);
+    Task<List<DetailYearlyCatch>> GetDetailYearlyCatchAsync(Guid licenceId);
     Task<CatchDto> UpdateCatchAsync(UpdateCatchDto updateCatchDto);
     Task<CatchDto> CreateCatchAsync(CreateCatchDto createCatchDto);
     Task<CatchDto> StartCatchDayAsync(Guid licenceId);
