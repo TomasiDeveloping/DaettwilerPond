@@ -158,7 +158,7 @@ public class CatchRepository(DaettwilerPondDbContext context, IMapper mapper) : 
     public async Task<bool> DeleteCatchAsync(Guid catchId)
     {
         var catchToDelete = await context.Catches
-            .Include(@catch => @catch.CatchDetails)
+            .Include (c => c.CatchDetails)
             .FirstOrDefaultAsync(c => c.Id == catchId);
         if (catchToDelete is null) return false;
         if (catchToDelete.CatchDetails.Any())
