@@ -17,27 +17,32 @@
             <hr>
             <p class="text-center text-info">{{monthCatch.catchDate | date: 'dd.MM.yyyy'}}</p>
             <div class="d-flex justify-content-between mt-2 mb-4">
-              <button class="btn btn-primary">Tag bearbeiten</button>
-              <button class="btn btn-danger">Tag löschen</button>
+              <button (click)="onEditDay(monthCatch)" class="btn btn-primary">Tag bearbeiten</button>
+              <button (click)="onDeleteDay(monthCatch)" class="btn btn-danger">Tag löschen</button>
             </div>
             <hr>
             @if (monthCatch.catchDetails && monthCatch.catchDetails.length > 0) {
               <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped table-bordered">
                   <caption></caption>
                   <thead>
                   <tr>
                     <th scope="col">Fischart</th>
+                    <th scope="col">Mageninhalt</th>
                     <th scope="col">Bearbeiten</th>
-                    <th scope="col">Löschen</th>
                   </tr>
                   </thead>
                   <tbody>
                     @for (catchDetail of monthCatch.catchDetails; track catchDetail.id) {
                       <tr>
                         <td>{{catchDetail.fishTypeName}}</td>
-                        <td><button class="btn btn-sm btn-secondary"><i class="bi bi-pencil-fill"></i></button></td>
-                        <td><button class="btn btn-sm btn-danger"><i class="bi bi-trash3-fill"></i></button></td>
+                        <td>{{catchDetail.hadCrabs ? 'Ja' : 'Nein'}}</td>
+                        <td>
+                          <div class="d-flex justify-content-between">
+                            <button (click)="onEditDetail(catchDetail)" class="btn btn-sm btn-secondary"><i class="bi bi-pencil-fill"></i></button>
+                            <button (click)="onDeleteDetail(catchDetail)" class="btn btn-sm btn-danger"><i class="bi bi-trash3-fill"></i></button>
+                          </div>
+                        </td>
                       </tr>
                     }
                   </tbody>
@@ -46,6 +51,9 @@
             } @else {
               <div class="text-center">Keine gefangenen Fische</div>
             }
+            <div class="d-flex justify-content-center">
+              <button (click)="onAddCatchDetail(monthCatch.id)" class="btn btn-sm btn-secondary">Fang hinzufügen</button>
+            </div>
           </div>
         </div>
       </div>

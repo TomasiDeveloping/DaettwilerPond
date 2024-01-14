@@ -35,8 +35,8 @@ export class FishCatchService {
     return this._httpClient.get<FishCatchModel[]>(this._serviceUrl + 'GetCatchesForMonth/' + licenceId + '/' + month);
   }
 
-  updateCatch(fishCatch: FishCatchModel): Observable<FishCatchModel> {
-    return this._httpClient.put<FishCatchModel>(this._serviceUrl + fishCatch.id, fishCatch);
+  updateCatch(fishCatchId: string, fishCatch: FishCatchModel): Observable<FishCatchModel> {
+    return this._httpClient.put<FishCatchModel>(this._serviceUrl + fishCatchId, fishCatch);
   }
 
   createFishCatch(manualCatch: ManualCatchModel): Observable<FishCatchModel> {
@@ -53,5 +53,9 @@ export class FishCatchService {
 
   continueFishingCatch(catchId: string): Observable<FishCatchModel> {
     return this._httpClient.get<FishCatchModel>(this._serviceUrl + 'ContinueFishingDay/' + catchId);
+  }
+
+  deleteFishCatch(fishCatchId: string): Observable<boolean> {
+    return this._httpClient.delete<boolean>(this._serviceUrl + fishCatchId);
   }
 }

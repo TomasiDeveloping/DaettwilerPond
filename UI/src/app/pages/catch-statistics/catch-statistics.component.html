@@ -14,7 +14,7 @@
             <div class="text-center"><b>Fische:</b></div>
             <div class="text-center">{{checkCatch(index + 1)?.fishes ?? 0}}</div>
             <div class="text-center">
-              <a (click)="onMonthDetail(index)" class="btn btn-primary">Details</a>
+              <button [disabled]="!checkCatch(index + 1)?.fishes" (click)="onMonthDetail(index)" class="btn btn-primary">Details</button>
             </div>
           </div>
         </div>

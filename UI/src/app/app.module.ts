@@ -33,6 +33,7 @@ import {
 import { CatchDayEditCatchComponent } from './pages/catchDay/catch-day-edit-catch/catch-day-edit-catch.component';
 import { CatchStatisticsComponent } from './pages/catch-statistics/catch-statistics.component';
 import { CatchStatisticsMonthDetailComponent } from './pages/catch-statistics/catch-statistics-month-detail/catch-statistics-month-detail.component';
+import { EditCatchDayDialogComponent } from './pages/catch-statistics/catch-statistics-month-detail/edit-catch-day-dialog/edit-catch-day-dialog.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { CatchStatisticsMonthDetailComponent } from './pages/catch-statistics/ca
     CatchDayEditCatchComponent,
     CatchStatisticsComponent,
     CatchStatisticsMonthDetailComponent,
+    EditCatchDayDialogComponent,
   ],
     imports: [
         BrowserModule,
