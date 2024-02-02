@@ -20,6 +20,10 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.15.0 (2024-02-02)
+- Implemented online catch statistics
+- Applied various security updates
+- Added functionality to record fishing days and enabled catch statistics, currently restricted to admins only
 ### 1.14.0 (2024-01-01)
 - Historical temperature data
 - Lowest, highest and average for current year and month
