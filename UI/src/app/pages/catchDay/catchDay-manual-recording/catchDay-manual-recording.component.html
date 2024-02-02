@@ -1,0 +1,82 @@
+<h1 mat-dialog-title>Manuell erfassen</h1>
+<div mat-dialog-content>
+  <form [formGroup]="manualCatchForm">
+    <div class="form-group">
+      <label class="form-label" for="catchDate">Angeltag</label>
+      <input [ngClass]="{
+            'is-invalid': f.get('catchDate')?.invalid && (f.get('catchDate')?.dirty || f.get('catchDate')?.touched),
+      'is-valid': f.get('catchDate')?.valid
+      }" class="form-control" id="catchDate" formControlName="catchDate" type="date" min="{{minDateAllowed}}"
+             max="{{maxDateAllowed}}">
+      <div *ngIf="f.get('catchDate')?.errors && (f.get('catchDate')?.dirty || f.get('catchDate')?.touched)"
+           class="invalid-feedback">
+        <p *ngIf="f.get('catchDate')?.hasError('required')">Datum ist ein Pflichtfeld</p>
+        <p *ngIf="f.get('catchDate')?.hasError('catchDayExists')">Angeltag bereits erfasst</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label class="form-label" for="hoursSpent">Stunden</label>
+        <select [ngClass]="{
+        'is-invalid': f.get('hoursSpent')?.invalid && (f.get('hoursSpent')?.dirty || f.get('hoursSpent')?.touched),
+        'is-valid': f.get('hoursSpent')?.valid
+        }" class="form-select" id="hoursSpent" formControlName="hoursSpent">
+          <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
+        </select>
+        <div *ngIf="f.get('hoursSpent')?.errors && (f.get('hoursSpent')?.dirty || f.get('hoursSpent')?.touched)"
+             class="invalid-feedback">
+          <p *ngIf="f.get('hoursSpent')?.hasError('required')">Stunden ist ein Pflichtfeld</p>
+        </div>
+      </div>
+      <div class="col">
+        <label class="form-label" for="minutesSpent">Minuten</label>
+        <select [ngClass]="{
+        'is-invalid': f.get('minutesSpent')?.invalid && (f.get('minutesSpent')?.dirty || f.get('minutesSpent')?.touched)
+        }" class="form-select" id="minutesSpent" formControlName="minutesSpent">
+          <option *ngFor="let minute of minutes" [value]="minute">{{ minute }}</option>
+        </select>
+        <div *ngIf="f.get('minutesSpent')?.errors && (f.get('minutesSpent')?.dirty || f.get('minutesSpent')?.touched)"
+             class="invalid-feedback">
+          <p *ngIf="f.get('minutesSpent')?.hasError('required')">Minuten ist ein Pflichtfeld</p>
+        </div>
+      </div>
+    </div>
+    <ng-container formArrayName="catchDetails">
+      <div *ngFor="let f of catchDetails.controls; let i=index">
+        <ng-container [formGroupName]="i">
+          <div class="form-group">
+            <label for="fishTypeId" class="form-label">Fischart</label>
+            <select [ngClass]="{
+            'is-invalid': catchDetails.controls[i].get('fishTypeId')?.invalid && (catchDetails.controls[i].get('fishTypeId')?.dirty || catchDetails.controls[i].get('fishTypeId')?.touched),
+            'is-valid': catchDetails.controls[i].get('fishTypeId')?.valid
+            }" class="form-select" id="fishTypeId" formControlName="fishTypeId">
+              <option *ngFor="let fishType of fishTypes" [ngValue]="fishType.id">{{ fishType.name }}</option>
+            </select>
+            <div class="invalid-feedback"
+                 *ngIf="catchDetails.controls[i].get('fishTypeId')?.errors && (catchDetails.controls[i].get('fishTypeId')?.dirty || catchDetails.controls[i].get('fishTypeId')?.touched)">
+              <p *ngIf="catchDetails.controls[i].get('fishTypeId')?.hasError('required')">Fischart ist ein
+                Pflichtfeld</p>
+            </div>
+          </div>
+          <div class="form-check mt-3">
+            <input class="form-check-input" formControlName="hadCrabs" id="hadCrabs" type="checkbox">
+            <label class="form-check-label" for="hadCrabs">Mageninhalt</label>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button (click)="onRemoveCatch(i)" class="btn btn-sm btn-danger">Fang entfernen</button>
+          </div>
+          <hr>
+        </ng-container>
+      </div>
+    </ng-container>
+    <div class="d-grid gap-2 mx-auto mt-4">
+      <button class="btn btn-primary" type="button" (click)="onAddCatch()">Fang hinzufügen</button>
+    </div>
+    <div class="d-flex justify-content-end mt-4" mat-dialog-actions>
+      <button (click)="onSubmit()" [disabled]="manualCatchForm.invalid" class="btn btn-success" type="submit">
+        Hinzufügen
+      </button>
+      <button (click)="onClose()" class="btn btn-danger ms-3" type="button">Abbrechen</button>
+    </div>
+  </form>
+</div>

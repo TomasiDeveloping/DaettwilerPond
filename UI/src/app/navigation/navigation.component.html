@@ -17,6 +17,14 @@
           <a (click)="isShown = false" class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard
           </a>
         </li>
+        <li *ngIf="isUserLoggedIn && isAdminUser" class="nav-item">
+          <a (click)="isShown = false" class="nav-link" routerLink="/angeltag" routerLinkActive="active">Angeltag
+          </a>
+        </li>
+        <li *ngIf="isUserLoggedIn && isAdminUser" class="nav-item">
+          <a (click)="isShown = false" class="nav-link" routerLink="/fangstatistik" routerLinkActive="active">Fangstatistik
+          </a>
+        </li>
         <li *ngIf="isUserLoggedIn" class="nav-item">
           <a (click)="isShown = false" class="nav-link" routerLink="/downloads" routerLinkActive="active">Downloads
           </a>

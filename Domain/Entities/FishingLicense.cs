@@ -7,6 +7,7 @@ public class FishingLicense
     public Guid UserId { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
+    public ICollection<Catch> Catches { get; set; }
     public int Year { get; set; }
     public bool IsPaid { get; set; }
     public string IssuedBy { get; set; }

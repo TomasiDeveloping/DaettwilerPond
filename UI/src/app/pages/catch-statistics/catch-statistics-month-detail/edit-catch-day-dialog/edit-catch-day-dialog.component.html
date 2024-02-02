@@ -1,0 +1,38 @@
+<h1 mat-dialog-title class="text-center">Tag {{currentCatchDay.catchDate | date: 'dd.MM.yyyy'}} bearbeiten</h1>
+<div mat-dialog-content>
+  <form [formGroup]="catchForm">
+    <div class="row">
+        <div class="col">
+          <label class="form-label" for="hoursSpent">Stunden</label>
+          <select [ngClass]="{
+        'is-invalid': f.get('hoursSpent')?.invalid && (f.get('hoursSpent')?.dirty || f.get('hoursSpent')?.touched),
+        'is-valid': f.get('hoursSpent')?.valid
+        }" class="form-select" id="hoursSpent" formControlName="hoursSpent">
+            <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
+          </select>
+          <div *ngIf="f.get('hoursSpent')?.errors && (f.get('hoursSpent')?.dirty || f.get('hoursSpent')?.touched)"
+               class="invalid-feedback">
+            <p *ngIf="f.get('hoursSpent')?.hasError('required')">Stunden ist ein Pflichtfeld</p>
+          </div>
+        </div>
+        <div class="col">
+          <label class="form-label" for="minutesSpent">Minuten</label>
+          <select [ngClass]="{
+        'is-invalid': f.get('minutesSpent')?.invalid && (f.get('minutesSpent')?.dirty || f.get('minutesSpent')?.touched)
+        }" class="form-select" id="minutesSpent" formControlName="minutesSpent">
+            <option *ngFor="let minute of minutes" [value]="minute">{{ minute }}</option>
+          </select>
+          <div *ngIf="f.get('minutesSpent')?.errors && (f.get('minutesSpent')?.dirty || f.get('minutesSpent')?.touched)"
+               class="invalid-feedback">
+            <p *ngIf="f.get('minutesSpent')?.hasError('required')">Minuten ist ein Pflichtfeld</p>
+          </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end mb-3" mat-dialog-actions>
+      <button (click)="onSubmit()" [disabled]="catchForm.invalid" class="btn btn-success" type="submit">Speichern
+      </button>
+      <button (click)="onClose(false)" class="btn btn-danger ms-3" type="button">Abbrechen</button>
+    </div>
+  </form>
+</div>
+

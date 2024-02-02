@@ -17,7 +17,7 @@ namespace Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.7")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -69,6 +69,61 @@ namespace Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Catch", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CatchDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EndFishing")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("FishingLicenseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("HoursSpent")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("StartFishing")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FishingLicenseId");
+
+                    b.ToTable("Catches");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CatchDetail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("CatchId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FishTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("HadCrabs")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CatchId");
+
+                    b.HasIndex("FishTypeId");
+
+                    b.ToTable("CatchDetails");
                 });
 
             modelBuilder.Entity("Domain.Entities.FishType", b =>
@@ -174,7 +229,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("IssuedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -401,7 +457,7 @@ namespace Persistence.Migrations
                         {
                             Id = new Guid("1e59351a-d970-428d-b63e-a141578f0184"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "727cf8e1-e5ef-418b-95cd-52d3a3c8e0b6",
+                            ConcurrencyStamp = "64c7c191-b579-4f94-883f-077eccf2c7f6",
                             Email = "info@tomasi-developing.ch",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -410,7 +466,7 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "info@tomasi-developing.ch",
                             NormalizedUserName = "INFO@TOMASI-DEVELOPING.CH",
-                            PasswordHash = "AQAAAAIAAYagAAAAELQY7G3ZXHcHRUIjb8RAq929Z/CzYFZOMFZUquZbeeDHkT3sYO4s0JZDJBzY4Itofw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIaGl6/X6tg7uAJlgln6zyOcBoEuHLj1Jb5Xu7/GSLRWK+V2+9ZXUdD8BMeKHTcYrA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "info@tomasi-developing.ch"
@@ -586,6 +642,36 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Catch", b =>
+                {
+                    b.HasOne("Domain.Entities.FishingLicense", "FishingLicense")
+                        .WithMany("Catches")
+                        .HasForeignKey("FishingLicenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FishingLicense");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CatchDetail", b =>
+                {
+                    b.HasOne("Domain.Entities.Catch", "Catch")
+                        .WithMany("CatchDetails")
+                        .HasForeignKey("CatchId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.FishType", "FishType")
+                        .WithMany("CatchDetails")
+                        .HasForeignKey("FishTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Catch");
+
+                    b.Navigation("FishType");
+                });
+
             modelBuilder.Entity("Domain.Entities.FishingLicense", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
@@ -679,6 +765,21 @@ namespace Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Catch", b =>
+                {
+                    b.Navigation("CatchDetails");
+                });
+
+            modelBuilder.Entity("Domain.Entities.FishType", b =>
+                {
+                    b.Navigation("CatchDetails");
+                });
+
+            modelBuilder.Entity("Domain.Entities.FishingLicense", b =>
+                {
+                    b.Navigation("Catches");
                 });
 
             modelBuilder.Entity("Domain.Entities.SensorType", b =>

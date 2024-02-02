@@ -1,0 +1,24 @@
+<div class="container">
+  <h1 class="text-center">Fangstatistik</h1>
+  <div class="total-catch-container">
+
+  </div>
+  @if (detailCatches.length > 0) {
+    <div class="month-catch-container">
+      @for (_ of months; track _; let index = $index) {
+        <div class="card border-dark">
+          <div class="card-body">
+            <h6 class="card-title text-center fw-bold text-warning">{{index | germanMonth}}</h6>
+            <div class="text-center"><b>Stunden:</b></div>
+            <div class="text-center">{{checkCatch(index + 1)?.hoursSpent ?? 0}}</div>
+            <div class="text-center"><b>Fische:</b></div>
+            <div class="text-center">{{checkCatch(index + 1)?.fishes ?? 0}}</div>
+            <div class="text-center">
+              <button [disabled]="!checkCatch(index + 1)?.fishes" (click)="onMonthDetail(index)" class="btn btn-primary">Details</button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

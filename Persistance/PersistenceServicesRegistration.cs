@@ -28,7 +28,6 @@ public static class PersistenceServicesRegistration
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.Lockout.AllowedForNewUsers = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-
             })
             .AddRoles<UserRole>()
             .AddTokenProvider<EmailTokenProvider<User>>(TokenOptions.DefaultProvider)
@@ -47,6 +46,8 @@ public static class PersistenceServicesRegistration
         services.AddScoped<IAddressRepository, AddressRepository>();
         services.AddScoped<IFishingLicenseRepository, FishingLicenseRepository>();
         services.AddScoped<IFishingClubRepository, FishingClubRepository>();
+        services.AddScoped<ICatchRepository, CatchRepository>();
+        services.AddScoped<ICatchDetailRepository, CatchDetailRepository>();
 
         return services;
     }

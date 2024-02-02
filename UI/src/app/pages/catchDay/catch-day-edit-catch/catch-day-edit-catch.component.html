@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Fang bearbeiten</h1>
+<div mat-dialog-content>
+  <form [formGroup]="catchDetailForm">
+    <div class="form-group">
+      <label class="form-label" for="fishTypeId">Fischart</label>
+      <select class="form-select" formControlName="fishTypeId" id="fishTypeId">
+        <option *ngFor="let fishType of fishTypes" [value]="fishType.id">{{ fishType.name }}</option>
+      </select>
+    </div>
+    <div class="form-check mt-3">
+      <input class="form-check-input" formControlName="hadCrabs" id="hadCrabs" type="checkbox">
+      <label class="form-check-label" for="hadCrabs">Mageninhalt</label>
+    </div>
+    <div class="d-flex justify-content-end mb-3" mat-dialog-actions>
+      <button (click)="onSubmit()" class="btn btn-success" type="submit">Bearbeiten</button>
+      <button (click)="onClose(false)" class="btn btn-danger ms-3" type="button">Abbrechen</button>
+    </div>
+  </form>
+</div>
+

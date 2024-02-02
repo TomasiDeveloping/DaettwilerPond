@@ -20,6 +20,8 @@ public class DaettwilerPondDbContext(DbContextOptions options, IConfiguration co
     public DbSet<FishingRegulation> FishingRegulations { get; set; }
     public DbSet<FishingLicense> FishingLicenses { get; set; }
     public DbSet<FishingClub> FishingClubs { get; set; }
+    public DbSet<CatchDetail> CatchDetails { get; set; }
+    public DbSet<Catch> Catches { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
