@@ -20,6 +20,9 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.15.1 (2024-02-03)
+- Background job to close forgotten fishing days
+- Adjustments for statistics page
 ### 1.15.0 (2024-02-02)
 - Implemented online catch statistics
 - Applied various security updates

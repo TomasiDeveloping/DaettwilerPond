@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {FishCatchService} from "../../../services/fish-catch.service";
 import {FishCatchModel} from "../../../models/fishCatch.model";
 import {CatchDetailModel} from "../../../models/catchDetail.model";
@@ -26,6 +26,7 @@ export class CatchStatisticsMonthDetailComponent implements OnInit{
   private readonly _dialog: MatDialog = inject(MatDialog);
   private readonly _catchDetailService: CatchDetailService = inject(CatchDetailService);
   private readonly _toastr: ToastrService = inject(ToastrService);
+  private readonly _router: Router = inject(Router);
 
   ngOnInit() {
     this.currentLicence = this._activatedRoute.snapshot.paramMap.get('licenceId');
@@ -147,5 +148,9 @@ export class CatchStatisticsMonthDetailComponent implements OnInit{
         }
       })
     });
+  }
+
+  onBack() {
+    this._router.navigate(['fangstatistik']).then();
   }
 }

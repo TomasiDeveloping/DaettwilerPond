@@ -1,5 +1,8 @@
 <div class="container">
   <h1>Fangdetail für {{currentMonth! | germanMonth}}</h1>
+  <div class="d-flex justify-content-center mb-3">
+    <button (click)="onBack()" class="btn btn-secondary">Zurück</button>
+  </div>
   <div class="accordion" id="accordionExample">
     @for (monthCatch of monthCatches; track monthCatch.id; let index = $index) {
       <div class="accordion-item">

@@ -3,8 +3,10 @@ using Application;
 using Application.Models;
 using HealthChecks.UI.Client;
 using Infrastructure;
+using Infrastructure.BackgroundJobs;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Persistence;
+using Quartz;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,21 @@ builder.Host.UseSerilog((context, configuration) =>
         .ReadFrom.Configuration(context.Configuration)
         .Enrich.WithProperty("ApplicationName", "DättwilerWeiher");
 });
+
+// Configure Quartz
+builder.Services.AddQuartz(options =>
+{
+    var jobKey = new JobKey(nameof(CheckFishingDayHasCompleted));
+
+    options.AddJob<CheckFishingDayHasCompleted>(jobKey)
+        .AddTrigger(
+            trigger => trigger.ForJob(jobKey)
+                .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(0, 0)));
+});
+
+
+// Register the Quartz.NET service and configure it to block shutdown until jobs are complete.
+builder.Services.AddQuartzHostedService(options => { options.WaitForJobsToComplete = true; });
 
 // Register Projects
 builder.Services.ConfigurePersistenceServices(builder.Configuration);
@@ -72,4 +89,3 @@ finally
 {
     Log.CloseAndFlush();
 }
-
