@@ -1,9 +1,18 @@
-﻿namespace Application.DataTransferObjects.CatchDetail;
-
-public class CreateCatchDetailDto
+﻿namespace Application.DataTransferObjects.CatchDetail
 {
-    public Guid CatchId { get; set; }
-    public Guid FishTypeId { get; set; }
-    public int Amount { get; set; }
-    public bool HadCrabs { get; set; }
+    // Data Transfer Object (DTO) representing the data for creating a fishing catch detail
+    public class CreateCatchDetailDto
+    {
+        // Unique identifier of the associated fishing catch
+        public Guid CatchId { get; set; }
+
+        // Unique identifier of the fish type caught
+        public Guid FishTypeId { get; set; }
+
+        // Amount of the specific fish type caught
+        public int Amount { get; set; }
+
+        // Indicates whether crabs were present during the catch
+        public bool HadCrabs { get; set; }
+    }
 }

@@ -3,13 +3,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
 
+// Static class for configuring and registering application services
 public static class ApplicationServicesRegistration
 {
+    // Extension method to configure application services
     public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services)
     {
-        // Register AutoMapper and Profiles
+        // Register AutoMapper and corresponding mapping profiles
         services.AddAutoMapper(options =>
         {
+            // Adding mapping profiles for different entities and DTOs
             options.AddProfile<SensorProfile>();
             options.AddProfile<SensorTypeProfile>();
             options.AddProfile<Lsn50V2LifecycleProfile>();

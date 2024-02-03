@@ -1,10 +1,21 @@
-﻿namespace Application.DataTransferObjects.User;
-
-public class UserDto
+﻿namespace Application.DataTransferObjects.User
 {
-    public Guid Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public bool IsActive { get; set; }
+    // Data Transfer Object (DTO) representing basic information about a user
+    public class UserDto
+    {
+        // Unique identifier for the user
+        public Guid Id { get; set; }
+
+        // First name of the user
+        public string FirstName { get; set; }
+
+        // Last name of the user
+        public string LastName { get; set; }
+
+        // Email address of the user
+        public string Email { get; set; }
+
+        // Indicates whether the user account is active
+        public bool IsActive { get; set; }
+    }
 }
