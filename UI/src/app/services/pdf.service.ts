@@ -10,9 +10,14 @@ import {MembersEmailModel} from "../models/membersEmail.model";
 })
 export class PdfService {
 
+  // API base URL obtained from environment
   private readonly _serviceUrl: string = environment.apiBaseUrl + '/Services/';
+
+  // Injecting necessary services
   private readonly _httpClient: HttpClient = inject(HttpClient);
 
+
+  // Method to get member PDF
   getMemberPdf(): Observable<{ image: Blob, filename: string | null }> {
     return this._httpClient.get(this._serviceUrl + 'GetMemberPdf/', {observe: 'response', responseType: 'blob'})
       .pipe(map((response: HttpResponse<Blob>) => {
@@ -23,6 +28,7 @@ export class PdfService {
       }));
   }
 
+  // Method to get fishing rules PDF
   getFishingRulesPdf(): Observable<{ image: Blob, filename: string | null }> {
     return this._httpClient.get(this._serviceUrl + 'GetFishingRulesPdf/', {observe: 'response', responseType: 'blob'})
       .pipe(map((response: HttpResponse<Blob>) => {
@@ -33,6 +39,7 @@ export class PdfService {
       }));
   }
 
+  // Method to get fish open season PDF
   getFishOpenSeasonPdf(): Observable<{ image: Blob, filename: string | null }> {
     return this._httpClient.get(this._serviceUrl + 'GetFishOpenSeasonPdf/', {observe: 'response', responseType: 'blob'})
       .pipe(map((response: HttpResponse<Blob>) => {
@@ -43,6 +50,7 @@ export class PdfService {
       }));
   }
 
+  // Method to get user invoice for a fishing license
   getUserInvoiceFishingLicense(fishingLicenseId: string): Observable<{ image: Blob, filename: string | null }> {
     return this._httpClient.get(this._serviceUrl + 'GetUserInvoiceFishingLicense/' + fishingLicenseId, {
       observe: 'response',
@@ -56,18 +64,20 @@ export class PdfService {
       }));
   }
 
+  // Method to send fishing license invoice
   sendFishingLicenseBill(createFishingLicenseBill: FishingLicenseCreateBill): Observable<boolean> {
     return this._httpClient.post<boolean>(this._serviceUrl + 'SendFishingLicenseInvoice', createFishingLicenseBill);
   }
 
+  // Method to send member emails
   sendMemberEmails(membersEmail: MembersEmailModel): Observable<boolean> {
     const formData = new FormData();
     formData.append('MailContent', membersEmail.mailContent);
     formData.append('Subject', membersEmail.subject);
-    membersEmail.receiverAddresses.forEach((address) => {
+    membersEmail.receiverAddresses.forEach((address: string): void => {
       formData.append('ReceiverAddresses', address)
     });
-    membersEmail.attachments.forEach((file) => {
+    membersEmail.attachments.forEach((file): void => {
       formData.append('Attachments', file, file.name)
     });
     return this._httpClient.post<boolean>(this._serviceUrl + 'SendMembersEmail', formData);

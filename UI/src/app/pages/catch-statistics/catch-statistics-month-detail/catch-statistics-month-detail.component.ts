@@ -18,9 +18,14 @@ import {ToastrService} from "ngx-toastr";
 })
 export class CatchStatisticsMonthDetailComponent implements OnInit{
 
+  // Properties for the current month and fishing license
   public currentMonth: number | null = null;
   public currentLicence: string | null = null;
+
+  // Array to hold fish catches for the specified month
   public monthCatches: FishCatchModel[] = [];
+
+  // Angular services and components injection
   private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly _fishCatchService: FishCatchService = inject(FishCatchService);
   private readonly _dialog: MatDialog = inject(MatDialog);
@@ -28,22 +33,29 @@ export class CatchStatisticsMonthDetailComponent implements OnInit{
   private readonly _toastr: ToastrService = inject(ToastrService);
   private readonly _router: Router = inject(Router);
 
-  ngOnInit() {
+  ngOnInit(): void {
+    // Initialize component properties based on route parameters
     this.currentLicence = this._activatedRoute.snapshot.paramMap.get('licenceId');
     const monthString: string | null = this._activatedRoute.snapshot.paramMap.get('month') ?? null;
+
+    // Convert month string to number
     if (monthString) {
       this.currentMonth = +monthString;
     }
 
+    // Check if required parameters are present, else return
     if (!this.currentLicence || this.currentMonth == null) {
       return;
     }
+
+    // Fetch month catches based on parameters
     this.getMonthCatches(this.currentLicence, this.currentMonth);
   }
 
-  getMonthCatches(licenceId: string, month: number) {
+  // Fetches fish catches for the specified license and month
+  getMonthCatches(licenceId: string, month: number): void {
     this._fishCatchService.getCatchesForMonth(licenceId, month + 1).subscribe({
-      next: ((response) => {
+      next: ((response: FishCatchModel[]): void => {
         if (response) {
           this.monthCatches = response;
         }
@@ -51,14 +63,18 @@ export class CatchStatisticsMonthDetailComponent implements OnInit{
     });
   }
 
-  onEditDay(monthCatch: FishCatchModel) {
+  // Opens the dialog for editing a fish catch day
+  onEditDay(monthCatch: FishCatchModel): void {
     const dialogRef = this._dialog.open(EditCatchDayDialogComponent, {
       width: '80%',
       height: 'auto',
       data: {fishCatch: monthCatch}
     });
+
+    // Subscribe to dialog close event
     dialogRef.afterClosed().subscribe({
-      next: ((reload) => {
+      next: ((reload): void => {
+        // Reload month catches if needed
         if (reload) {
           this.getMonthCatches(this.currentLicence!, this.currentMonth!);
         }
@@ -66,7 +82,8 @@ export class CatchStatisticsMonthDetailComponent implements OnInit{
     });
   }
 
-  onDeleteDay(monthCatch: FishCatchModel) {
+  // Deletes a fish catch day after confirmation
+  onDeleteDay(monthCatch: FishCatchModel): void {
     Swal.fire({
       title: 'Bist Du sicher?',
       text: 'Angeltag mit wirklisch löschen?',
@@ -78,6 +95,7 @@ export class CatchStatisticsMonthDetailComponent implements OnInit{
       cancelButtonText: 'Abbrechen'
     }).then((result: SweetAlertResult): void => {
       if (result.isConfirmed) {
+        // Call the service to delete the fish catch
         this._fishCatchService.deleteFishCatch(monthCatch.id).subscribe({
           next: ((response: boolean): void => {
             if (response) {
@@ -93,14 +111,18 @@ export class CatchStatisticsMonthDetailComponent implements OnInit{
     });
   }
 
-  onEditDetail(catchDetail: CatchDetailModel) {
+  // Opens the dialog for editing a catch detail
+  onEditDetail(catchDetail: CatchDetailModel): void {
     const dialogRef = this._dialog.open(CatchDayEditCatchComponent, {
       width: '80%',
       height: 'auto',
       data: {catchDetail: catchDetail}
     });
+
+    // Subscribe to dialog close event
     dialogRef.afterClosed().subscribe({
-      next: ((reload: boolean) => {
+      next: ((reload: boolean): void => {
+        // Reload month catches if needed
         if (reload) {
           this.getMonthCatches(this.currentLicence!, this.currentMonth!);
         }
@@ -108,7 +130,8 @@ export class CatchStatisticsMonthDetailComponent implements OnInit{
     });
   }
 
-  onDeleteDetail(catchDetail: CatchDetailModel) {
+  // Deletes a catch detail after confirmation
+  onDeleteDetail(catchDetail: CatchDetailModel): void {
     Swal.fire({
       title: 'Bist Du sicher?',
       text: 'Fang wirklisch löschen?',
@@ -120,6 +143,7 @@ export class CatchStatisticsMonthDetailComponent implements OnInit{
       cancelButtonText: 'Abbrechen'
     }).then((result: SweetAlertResult): void => {
       if (result.isConfirmed) {
+        // Call the service to delete the catch detail
         this._catchDetailService.deleteCatchDetail(catchDetail.id).subscribe({
           next: ((response: boolean): void => {
             if (response) {
@@ -135,14 +159,18 @@ export class CatchStatisticsMonthDetailComponent implements OnInit{
     });
   }
 
-  onAddCatchDetail(catchId: string) {
+  // Opens the dialog for adding a new catch detail
+  onAddCatchDetail(catchId: string): void {
     const dialogRef = this._dialog.open(CatchDayAddCatchComponent, {
       width: '80%',
       height: 'auto',
       data: {catchId: catchId}
     });
+
+    // Subscribe to dialog close event
     dialogRef.afterClosed().subscribe({
-      next: ((reload: boolean) => {
+      next: ((reload: boolean): void => {
+        // Reload month catches if needed
         if (reload) {
           this.getMonthCatches(this.currentLicence!, this.currentMonth!);
         }
@@ -150,7 +178,8 @@ export class CatchStatisticsMonthDetailComponent implements OnInit{
     });
   }
 
-  onBack() {
+  // Navigates back to the catch statistics page
+  onBack(): void {
     this._router.navigate(['fangstatistik']).then();
   }
 }

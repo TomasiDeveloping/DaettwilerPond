@@ -1,22 +1,37 @@
+<!-- Navigation bar with Bootstrap styling -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
+
+    <!-- Brand link leading to the home page -->
     <a class="navbar-brand" routerLink="/home">Dättwiler Weiher</a>
+
+    <!-- Displaying the application version -->
     <span class="version">v.{{version}}</span>
+
+    <!-- Toggle button for collapsed navigation on smaller screens -->
     <button (click)="isShown = !isShown" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"
             class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse"
             type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <!-- Collapsible navigation links -->
     <div [ngClass]="{'show': isShown}" class="collapse navbar-collapse" id="navbar">
       <ul class="navbar-nav me-auto">
+
+        <!-- Home link -->
         <li class="nav-item">
           <a (click)="isShown = false" class="nav-link" routerLink="/home" routerLinkActive="active">Home
           </a>
         </li>
+
+        <!-- Dashboard link (visible only when user is logged in) -->
         <li *ngIf="isUserLoggedIn" class="nav-item">
           <a (click)="isShown = false" class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard
           </a>
         </li>
+
+        <!-- Links visible only for logged-in admin users -->
         <li *ngIf="isUserLoggedIn && isAdminUser" class="nav-item">
           <a (click)="isShown = false" class="nav-link" routerLink="/angeltag" routerLinkActive="active">Angeltag
           </a>
@@ -25,10 +40,14 @@
           <a (click)="isShown = false" class="nav-link" routerLink="/fangstatistik" routerLinkActive="active">Fangstatistik
           </a>
         </li>
+
+        <!-- Downloads link (visible only when user is logged in) -->
         <li *ngIf="isUserLoggedIn" class="nav-item">
           <a (click)="isShown = false" class="nav-link" routerLink="/downloads" routerLinkActive="active">Downloads
           </a>
         </li>
+
+        <!-- Other navigation links -->
         <li class="nav-item">
           <a (click)="isShown = false" class="nav-link" routerLink="/temperatur" routerLinkActive="active">Temperatur
           </a>
@@ -37,11 +56,15 @@
           <a (click)="isShown = false" class="nav-link" routerLink="/geschichte" routerLinkActive="active">Geschichte
           </a>
         </li>
+
+        <!-- Admin link (visible only for logged-in admin users) -->
         <li *ngIf="isUserLoggedIn && isAdminUser" class="nav-item">
           <a (click)="isShown = false" class="nav-link" routerLink="/admin" routerLinkActive="active">Administrator
           </a>
         </li>
       </ul>
+
+      <!-- User menu (visible only when user is logged in) -->
       <div *ngIf="isUserLoggedIn" class="login">
         <ul class="navbar-nav me-auto">
           <li class="nav-item dropdown">
@@ -51,6 +74,8 @@
               <i class="bi bi-person-circle"></i>
               {{currentUser?.firstName}}
             </a>
+
+            <!-- User dropdown menu -->
             <div class="dropdown-menu dropdown-menu-end">
               <a (click)="isShown = false" class="dropdown-item user-menu" routerLink="/konto"><i
                 class="bi bi-person-gear"></i> Konto</a>
@@ -62,6 +87,8 @@
           </li>
         </ul>
       </div>
+
+      <!-- Login button (visible only when user is not logged in) -->
       <div *ngIf="!isUserLoggedIn" class="d-flex login" routerLink="/login">
         <button (click)="isShown = false" class="btn btn-secondary" routerLink="/login"><i
           class="bi bi-box-arrow-right"></i> Login
@@ -70,4 +97,6 @@
     </div>
   </div>
 </nav>
+
+<!-- Router outlet for displaying routed components -->
 <router-outlet></router-outlet>

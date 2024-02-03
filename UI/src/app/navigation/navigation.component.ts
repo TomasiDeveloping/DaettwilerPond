@@ -20,19 +20,25 @@ export class NavigationComponent implements OnInit {
   public isShown: boolean = false;
   public isAdminUser: boolean = false;
 
-
+  // Application version from environment
   public version: string = environment.version;
   public currentUser: User | undefined;
+
+  // Injecting necessary services
   private readonly _userService: UserService = inject(UserService);
   private readonly _authenticationService: AuthenticationService = inject(AuthenticationService);
 
   ngOnInit(): void {
+    // Auto login and subscribe to authentication changes
     this._authenticationService.autoLogin();
     this._authenticationService.authChangeNotification.subscribe({
-      next: ((isLoggedIn) => {
+      next: ((isLoggedIn: boolean): void => {
+        // Update user login status and admin status on authentication change
         this.isUserLoggedIn = isLoggedIn;
         this.isAdminUser = this._authenticationService.isUserAdministrator();
-        const userId = this._authenticationService.getUserIdFromToken();
+
+        // Retrieve and update current user information if logged in
+        const userId: string | null = this._authenticationService.getUserIdFromToken();
         if (userId) {
           this.getUser(userId);
         }
@@ -40,19 +46,23 @@ export class NavigationComponent implements OnInit {
     });
   }
 
-  getUser(userId: string) {
+  // Retrieve user information by user ID
+  getUser(userId: string): void {
     this._userService.getUserById(userId).subscribe({
-      next: ((response) => {
+      next: ((response: User): void => {
+        // Update current user if the user information is retrieved successfully
         if (response) {
           this.currentUser = response;
         }
       }),
       error: _ => {
+        // Handle error if user information retrieval fails
       }
     });
   }
 
-  onLogout() {
+  // Logout function triggered on user click
+  onLogout(): void {
     this.isShown = false;
     this._authenticationService.logout();
   }

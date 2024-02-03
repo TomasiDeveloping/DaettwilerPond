@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Infrastructure.Services;
 
-public class WebHookService(ILsn50V2d20Logic lsn50V2d20Logic, ILogger<WebHookService> logger,
+public class WebHookService(ILsn50V2D20Logic lsn50V2D20Logic, ILogger<WebHookService> logger,
     ISensorRepository sensorRepository) : IWebHookService
 {
     public async Task<bool> AkenzaCallProcessAsync(JObject jObject)
@@ -26,12 +26,12 @@ public class WebHookService(ILsn50V2d20Logic lsn50V2d20Logic, ILogger<WebHookSer
             case "lifecycle":
                 var lifecycle = JsonConvert.DeserializeObject<Lifecycle>(jObject.SelectToken("data")?.ToString() ??
                                                                          throw new InvalidOperationException());
-                if (sensor is not null) await lsn50V2d20Logic.HandleLifecycleAsync(lifecycle, sensor.Id);
+                if (sensor is not null) await lsn50V2D20Logic.HandleLifecycleAsync(lifecycle, sensor.Id);
                 break;
             case "default":
                 var payload = JsonConvert.DeserializeObject<Payload>(jObject.SelectToken("data")?.ToString() ??
                                                                      throw new InvalidOperationException());
-                if (sensor is not null) await lsn50V2d20Logic.HandleDataPayloadAsync(payload, sensor.Id);
+                if (sensor is not null) await lsn50V2D20Logic.HandleDataPayloadAsync(payload, sensor.Id);
                 break;
             case "ds":
                 logger.LogInformation("ds Payload received");

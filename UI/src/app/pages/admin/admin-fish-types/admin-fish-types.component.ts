@@ -8,8 +8,7 @@ import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-admin-fish-types',
-  templateUrl: './admin-fish-types.component.html',
-  styleUrls: ['./admin-fish-types.component.scss']
+  templateUrl: './admin-fish-types.component.html'
 })
 export class AdminFishTypesComponent implements OnInit {
 

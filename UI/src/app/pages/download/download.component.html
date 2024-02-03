@@ -1,32 +1,57 @@
+<!-- Main container for the Downloads section -->
 <div class="container">
+  <!-- Heading for the Downloads section -->
   <h1 class="text-center">Downloads</h1>
+
+  <!-- Introduction paragraph for the Downloads section -->
   <p>Hier findest Du eine Auswahl an PDF-Downloads rund um den Fischerclub Dättwilerweiher</p>
+
+  <!-- Container for displaying download cards -->
   <div class="card-container">
+    <!-- Card for downloading the current Members list -->
     <div class="card text-center">
       <div class="card-body">
+        <!-- Card title -->
         <h5 class="card-title">Mitglieder</h5>
+        <!-- Card description -->
         <p class="card-text">Aktuelle Mitgliederliste mit Adresse</p>
+        <!-- Download button with an icon -->
         <a (click)="onDownloadMember()" class="btn btn-secondary"><i class="bi bi-file-earmark-pdf-fill pdf-icon"></i> Download Mitgliederliste</a>
       </div>
     </div>
+
+    <!-- Card for downloading the current Open Season list -->
     <div class="card text-center">
       <div class="card-body">
+        <!-- Card title -->
         <h5 class="card-title">Schonmasse und Schonzeiten</h5>
+        <!-- Card description -->
         <p class="card-text">Aktuelle Liste mit Schonmassen und Schonzeiten</p>
+        <!-- Download button with an icon -->
         <a (click)="onDownloadOpenSeason()" class="btn btn-secondary"><i class="bi bi-file-earmark-pdf-fill pdf-icon"></i> Download Schonmasse</a>
       </div>
     </div>
+
+    <!-- Card for downloading the current Fishing Rules document -->
     <div class="card text-center">
       <div class="card-body">
+        <!-- Card title -->
         <h5 class="card-title">Vorschriften</h5>
+        <!-- Card description -->
         <p class="card-text">Aktuelles Dokument mit allen Vorschriften</p>
+        <!-- Download button with an icon -->
         <a (click)="onDownloadFishingRules()" class="btn btn-secondary"><i class="bi bi-file-earmark-pdf-fill pdf-icon"></i> Download Vorschriften</a>
       </div>
     </div>
+
+    <!-- Card for downloading information on Crab Plague precautions -->
     <div class="card text-center">
       <div class="card-body">
+        <!-- Card title -->
         <h5 class="card-title">Krebspest</h5>
+        <!-- Card description -->
         <p class="card-text">Vorsichtsmassnamen gegen die Krebspest</p>
+        <!-- Download button with an icon -->
         <a (click)="onDownloadCrabPlague()" class="btn btn-secondary"><i class="bi bi-file-earmark-pdf-fill pdf-icon"></i> Download Massnamen Krebspest</a>
       </div>
     </div>

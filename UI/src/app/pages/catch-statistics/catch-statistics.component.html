@@ -1,22 +1,39 @@
 <div class="container">
+  <!-- Main title for the catch statistics page -->
   <h1 class="text-center">Fangstatistik</h1>
+
+  <!-- Container for displaying total yearly catch -->
   <div class="total-catch-container">
+    <!-- Check if yearlyCatch is available -->
     @if (yearlyCatch) {
+      <!-- Display total hours spent and total fish catches for the year -->
       <div><b>Total Stunden:</b> {{yearlyCatch.hoursSpent.toFixed(2)}}</div>
       <div><b>Gefangene Fische:</b> {{yearlyCatch.fishCatches}}</div>
     }
   </div>
+
+  <!-- Check if there are monthly detailed catches available -->
   @if (detailCatches.length > 0) {
+    <!-- Container for displaying monthly catch details -->
     <div class="month-catch-container">
       @for (_ of months; track _; let index = $index) {
+        <!-- Card for each month with catch details -->
         <div class="card border-dark">
           <div class="card-body">
+            <!-- Display the month name using the germanMonth pipe -->
             <h6 class="card-title text-center fw-bold text-warning">{{index | germanMonth}}</h6>
+
+            <!-- Display hours spent for the month -->
             <div class="text-center"><b>Stunden:</b></div>
             <div class="text-center">{{checkCatch(index + 1)?.hoursSpent ?? 0}}</div>
+
+            <!-- Display total fishes caught for the month -->
             <div class="text-center"><b>Fische:</b></div>
             <div class="text-center">{{checkCatch(index + 1)?.fishes ?? 0}}</div>
+
+            <!-- Button to view details for the month -->
             <div class="text-center">
+              <!-- Disable button if no fishes were caught in the month -->
               <button [disabled]="!checkCatch(index + 1)?.fishes" (click)="onMonthDetail(index)" class="btn btn-primary">Details</button>
             </div>
           </div>

@@ -11,8 +11,7 @@ import {AdminSendEmailComponent} from "./admin-send-email/admin-send-email.compo
 
 @Component({
   selector: 'app-admin-users',
-  templateUrl: './admin-users.component.html',
-  styleUrls: ['./admin-users.component.scss']
+  templateUrl: './admin-users.component.html'
 })
 export class AdminUsersComponent implements OnInit {
   public users: UserWithAddress[] = [];
@@ -132,7 +131,7 @@ export class AdminUsersComponent implements OnInit {
     this.users.forEach((user) => {
       memberEmails.push({email: user.email, fullName: `${user.firstName} ${user.lastName}`})
     });
-    const dialogRef = this._dialog.open(AdminSendEmailComponent, {
+    this._dialog.open(AdminSendEmailComponent, {
       width: '80%',
       height: 'auto',
       autoFocus: false,

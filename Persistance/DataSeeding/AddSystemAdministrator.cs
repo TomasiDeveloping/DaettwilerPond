@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Persistence.DataSeeding;
 
-public class AddSystemAdministrator
+public static class AddSystemAdministrator
 {
     public static void SeedSystemAdministrator(ModelBuilder builder, IConfigurationSection sysAdminSection)
     {

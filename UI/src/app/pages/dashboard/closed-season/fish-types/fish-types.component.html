@@ -1,7 +1,13 @@
+<!-- Displaying the heading for the table -->
 <h4 class="text-center mt-5 mb-2">Schonmasse und Schonzeiten</h4>
+
+<!-- Creating a responsive table container -->
 <div class="table-responsive">
+  <!-- Checking if fishTypes array exists before rendering the table -->
   <table *ngIf="fishTypes" class="table table-striped table-bordered">
     <caption></caption>
+
+    <!-- Table header with column names -->
     <thead>
     <tr>
       <th scope="col">Fischart</th>
@@ -9,10 +15,18 @@
       <th scope="col">Schonzeit</th>
     </tr>
     </thead>
+
+    <!-- Table body with data from fishTypes array -->
     <tbody>
+    <!-- Iterating through each fishType in fishTypes array -->
     <tr *ngFor="let fishType of fishTypes">
+      <!-- Displaying fish name in the first column -->
       <td>{{fishType.name}}</td>
+
+      <!-- Displaying minimum size or '-' if not available in the second column -->
       <td>{{fishType.hasMinimumSize ? fishType.minimumSize + ' cm' : '-'}}</td>
+
+      <!-- Displaying closed season date range or '-' if not available in the third column -->
       <td>{{fishType.hasClosedSeason ? ("0" + fishType.closedSeasonFromDay).slice(-2) + '.' + ("0" + fishType.closedSeasonFromMonth).slice(-2) + ' - ' + ("0" + fishType.closedSeasonToDay).slice(-2) + '.' + ("0" + fishType.closedSeasonToMonth).slice(-2) : ' - '}}</td>
     </tr>
     </tbody>

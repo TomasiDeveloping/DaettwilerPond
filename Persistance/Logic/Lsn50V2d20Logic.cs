@@ -5,8 +5,8 @@ using Application.Models.LSN50v2D20;
 
 namespace Persistence.Logic;
 
-public class Lsn50V2d20Logic(ILsn50V2MeasurementRepository lsn50V2MeasurementRepository,
-    ILsn50V2LifecycleRepository lsn50V2LifecycleRepository) : ILsn50V2d20Logic
+public class Lsn50V2D20Logic(ILsn50V2MeasurementRepository lsn50V2MeasurementRepository,
+    ILsn50V2LifecycleRepository lsn50V2LifecycleRepository) : ILsn50V2D20Logic
 {
     public async Task HandleLifecycleAsync(Lifecycle lifecycle, Guid sensorId)
     {

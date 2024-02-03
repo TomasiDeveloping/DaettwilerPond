@@ -15,10 +15,11 @@ public class AuthenticationRepository(UserManager<User> userManager, IJwtService
     public async Task<RegistrationResponseDto> Register(RegistrationDto registrationDto)
     {
         var user = mapper.Map<User>(registrationDto);
+        IEnumerable<string> errors;
         var result = await userManager.CreateAsync(user, $"Welcome${DateTime.Now.Year}");
         if (!result.Succeeded)
         {
-            var errors = result.Errors.Select(e => e.Description);
+            errors = result.Errors.Select(e => e.Description);
             return new RegistrationResponseDto
             {
                 IsSuccessful = false,
@@ -36,14 +37,12 @@ public class AuthenticationRepository(UserManager<User> userManager, IJwtService
             {
                 IsSuccessful = true
             };
+        errors = roleResult.Errors.Select(e => e.Description);
+        return new RegistrationResponseDto
         {
-            var errors = result.Errors.Select(e => e.Description);
-            return new RegistrationResponseDto
-            {
-                IsSuccessful = false,
-                Errors = errors
-            };
-        }
+            IsSuccessful = false,
+            Errors = errors
+        };
     }
 
     public async Task<AuthResponseDto> LoginAsync(LoginDto loginDto)

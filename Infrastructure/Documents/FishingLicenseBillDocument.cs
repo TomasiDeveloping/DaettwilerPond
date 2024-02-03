@@ -11,7 +11,6 @@ public class FishingLicenseBillDocument(byte[] qrBill, FishingLicenseBill fishin
     {
         container.Page(page =>
         {
-            //page.Margin(50);
             page.Size(PageSizes.A4.Portrait());
 
             page.Header().PaddingTop(50).PaddingLeft(50).PaddingRight(50).Element(ComposeHeader);

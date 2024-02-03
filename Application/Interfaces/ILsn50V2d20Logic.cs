@@ -2,7 +2,7 @@
 
 namespace Application.Interfaces;
 
-public interface ILsn50V2d20Logic
+public interface ILsn50V2D20Logic
 {
     Task HandleLifecycleAsync(Lifecycle lifecycle, Guid sensorId);
     Task HandleDataPayloadAsync(Payload payload, Guid sensorId);

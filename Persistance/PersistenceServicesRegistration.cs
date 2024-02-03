@@ -33,7 +33,7 @@ public static class PersistenceServicesRegistration
             .AddTokenProvider<EmailTokenProvider<User>>(TokenOptions.DefaultProvider)
             .AddEntityFrameworkStores<DaettwilerPondDbContext>();
 
-        services.AddScoped<ILsn50V2d20Logic, Lsn50V2d20Logic>();
+        services.AddScoped<ILsn50V2D20Logic, Lsn50V2D20Logic>();
         services.AddScoped<ISensorRepository, SensorRepository>();
         services.AddScoped<ISensorTypeRepository, SensorTypeRepository>();
         services.AddScoped<ILsn50V2MeasurementRepository, Lsn50V2MeasurementRepository>();

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.DataSeeding;
 
-public class AddRoles
+public static class AddRoles
 {
     public static void SeedRoles(ModelBuilder builder)
     {

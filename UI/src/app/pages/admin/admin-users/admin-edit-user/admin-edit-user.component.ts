@@ -9,8 +9,7 @@ import {UserService} from "../../../../services/user.service";
 
 @Component({
   selector: 'app-admin-edit-user',
-  templateUrl: './admin-edit-user.component.html',
-  styleUrls: ['./admin-edit-user.component.scss']
+  templateUrl: './admin-edit-user.component.html'
 })
 export class AdminEditUserComponent {
 

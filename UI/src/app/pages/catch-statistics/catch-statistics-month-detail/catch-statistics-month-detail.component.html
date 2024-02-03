@@ -1,29 +1,41 @@
 <div class="container">
-  <h1>Fangdetail für {{currentMonth! | germanMonth}}</h1>
+  <!-- Page title with the current month in German format -->
+  <h1>Fangdetail für {{ currentMonth! | germanMonth }}</h1>
+
   <div class="d-flex justify-content-center mb-3">
+    <!-- Button to navigate back -->
     <button (click)="onBack()" class="btn btn-secondary">Zurück</button>
   </div>
+
   <div class="accordion" id="accordionExample">
+    <!-- Loop through monthCatches and display each catch as an accordion item -->
     @for (monthCatch of monthCatches; track monthCatch.id; let index = $index) {
       <div class="accordion-item">
         <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#accordion' + index" aria-expanded="false" [attr.aria-controls]="index">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  [attr.data-bs-target]="'#accordion' + index" aria-expanded="false" [attr.aria-controls]="index">
+            <!-- Display summary information for each monthCatch -->
             <div class="summary">
-              <div>{{monthCatch.catchDate | date: 'dd.MM'}}</div>
-              <div>Stunden: {{monthCatch.hoursSpent}}</div>
-              <div>Fische: {{monthCatch.amountFishCatch}}</div>
+              <div>{{ monthCatch.catchDate | date: 'dd.MM' }}</div>
+              <div>Stunden: {{ monthCatch.hoursSpent }}</div>
+              <div>Fische: {{ monthCatch.amountFishCatch }}</div>
             </div>
           </button>
         </h2>
+
         <div [id]="'accordion' + index" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <hr>
-            <p class="text-center text-info">{{monthCatch.catchDate | date: 'dd.MM.yyyy'}}</p>
+            <!-- Detailed information for each monthCatch -->
+            <p class="text-center text-info">{{ monthCatch.catchDate | date: 'dd.MM.yyyy' }}</p>
             <div class="d-flex justify-content-between mt-2 mb-4">
+              <!-- Buttons for editing and deleting the day -->
               <button (click)="onEditDay(monthCatch)" class="btn btn-primary">Tag bearbeiten</button>
               <button (click)="onDeleteDay(monthCatch)" class="btn btn-danger">Tag löschen</button>
             </div>
             <hr>
+
+            <!-- Display catch details in a table -->
             @if (monthCatch.catchDetails && monthCatch.catchDetails.length > 0) {
               <div class="table-responsive">
                 <table class="table table-striped table-bordered">
@@ -36,14 +48,22 @@
                   </tr>
                   </thead>
                   <tbody>
+                  <!-- Loop through catchDetails for the current monthCatch -->
                     @for (catchDetail of monthCatch.catchDetails; track catchDetail.id) {
                       <tr>
-                        <td>{{catchDetail.fishTypeName}}</td>
-                        <td>{{catchDetail.hadCrabs ? 'Ja' : 'Nein'}}</td>
+                        <td>{{ catchDetail.fishTypeName }}</td>
+                        <td>{{ catchDetail.hadCrabs ? 'Ja' : 'Nein' }}</td>
                         <td>
+                          <!-- Buttons for editing and deleting the catch detail -->
                           <div class="d-flex justify-content-between">
-                            <button (click)="onEditDetail(catchDetail)" class="btn btn-sm btn-secondary"><i class="bi bi-pencil-fill"></i></button>
-                            <button (click)="onDeleteDetail(catchDetail)" class="btn btn-sm btn-danger"><i class="bi bi-trash3-fill"></i></button>
+                            <button (click)="onEditDetail(catchDetail)" class="btn btn-sm btn-secondary">
+                              <!-- Edit icon -->
+                              <i class="bi bi-pencil-fill"></i>
+                            </button>
+                            <button (click)="onDeleteDetail(catchDetail)" class="btn btn-sm btn-danger">
+                              <!-- Delete icon -->
+                              <i class="bi bi-trash3-fill"></i>
+                            </button>
                           </div>
                         </td>
                       </tr>
@@ -52,10 +72,14 @@
                 </table>
               </div>
             } @else {
+              <!-- Display message if no fish were caught -->
               <div class="text-center">Keine gefangenen Fische</div>
             }
+
+            <!-- Button to add a new catch detail -->
             <div class="d-flex justify-content-center">
-              <button (click)="onAddCatchDetail(monthCatch.id)" class="btn btn-sm btn-secondary">Fang hinzufügen</button>
+              <button (click)="onAddCatchDetail(monthCatch.id)" class="btn btn-sm btn-secondary">Fang hinzufügen
+              </button>
             </div>
           </div>
         </div>

@@ -1,8 +1,20 @@
+<!-- Main container for the dashboard -->
 <div class="container">
+  <!-- Dashboard title -->
   <h1 class="text-center">Dashboard</h1>
+
+  <!-- Greeting message based on the current user's name -->
   <h4>{{getGreeting()}} {{currentUser?.firstName}} {{currentUser?.lastName}}</h4>
-    <app-fishing-license [fishingLicence]="currentFishingLicence"></app-fishing-license>
+
+  <!-- Component for displaying fishing license information -->
+  <app-fishing-license [fishingLicence]="currentFishingLicence"></app-fishing-license>
+
+  <!-- Component for displaying information about closed fishing season -->
   <app-closed-season></app-closed-season>
+
+  <!-- Horizontal rule for visual separation -->
   <hr>
+
+  <!-- Component for displaying fishing regulations -->
   <app-fishing-regulation></app-fishing-regulation>
 </div>

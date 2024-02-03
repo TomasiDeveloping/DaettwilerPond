@@ -11,7 +11,9 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 @NgModule({
   declarations: [],
   imports: [
+    // CommonModule is imported to ensure common directives like *ngFor, *ngIf are available
     CommonModule,
+    // Importing Angular Material modules for UI components
     MatTabsModule,
     MatCardModule,
     MatDialogModule,
@@ -19,6 +21,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatSelectModule,
     MatCheckboxModule,
   ],
+  // Exporting Angular Material modules for use in other modules
   exports: [
     MatTabsModule,
     MatCardModule,

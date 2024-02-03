@@ -9,52 +9,62 @@ import {ToastrService} from "ngx-toastr";
 })
 export class DownloadComponent {
 
+  // Private properties for PdfService and ToastrService using Angular DI
   private readonly _pdfService: PdfService = inject(PdfService);
   private readonly _toastr: ToastrService = inject(ToastrService);
 
-  onDownloadMember() {
+  // Method to download the Members list PDF
+  onDownloadMember(): void {
     this._pdfService.getMemberPdf().subscribe({
-      next: ((response: {image: Blob, filename: string | null}) => {
+      next: ((response: {image: Blob, filename: string | null}): void => {
         this.downloadPdf(response);
       }),
-      error: () => {
+      // Handling errors and displaying toastr messages
+      error: (): void => {
         this._toastr.error('Fehler beim Download', 'Mitgliederliste');
       }
     });
   }
 
-  onDownloadOpenSeason() {
+  // Method to download the Open Season PDF
+  onDownloadOpenSeason(): void {
     this._pdfService.getFishOpenSeasonPdf().subscribe({
-      next: ((response: {image: Blob, filename: string | null}) => {
+      next: ((response: {image: Blob, filename: string | null}): void => {
         this.downloadPdf(response);
       }),
-      error: () => {
+      // Handling errors and displaying toastr messages
+      error: (): void => {
         this._toastr.error('Fehler beim Download', 'Schonmasse');
       }
     });
   }
-  onDownloadFishingRules() {
+
+  // Method to download the Fishing Rules PDF
+  onDownloadFishingRules(): void {
     this._pdfService.getFishingRulesPdf().subscribe({
-      next: ((response: {image: Blob, filename: string | null}) => {
+      next: ((response: {image: Blob, filename: string | null}): void => {
         this.downloadPdf(response);
       }),
-      error: () =>{
+      // Handling errors and displaying toastr messages
+      error: (): void =>{
         this._toastr.error('Fehler beim Download', 'Vorschriften');
       }
     });
   }
 
-  onDownloadCrabPlague() {
-    const anchorElement = document.createElement('a');
+  // Method to download the Crab Plague PDF from the assets folder
+  onDownloadCrabPlague(): void {
+    const anchorElement: HTMLAnchorElement = document.createElement('a');
     anchorElement.download = "Vorsichtsmassnahmen_gegen_die_Krebspest.pdf";
     anchorElement.href = '../../../assets/documents/CrabPlaque.pdf';
     anchorElement.click();
   }
 
 
-  private downloadPdf(data: any){
-    const fileUrl = URL.createObjectURL(data.image);
-    const anchorElement = document.createElement('a');
+  // Private method to handle the actual PDF download process
+  private downloadPdf(data: any): void{
+    const fileUrl: string = URL.createObjectURL(data.image);
+    const anchorElement: HTMLAnchorElement = document.createElement('a');
     anchorElement.href = fileUrl;
     anchorElement.target = '_blank';
     anchorElement.download = data.filename;

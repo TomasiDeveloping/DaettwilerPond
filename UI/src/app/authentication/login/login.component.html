@@ -1,41 +1,61 @@
+<!-- Container for the login page -->
 <div class="container">
+  <!-- Login page title -->
   <h1 class="text-center">Login</h1>
+
+  <!-- Form container for the login form -->
   <div class="form-container">
     <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+
+      <!-- Email input field with validation and feedback -->
       <div class="form-group mt-3">
         <label class="form-label" for="email">E-Mail</label>
         <div class="input-group">
+          <!-- Email icon -->
           <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+          <!-- Email input with dynamic classes based on validation -->
           <input [ngClass]="{
           'is-invalid': email?.invalid && (email?.dirty || email?.touched),
           'is-valid': email?.valid
           }" class="form-control" formControlName="email" id="email" type="email">
+          <!-- Error messages for email input validation -->
           <div *ngIf="email?.errors && (email?.dirty || email?.touched)" class="invalid-feedback">
             <p *ngIf="email?.hasError('required')">E-Mail ist ein Pflichtfeld</p>
             <p *ngIf="email?.hasError('email')">Ungültige E-Mail Adresse</p>
           </div>
         </div>
       </div>
+
+      <!-- Password input field with validation, visibility toggle, and feedback -->
       <div class="form-group mt-2">
         <label class="form-label" for="password">Passwort</label>
         <div class="input-group">
+          <!-- Password icon -->
           <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
+          <!-- Password input with dynamic classes based on validation -->
           <input [ngClass]="{
           'is-invalid': password?.invalid && (password?.dirty || password?.touched),
           'is-valid': password?.valid
           }" [type]="isText ? 'text': 'password'" class="form-control" formControlName="password" id="password">
+          <!-- Visibility toggle icon for password -->
           <span (click)="isText = !isText" class="input-group-text eye-icon"><i
             [ngClass]="isText ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
             class="bi"></i></span>
+          <!-- Error message for password input validation -->
           <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="invalid-feedback">
             <p *ngIf="password?.hasError('required')">Passwort ist ein Pflichfeld</p>
           </div>
         </div>
       </div>
+
+      <!-- Forgot password link -->
       <div class="forgot-password">
         <span (click)="onForgotPassword()" class="forgot-password-text">Passwort vergessen?</span>
       </div>
+
+      <!-- Login button -->
       <div class="d-grid gap-2 col-6 mx-auto mt-3">
+        <!-- Submit button with dynamic disabling based on form validity -->
         <button [disabled]="loginForm.invalid" class="btn btn-success" type="submit"><i
           class="bi bi-box-arrow-in-right"></i> Login
         </button>
