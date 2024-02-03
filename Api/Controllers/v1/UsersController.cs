@@ -6,45 +6,52 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;
 
+// Define the route for the controller with versioning support
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [ApiVersion("1.0")]
 [Authorize]
 public class UsersController(IUserRepository userRepository, ILogger<UsersController> logger) : ControllerBase
 {
+
+    // Get a list of users
     [HttpGet]
     public async Task<ActionResult<List<UserDto>>> GetUsers()
     {
         try
         {
             var users = await userRepository.GetUsersAsync();
-            return users.Any() ? Ok(users) : NoContent();
+            return users.Count != 0 ? Ok(users) : NoContent();
         }
         catch (Exception e)
         {
+            // Log error and return a 500 Internal Server Error
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetUsers)}");
         }
     }
 
+    // Get a list of users with their addresses
     [HttpGet("Addresses")]
     public async Task<ActionResult<List<UserWithAddressDto>>> GetUsersWithAddresses()
     {
         try
         {
             var usersWithAddresses = await userRepository.GetUsersWithAddressesAsync();
-            return usersWithAddresses.Any() ? Ok(usersWithAddresses) : NoContent();
+            return usersWithAddresses.Count != 0 ? Ok(usersWithAddresses) : NoContent();
         }
         catch (Exception e)
         {
+            // Log error and return a 500 Internal Server Error
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetUsersWithAddresses)}");
         }
     }
 
-    [HttpGet("{userId}")]
+    // Get a user by their ID
+    [HttpGet("{userId:guid}")]
     public async Task<ActionResult<UserDto>> GetUserById(Guid userId)
     {
         try
@@ -55,12 +62,14 @@ public class UsersController(IUserRepository userRepository, ILogger<UsersContro
         }
         catch (Exception e)
         {
+            // Log error and return a 500 Internal Server Error
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetUserById)}");
         }
     }
 
+    // Change user password
     [HttpPost("[action]")]
     public async Task<ActionResult<ChangePasswordResponseDto>> ChangeUserPassword(ChangePasswordDto changePasswordDto)
     {
@@ -72,13 +81,15 @@ public class UsersController(IUserRepository userRepository, ILogger<UsersContro
         }
         catch (Exception e)
         {
+            // Log error and return a 500 Internal Server Error
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(ChangeUserPassword)}");
         }
     }
 
-    [HttpPut("Addresses/{userId}")]
+    // Update user with address information
+    [HttpPut("Addresses/{userId:guid}")]
     public async Task<ActionResult<UserWithAddressDto>> UpdateUserWithAddress(Guid userId,
         UserWithAddressDto userWithAddressDto)
     {
@@ -91,13 +102,15 @@ public class UsersController(IUserRepository userRepository, ILogger<UsersContro
         }
         catch (Exception e)
         {
+            // Log error and return a 500 Internal Server Error
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(UpdateUserWithAddress)}");
         }
     }
 
-    [HttpPut("{userId}")]
+    // Update user information
+    [HttpPut("{userId:guid}")]
     public async Task<ActionResult<UserDto>> UpdateUser(Guid userId, UserDto userDto)
     {
         try
@@ -109,13 +122,15 @@ public class UsersController(IUserRepository userRepository, ILogger<UsersContro
         }
         catch (Exception e)
         {
+            // Log error and return a 500 Internal Server Error
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(UpdateUser)}");
         }
     }
 
-    [HttpDelete("{userId}")]
+    // Delete a user by their ID
+    [HttpDelete("{userId:guid}")]
     public async Task<ActionResult<bool>> DeleteUser(Guid userId)
     {
         try
@@ -125,6 +140,7 @@ public class UsersController(IUserRepository userRepository, ILogger<UsersContro
         }
         catch (Exception e)
         {
+            // Log error and return a 500 Internal Server Error
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(DeleteUser)}");

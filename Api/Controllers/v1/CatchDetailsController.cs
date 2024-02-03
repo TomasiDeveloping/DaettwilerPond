@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;
 
+// Define the route, API version, and authorize the controller
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [ApiVersion("1.0")]
@@ -14,6 +15,7 @@ public class CatchDetailsController(
     ICatchDetailRepository catchDetailRepository,
     ILogger<CatchDetailsController> logger) : ControllerBase
 {
+    // Handle GET request to retrieve a specific catch detail by ID
     [HttpGet("{catchDetailId:guid}")]
     public async Task<ActionResult<CatchDetailDto>> GetCatchDetail(Guid catchDetailId)
     {
@@ -26,12 +28,14 @@ public class CatchDetailsController(
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetCatchDetail)}");
         }
     }
 
+    // Handle POST request to create a new catch detail
     [HttpPost]
     public async Task<ActionResult<CatchDetailDto>> CreateCatchDetail(CreateCatchDetailDto createCatchDetailDto)
     {
@@ -44,12 +48,14 @@ public class CatchDetailsController(
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(CreateCatchDetail)}");
         }
     }
 
+    // Handle PUT request to update an existing catch detail
     [HttpPut("{catchDetailId:guid}")]
     public async Task<ActionResult<CatchDetailDto>> UpdateCatchDetail(Guid catchDetailId,
         UpdateCatchDetailDto updateCatchDetailDto)
@@ -64,12 +70,14 @@ public class CatchDetailsController(
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(UpdateCatchDetail)}");
         }
     }
 
+    // Handle DELETE request to delete a catch detail by ID
     [HttpDelete("{catchDetailId:guid}")]
     public async Task<ActionResult<bool>> DeleteCatchDetail(Guid catchDetailId)
     {
@@ -80,6 +88,7 @@ public class CatchDetailsController(
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(DeleteCatchDetail)}");

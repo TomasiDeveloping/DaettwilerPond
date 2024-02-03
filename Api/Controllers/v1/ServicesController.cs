@@ -8,13 +8,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;
 
-[Route("api/v{version:apiVersion}/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]/[action]")]
 [ApiController]
 [ApiVersion("1.0")]
 [Authorize]
 public class ServicesController(IPdfService pdfService, ILogger<ServicesController> logger, IEmailService emailService) : ControllerBase
 {
-    [HttpGet("[action]")]
+
+    // Handle GET request to generate and retrieve a member PDF
+    [HttpGet]
     public async Task<IActionResult> GetMemberPdf()
     {
         try
@@ -33,7 +35,8 @@ public class ServicesController(IPdfService pdfService, ILogger<ServicesControll
         }
     }
 
-    [HttpGet("[action]")]
+    // Handle GET request to generate and retrieve fishing rules PDF
+    [HttpGet]
     public async Task<IActionResult> GetFishingRulesPdf()
     {
         try
@@ -52,7 +55,8 @@ public class ServicesController(IPdfService pdfService, ILogger<ServicesControll
         }
     }
 
-    [HttpGet("[action]")]
+    // Handle GET request to generate and retrieve fish open season PDF
+    [HttpGet]
     public async Task<IActionResult> GetFishOpenSeasonPdf()
     {
         try
@@ -71,7 +75,8 @@ public class ServicesController(IPdfService pdfService, ILogger<ServicesControll
         }
     }
 
-    [HttpPost("[action]")]
+    // Handle POST request to send fishing license invoice via email
+    [HttpPost]
     public async Task<ActionResult<bool>> SendFishingLicenseInvoice(
         CreateFishingLicenseBillDto createFishingLicenseBillDto)
     {
@@ -88,7 +93,8 @@ public class ServicesController(IPdfService pdfService, ILogger<ServicesControll
         }
     }
 
-    [HttpPost("[action]")]
+    // Handle POST request to send email to members
+    [HttpPost]
     public async Task<ActionResult<bool>> SendMembersEmail([FromForm] MembersEmailDto membersEmailDto)
     {
         try
@@ -105,7 +111,8 @@ public class ServicesController(IPdfService pdfService, ILogger<ServicesControll
         }
     }
 
-    [HttpGet("[action]/{fishingLicenseId}")]
+    // Handle GET request to retrieve and send user invoice for fishing license
+    [HttpGet("{fishingLicenseId:guid}")]
     public async Task<IActionResult> GetUserInvoiceFishingLicense(Guid fishingLicenseId)
     {
         try
@@ -124,6 +131,7 @@ public class ServicesController(IPdfService pdfService, ILogger<ServicesControll
         }
     }
 
+    // Utility method to get user email from claims
     private string GetUserEmail()
     {
         var email = HttpContext.User.Identity is ClaimsIdentity identity

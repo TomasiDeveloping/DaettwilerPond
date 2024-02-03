@@ -5,13 +5,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;
 
-[Route("api/v{version:apiVersion}/[controller]")]
+// Define the route, API version, and use ApiController attribute
+[Route("api/v{version:apiVersion}/[controller]/[action]")]
 [ApiController]
 [ApiVersion("1.0")]
 public class Lsn50V2MeasurementsController(ILsn50V2MeasurementRepository lsn50V2MeasurementRepository,
     ILogger<Lsn50V2MeasurementsController> logger) : ControllerBase
 {
-    [HttpGet("[action]")]
+
+    // Handle GET request to retrieve the latest temperature measurement
+    [HttpGet]
     public async Task<ActionResult<Lsn50V2TemperatureMeasurementDto>> GetLatestTemperatureMeasurement()
     {
         try
@@ -22,13 +25,15 @@ public class Lsn50V2MeasurementsController(ILsn50V2MeasurementRepository lsn50V2
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetLatestTemperatureMeasurement)}");
         }
     }
 
-    [HttpGet("[action]/{includeDays}")]
+    // Handle GET request to retrieve temperature measurements for a specified number of days
+    [HttpGet("{includeDays:int}")]
     public async Task<ActionResult<List<Lsn50V2TemperatureMeasurementDto>>> GetTemperatureMeasurementByDay(
         int includeDays)
     {
@@ -36,17 +41,19 @@ public class Lsn50V2MeasurementsController(ILsn50V2MeasurementRepository lsn50V2
         {
             var temperatureMeasurements =
                 await lsn50V2MeasurementRepository.GetTemperatureMeasurementsByDays(includeDays);
-            return temperatureMeasurements.Any() ? Ok(temperatureMeasurements) : NoContent();
+            return temperatureMeasurements.Count != 0 ? Ok(temperatureMeasurements) : NoContent();
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetTemperatureMeasurementByDay)}");
         }
     }
 
-    [HttpGet("[action]")]
+    // Handle GET request to retrieve temperature history data
+    [HttpGet]
     public async Task<ActionResult<TemperatureHistoryDto>> GetHistoryData()
     {
         try
@@ -56,6 +63,7 @@ public class Lsn50V2MeasurementsController(ILsn50V2MeasurementRepository lsn50V2
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetHistoryData)}");

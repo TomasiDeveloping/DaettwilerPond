@@ -5,28 +5,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;
 
+// Define the route, API version, and use ApiController attribute
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [ApiVersion("1.0")]
 public class SensorsController(ISensorRepository sensorRepository, ILogger<SensorsController> logger) : ControllerBase
 {
+    // Handle GET request to retrieve all sensors
     [HttpGet]
     public async Task<ActionResult<List<SensorDto>>> GetSensors()
     {
         try
         {
             var sensors = await sensorRepository.GetSensorsAsync();
-            return sensors.Any() ? Ok(sensors) : NoContent();
+            return sensors.Count != 0 ? Ok(sensors) : NoContent();
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetSensors)}");
         }
     }
 
-    [HttpGet("{sensorId}")]
+    // Handle GET request to retrieve a specific sensor by ID
+    [HttpGet("{sensorId:guid}")]
     public async Task<ActionResult<SensorDto>> GetSensorById(Guid sensorId)
     {
         try
@@ -37,12 +41,14 @@ public class SensorsController(ISensorRepository sensorRepository, ILogger<Senso
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetSensorById)}");
         }
     }
 
+    // Handle POST request to create a new sensor
     [HttpPost]
     public async Task<ActionResult<SensorDto>> CreateSensor(CreateSensorDto createSensorDto)
     {
@@ -54,6 +60,7 @@ public class SensorsController(ISensorRepository sensorRepository, ILogger<Senso
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(CreateSensor)}");

@@ -5,10 +5,12 @@ namespace Api.Configurations;
 
 public static class SwaggerExtension
 {
+    // Configures Swagger for API documentation
     public static void ConfigureSwagger(this IServiceCollection services)
     {
         services.AddSwaggerGen(options =>
         {
+            // Defines API documentation details for version 1
             options.SwaggerDoc("v1", new OpenApiInfo
             {
                 Title = "Dättwiler Pond API",
@@ -25,6 +27,8 @@ public static class SwaggerExtension
                     Url = new Uri("https://tomasi-developing.ch")
                 }
             });
+
+            // Configures Bearer token authentication for Swagger
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Description = @"JWT Authorization header using the Bearer scheme.
@@ -35,6 +39,8 @@ public static class SwaggerExtension
                 Type = SecuritySchemeType.ApiKey,
                 Scheme = JwtBearerDefaults.AuthenticationScheme
             });
+
+            // Adds security requirements for Bearer token authentication
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
