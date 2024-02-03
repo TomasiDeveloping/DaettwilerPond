@@ -4,6 +4,7 @@ import {DetailYearlyCatchModel} from "../../models/detailYearlyCatch.model";
 import {AuthenticationService} from "../../services/authentication.service";
 import {FishingLicenseService} from "../../services/fishing-license.service";
 import {Router} from "@angular/router";
+import {YearlyCatchModel} from "../../models/yearlyCatch.model";
 
 @Component({
   selector: 'app-catch-statistics',
@@ -13,6 +14,7 @@ import {Router} from "@angular/router";
 export class CatchStatisticsComponent implements OnInit{
 
   public detailCatches: DetailYearlyCatchModel[] = [];
+  public yearlyCatch: YearlyCatchModel | undefined;
   public months: number[] = Array(12);
   private currentLicence: string | undefined;
   private readonly _fishCatchService: FishCatchService = inject(FishCatchService);
@@ -30,6 +32,7 @@ export class CatchStatisticsComponent implements OnInit{
        if (response) {
          this.currentLicence = response.id;
          this.getDetailCatches(response.id);
+         this.getYearlyCatch(response.id);
        }
      })
    });
@@ -40,6 +43,16 @@ export class CatchStatisticsComponent implements OnInit{
       next: ((response) => {
         if (response) {
           this.detailCatches = response;
+        }
+      })
+    });
+  }
+
+  getYearlyCatch(licenceId: string) {
+    this._fishCatchService.getYearlyCatch(licenceId).subscribe({
+      next: ((response) => {
+        if (response) {
+          this.yearlyCatch = response;
         }
       })
     });

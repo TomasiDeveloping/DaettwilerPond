@@ -1,7 +1,10 @@
 <div class="container">
   <h1 class="text-center">Fangstatistik</h1>
   <div class="total-catch-container">
-
+    @if (yearlyCatch) {
+      <div><b>Total Stunden:</b> {{yearlyCatch.hoursSpent.toFixed(2)}}</div>
+      <div><b>Gefangene Fische:</b> {{yearlyCatch.fishCatches}}</div>
+    }
   </div>
   @if (detailCatches.length > 0) {
     <div class="month-catch-container">
