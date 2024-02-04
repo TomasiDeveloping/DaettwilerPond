@@ -58,7 +58,7 @@ public class SensorRepository(DaettwilerPondDbContext context, IMapper mapper) :
     public async Task<SensorDto> UpdateSensorAsync(UpdateSensorDto updateSensorDto)
     {
         // Retrieve and update an existing sensor
-        var sensor = await context.Sensors.FirstOrDefaultAsync(s => s.Id == updateSensorDto.Ïd);
+        var sensor = await context.Sensors.FirstOrDefaultAsync(s => s.Id == updateSensorDto.Id);
         if (sensor == null) return null;
         mapper.Map(updateSensorDto, sensor);
         await context.SaveChangesAsync();
