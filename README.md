@@ -20,6 +20,9 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.15.3 (2024-02-04)
+- Fix Bug in Background job
+- Better email template
 ### 1.15.2 (2024-02-04)
 - Code Refactoring
 - Thorough commenting added to enhance code understanding
