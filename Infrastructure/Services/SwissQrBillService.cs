@@ -10,7 +10,7 @@ public class SwissQrBillService : ISwissQrBillService
     {
         var bill = new Bill
         {
-            // creditor data
+            // Creditor data
             Account = fishingLicenseBill.Account,
             Creditor = new Address
             {
@@ -20,11 +20,11 @@ public class SwissQrBillService : ISwissQrBillService
                 CountryCode = "CH"
             },
 
-            // payment data
+            // Payment data
             Amount = fishingLicenseBill.Amount,
             Currency = "CHF",
 
-            // debtor data
+            // Debtor data
             Debtor = new Address
             {
                 Name = fishingLicenseBill.DebtorName,
@@ -33,11 +33,11 @@ public class SwissQrBillService : ISwissQrBillService
                 CountryCode = "CH"
             },
 
-            // more payment data
+            // More payment data
             UnstructuredMessage = fishingLicenseBill.ReferenceMessage,
 
 
-            // output format
+            // Output format
             Format = new BillFormat
             {
                 Language = Language.DE,
@@ -45,6 +45,8 @@ public class SwissQrBillService : ISwissQrBillService
                 OutputSize = OutputSize.QrBillExtraSpace
             }
         };
+
+        // Check for null or empty values in Debtor Address and City
         if (!string.IsNullOrWhiteSpace(fishingLicenseBill.DebtorAddress) &&
             !string.IsNullOrWhiteSpace(fishingLicenseBill.DebtorCity)) return QRBill.Generate(bill);
         bill.Debtor.Name = null;

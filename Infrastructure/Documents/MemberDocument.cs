@@ -8,15 +8,18 @@ namespace Infrastructure.Documents;
 
 public class MemberDocument(List<UserWithAddressDto> usersWithAddresses) : IDocument
 {
+    // Text style for the body cells in the table
     private static TextStyle TableBodyTextStyle => TextStyle
         .Default
         .FontSize(11);
 
+    // Text style for the header cells in the table
     private static TextStyle TableHeaderTextStyle => TextStyle
         .Default
         .FontSize(14)
         .Bold();
 
+    // Implementation of the Compose method from the IDocument interface
     public void Compose(IDocumentContainer container)
     {
         container.Page(page =>
@@ -24,15 +27,19 @@ public class MemberDocument(List<UserWithAddressDto> usersWithAddresses) : IDocu
             // Document settings
             page.Margin(20);
             page.Size(PageSizes.A4.Landscape());
+
             // Create Document Header
             page.Header().Element(ComposeHeader);
+
             // Create Document Content Table
             page.Content().Element(ComposeContent);
+
             // Create Document Footer
             page.Footer().AlignCenter().Text($"Stand: {DateTime.Now:dd.MM.yyyy}");
         });
     }
 
+    // Method to compose the header section of the document
     private static void ComposeHeader(IContainer container)
     {
         container.Row(row =>
@@ -42,6 +49,7 @@ public class MemberDocument(List<UserWithAddressDto> usersWithAddresses) : IDocu
         });
     }
 
+    // Method to compose the content section of the document
     private void ComposeContent(IContainer container)
     {
         // Table Column Definition
@@ -64,6 +72,7 @@ public class MemberDocument(List<UserWithAddressDto> usersWithAddresses) : IDocu
                 // Mobile
                 columns.ConstantColumn(100);
             });
+
             // Configure Table Header 
             table.Header(header =>
             {
@@ -75,11 +84,13 @@ public class MemberDocument(List<UserWithAddressDto> usersWithAddresses) : IDocu
                 header.Cell().Element(TableHeaderStyle).Text("Telefon").Style(TableHeaderTextStyle);
                 header.Cell().Element(TableHeaderStyle).Text("Natel").Style(TableHeaderTextStyle);
 
+                // Styling for the table header cells
                 static IContainer TableHeaderStyle(IContainer container)
                 {
                     return container.Border(1).Background(Colors.Grey.Lighten1).Padding(1).AlignCenter();
                 }
             });
+
             // Create Table Body Content
             foreach (var user in usersWithAddresses)
             {
@@ -102,6 +113,7 @@ public class MemberDocument(List<UserWithAddressDto> usersWithAddresses) : IDocu
                 // Mobile
                 table.Cell().Element(TableBodyStyle).Text(user.Address.Mobile).Style(TableBodyTextStyle);
 
+                // Styling for the table body cells
                 static IContainer TableBodyStyle(IContainer container)
                 {
                     return container.Border(1).MinHeight(30).Background(Colors.Grey.Lighten5).PaddingLeft(2).Padding(1)
