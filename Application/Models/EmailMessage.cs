@@ -1,15 +1,14 @@
 ﻿namespace Application.Models;
 
-public class EmailMessage
+// Model representing an email message
+public class EmailMessage(IEnumerable<string> to, string subject, string content)
 {
-    public EmailMessage(IEnumerable<string> to, string subject, string content)
-    {
-        To = to;
-        Subject = subject;
-        Content = content;
-    }
+    // Recipients of the email
+    public IEnumerable<string> To { get; set; } = to;
 
-    public IEnumerable<string> To { get; set; }
-    public string Subject { get; set; }
-    public string Content { get; set; }
+    // Subject of the email
+    public string Subject { get; set; } = subject;
+
+    // Subject of the email
+    public string Content { get; set; } = content;
 }

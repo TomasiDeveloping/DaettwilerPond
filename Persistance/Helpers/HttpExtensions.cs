@@ -1,21 +1,29 @@
 ﻿using System.Web;
 
-namespace Persistence.Helpers;
-
-public static class HttpExtensions
+namespace Persistence.Helpers
 {
-    public static Uri AddQuery(this Uri uri, string name, string value)
+    // Static class providing extension methods for working with URIs and query parameters.
+    public static class HttpExtensions
     {
-        var httpValueCollection = HttpUtility.ParseQueryString(uri.Query);
-
-        httpValueCollection.Remove(name);
-        httpValueCollection.Add(name, value);
-
-        var ub = new UriBuilder(uri)
+        // Extension method to add or replace a query parameter in the URI.
+        public static Uri AddQuery(this Uri uri, string name, string value)
         {
-            Query = httpValueCollection.ToString() ?? string.Empty
-        };
+            // Parse the existing query parameters.
+            var httpValueCollection = HttpUtility.ParseQueryString(uri.Query);
 
-        return ub.Uri;
+            // Remove the existing parameter with the same name.
+            httpValueCollection.Remove(name);
+
+            // Add the new parameter.
+            httpValueCollection.Add(name, value);
+
+            // Build a new URI with the modified query parameters.
+            var ub = new UriBuilder(uri)
+            {
+                Query = httpValueCollection.ToString() ?? string.Empty
+            };
+
+            return ub.Uri;
+        }
     }
 }

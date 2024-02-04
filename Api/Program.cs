@@ -11,7 +11,7 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure Serilog
+// Configure Serilog for logging
 builder.Host.UseSerilog((context, configuration) =>
 {
     configuration.WriteTo.Console()
@@ -19,7 +19,7 @@ builder.Host.UseSerilog((context, configuration) =>
         .Enrich.WithProperty("ApplicationName", "DättwilerWeiher");
 });
 
-// Configure Quartz
+// Configure Quartz for background jobs
 builder.Services.AddQuartz(options =>
 {
     var jobKey = new JobKey(nameof(CheckFishingDayHasCompleted));
@@ -34,7 +34,7 @@ builder.Services.AddQuartz(options =>
 // Register the Quartz.NET service and configure it to block shutdown until jobs are complete.
 builder.Services.AddQuartzHostedService(options => { options.WaitForJobsToComplete = true; });
 
-// Register Projects
+// Register Projects (Persistence, Application, Infrastructure)
 builder.Services.ConfigurePersistenceServices(builder.Configuration);
 builder.Services.ConfigureApplicationServices();
 builder.Services.ConfigureInfrastructureServices();
@@ -48,44 +48,53 @@ builder.Services.ConfigureApiVersioning();
 builder.Services.ConfigureHealthChecks(builder.Configuration);
 builder.Services.ConfigureAuthentication(builder.Configuration.GetSection("Jwt"));
 
-// Register custom services to the container
+// Register custom services to the container (Email configuration)
 builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailSettings"));
 
-
+// Build the application
 var app = builder.Build();
 
 try
 {
+    // Log information about starting the web host
     Log.Logger.Information("Starting web host");
-    // Configure the HTTP request pipeline.
 
+    // Enable Swagger and Swagger UI
     app.UseSwagger();
     app.UseSwaggerUI();
 
+    // Enable Cross-Origin Resource Sharing (CORS)
     app.UseCors("CorsPolicy");
 
+    // Log HTTP requests using Serilog
     app.UseSerilogRequestLogging();
 
+    // Redirect HTTP to HTTPS
     app.UseHttpsRedirection();
 
+    // Enable authentication and authorization
     app.UseAuthentication();
     app.UseAuthorization();
 
+    // Map controllers
     app.MapControllers();
 
+    // Map health checks endpoint with UI response
     app.MapHealthChecks("/health", new HealthCheckOptions
     {
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
     });
 
-
+    // Run the application
     app.Run();
 }
 catch (Exception e)
 {
+    // Log fatal error if the host terminates unexpectedly
     Log.Fatal(e, "Host terminated unexpectedly");
 }
 finally
 {
+    // Close and flush the Serilog log
     Log.CloseAndFlush();
 }

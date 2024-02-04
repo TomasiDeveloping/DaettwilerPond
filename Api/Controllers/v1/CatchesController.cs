@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;
 
+// Define the route, API version, and authorize the controller
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [ApiVersion("1.0")]
 [Authorize]
 public class CatchesController(ICatchRepository catchRepository, ILogger<CatchesController> logger) : ControllerBase
 {
+    // Handle GET request to retrieve a specific catch by ID
     [HttpGet("{catchId:guid}")]
     public async Task<ActionResult<CatchDto>> GetCatchById(Guid catchId)
     {
@@ -25,12 +27,14 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetCatchById)}");
         }
     }
 
+    // Handle GET request to retrieve the catch for the current day
     [HttpGet("[action]/{licenceId:guid}")]
     public async Task<ActionResult<CatchDto>> GetCatchForCurrentDay(Guid licenceId)
     {
@@ -41,12 +45,14 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetCatchForCurrentDay)}");
         }
     }
 
+    // Handle GET request to start a fishing day
     [HttpGet("[action]/{licenceId:guid}")]
     public async Task<ActionResult<CatchDto>> StartFishingDay(Guid licenceId)
     {
@@ -57,12 +63,14 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(StartFishingDay)}");
         }
     }
 
+    // Handle GET request to stop a fishing day
     [HttpGet("[action]/{catchId:guid}")]
     public async Task<ActionResult<CatchDto>> StopFishingDay(Guid catchId)
     {
@@ -73,12 +81,14 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(StopFishingDay)}");
         }
     }
 
+    // Handle GET request to continue a fishing day
     [HttpGet("[action]/{catchId:guid}")]
     public async Task<ActionResult<CatchDto>> ContinueFishingDay(Guid catchId)
     {
@@ -89,12 +99,14 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(ContinueFishingDay)}");
         }
     }
 
+    // Handle GET request to get yearly catch statistics
     [HttpGet("[action]/{licenceId:guid}")]
     public async Task<ActionResult<YearlyCatch>> GetYearlyCatch(Guid licenceId)
     {
@@ -105,12 +117,14 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetYearlyCatch)}");
         }
     }
 
+    // Handle GET request to check if a catch date exists
     [HttpGet("[action]/{licenceId:guid}/{catchDate}")]
     public async Task<ActionResult<bool>> CheckCatchDateExists(Guid licenceId, string catchDate)
     {
@@ -121,44 +135,50 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(CheckCatchDateExists)}");
         }
     }
 
+    // Handle GET request to get detailed yearly catch statistics
     [HttpGet("[action]/{licenceId:guid}")]
     public async Task<ActionResult<List<DetailYearlyCatch>>> GetDetailYearlyCatches(Guid licenceId)
     {
         try
         {
             var detailCatches = await catchRepository.GetDetailYearlyCatchAsync(licenceId);
-            return detailCatches.Any() ? Ok(detailCatches) : NoContent();
+            return detailCatches.Count != 0 ? Ok(detailCatches) : NoContent();
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetDetailYearlyCatches)}");
         }
     }
 
+    // Handle GET request to get catches for a specific month
     [HttpGet("[action]/{licenceId:guid}/{month:int}")]
     public async Task<ActionResult<List<CatchDto>>> GetCatchesForMonth(Guid licenceId, int month)
     {
         try
         {
             var monthCatches = await catchRepository.GetCatchesForMonthAsync(licenceId, month);
-            return monthCatches.Any() ? Ok(monthCatches) : NoContent();
+            return monthCatches.Count != 0 ? Ok(monthCatches) : NoContent();
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetCatchesForMonth)}");
         }
     }
 
+    // Handle POST request to create a new catch
     [HttpPost]
     public async Task<ActionResult<CatchDto>> CreateCatch(CreateCatchDto createCatchDto)
     {
@@ -171,13 +191,14 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(CreateCatch)}");
         }
     }
 
-
+    // Handle PUT request to update an existing catch
     [HttpPut("{catchId:guid}")]
     public async Task<ActionResult<CatchDto>> UpdateCatch(Guid catchId, UpdateCatchDto updateCatchDto)
     {
@@ -189,12 +210,14 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(UpdateCatch)}");
         }
     }
 
+    // Handle DELETE request to delete a catch by ID
     [HttpDelete("{catchId:guid}")]
     public async Task<ActionResult<bool>> DeleteCatch(Guid catchId)
     {
@@ -205,6 +228,7 @@ public class CatchesController(ICatchRepository catchRepository, ILogger<Catches
         }
         catch (Exception e)
         {
+            // Log and return a generic error 
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(DeleteCatch)}");

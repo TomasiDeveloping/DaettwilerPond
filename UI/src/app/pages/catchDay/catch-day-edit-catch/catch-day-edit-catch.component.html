@@ -1,18 +1,32 @@
+<!-- Dialog title -->
 <h1 mat-dialog-title>Fang bearbeiten</h1>
+
+<!-- Dialog content -->
 <div mat-dialog-content>
+  <!-- Form for editing fish catch details -->
   <form [formGroup]="catchDetailForm">
+
+    <!-- Dropdown for selecting fish type -->
     <div class="form-group">
       <label class="form-label" for="fishTypeId">Fischart</label>
       <select class="form-select" formControlName="fishTypeId" id="fishTypeId">
+        <!-- Loop through fishTypes array and generate options -->
         <option *ngFor="let fishType of fishTypes" [value]="fishType.id">{{ fishType.name }}</option>
       </select>
     </div>
+
+    <!-- Checkbox for indicating whether the fish had crabs in its stomach -->
     <div class="form-check mt-3">
       <input class="form-check-input" formControlName="hadCrabs" id="hadCrabs" type="checkbox">
       <label class="form-check-label" for="hadCrabs">Mageninhalt</label>
     </div>
+
+    <!-- Dialog actions (buttons) -->
     <div class="d-flex justify-content-end mb-3" mat-dialog-actions>
+      <!-- Button to submit the form and save changes -->
       <button (click)="onSubmit()" class="btn btn-success" type="submit">Bearbeiten</button>
+
+      <!-- Button to close the dialog without saving changes -->
       <button (click)="onClose(false)" class="btn btn-danger ms-3" type="button">Abbrechen</button>
     </div>
   </form>

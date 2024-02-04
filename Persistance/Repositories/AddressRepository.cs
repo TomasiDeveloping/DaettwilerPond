@@ -7,8 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repositories;
 
+// Repository class for handling Address entities.
 public class AddressRepository(DaettwilerPondDbContext context, IMapper mapper) : IAddressRepository
 {
+
+    // Method to get all addresses.
     public async Task<List<AddressDto>> GetAddressesAsync()
     {
         var addresses = await context.Addresses
@@ -18,6 +21,7 @@ public class AddressRepository(DaettwilerPondDbContext context, IMapper mapper) 
         return addresses;
     }
 
+    // Method to get addresses for a specific user.
     public async Task<List<AddressDto>> GetUserAddressesAsync(Guid userId)
     {
         var userAddresses = await context.Addresses
@@ -28,6 +32,7 @@ public class AddressRepository(DaettwilerPondDbContext context, IMapper mapper) 
         return userAddresses;
     }
 
+    // Method to get a specific address by its ID.
     public async Task<AddressDto> GetAddressAsync(Guid addressId)
     {
         var address = await context.Addresses
@@ -37,6 +42,7 @@ public class AddressRepository(DaettwilerPondDbContext context, IMapper mapper) 
         return address;
     }
 
+    // Method to create a new address.
     public async Task<AddressDto> CreateAddressAsync(AddressDto addressDto)
     {
         var address = mapper.Map<Address>(addressDto);
@@ -46,6 +52,7 @@ public class AddressRepository(DaettwilerPondDbContext context, IMapper mapper) 
         return mapper.Map<AddressDto>(address);
     }
 
+    // Method to update an existing address.
     public async Task<AddressDto> UpdateAddressAsync(Guid addressId, AddressDto addressDto)
     {
         var address = await context.Addresses.FirstOrDefaultAsync(a => a.Id == addressId);
@@ -55,6 +62,7 @@ public class AddressRepository(DaettwilerPondDbContext context, IMapper mapper) 
         return mapper.Map<AddressDto>(address);
     }
 
+    // Method to delete an address.
     public async Task<bool> DeleteAddressAsync(Guid addressId)
     {
         var address = await context.Addresses.FirstOrDefaultAsync(a => a.Id == addressId);

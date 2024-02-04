@@ -9,21 +9,18 @@ import {Address} from "../models/address.model";
 })
 export class AddressService {
 
+  // API base URL obtained from environment
   private readonly _serviceUrl: string = environment.apiBaseUrl + '/Addresses/';
+
+  // Injecting the HttpClient service
   private readonly _httpClient: HttpClient = inject(HttpClient);
 
-  getAddresses(): Observable<Address[]> {
-    return this._httpClient.get<Address[]>(this._serviceUrl);
-  }
-
-  getAddress(addressId: string): Observable<Address> {
-    return this._httpClient.get<Address>(this._serviceUrl + addressId);
-  }
-
+  // Retrieve addresses for a specific user
   getUserAddresses(userId: string): Observable<Address[]> {
     return this._httpClient.get<Address[]>(this._serviceUrl + `users/${userId}`);
   }
 
+  // Update an existing address
   updateAddress(addressId: string, address: Address): Observable<Address> {
     return this._httpClient.put<Address>(this._serviceUrl + addressId, address);
   }

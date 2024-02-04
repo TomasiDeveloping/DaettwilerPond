@@ -9,8 +9,7 @@ import {UserService} from "../../../../services/user.service";
 
 @Component({
   selector: 'app-admin-edit-fishing-license',
-  templateUrl: './admin-edit-fishing-license.component.html',
-  styleUrls: ['./admin-edit-fishing-license.component.scss']
+  templateUrl: './admin-edit-fishing-license.component.html'
 })
 export class AdminEditFishingLicenseComponent {
   public isUpdate: boolean;

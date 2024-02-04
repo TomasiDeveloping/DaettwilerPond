@@ -6,28 +6,33 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;
 
+// Define the route, API version, and authorize the controller
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [ApiVersion("1.0")]
 [Authorize]
 public class FishTypesController(IFishTypeRepository fishTypeRepository, ILogger<FishTypesController> logger) : ControllerBase
 {
+
+    // Handle GET request to retrieve all fish types
     [HttpGet]
     public async Task<ActionResult<List<FishTypeDto>>> GetFishTypes()
     {
         try
         {
             var fishTypes = await fishTypeRepository.GetFishTypesAsync();
-            return fishTypes.Any() ? Ok(fishTypes) : NoContent();
+            return fishTypes.Count != 0 ? Ok(fishTypes) : NoContent();
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetFishTypes)}");
         }
     }
 
+    // Handle POST request to create a new fish type
     [HttpPost]
     public async Task<ActionResult<FishTypeDto>> CreateFishType(CreateFishTypeDto createFishTypeDto)
     {
@@ -40,13 +45,15 @@ public class FishTypesController(IFishTypeRepository fishTypeRepository, ILogger
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(CreateFishType)}");
         }
     }
 
-    [HttpPut("{fishTypeId}")]
+    // Handle PUT request to update an existing fish type by ID
+    [HttpPut("{fishTypeId:guid}")]
     public async Task<ActionResult<FishTypeDto>> UpdateFishType(Guid fishTypeId, FishTypeDto fishTypeDto)
     {
         try
@@ -58,13 +65,15 @@ public class FishTypesController(IFishTypeRepository fishTypeRepository, ILogger
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(UpdateFishType)}");
         }
     }
 
-    [HttpDelete("{fishTypeId}")]
+    // Handle DELETE request to delete a fish type by ID
+    [HttpDelete("{fishTypeId:guid}")]
     public async Task<ActionResult<bool>> DeleteFishType(Guid fishTypeId)
     {
         try
@@ -74,6 +83,7 @@ public class FishTypesController(IFishTypeRepository fishTypeRepository, ILogger
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(DeleteFishType)}");

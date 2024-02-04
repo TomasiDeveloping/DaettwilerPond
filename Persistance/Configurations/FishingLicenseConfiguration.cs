@@ -2,23 +2,31 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Persistence.Configurations;
-
-public class FishingLicenseConfiguration : IEntityTypeConfiguration<FishingLicense>
+namespace Persistence.Configurations
 {
-    public void Configure(EntityTypeBuilder<FishingLicense> builder)
+    // Configuration class for the FishingLicense entity to define its database schema.
+    public class FishingLicenseConfiguration : IEntityTypeConfiguration<FishingLicense>
     {
-        builder.HasKey(l => l.Id);
-        builder.HasOne(l => l.User)
-            .WithMany(u => u.FishingLicenses)
-            .HasForeignKey(l => l.UserId)
-            .OnDelete(DeleteBehavior.NoAction);
-        builder.Property(l => l.CreatedAt).IsRequired();
-        builder.Property(l => l.ExpiresOn).IsRequired();
-        builder.Property(l => l.IsPaid).IsRequired().HasMaxLength(200);
-        builder.Property(l => l.IssuedBy).HasMaxLength(100).IsRequired();
-        builder.Property(l => l.UpdatedAt).IsRequired(false);
-        builder.Property(l => l.Year).IsRequired();
-        builder.Property(l => l.IsActive).IsRequired();
+        // Configures the FishingLicense entity.
+        public void Configure(EntityTypeBuilder<FishingLicense> builder)
+        {
+            // Primary key configuration
+            builder.HasKey(l => l.Id);
+
+            // Relationship configuration with User entity
+            builder.HasOne(l => l.User)
+                .WithMany(u => u.FishingLicenses)
+                .HasForeignKey(l => l.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Property configurations
+            builder.Property(l => l.CreatedAt).IsRequired();
+            builder.Property(l => l.ExpiresOn).IsRequired();
+            builder.Property(l => l.IsPaid).IsRequired(); // Note: Removed unnecessary MaxLength
+            builder.Property(l => l.IssuedBy).HasMaxLength(100).IsRequired();
+            builder.Property(l => l.UpdatedAt).IsRequired(false);
+            builder.Property(l => l.Year).IsRequired();
+            builder.Property(l => l.IsActive).IsRequired();
+        }
     }
 }

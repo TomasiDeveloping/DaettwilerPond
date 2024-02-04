@@ -2,13 +2,19 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Persistence.Configurations;
-
-public class FishingRegulationConfiguration : IEntityTypeConfiguration<FishingRegulation>
+namespace Persistence.Configurations
 {
-    public void Configure(EntityTypeBuilder<FishingRegulation> builder)
+    // Configuration class for the FishingRegulation entity to define its database schema.
+    public class FishingRegulationConfiguration : IEntityTypeConfiguration<FishingRegulation>
     {
-        builder.HasKey(fr => fr.Id);
-        builder.Property(fr => fr.Regulation).IsRequired();
+        // Configures the FishingRegulation entity.
+        public void Configure(EntityTypeBuilder<FishingRegulation> builder)
+        {
+            // Primary key configuration
+            builder.HasKey(fr => fr.Id);
+
+            // Property configurations
+            builder.Property(fr => fr.Regulation).IsRequired();
+        }
     }
 }

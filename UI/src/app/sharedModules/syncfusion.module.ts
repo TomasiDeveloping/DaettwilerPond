@@ -16,15 +16,19 @@ import {
 @NgModule({
   declarations: [],
   imports: [
+    // CommonModule is imported to ensure common directives like *ngFor, *ngIf are available
     CommonModule,
+    // Importing Syncfusion Grid modules for UI components
     PagerModule,
     GridModule,
   ],
+  // Exporting both Angular and Syncfusion Grid modules for use in other modules
   exports: [
     CommonModule,
     PagerModule,
     GridModule
   ],
+  // Providing Syncfusion Grid services to be used as dependencies
   providers: [
     GroupService,
     DetailRowService,

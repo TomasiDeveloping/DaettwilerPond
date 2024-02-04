@@ -1,13 +1,26 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Domain.Entities;
-
-public class User : IdentityUser<Guid>
+namespace Domain.Entities
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public bool IsActive { get; set; }
-    public DateTime? LastActivity { get; set; }
-    public ICollection<Address> Addresses { get; set; }
-    public ICollection<FishingLicense> FishingLicenses { get; set; }
+    // Represents a user in the application, extending IdentityUser with a Guid as the key
+    public class User : IdentityUser<Guid>
+    {
+        // First name of the user
+        public string FirstName { get; set; }
+
+        // Last name of the user
+        public string LastName { get; set; }
+
+        // Indicates whether the user is currently active
+        public bool IsActive { get; set; }
+
+        // The timestamp of the user's last activity (nullable)
+        public DateTime? LastActivity { get; set; }
+
+        // Collection of addresses associated with the user
+        public ICollection<Address> Addresses { get; set; }
+
+        // Collection of fishing licenses associated with the user
+        public ICollection<FishingLicense> FishingLicenses { get; set; }
+    }
 }

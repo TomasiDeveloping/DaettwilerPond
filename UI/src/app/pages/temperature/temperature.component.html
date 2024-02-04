@@ -1,4 +1,6 @@
 <div class="container">
+
+  <!-- Current Temperature Section -->
   <h1 class="text-center">Temperatur</h1>
   <p *ngIf="currentMeasurement">Aktuelle Wassertemperatur <span
     class="fw-semibold">{{currentMeasurement.temperature.toFixed(2)}} °C</span>
@@ -6,6 +8,7 @@
     <br><span class="text-muted">Messung vom: {{currentMeasurement.receivedAt | date: 'dd.MM.yyyy HH:mm'}}</span>
   </p>
 
+  <!-- Tagesverlauf Section -->
   <h3 class="text-center">Tagesverlauf</h3>
   <highcharts-chart *ngIf="loadData"
                     [Highcharts]="Highcharts"
@@ -13,8 +16,11 @@
                     style="width: 100%; height: 400px; display: block;"
   ></highcharts-chart>
 
+  <!-- Rekordwerte und Durchschnittswerte Section -->
   <ng-container *ngIf="historyData">
     <h3 class="mt-3 text-center">Rekordwerte und Durchschnittswerte</h3>
+
+    <!-- Monthly Statistics -->
     <div class="history-container">
       <div class="history-box">
         <h5 class="text-center">Monat {{currentMonth | germanMonth}}</h5>
@@ -22,12 +28,16 @@
         <div>Niedrigste Temperatur: <span class="cold">{{historyData.minimumTemperatureMonth.toFixed(2)}}</span> °C</div>
         <div>Durchschnittstemperatur: {{historyData.temperatureAverageMonth.toFixed(2)}} °C</div>
       </div>
+
+      <!-- Yearly Statistics -->
       <div class="history-box">
         <h5 class="text-center">Jahr {{currentYear}}</h5>
         <div>Höchste Temperatur: <span class="warm">{{historyData.maximumTemperatureYear.toFixed(2)}}</span> °C</div>
         <div>Niedrigste Temperatur: <span class="cold">{{historyData.minimumTemperatureYear.toFixed(2)}}</span> °C</div>
         <div>Durchschnittstemperatur: {{historyData.temperatureAverageYear.toFixed(2)}} °C</div>
       </div>
+
+      <!-- All-time Statistics -->
       <div class="history-box">
         <h5 class="text-center">Seit Beginn der Aufzeichnungen</h5>
         <div>Höchste Temperatur: <span class="warm">{{historyData.maximumTemperature.toFixed(2)}}</span> °C</div>
@@ -38,7 +48,7 @@
     </div>
   </ng-container>
 
-
+  <!-- Weather Widget Section -->
   <div class="weather-widget-container">
     <iframe
       title="Wetter Dättwil"

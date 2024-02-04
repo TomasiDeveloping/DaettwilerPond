@@ -10,8 +10,7 @@ import {CreateLicenseBillComponent} from "./create-license-bill/create-license-b
 
 @Component({
   selector: 'app-admin-fishing-license',
-  templateUrl: './admin-fishing-license.component.html',
-  styleUrls: ['./admin-fishing-license.component.scss']
+  templateUrl: './admin-fishing-license.component.html'
 })
 export class AdminFishingLicenseComponent implements OnInit {
   public licenses: FishingLicense[] = [];

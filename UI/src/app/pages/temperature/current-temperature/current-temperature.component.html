@@ -1,12 +1,23 @@
+<!-- ngIf Directive: Display the card only if currentTemperature is truthy -->
 <div *ngIf="currentTemperature" class="card text-center">
+
+  <!-- Card Header Section -->
   <div class="card-header">
     Aktuelle Wassertemperatur
   </div>
+
+  <!-- Card Body Section -->
   <div class="card-body">
+    <!-- Display the formatted temperature with 2 decimal places -->
     <h5 class="card-title temperature">{{currentTemperature.temperature.toFixed(2)}} °C</h5>
+
+    <!-- Details Button with Router Link -->
     <a class="btn btn-secondary btn-sm" href="#" routerLink="/temperatur">Details</a>
   </div>
+
+  <!-- Card Footer Section -->
   <div class="card-footer text-body-secondary">
+    <!-- Display the timestamp of the temperature measurement in a formatted way -->
     Messung: {{currentTemperature.receivedAt | date: 'dd.MM.yyyy HH:mm'}}
   </div>
 </div>

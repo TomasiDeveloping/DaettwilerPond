@@ -7,34 +7,46 @@ import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-forgot-password-dialog',
-  templateUrl: './forgot-password-dialog.component.html',
-  styleUrls: ['./forgot-password-dialog.component.scss']
+  templateUrl: './forgot-password-dialog.component.html'
 })
 export class ForgotPasswordDialogComponent {
 
+  // Initialize the form group for the forgot password form with email validation
   public forgotPasswordForm: FormGroup = new FormGroup({
     email: new FormControl<string>('', [Validators.required, Validators.email])
   });
+
+  // Inject AuthenticationService and MatDialogRef for service and dialog functionality
   private readonly _authenticationService: AuthenticationService = inject(AuthenticationService);
   private readonly _dialogRef: MatDialogRef<ForgotPasswordDialogComponent> = inject(MatDialogRef<ForgotPasswordDialogComponent>);
 
+  // Getter for email control to access it easily in the template
   get email() {
     return this.forgotPasswordForm.get('email');
   }
 
-  onSubmit() {
+  // Handle form submission
+  onSubmit(): void {
+    // Check if the form is invalid before proceeding
     if (this.forgotPasswordForm.invalid) {
       return;
     }
+
+    // Create a ForgotPassword object with email and client URI
     const forgotPasswordRequest: ForgotPassword = {
       email: this.email?.value,
       clientUri: environment.resetPasswordUri
     };
+
+    // Call the AuthenticationService method for forgot password
     this._authenticationService.forgotPassword(forgotPasswordRequest);
+
+    // Close the dialog after submission
     this.onClose();
   }
 
-  onClose() {
+  // Close the dialog
+  onClose(): void {
     this._dialogRef.close();
   }
 }

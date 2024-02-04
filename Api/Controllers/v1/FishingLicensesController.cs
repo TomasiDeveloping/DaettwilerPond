@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;
 
+// Define the route, API version, and authorize the controller
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [ApiVersion("1.0")]
@@ -14,23 +15,26 @@ namespace Api.Controllers.v1;
 public class FishingLicensesController(IFishingLicenseRepository fishingLicenseRepository,
     ILogger<FishingLicensesController> logger) : ControllerBase
 {
+    // Handle GET request to retrieve all fishing licenses
     [HttpGet]
     public async Task<ActionResult<List<FishingLicenseDto>>> GetFishingLicenses()
     {
         try
         {
             var licenses = await fishingLicenseRepository.GetFishingLicensesAsync();
-            return licenses.Any() ? Ok(licenses) : NoContent();
+            return licenses.Count != 0 ? Ok(licenses) : NoContent();
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetFishingLicenses)}");
         }
     }
 
-    [HttpGet("{fishingLicenseId}")]
+    // Handle GET request to retrieve a specific fishing license by ID
+    [HttpGet("{fishingLicenseId:guid}")]
     public async Task<ActionResult<FishingLicenseDto>> GetFishingLicense(Guid fishingLicenseId)
     {
         try
@@ -41,29 +45,33 @@ public class FishingLicensesController(IFishingLicenseRepository fishingLicenseR
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetFishingLicense)}");
         }
     }
 
-    [HttpGet("Users/{userId}")]
+    // Handle GET request to retrieve fishing licenses for a specific user
+    [HttpGet("Users/{userId:guid}")]
     public async Task<ActionResult<List<FishingLicenseDto>>> GetUserFishingLicenses(Guid userId)
     {
         try
         {
             var userLicenses = await fishingLicenseRepository.GetUserFishingLicenses(userId);
-            return userLicenses.Any() ? Ok(userLicenses) : NoContent();
+            return userLicenses.Count != 0 ? Ok(userLicenses) : NoContent();
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetUserFishingLicenses)}");
         }
     }
 
-    [HttpGet("Users/[action]/{userId}")]
+    // Handle GET request to retrieve the current user's fishing license for the current year
+    [HttpGet("Users/[action]/{userId:guid}")]
     public async Task<ActionResult<FishingLicenseDto>> GetCurrentUserLicense(Guid userId)
     {
         try
@@ -74,12 +82,14 @@ public class FishingLicensesController(IFishingLicenseRepository fishingLicenseR
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetCurrentUserLicense)}");
         }
     }
 
+    // Handle POST request to create a new fishing license
     [HttpPost]
     public async Task<ActionResult<FishingLicenseDto>> CreateFishingLicense(
         CreateFishingLicenseDto createFishingLicenseDto)
@@ -93,13 +103,15 @@ public class FishingLicensesController(IFishingLicenseRepository fishingLicenseR
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(CreateFishingLicense)}");
         }
     }
 
-    [HttpPut("{fishingLicenseId}")]
+    // Handle PUT request to update an existing fishing license by ID
+    [HttpPut("{fishingLicenseId:guid}")]
     public async Task<ActionResult<FishingLicenseDto>> UpdateFishingLicense(Guid fishingLicenseId,
         FishingLicenseDto fishingLicenseDto)
     {
@@ -112,13 +124,15 @@ public class FishingLicensesController(IFishingLicenseRepository fishingLicenseR
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(UpdateFishingLicense)}");
         }
     }
 
-    [HttpDelete("{fishingLicenseId}")]
+    // Handle DELETE request to delete a fishing license by ID
+    [HttpDelete("{fishingLicenseId:guid}")]
     public async Task<ActionResult<bool>> DeleteFishingLicense(Guid fishingLicenseId)
     {
         try
@@ -128,6 +142,7 @@ public class FishingLicensesController(IFishingLicenseRepository fishingLicenseR
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(DeleteFishingLicense)}");

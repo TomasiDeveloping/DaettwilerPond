@@ -1,14 +1,33 @@
-﻿namespace Application.DataTransferObjects.FishType;
-
-public class FishTypeDto
+﻿namespace Application.DataTransferObjects.FishType
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public int? ClosedSeasonFromMonth { get; set; }
-    public int? ClosedSeasonFromDay { get; set; }
-    public int? ClosedSeasonToMonth { get; set; }
-    public int? ClosedSeasonToDay { get; set; }
-    public bool HasClosedSeason { get; set; }
-    public int? MinimumSize { get; set; }
-    public bool HasMinimumSize { get; set; }
+    // Data Transfer Object (DTO) representing detailed information about a fish type
+    public class FishTypeDto
+    {
+        // Unique identifier for the fish type
+        public Guid Id { get; set; }
+
+        // Name of the fish type
+        public string Name { get; set; }
+
+        // Month of the starting month of the closed season (nullable)
+        public int? ClosedSeasonFromMonth { get; set; }
+
+        // Day of the starting day of the closed season (nullable)
+        public int? ClosedSeasonFromDay { get; set; }
+
+        // Month of the ending month of the closed season (nullable)
+        public int? ClosedSeasonToMonth { get; set; }
+
+        // Day of the ending day of the closed season (nullable)
+        public int? ClosedSeasonToDay { get; set; }
+
+        // Indicates whether the fish type has a closed season
+        public bool HasClosedSeason { get; set; }
+
+        // Minimum size requirement for the fish type (nullable)
+        public int? MinimumSize { get; set; }
+
+        // Indicates whether the fish type has a minimum size requirement
+        public bool HasMinimumSize { get; set; }
+    }
 }

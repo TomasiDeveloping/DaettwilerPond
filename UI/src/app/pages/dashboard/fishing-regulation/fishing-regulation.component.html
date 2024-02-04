@@ -1,16 +1,30 @@
+<!-- Heading for fishing regulations section -->
 <h5 class="text-center mt-5 mb-2">Fischereivorschriften</h5>
+
+<!-- Card for displaying fishing regulations -->
 <div class="card">
+  <!-- Card header with a title -->
   <div class="card-header text-center">
     Vorschriften
   </div>
+
+  <!-- Card body containing fishing regulations details -->
   <div class="card-body">
+    <!-- Subtitle for fishing regulations section -->
     <h5 class="card-title">Fischereivorschriften</h5>
+
+    <!-- Paragraph providing general information about fishing regulations -->
     <p class="card-text">Der Inhaber einer Karte ist berechtigt im Dättwilerweiher vom Ufer aus und
       mit dem Boot zu fischen und hat folgendes zu beachten:</p>
+
+    <!-- Unordered list to display individual fishing regulations -->
     <ul>
+      <!-- Iterating through each regulation in the fishingRegulations array -->
       <li *ngFor="let regulation of fishingRegulations">{{regulation.regulation}}</li>
     </ul>
   </div>
+
+  <!-- Card footer displaying the date of the fishing regulations -->
   <div class="card-footer text-body-secondary text-center">
     Baden, 1. Januar 2018
   </div>

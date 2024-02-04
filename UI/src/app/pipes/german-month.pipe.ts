@@ -1,11 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
+  // Pipe name for usage in templates
   name: 'germanMonth',
+
+  // Optional property to indicate that this pipe is standalone (doesn't rely on Angular's change detection)
   standalone: true
 })
 export class GermanMonthPipe implements PipeTransform {
 
+  // Transform function to convert numerical month to German month name
   transform(month: number): string {
     switch (month) {
       case 0: return 'Januar';

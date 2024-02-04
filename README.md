@@ -20,6 +20,9 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.15.2 (2024-02-04)
+- Code Refactoring
+- Thorough commenting added to enhance code understanding
 ### 1.15.1 (2024-02-03)
 - Background job to close forgotten fishing days
 - Adjustments for statistics page

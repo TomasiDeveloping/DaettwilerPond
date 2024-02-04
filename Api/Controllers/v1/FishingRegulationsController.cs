@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1;
 
+// Define the route, API version, and authorize the controller
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [ApiVersion("1.0")]
@@ -13,22 +14,26 @@ namespace Api.Controllers.v1;
 public class FishingRegulationsController(IFishingRegulationRepository fishingRegulationRepository,
     ILogger<FishingRegulationsController> logger) : ControllerBase
 {
+
+    // Handle GET request to retrieve all fishing regulations
     [HttpGet]
     public async Task<ActionResult<List<FishingRegulationDto>>> GetFishingRegulations()
     {
         try
         {
             var fishingRegulations = await fishingRegulationRepository.GetFishingRegulationsAsync();
-            return fishingRegulations.Any() ? Ok(fishingRegulations) : NoContent();
+            return fishingRegulations.Count != 0 ? Ok(fishingRegulations) : NoContent();
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetFishingRegulations)}");
         }
     }
 
+    // Handle POST request to create a new fishing regulation
     [HttpPost]
     public async Task<ActionResult<FishingRegulationDto>> CreateFishingRegulation(
         CreateFishingRegulationDto createFishingRegulationDto)
@@ -42,13 +47,15 @@ public class FishingRegulationsController(IFishingRegulationRepository fishingRe
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(CreateFishingRegulation)}");
         }
     }
 
-    [HttpPut("{fishingRegulationId}")]
+    // Handle PUT request to update an existing fishing regulation by ID
+    [HttpPut("{fishingRegulationId:guid}")]
     public async Task<ActionResult<FishingRegulationDto>> UpdateFishingRegulation(Guid fishingRegulationId,
         FishingRegulationDto fishingRegulationDto)
     {
@@ -64,13 +71,15 @@ public class FishingRegulationsController(IFishingRegulationRepository fishingRe
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(UpdateFishingRegulation)}");
         }
     }
 
-    [HttpDelete("{fishingRegulationId}")]
+    // Handle DELETE request to delete a fishing regulation by ID
+    [HttpDelete("{fishingRegulationId:guid}")]
     public async Task<ActionResult<bool>> DeleteFishingRegulation(Guid fishingRegulationId)
     {
         try
@@ -80,6 +89,7 @@ public class FishingRegulationsController(IFishingRegulationRepository fishingRe
         }
         catch (Exception e)
         {
+            // Log and return a generic error response
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(DeleteFishingRegulation)}");

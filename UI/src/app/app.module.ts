@@ -37,6 +37,7 @@ import { EditCatchDayDialogComponent } from './pages/catch-statistics/catch-stat
 
 
 @NgModule({
+  // Declarations of all the components used in the module
   declarations: [
     AppComponent,
     NavigationComponent,
@@ -58,7 +59,8 @@ import { EditCatchDayDialogComponent } from './pages/catch-statistics/catch-stat
     CatchStatisticsMonthDetailComponent,
     EditCatchDayDialogComponent,
   ],
-    imports: [
+  // Importing necessary Angular modules
+  imports: [
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
@@ -76,11 +78,13 @@ import { EditCatchDayDialogComponent } from './pages/catch-statistics/catch-stat
         }),
         GermanMonthPipe,
     ],
+  // Providers for services and interceptors
   providers: [
     DatePipe,
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],
+  // Bootstrap component for the module
   bootstrap: [AppComponent]
 })
 export class AppModule {
