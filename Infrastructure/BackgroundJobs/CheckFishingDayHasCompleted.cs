@@ -11,10 +11,10 @@ namespace Infrastructure.BackgroundJobs;
 [DisallowConcurrentExecution]
 public class CheckFishingDayHasCompleted(
     DaettwilerPondDbContext dbContext,
+    ICatchRepository catchRepository,
     IEmailService emailService,
     ILogger<CheckFishingDayHasCompleted> logger) : IJob
 {
-
     // Implementation of the Execute method from the IJob interface
     public async Task Execute(IJobExecutionContext context)
     {
@@ -22,6 +22,7 @@ public class CheckFishingDayHasCompleted(
         {
             // Retrieve open catches that need to be completed
             var openCatches = await dbContext.Catches
+                .AsNoTracking()
                 .Where(c => c.StartFishing.HasValue && !c.EndFishing.HasValue && c.StartFishing.Value < DateTime.Now)
                 .ToListAsync();
 
@@ -31,24 +32,22 @@ public class CheckFishingDayHasCompleted(
             // Iterate through open catches and complete them
             foreach (var fishCatch in openCatches)
             {
-                if (fishCatch.StartFishing != null)
-                {
-                    // Calculate the end date for the catch
-                    var catchDate = fishCatch.StartFishing.Value;
-                    var endDate = new DateTime(catchDate.Year, catchDate.Month, catchDate.Day).AddDays(1)
-                        .AddMinutes(-1);
-                    fishCatch.EndFishing = endDate;
+                if (fishCatch.StartFishing == null) continue;
 
-                    // Create an email message for the user
-                    var message = await CreateMailMessage(fishCatch.FishingLicenseId, catchDate);
+                // Calculate the end date for the catch
+                var catchDate = fishCatch.StartFishing.Value;
+                var endDate = new DateTime(catchDate.Year, catchDate.Month, catchDate.Day).AddDays(1)
+                    .AddMinutes(-1);
 
-                    // Send the email and log a warning if it fails
-                    var mailSend = await emailService.SendEmailAsync(message);
-                    if (!mailSend) logger.LogWarning("Could not send email");
-                }
+                // Stop catch day and save to Database
+                await catchRepository.StopCatchDayAsync(fishCatch.Id, endDate);
 
-                // Save changes to the database
-                await dbContext.SaveChangesAsync();
+                // Create an email message for the user
+                var message = await CreateMailMessage(fishCatch.FishingLicenseId, catchDate);
+
+                // Send the email and log a warning if it fails
+                var mailSend = await emailService.SendEmailAsync(message);
+                if (!mailSend) logger.LogWarning("Could not send email");
             }
         }
         catch (Exception e)
@@ -63,6 +62,7 @@ public class CheckFishingDayHasCompleted(
     {
         // Retrieve user information based on the fishing license ID
         var userWithMail = await dbContext.FishingLicenses
+            .AsNoTracking()
             .Include(f => f.User)
             .Where(l => l.Id == licenceId)
             .Select(l => new
@@ -73,9 +73,11 @@ public class CheckFishingDayHasCompleted(
             }).FirstOrDefaultAsync() ?? throw new ArgumentException($"No User for Licence: {licenceId}");
 
         // Create the content of the email
-        var content = $"<h1>Hallo {userWithMail.FirstName} {userWithMail.LastName}</h1>" +
-                      $"<p>Dein Fangtag vom {catchDate:dd.MM.yyyy} wurde automatisch abgeschlossen.</p>" +
-                      $"<p>Bitte korrigiere fals nötig den Tag im Portal. Danke</p>";
+        var content = $"<h2>Hallo {userWithMail.FirstName} {userWithMail.LastName},</h2>" +
+                      $"<p>Diese Nachricht wurde automatisch generiert, um dich darüber zu informieren, dass dein Fangtag vom {catchDate:dd.MM.yyyy} automatisch abgeschlossen wurde.</p>" +
+                      $"<p>Sollten Anpassungen nötig sein, kannst du diese <a href=\"https://weiher.tomasi-developing.ch/home\">direkt im Portal</a> vornehmen. Vielen Dank für deine Kooperation.</p>" +
+                      $"<br> " +
+                      $"<small>Bitte beachte, dass auf direkte Antworten auf diese E-Mail nicht überwacht wird. Bei weiteren Fragen oder Anliegen stehen wir jedoch gerne zur Verfügung. Nutze dazu bitte die üblichen Kontaktmöglichkeiten.</small>";
 
         // Return the email message
         return new EmailMessage(new[] { userWithMail.Email }, "Fangtag automatisch abgeschlossen", content);

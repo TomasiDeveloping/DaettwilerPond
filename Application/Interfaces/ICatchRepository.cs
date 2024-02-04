@@ -36,7 +36,7 @@ public interface ICatchRepository
     Task<CatchDto> StartCatchDayAsync(Guid licenceId);
 
     // Stop the current fishing day for the given catch ID
-    Task<CatchDto> StopCatchDayAsync(Guid catchId);
+    Task<CatchDto> StopCatchDayAsync(Guid catchId, DateTime endTime = default);
 
     // Continue the fishing day for the given catch ID
     Task<CatchDto> ContinueFishingDayAsync(Guid catchId);

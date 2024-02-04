@@ -168,7 +168,7 @@ public class CatchRepository(DaettwilerPondDbContext context, IMapper mapper) : 
     }
 
     // Stop the catch day and calculate hours spent
-    public async Task<CatchDto> StopCatchDayAsync(Guid catchId)
+    public async Task<CatchDto> StopCatchDayAsync(Guid catchId, DateTime endTime = default)
     {
         // Finding the catch to stop
         var currentCatch = await context.Catches.FirstOrDefaultAsync(c => c.Id == catchId);
@@ -178,8 +178,9 @@ public class CatchRepository(DaettwilerPondDbContext context, IMapper mapper) : 
         if (!currentCatch.StartFishing.HasValue) throw new ArgumentException("No Start date");
 
         // Setting end fishing time, calculating hours spent, and saving changes
-        currentCatch.EndFishing = DateTime.Now;
-        currentCatch.HoursSpent += CalculateHoursSpent(currentCatch.StartFishing.Value, DateTime.Now);
+        if (endTime == default) endTime = DateTime.Now;
+        currentCatch.EndFishing = endTime;
+        currentCatch.HoursSpent += CalculateHoursSpent(currentCatch.StartFishing.Value, endTime);
         await context.SaveChangesAsync();
 
         // Returning the updated catch
