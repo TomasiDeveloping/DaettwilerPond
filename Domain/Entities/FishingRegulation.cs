@@ -1,7 +1,12 @@
-﻿namespace Domain.Entities;
-
-public class FishingRegulation
+﻿namespace Domain.Entities
 {
-    public Guid Id { get; set; }
-    public string Regulation { get; set; }
+    // Entity representing a fishing regulation within the application
+    public class FishingRegulation
+    {
+        // Unique identifier for the fishing regulation
+        public Guid Id { get; set; }
+
+        // Textual representation of the fishing regulation
+        public string Regulation { get; set; }
+    }
 }

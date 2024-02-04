@@ -1,11 +1,24 @@
-﻿namespace Domain.Entities;
-
-public class Lsn50V2Lifecycle
+﻿namespace Domain.Entities
 {
-    public Guid Id { get; set; }
-    public Sensor Sensor { get; set; }
-    public Guid SensorId { get; set; }
-    public DateTime ReceivedAt { get; set; }
-    public decimal BatteryVoltage { get; set; }
-    public int BatteryLevel { get; set; }
+    // Entity representing the lifecycle data of an LSN50V2 sensor within the application
+    public class Lsn50V2Lifecycle
+    {
+        // Unique identifier for the lifecycle entry
+        public Guid Id { get; set; }
+
+        // The associated sensor for this lifecycle entry
+        public Sensor Sensor { get; set; }
+
+        // Unique identifier of the associated sensor
+        public Guid SensorId { get; set; }
+
+        // The timestamp when the lifecycle data was received
+        public DateTime ReceivedAt { get; set; }
+
+        // The battery voltage of the sensor
+        public decimal BatteryVoltage { get; set; }
+
+        // The battery level of the sensor
+        public int BatteryLevel { get; set; }
+    }
 }
