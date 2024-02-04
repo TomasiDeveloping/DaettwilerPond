@@ -87,7 +87,7 @@ export class CatchStatisticsComponent implements OnInit{
     } else  {
       // Find and return the detailed catch data for the specified month
       const detailCatch: DetailYearlyCatchModel | undefined = this.detailCatches.find((x: DetailYearlyCatchModel): boolean => x.month === month);
-      return detailCatch || null;
+      return detailCatch ?? null;
     }
 
   }
