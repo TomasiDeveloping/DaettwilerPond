@@ -2,14 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Persistence.Configurations;
-
-public class SensorTypeConfiguration : IEntityTypeConfiguration<SensorType>
+namespace Persistence.Configurations
 {
-    public void Configure(EntityTypeBuilder<SensorType> builder)
+    // Configuration class for the SensorType entity to define its database schema.
+    public class SensorTypeConfiguration : IEntityTypeConfiguration<SensorType>
     {
-        builder.HasKey(st => st.Id);
-        builder.Property(st => st.Name).IsRequired().HasMaxLength(150);
-        builder.Property(st => st.Producer).IsRequired().HasMaxLength(250);
+        // Configures the SensorType entity.
+        public void Configure(EntityTypeBuilder<SensorType> builder)
+        {
+            // Primary key configuration
+            builder.HasKey(st => st.Id);
+
+            // Property configurations
+            builder.Property(st => st.Name).IsRequired().HasMaxLength(150);
+            builder.Property(st => st.Producer).IsRequired().HasMaxLength(250);
+        }
     }
 }

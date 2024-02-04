@@ -9,10 +9,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repositories;
 
+// UserRepository handles CRUD operations for User entities, including user addresses and password changes.
 public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, UserManager<User> userManager) : IUserRepository
 {
+
+    // Get a list of all users
     public async Task<List<UserDto>> GetUsersAsync()
     {
+        // Projecting and querying a list of UserDto
         var users = await context.Users
             .ProjectTo<UserDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
@@ -20,8 +24,10 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
         return users;
     }
 
+    // Get a user by email
     public async Task<UserDto> GetUserByEmail(string userEmail)
     {
+        // Projecting and querying a UserDto based on email
         var user = await context.Users
             .ProjectTo<UserDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
@@ -29,10 +35,14 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
         return user;
     }
 
+    // Get a list of users with associated addresses
     public async Task<List<UserWithAddressDto>> GetUsersWithAddressesAsync()
     {
+        // Retrieve users with addresses, excluding System Administrators
         var users = await context.Users.AsNoTracking().OrderBy(u => u.LastName).ToListAsync();
         var usersWithAddresses = new List<UserWithAddressDto>();
+
+        // Iterate through users and map to UserWithAddressDto
         foreach (var user in users.Where(user =>
                      !user.FirstName.Equals("System") || !user.LastName.Equals("Administrator")))
         {
@@ -53,16 +63,20 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
         return usersWithAddresses;
     }
 
+    // Get a user with associated address by user ID
     public async Task<UserWithAddressDto> GetUserWithAddressByUserId(Guid userId)
     {
+        // Projecting and querying a UserWithAddressDto based on user ID
         var userWithAddress = await context.Users
             .ProjectTo<UserWithAddressDto>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(u => u.UserId == userId);
         return userWithAddress;
     }
 
+    // Update user details by user ID
     public async Task<UserDto> UpdateUserAsync(Guid userId, UserDto userDto)
     {
+        // Retrieve and update user details
         var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
         if (user == null) return null;
         mapper.Map(userDto, user);
@@ -70,13 +84,17 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
         return await GetUserByIdAsync(userId);
     }
 
+    // Update user details with associated address and role
     public async Task<UserWithAddressDto> UpdateUserWithAddressAsync(UserWithAddressDto userWithAddressDto)
     {
+        // Retrieve and update user details, address, and role
         var user = await context.Users
             .Include(u => u.Addresses)
             .FirstOrDefaultAsync(u => u.Id == userWithAddressDto.UserId);
         if (user == null) return null;
         mapper.Map(userWithAddressDto, user);
+
+        // Retrieve and update roles
         var currentRoles = await userManager.GetRolesAsync(user);
         if (currentRoles.FirstOrDefault() != userWithAddressDto.Role)
         {
@@ -84,6 +102,7 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
             await userManager.AddToRoleAsync(user, userWithAddressDto.Role);
         }
 
+        // Update address details
         var address = user.Addresses.FirstOrDefault() ?? new Address();
         address.City = userWithAddressDto.Address.City;
         address.Country = userWithAddressDto.Address.Country;
@@ -92,12 +111,16 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
         address.Phone = userWithAddressDto.Address.Phone;
         address.PostalCode = userWithAddressDto.Address.PostalCode;
         address.Street = userWithAddressDto.Address.Street;
+
+        // Save changes to the database
         await context.SaveChangesAsync();
         return userWithAddressDto;
     }
 
+    // Get a user by user ID
     public async Task<UserDto> GetUserByIdAsync(Guid userId)
     {
+        // Projecting and querying a UserDto based on user ID
         var user = await context.Users
             .ProjectTo<UserDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
@@ -105,8 +128,10 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
         return user;
     }
 
+    // Change user password
     public async Task<ChangePasswordResponseDto> ChangeUserPassword(ChangePasswordDto changePasswordDto)
     {
+        // Retrieve user by ID
         var user = await userManager.FindByIdAsync(changePasswordDto.UserId.ToString());
         if (user == null)
             return new ChangePasswordResponseDto
@@ -115,6 +140,7 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
                 ErrorMessage = "Passwort konnte nicht geändert werden"
             };
 
+        // Check the current password
         var checkPassword = await userManager.CheckPasswordAsync(user, changePasswordDto.CurrentPassword);
         if (!checkPassword)
             return new ChangePasswordResponseDto
@@ -123,6 +149,7 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
                 ErrorMessage = "Aktuelles Passwort ist nicht korrekt"
             };
 
+        // Change the password
         var checkChangePassword =
             await userManager.ChangePasswordAsync(user, changePasswordDto.CurrentPassword, changePasswordDto.Password);
         if (checkChangePassword.Succeeded)
@@ -139,14 +166,24 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
         };
     }
 
+    // Delete user by user ID
     public async Task<bool> DeleteUserAsync(Guid userId)
     {
+        // Retrieve and delete user and associated addresses
         var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
         if (user == null) return false;
+
+        // Retrieve and delete associated addresses
         var addresses = await context.Addresses.Where(a => a.UserId == userId).ToListAsync();
         if (addresses.Any()) context.Addresses.RemoveRange(addresses);
+
+        // Remove the user from the context
         context.Users.Remove(user);
+
+        // Save changes to the database
         await context.SaveChangesAsync();
+
+        // Return true to indicate successful deletion
         return true;
     }
 }
