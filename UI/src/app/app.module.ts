@@ -34,6 +34,7 @@ import { CatchDayEditCatchComponent } from './pages/catchDay/catch-day-edit-catc
 import { CatchStatisticsComponent } from './pages/catch-statistics/catch-statistics.component';
 import { CatchStatisticsMonthDetailComponent } from './pages/catch-statistics/catch-statistics-month-detail/catch-statistics-month-detail.component';
 import { EditCatchDayDialogComponent } from './pages/catch-statistics/catch-statistics-month-detail/edit-catch-day-dialog/edit-catch-day-dialog.component';
+import { OverseerComponent } from './pages/overseer/overseer.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { EditCatchDayDialogComponent } from './pages/catch-statistics/catch-stat
     CatchStatisticsComponent,
     CatchStatisticsMonthDetailComponent,
     EditCatchDayDialogComponent,
+    OverseerComponent,
   ],
   // Importing necessary Angular modules
   imports: [

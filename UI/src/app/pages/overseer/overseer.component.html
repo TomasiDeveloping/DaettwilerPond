@@ -1,0 +1,41 @@
+<div class="container">
+  <h1 class="text-center">Aufseher</h1>
+
+  <div class="total-container">
+    <h4>Jahr 2024</h4>
+    <div>Gesamte Angelstunden aller Mitglieder</div>
+    <div>32 Stunden</div>
+    <div>Gesamtzahl der gefangenen Fische</div>
+    <div>12 Fische</div>
+  </div>
+
+  <div class="d-flex justify-content-between mb-3">
+    <button class="btn btn-primary">Statistik Exportieren</button>
+    <button (click)="onSendMail()" class="btn btn-primary">Email-Senden</button>
+  </div>
+
+  <div class="member-select">
+    <div>Mitglied auswählen für Details</div>
+    <select (change)="onMemberChange($event)" class="form-select" aria-label="Default select example">
+      <option></option>
+      @for (member of members; track member.userId) {
+        <option [value]="member.userId">{{member.fullName}}</option>
+      }
+    </select>
+  </div>
+
+  @if (userSelected) {
+    <div class="user-detail-container">
+      <h5 class="text-center">Tomasi Patrick</h5>
+      <div>Anzahl Stunden: 23.25</div>
+      <div>Anzahl Fische: 3</div>
+      <div>Aktiv: <i class="bi bi-check2 custom-icon-check"></i></div>
+      <div>Ausgestellt am: 01.01.2024</div>
+      <div>Ausgestellt durch: Patrick Tomasi</div>
+      <div>Gültig bis: 31.12.2024</div>
+      <div>Bezahlt: <i class="bi bi-x custom-icon-cancel"></i></div>
+      <div>Ist am Angeln: <i class="bi bi-x custom-icon-cancel"></i></div>
+    </div>
+  }
+
+</div>
