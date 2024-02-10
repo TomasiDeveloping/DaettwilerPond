@@ -31,12 +31,14 @@
           </a>
         </li>
 
-        <!-- Links visible only for logged-in admin users -->
-        <li *ngIf="isUserLoggedIn && isAdminUser" class="nav-item">
+        <!-- Show the 'Angeltag' link in the navigation bar only if the user is logged in and has overseer or higher privileges -->
+        <li *ngIf="isUserLoggedIn && isOverseerOrHigher" class="nav-item">
           <a (click)="isShown = false" class="nav-link" routerLink="/angeltag" routerLinkActive="active">Angeltag
           </a>
         </li>
-        <li *ngIf="isUserLoggedIn && isAdminUser" class="nav-item">
+
+        <!-- Show the 'Fangstatistik' link in the navigation bar only if the user is logged in and has overseer or higher privileges -->
+        <li *ngIf="isUserLoggedIn && isOverseerOrHigher" class="nav-item">
           <a (click)="isShown = false" class="nav-link" routerLink="/fangstatistik" routerLinkActive="active">Fangstatistik
           </a>
         </li>

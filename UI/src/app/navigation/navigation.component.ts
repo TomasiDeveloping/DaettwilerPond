@@ -19,6 +19,7 @@ export class NavigationComponent implements OnInit {
   public isUserLoggedIn: boolean = false;
   public isShown: boolean = false;
   public isAdminUser: boolean = false;
+  public isOverseerOrHigher: boolean = false;
 
   // Application version from environment
   public version: string = environment.version;
@@ -36,6 +37,7 @@ export class NavigationComponent implements OnInit {
         // Update user login status and admin status on authentication change
         this.isUserLoggedIn = isLoggedIn;
         this.isAdminUser = this._authenticationService.isUserAdministrator();
+        this.isOverseerOrHigher = this._authenticationService.isUserOverseerOrHigher();
 
         // Retrieve and update current user information if logged in
         const userId: string | null = this._authenticationService.getUserIdFromToken();

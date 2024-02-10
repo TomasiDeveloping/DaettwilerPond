@@ -85,6 +85,16 @@ export class AuthenticationService {
     return false;
   }
 
+  public isUserOverseerOrHigher(): boolean {
+    const token: string | null = localStorage.getItem('DaettwilerPondToken');
+    if (token) {
+      const decodedToken = this._jwtHelper.decodeToken(token);
+      const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      return role === 'Administrator' || role === 'Aufseher';
+    }
+    return false;
+  }
+
   // Automatically log in the user if a valid token exists
   public autoLogin(): void {
     const token: string | null = localStorage.getItem('DaettwilerPondToken');

@@ -20,6 +20,8 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.15.4 (2024-02-10)
+- Catch Day and Statistic links it is now visible if the user is an overseer or higher.
 ### 1.15.3 (2024-02-04)
 - Fix Bug in Background job
 - Better email template

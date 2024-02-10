@@ -15,6 +15,7 @@ import {CatchStatisticsComponent} from "./pages/catch-statistics/catch-statistic
 import {
   CatchStatisticsMonthDetailComponent
 } from "./pages/catch-statistics/catch-statistics-month-detail/catch-statistics-month-detail.component";
+import {overseerGuard} from "./guards/overseer.guard";
 
 // Defining routes for different components
 const routes: Routes = [
@@ -42,10 +43,10 @@ const routes: Routes = [
   },
 
   // Protected route for the catch day component, requiring authentication
-  {path: 'angeltag', component: CatchDayComponent, canActivate:[authGuard]},
+  {path: 'angeltag', component: CatchDayComponent, canActivate:[overseerGuard]},
 
   // Protected route for the catch statistics component, requiring authentication
-  {path: 'fangstatistik', component: CatchStatisticsComponent, canActivate:[authGuard]},
+  {path: 'fangstatistik', component: CatchStatisticsComponent, canActivate:[overseerGuard]},
 
   // Protected route for detailed monthly catch statistics, requiring authentication
   {path: 'monatstatistik/:licenceId/:month', component: CatchStatisticsMonthDetailComponent, canActivate: [authGuard]},
