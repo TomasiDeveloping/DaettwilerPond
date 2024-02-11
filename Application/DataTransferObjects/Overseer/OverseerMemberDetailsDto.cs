@@ -2,6 +2,7 @@
 
 public class OverseerMemberDetailsDto
 {
+    public string UserFullName { get; set; }
     public double TotalHours { get; set; }
     public int TotalFishes { get; set; }
     public bool IsLicenceActive { get; set; }

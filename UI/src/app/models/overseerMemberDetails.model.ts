@@ -1,10 +1,11 @@
 export interface OverseerMemberDetailsModel {
+  userFullName: string;
   totalHours: number;
   totalFishes: number;
   isLicenceActive: boolean;
   licenseIssuedBy: string;
   licenseIssuedOn: Date;
-  LicenseValidUntil: Date;
+  licenseValidUntil: Date;
   isLicencePaid: boolean;
   isFishing: boolean;
 }

@@ -2,11 +2,11 @@
   <h1 class="text-center">Aufseher</h1>
 
   <div class="total-container">
-    <h4>Jahr 2024</h4>
+    <h4>Jahr {{yearlyDetails?.currentYear}}</h4>
     <div>Gesamte Angelstunden aller Mitglieder</div>
-    <div>32 Stunden</div>
+    <div><b>{{yearlyDetails?.totalHoursSpend}} Stunden</b></div>
     <div>Gesamtzahl der gefangenen Fische</div>
-    <div>12 Fische</div>
+    <div><b>{{yearlyDetails?.totalFishCatches}} Fische</b></div>
   </div>
 
   <div class="d-flex justify-content-between mb-3">
@@ -26,15 +26,15 @@
 
   @if (userSelected) {
     <div class="user-detail-container">
-      <h5 class="text-center">Tomasi Patrick</h5>
-      <div>Anzahl Stunden: 23.25</div>
-      <div>Anzahl Fische: 3</div>
-      <div>Aktiv: <i class="bi bi-check2 custom-icon-check"></i></div>
-      <div>Ausgestellt am: 01.01.2024</div>
-      <div>Ausgestellt durch: Patrick Tomasi</div>
-      <div>Gültig bis: 31.12.2024</div>
-      <div>Bezahlt: <i class="bi bi-x custom-icon-cancel"></i></div>
-      <div>Ist am Angeln: <i class="bi bi-x custom-icon-cancel"></i></div>
+      <h5 class="text-center">{{memberDetail?.userFullName}}</h5>
+      <div>Anzahl Stunden: {{memberDetail?.totalHours}}</div>
+      <div>Anzahl Fische: {{memberDetail?.totalFishes}}</div>
+      <div>Aktiv: <i [ngClass]="memberDetail?.isLicenceActive ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'" class="bi"></i></div>
+      <div>Ausgestellt am: {{memberDetail?.licenseIssuedOn | date: 'dd.MM.yyyy'}}</div>
+      <div>Ausgestellt durch: {{memberDetail?.licenseIssuedBy}}</div>
+      <div>Gültig bis: {{memberDetail?.licenseValidUntil | date: 'dd.MM.yyyy'}}</div>
+      <div>Bezahlt: <i [ngClass]="memberDetail?.isLicencePaid ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'" class="bi"></i></div>
+      <div>Ist am Angeln: <i [ngClass]="memberDetail?.isFishing ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'" class="bi"></i></div>
     </div>
   }
 
