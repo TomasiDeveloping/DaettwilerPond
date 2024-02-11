@@ -88,7 +88,7 @@ public class FishingLicenseRepository(DaettwilerPondDbContext context, IMapper m
             .Where(l => l.User.Id == userId && l.Year == currentYear)
             .Select(l => new OverseerMemberDetailsDto()
             {
-                IsLicencePaîd = l.IsPaid,
+                IsLicencePaid = l.IsPaid,
                 IsLicenceActive = l.IsActive,
                 LicenseIssuedBy = l.IssuedBy,
                 LicenseIssuedOn = l.CreatedAt,
