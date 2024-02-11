@@ -1,4 +1,5 @@
 ﻿using Application.DataTransferObjects.FishingLicense;
+using Application.DataTransferObjects.Overseer;
 using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -57,6 +58,48 @@ public class FishingLicenseRepository(DaettwilerPondDbContext context, IMapper m
             .Where(l => l.UserId == userId && l.Year == DateTime.Now.Year)
             .FirstOrDefaultAsync();
         return currentUserLicense;
+    }
+
+    public async Task<CatchDetailsYearDto> GetDetailYearlyCatchAsync(int year)
+    {
+        var catchDetails = await context.FishingLicenses
+            .Where(l => l.Year == year)
+            .SelectMany(l => l.Catches)
+            .GroupBy(c => 1) // Group by a constant to aggregate all records into a single group
+            .Select(g => new CatchDetailsYearDto
+            {
+                TotalFishCatches = g.SelectMany(c => c.CatchDetails).Sum(cd => cd.Amount),
+                TotalHoursSpend = g.Sum(c => c.HoursSpent),
+                CurrentYear = year
+            })
+            .FirstOrDefaultAsync();
+
+        return catchDetails;
+    }
+
+    public async Task<OverseerMemberDetailsDto> GetOverseerMemberDetailAsync(Guid userId)
+    {
+        var today = DateTime.Now;
+        var currentYear = today.Year;
+        
+        var memberDetail = await context.FishingLicenses
+            .Include(l => l.User)
+            .Include(l => l.Catches).ThenInclude(c => c.CatchDetails)
+            .Where(l => l.User.Id == userId && l.Year == currentYear)
+            .Select(l => new OverseerMemberDetailsDto()
+            {
+                IsLicencePaîd = l.IsPaid,
+                IsLicenceActive = l.IsActive,
+                LicenseIssuedBy = l.IssuedBy,
+                LicenseIssuedOn = l.CreatedAt,
+                LicenseValidUntil = l.ExpiresOn,
+                IsFishing = l.Catches.Any(c => c.StartFishing.HasValue && !c.EndFishing.HasValue && c.StartFishing.Value.Date == today.Date),
+                TotalFishes = l.Catches.SelectMany(d => d.CatchDetails).Count(),
+                TotalHours = l.Catches.Sum(c => c.HoursSpent)
+            })
+            .FirstOrDefaultAsync();
+
+        return memberDetail;
     }
 
     // Create a new fishing license
