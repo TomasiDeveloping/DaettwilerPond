@@ -1,6 +1,7 @@
 ﻿using Application.DataTransferObjects.FishingLicense;
 using Application.DataTransferObjects.Overseer;
 using Application.Interfaces;
+using Application.Models.CatchReport;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Entities;
@@ -75,6 +76,17 @@ public class FishingLicenseRepository(DaettwilerPondDbContext context, IMapper m
             .FirstOrDefaultAsync();
 
         return catchDetails;
+    }
+
+    public async Task<List<UserStatistic>> GetDetailYearlyCatchReportAsync(int year)
+    {
+        // Fetch all fishing licenses for the given year
+        var userStatistic = await context.FishingLicenses
+            .Where(fl => fl.Year == year)
+            .ProjectTo<UserStatistic>(mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        return userStatistic;
     }
 
     public async Task<OverseerMemberDetailsDto> GetOverseerMemberDetailAsync(Guid userId)

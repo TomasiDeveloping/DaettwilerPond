@@ -1,6 +1,8 @@
 ﻿using Application.DataTransferObjects.Catch;
 using Application.Interfaces;
 using Asp.Versioning;
+using DocumentFormat.OpenXml.Bibliography;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +15,7 @@ namespace Api.Controllers.v1;
 [Authorize]
 public class OverseersController(
     IFishingLicenseRepository fishingLicenseRepository,
+    IReportService reportService,
     ILogger<OverseersController> logger) : ControllerBase
 {
     [HttpGet("{year:int}")]
@@ -46,6 +49,33 @@ public class OverseersController(
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetDetailYearlyCatch)}");
+        }
+    }
+
+    [AllowAnonymous]
+    [HttpGet("[action]/{year:int}")]
+    public async Task<IActionResult> GetYearlyExcelReport(int year)
+    {
+        try
+        {
+            var workBook = await reportService.CreateYearlyExcelReportAsync(year);
+            await using var stream = new MemoryStream();
+            workBook.SaveAs(stream);
+            var content = stream.ToArray();
+            var filename = $"Fangstatistik_{year}.xlsx";
+            Response.Headers.Append("x-file-name", filename);
+            Response.Headers.Append("Access-Control-Expose-Headers", "x-file-name");
+            return File(
+                content,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                filename);
+        }
+        catch (Exception e)
+        {
+            // Log and return a generic error response
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(GetYearlyExcelReport)}");
         }
     }
 }

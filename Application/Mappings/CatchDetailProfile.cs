@@ -18,7 +18,8 @@ public class CatchDetailProfile : Profile
         // Mapping from CreateCatchDetailDto to CatchDetail entity
         CreateMap<CreateCatchDetailDto, CatchDetail>()
             // Custom mapping for Id, generating a new Guid for the destination
-            .ForMember(des => des.Id, opt => opt.MapFrom(src => new Guid()));
+            .ForMember(des => des.Id, opt => opt.MapFrom(src => new Guid()))
+            .ForMember(des => des.Amount, opt => opt.MapFrom(src => 1));
 
         // Mapping from UpdateCatchDetailDto to CatchDetail entity
         CreateMap<UpdateCatchDetailDto, CatchDetail>();
