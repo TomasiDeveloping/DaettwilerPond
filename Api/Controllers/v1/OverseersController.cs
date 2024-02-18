@@ -1,8 +1,7 @@
 ﻿using Application.DataTransferObjects.Catch;
 using Application.Interfaces;
 using Asp.Versioning;
-using DocumentFormat.OpenXml.Bibliography;
-using Infrastructure.Services;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,15 +51,14 @@ public class OverseersController(
         }
     }
 
-    [AllowAnonymous]
-    [HttpGet("[action]/{year:int}")]
+    [HttpGet("{year:int}")]
     public async Task<IActionResult> GetYearlyExcelReport(int year)
     {
         try
         {
             var workBook = await reportService.CreateYearlyExcelReportAsync(year);
             await using var stream = new MemoryStream();
-            workBook.SaveAs(stream);
+            workBook.SaveAs(stream, new SaveOptions() {GenerateCalculationChain = false});
             var content = stream.ToArray();
             var filename = $"Fangstatistik_{year}.xlsx";
             Response.Headers.Append("x-file-name", filename);
