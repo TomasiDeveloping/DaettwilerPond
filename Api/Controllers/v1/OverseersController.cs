@@ -35,13 +35,13 @@ public class OverseersController(
         }
     }
 
-    [HttpGet("{userId:guid}")]
-    public async Task<ActionResult<DetailYearlyCatch>> GetMemberDetail(Guid userId)
+    [HttpGet("{year:int}/{userId:guid}")]
+    public async Task<ActionResult<DetailYearlyCatch>> GetMemberDetail(int year, Guid userId)
     {
         try
         {
             // Retrieve detailed yearly catch information for the specified user
-            var detailYearlyCatch = await fishingLicenseRepository.GetOverseerMemberDetailAsync(userId);
+            var detailYearlyCatch = await fishingLicenseRepository.GetOverseerMemberDetailAsync(userId, year);
             return detailYearlyCatch is null ? NotFound($"No Details for userId {userId}") : Ok(detailYearlyCatch);
         }
         catch (Exception e)

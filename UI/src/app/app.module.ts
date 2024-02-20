@@ -13,7 +13,7 @@ import {DatePipe} from "@angular/common";
 import {SpinnerInterceptor} from "./interceptors/spinner.interceptor";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {LoginComponent} from './authentication/login/login.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import {ForgotPasswordDialogComponent} from './authentication/forgot-password-dialog/forgot-password-dialog.component';
 import {PasswordResetComponent} from './authentication/password-reset/password-reset.component';
@@ -62,7 +62,7 @@ import { OverseerComponent } from './pages/overseer/overseer.component';
     OverseerComponent,
   ],
   // Importing necessary Angular modules
-  imports: [
+    imports: [
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
@@ -79,6 +79,7 @@ import { OverseerComponent } from './pages/overseer/overseer.component';
             }
         }),
         GermanMonthPipe,
+        FormsModule,
     ],
   // Providers for services and interceptors
   providers: [

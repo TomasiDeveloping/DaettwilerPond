@@ -7,7 +7,7 @@
     @if (!dayStart) {
       <!-- Display buttons to start CatchDay or manually record -->
       <div class="d-grid gap-2 col-6 mx-auto mt-5">
-        <button class="btn btn-success" type="button" (click)="onStartDay()">Angeltag starten</button>
+        <button class="btn btn-success" type="button" (click)="onStartDay()"><i class="bi bi-play-fill"></i> Angeltag starten</button>
         <button class="btn btn-primary" type="button" (click)="onAddManual()">Manuell erfassen</button>
       </div>
 
@@ -15,14 +15,14 @@
     } @else if (isDayStopped) {
       <!-- Display button to continue fishing -->
       <div class="d-grid gap-2 col-6 mx-auto mt-5">
-        <button class="btn btn-success" type="button" (click)="onContinue()">Weiter Angeln</button>
+        <button class="btn btn-success" type="button" (click)="onContinue()"><i class="bi bi-arrow-repeat"></i> Weiter Angeln</button>
       </div>
 
       <!-- CatchDay is ongoing -->
     } @else {
       <!-- Display buttons to stop CatchDay or add catch -->
       <div class="d-grid gap-2 col-6 mx-auto mt-5">
-        <button class="btn btn-warning" type="button" (click)="onStopDay()">Angeltag stoppen</button>
+        <button class="btn btn-warning" type="button" (click)="onStopDay()"><i class="bi bi-stop-fill"></i> Angeltag stoppen</button>
         <button class="btn btn-primary" type="button" (click)="onAddCatch()">Fang hinzufügen</button>
       </div>
     }

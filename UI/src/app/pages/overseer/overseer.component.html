@@ -9,6 +9,15 @@
     <div><b>{{yearlyDetails?.totalFishCatches}} Fische</b></div>
   </div>
 
+  <div class="year-select">
+    <div>Jahr</div>
+    <select (change)="onYearChange($event)" class="form-select" aria-label="Default select example">
+      @for (year of availableYears; track year) {
+        <option [value]="year">{{year}}</option>
+      }
+    </select>
+  </div>
+
   <div class="d-flex justify-content-between mb-3">
     <button (click)="onDownloadExcel()" class="btn btn-primary">Statistik Exportieren</button>
     <button (click)="onSendMail()" class="btn btn-primary">Email-Senden</button>
@@ -16,7 +25,7 @@
 
   <div class="member-select">
     <div>Mitglied auswählen für Details</div>
-    <select (change)="onMemberChange($event)" class="form-select" aria-label="Default select example">
+    <select (change)="onMemberChange($event)" [(ngModel)]="selectedUserId" class="form-select" aria-label="Default select example">
       <option></option>
       @for (member of members; track member.userId) {
         <option [value]="member.userId">{{member.fullName}}</option>
@@ -35,6 +44,7 @@
       <div>Gültig bis: <b>{{memberDetail?.licenseValidUntil | date: 'dd.MM.yyyy'}}</b></div>
       <div>Bezahlt: <i [ngClass]="memberDetail?.isLicencePaid ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'" class="bi"></i></div>
       <div>Ist am Angeln: <i [ngClass]="memberDetail?.isFishing ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'" class="bi"></i></div>
+      <button (click)="onDownloadMemberExcel()" class="btn btn-sm btn-primary">Statistik für {{memberDetail?.userFullName}} herunterladen</button>
     </div>
   }
 

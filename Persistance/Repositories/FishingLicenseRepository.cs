@@ -75,7 +75,7 @@ public class FishingLicenseRepository(DaettwilerPondDbContext context, IMapper m
             })
             .FirstOrDefaultAsync();
 
-        return catchDetails;
+        return catchDetails ?? new CatchDetailsYearDto() {CurrentYear = year};
     }
 
     public async Task<List<UserStatistic>> GetDetailYearlyCatchReportAsync(int year)
@@ -99,15 +99,14 @@ public class FishingLicenseRepository(DaettwilerPondDbContext context, IMapper m
         return userStatistic;
     }
 
-    public async Task<OverseerMemberDetailsDto> GetOverseerMemberDetailAsync(Guid userId)
+    public async Task<OverseerMemberDetailsDto> GetOverseerMemberDetailAsync(Guid userId, int year)
     {
         var today = DateTime.Now;
-        var currentYear = today.Year;
         
         var memberDetail = await context.FishingLicenses
             .Include(l => l.User)
             .Include(l => l.Catches).ThenInclude(c => c.CatchDetails)
-            .Where(l => l.User.Id == userId && l.Year == currentYear)
+            .Where(l => l.User.Id == userId && l.Year == year)
             .Select(l => new OverseerMemberDetailsDto()
             {
                 UserFullName = $"{l.User.FirstName} {l.User.LastName}",
