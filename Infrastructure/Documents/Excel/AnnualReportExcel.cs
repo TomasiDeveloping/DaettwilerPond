@@ -10,18 +10,25 @@ namespace Infrastructure.Documents.Excel
             // Initializes workbook and worksheet
             var workbook = new XLWorkbook();
 
+            // Create a new worksheet for the annual report
             var workSheet = ExcelExtensions.InitializeWorksheet(workbook, $"Fangstatistik {year}", $"Fangstatistik {year}", 18);
 
             // Sets up month rows and summary section
             var row = 3;
+
+            // Setup month rows based on month reports
             row = SetupMonthRows(workSheet, row, monthReports);
 
+            // Add summary section for the annual report
             row = AddSummarySection(workSheet, row, year, monthReports);
 
+            // Add extra spacing between sections
             row += 2;
 
+            // Add user statistics section
             AddUserSection(workSheet, row, userStatistics);
 
+            // Return the workbook with populated data
             return workbook;
 
         }
@@ -95,6 +102,8 @@ namespace Infrastructure.Documents.Excel
             worksheet.Cell(startRow, 1).Style.Font.SetBold();
             worksheet.Row(startRow).Style.Font.FontSize = 16;
             startRow++;
+
+            // Column headers for fish type, amount, and crab content
             worksheet.Cell(startRow, 2).SetValue("Fischart");
             worksheet.Cell(startRow, 2).Style.Font.SetBold();
             worksheet.Cell(startRow, 3).SetValue("Anzahl");
@@ -112,17 +121,21 @@ namespace Infrastructure.Documents.Excel
                 startRow++;
             }
 
+            // Add total hours spent fishing
             startRow++;
             worksheet.Cell(startRow, 1).SetValue($"Total Stunden {CalculateTotalHours(monthReports)}");
             worksheet.Cell(startRow, 1).Style.Font.SetBold();
             worksheet.Row(startRow).Style.Font.FontSize = 12;
             startRow++;
 
+            // Add total catches and catches with crab content
             startRow++;
             worksheet.Cell(startRow, 1).SetValue(
                 $"Total Fänge {CalculateTotalCatches(monthReports)} davon {CalculateTotalCrabs(monthReports)} mit Mageninhalt");
             worksheet.Cell(startRow, 1).Style.Font.SetBold();
             worksheet.Row(startRow).Style.Font.FontSize = 12;
+
+            // Return the updated startRow
             return startRow;
         }
 
@@ -173,31 +186,37 @@ namespace Infrastructure.Documents.Excel
 
         private static void AddUserSection(IXLWorksheet worksheet, int startRow, List<UserStatistic> userStatistics)
         {
+            // Set background color for separation
             worksheet.Row(startRow).Style.Fill.SetBackgroundColor(XLColor.LightGray);
             startRow++;
             worksheet.Row(startRow).Style.Fill.SetBackgroundColor(XLColor.LightGray);
             startRow++;
+
+            // Header for user statistics section
             worksheet.Cell(startRow, 1).SetValue("Mitglieder Statistik");
             worksheet.Cell(startRow, 1).Style.Font.SetBold();
             worksheet.Row(startRow).Style.Font.FontSize = 16;
 
             startRow++;
             startRow++;
+
+            // Iterate through each user statistic
             foreach (var userStatistic in userStatistics)
             {
+                // Display user's name and SaNa number
                 worksheet.Cell(startRow, 1).SetValue("Name");
                 worksheet.Cell(startRow, 1).Style.Font.SetBold();
-
                 worksheet.Cell(startRow, 2).SetValue("SaNa Nummer");
                 worksheet.Cell(startRow, 2).Style.Font.SetBold();
-
                 startRow++;
                 worksheet.Cell(startRow, 1).Value = $"{userStatistic.FirstName} {userStatistic.LastName}";
                 worksheet.Cell(startRow, 2).Value = "SANA NUMMER";
                 startRow++;
 
+                // Calculate fish dictionary and total hours spent for the user
                 var userFishDictionary = new Dictionary<string, (int, int)>();
                 var hoursSpend = 0d;
+
                 foreach (var fishCatch in userStatistic.Catches)
                 {
                     hoursSpend += fishCatch.HoursSpend;
@@ -220,9 +239,12 @@ namespace Infrastructure.Documents.Excel
                     }
                 }
 
+                // Display total hours spent by the user
                 worksheet.Cell(startRow, 1).Value = $"Total Stunden {hoursSpend:0.00}";
                 worksheet.Cell(startRow, 1).Style.Font.SetBold();
                 startRow++;
+
+                // Column headers for fish type, amount, and crab content
                 worksheet.Cell(startRow, 2).Value = "Fischart";
                 worksheet.Cell(startRow, 2).Style.Font.SetBold();
                 worksheet.Cell(startRow, 3).Value = "Anzahl";
@@ -230,7 +252,7 @@ namespace Infrastructure.Documents.Excel
                 worksheet.Cell(startRow, 4).Value = "Mageninhalt";
                 worksheet.Cell(startRow, 4).Style.Font.SetBold();
 
-
+                // Display fish catch details for the user
                 foreach (var userCatches in userFishDictionary)
                 {
                     startRow++;
@@ -239,6 +261,7 @@ namespace Infrastructure.Documents.Excel
                     worksheet.Cell(startRow, 4).Value = userCatches.Value.Item2;
                 }
 
+                // Set background color for separation
                 startRow++;
                 worksheet.Row(startRow).Style.Fill.SetBackgroundColor(XLColor.LightGray);
                 startRow++;

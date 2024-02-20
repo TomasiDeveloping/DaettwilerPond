@@ -17,6 +17,13 @@ public static class ExcelService
         return AnnualReportExcel.CreateAnnualReportExcel(monthReports, year, userStatistics);
     }
 
+    public static XLWorkbook CreateYearlyUserReport(UserStatistic userStatistic, int year)
+    {
+        ArgumentNullException.ThrowIfNull(userStatistic);
+
+        return AnnualUserReportExcel.CreateUserAnnualReport(userStatistic, year);
+    }
+
     // Creates month-wise reports based on user statistics
     private static List<MonthReport> CreateMonthReports(IReadOnlyCollection<UserStatistic> userStatistics)
     {

@@ -89,6 +89,16 @@ public class FishingLicenseRepository(DaettwilerPondDbContext context, IMapper m
         return userStatistic;
     }
 
+    public async Task<UserStatistic> GetYearlyUserCatchReportAsync(Guid userId, int year)
+    {
+        var userStatistic = await context.FishingLicenses
+            .Where(l => l.UserId == userId && l.Year == year)
+            .ProjectTo<UserStatistic>(mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync();
+
+        return userStatistic;
+    }
+
     public async Task<OverseerMemberDetailsDto> GetOverseerMemberDetailAsync(Guid userId)
     {
         var today = DateTime.Now;

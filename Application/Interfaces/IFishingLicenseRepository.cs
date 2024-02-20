@@ -23,6 +23,8 @@ public interface IFishingLicenseRepository
 
     Task<List<UserStatistic>> GetDetailYearlyCatchReportAsync(int year);
 
+    Task<UserStatistic> GetYearlyUserCatchReportAsync(Guid userId, int year);
+
     Task<OverseerMemberDetailsDto> GetOverseerMemberDetailAsync(Guid userId);
 
     // Create a new fishing license with the specified details and issuer

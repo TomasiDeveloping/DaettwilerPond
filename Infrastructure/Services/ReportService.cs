@@ -13,4 +13,13 @@ public class ReportService(IFishingLicenseRepository fishingLicenseRepository): 
 
         return workBook;
     }
+
+    public async Task<XLWorkbook> CreateYearlyUserExcelReportAsync(Guid userId, int year)
+    {
+        var userStatistic = await fishingLicenseRepository.GetYearlyUserCatchReportAsync(userId, year);
+
+        var workBook = ExcelService.CreateYearlyUserReport(userStatistic, year);
+
+        return workBook;
+    }
 }
