@@ -1,5 +1,4 @@
 ﻿using Application.DataTransferObjects.FishingLicense;
-using Application.Models.CatchReport;
 using AutoMapper;
 using Domain.Entities;
 

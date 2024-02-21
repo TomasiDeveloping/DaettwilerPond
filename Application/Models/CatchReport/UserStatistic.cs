@@ -8,5 +8,7 @@ public class UserStatistic
 
     public string LastName { get; set; }
 
+    public string SaNaNumber { get; set; }
+
     public ICollection<UserCatch> Catches { get; set; } = new List<UserCatch>();
 }

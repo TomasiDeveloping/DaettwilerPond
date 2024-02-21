@@ -19,8 +19,8 @@
   </div>
 
   <div class="d-flex justify-content-between mb-3">
-    <button (click)="onDownloadExcel()" class="btn btn-primary">Statistik Exportieren</button>
-    <button (click)="onSendMail()" class="btn btn-primary">Email-Senden</button>
+    <button (click)="onDownloadExcel()" class="btn btn-primary"><i class="bi bi-arrow-down-square"></i> Statistik Exportieren</button>
+    <button (click)="onSendMail()" class="btn btn-primary"><i class="bi bi-send"></i> Email-Senden</button>
   </div>
 
   <div class="member-select">
@@ -36,6 +36,7 @@
   @if (userSelected) {
     <div class="user-detail-container">
       <h5 class="text-center"><b>{{memberDetail?.userFullName}}</b></h5>
+      <div>SaNa-Nummer: {{memberDetail?.saNaNumber}}</div>
       <div>Anzahl Stunden: <b>{{memberDetail?.totalHours}}</b></div>
       <div>Anzahl Fische: <b>{{memberDetail?.totalFishes}}</b></div>
       <div>Aktiv: <i [ngClass]="memberDetail?.isLicenceActive ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'" class="bi"></i></div>
@@ -44,7 +45,7 @@
       <div>Gültig bis: <b>{{memberDetail?.licenseValidUntil | date: 'dd.MM.yyyy'}}</b></div>
       <div>Bezahlt: <i [ngClass]="memberDetail?.isLicencePaid ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'" class="bi"></i></div>
       <div>Ist am Angeln: <i [ngClass]="memberDetail?.isFishing ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'" class="bi"></i></div>
-      <button (click)="onDownloadMemberExcel()" class="btn btn-sm btn-primary">Statistik für {{memberDetail?.userFullName}} herunterladen</button>
+      <button (click)="onDownloadMemberExcel()" class="btn btn-sm btn-primary"><i class="bi bi-arrow-down-square"></i> Statistik für {{memberDetail?.userFullName}} herunterladen</button>
     </div>
   }
 

@@ -133,7 +133,8 @@ export class CatchDayManualRecordingComponent {
       id: new FormControl<string>(''),
       catchId: new FormControl<string>(''),
       fishTypeId: new FormControl<string>('', [Validators.required]),
-      hadCrabs: new FormControl<boolean>(false)
+      hadCrabs: new FormControl<boolean>(false),
+      amount: new FormControl<number>(1)
     })
   }
 

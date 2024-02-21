@@ -23,16 +23,24 @@
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <label class="form-label" for="email">E-Mail</label>
-      <input [ngClass]="{
+    <div class="row">
+      <div class="col-6">
+          <label class="form-label" for="email">E-Mail</label>
+          <input [ngClass]="{
       'is-invalid': email?.invalid && (email?.dirty || email?.touched),
       'is-valid': email?.valid
       }" class="form-control" formControlName="email" id="email" type="email">
-      <div *ngIf="email?.errors && (email?.dirty || email?.touched)" class="invalid-feedback">
-        <p *ngIf="email?.hasError('required')">E-Mail ist ein Pflichtfeld</p>
-        <p *ngIf="email?.hasError('email')">Ungültige E-Mail Adresse</p>
-      </div>
+          <div *ngIf="email?.errors && (email?.dirty || email?.touched)" class="invalid-feedback">
+            <p *ngIf="email?.hasError('required')">E-Mail ist ein Pflichtfeld</p>
+            <p *ngIf="email?.hasError('email')">Ungültige E-Mail Adresse</p>
+          </div>
+        </div>
+      <div class="col-6">
+          <div class="form-group">
+            <label class="form-label" for="saNaNumber">SaNa_Nummer</label>
+            <input class="form-control" formControlName="saNaNumber" id="saNaNumber" [dropSpecialCharacters]="false" [showMaskTyped]="true" mask="999-9999-9999/999-9">
+          </div>
+        </div>
     </div>
     <div class="form-group">
       <label class="form-label">Plattform Recht</label>

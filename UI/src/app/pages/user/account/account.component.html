@@ -33,16 +33,26 @@
     </div>
 
     <!-- Email Section -->
-    <div class="form-group mt-3">
-      <label class="form-label" for="email">E-Mail</label>
-      <input [ngClass]="{
+    <div class="row">
+      <div class="col">
+        <div class="form-group mt-3">
+          <label class="form-label" for="email">E-Mail</label>
+          <input [ngClass]="{
       'is-invalid': email?.invalid && (email?.dirty || email?.touched),
       'is-valid': email?.valid
       }" class="form-control" formControlName="email" id="email" type="email">
-      <!-- Email Validation -->
-      <div *ngIf="email?.errors && (email?.dirty || email?.touched)" class="invalid-feedback">
-        <p *ngIf="email?.hasError('required')">E-Mail ist ein Pflichtfeld</p>
-        <p *ngIf="email?.hasError('email')">Ungültige E-Mail</p>
+          <!-- Email Validation -->
+          <div *ngIf="email?.errors && (email?.dirty || email?.touched)" class="invalid-feedback">
+            <p *ngIf="email?.hasError('required')">E-Mail ist ein Pflichtfeld</p>
+            <p *ngIf="email?.hasError('email')">Ungültige E-Mail</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group mt-3">
+          <label class="form-label" for="saNaNumber">SaNa-Nummer</label>
+          <input class="form-control" formControlName="saNaNumber" id="saNaNumber" type="text" [dropSpecialCharacters]="false" [showMaskTyped]="true" mask="999-9999-9999/999-9">
+        </div>
       </div>
     </div>
 

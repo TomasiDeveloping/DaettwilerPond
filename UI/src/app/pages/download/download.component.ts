@@ -72,4 +72,24 @@ export class DownloadComponent {
     anchorElement.click();
   }
 
+  onDownloadCatchInstruction(): void {
+    const anchorElement: HTMLAnchorElement = document.createElement('a');
+    anchorElement.download = "Online-Fangstatistik-Anleitung.pdf";
+    anchorElement.href = '../../../assets/documents/FangstatistikAnleitung.pdf';
+    anchorElement.click();
+  }
+
+  onDownloadIphoneInstruction() {
+    const anchorElement: HTMLAnchorElement = document.createElement('a');
+    anchorElement.download = "Webseite_als_App_ios.pdf";
+    anchorElement.href = '../../../assets/documents/WebseiteAppIOS.pdf';
+    anchorElement.click();
+  }
+
+  onDownloadAndroidInstruction() {
+    const anchorElement: HTMLAnchorElement = document.createElement('a');
+    anchorElement.download = "Webseite_als_App_Android.pdf";
+    anchorElement.href = '../../../assets/documents/WebseiteAppAndroid.pdf';
+    anchorElement.click();
+  }
 }

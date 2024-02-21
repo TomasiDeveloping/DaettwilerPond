@@ -90,7 +90,6 @@ public class OverseersController(
         }
     }
 
-    [AllowAnonymous]
     [HttpGet("{year:int}/{userId:guid}")]
     public async Task<IActionResult> GetYearlyUserExcelReport(int year, Guid userId)
     {

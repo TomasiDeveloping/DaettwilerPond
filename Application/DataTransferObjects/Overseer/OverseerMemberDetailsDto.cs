@@ -11,4 +11,5 @@ public class OverseerMemberDetailsDto
     public DateTime LicenseValidUntil { get; set; }
     public bool IsLicencePaid { get; set; }
     public bool IsFishing { get; set; }
+    public string SaNaNumber { get; set; }
 }

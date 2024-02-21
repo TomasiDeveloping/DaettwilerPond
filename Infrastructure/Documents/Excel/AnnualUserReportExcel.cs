@@ -22,7 +22,7 @@ public class AnnualUserReportExcel
         var row = 2;
 
         // Add a static value to the worksheet
-        workSheet.Cell(row, 1).Value = "SaNa Nr: 123456";
+        workSheet.Cell(row, 1).Value = $"SaNa-Nummer: {userStatistic.SaNaNumber}";
         workSheet.Cell(row, 1).Style.Font.SetBold();
         workSheet.Row(row).Style.Font.FontSize = 14;
         row++;

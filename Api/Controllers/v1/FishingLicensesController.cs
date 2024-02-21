@@ -97,7 +97,7 @@ public class FishingLicensesController(IFishingLicenseRepository fishingLicenseR
         try
         {
             var newLicense =
-                await fishingLicenseRepository.CreateFishingLicenseAsync(createFishingLicenseDto, GetUserEmail());
+                await fishingLicenseRepository.CreateFishingLicenseAsync(createFishingLicenseDto, GetUserFullName());
             if (newLicense == null) return BadRequest("Lizenz konnte nicht erstellt werden");
             return Ok(newLicense);
         }
@@ -149,10 +149,10 @@ public class FishingLicensesController(IFishingLicenseRepository fishingLicenseR
         }
     }
 
-    private string GetUserEmail()
+    private string GetUserFullName()
     {
         var email = HttpContext.User.Identity is ClaimsIdentity identity
-            ? identity.FindFirst(ClaimTypes.Email)?.Value ?? "Unknown"
+            ? identity.FindFirst("fullName")?.Value ?? "Unknown"
             : "Unknown";
         return email;
     }

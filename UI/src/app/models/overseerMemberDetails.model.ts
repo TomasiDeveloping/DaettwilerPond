@@ -8,4 +8,5 @@ export interface OverseerMemberDetailsModel {
   licenseValidUntil: Date;
   isLicencePaid: boolean;
   isFishing: boolean;
+  saNaNumber?: string;
 }

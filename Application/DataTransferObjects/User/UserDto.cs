@@ -17,5 +17,7 @@
 
         // Indicates whether the user account is active
         public bool IsActive { get; set; }
+
+        public string SaNaNumber { get; set; }
     }
 }

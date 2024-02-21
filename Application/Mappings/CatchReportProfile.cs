@@ -9,6 +9,7 @@ public class CatchReportProfile : Profile
     public CatchReportProfile()
     {
         CreateMap<FishingLicense, UserStatistic>()
+            .ForMember(des => des.SaNaNumber, opt => opt.MapFrom(src => src.User.SaNaNumber))
             .ForMember(des => des.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
             .ForMember(des => des.LastName, opt => opt.MapFrom(scr => scr.User.LastName));
 

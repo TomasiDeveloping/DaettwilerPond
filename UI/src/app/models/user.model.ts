@@ -6,6 +6,7 @@ export interface User {
   lastName: string;
   email: string;
   isActive: boolean;
+  saNaNumber?: string;
 }
 
 export interface UserWithAddress {
@@ -16,4 +17,5 @@ export interface UserWithAddress {
   isActive: boolean,
   address: Address;
   role?: string;
+  saNaNumber?: string;
 }

@@ -115,6 +115,7 @@ public class FishingLicenseRepository(DaettwilerPondDbContext context, IMapper m
                 LicenseIssuedBy = l.IssuedBy,
                 LicenseIssuedOn = l.CreatedAt,
                 LicenseValidUntil = l.ExpiresOn,
+                SaNaNumber = l.User.SaNaNumber,
                 IsFishing = l.Catches.Any(c => c.StartFishing.HasValue && !c.EndFishing.HasValue && c.StartFishing.Value.Date == today.Date),
                 TotalFishes = l.Catches.SelectMany(d => d.CatchDetails).Count(),
                 TotalHours = l.Catches.Sum(c => c.HoursSpent)

@@ -55,6 +55,7 @@ export class CatchDayEditCatchComponent {
     // Update the current catch detail with values from the form
     this.currentCatchDetail.fishTypeId = this.catchDetailForm.get('fishTypeId')?.value;
     this.currentCatchDetail.hadCrabs = this.catchDetailForm.get('hadCrabs')?.value;
+    this.currentCatchDetail.amount = 1;
 
     // Call the CatchDetailService to update the catch detail
     this._catchDetailService.updateCatchDetail(this.currentCatchDetail.id, this.currentCatchDetail).subscribe({

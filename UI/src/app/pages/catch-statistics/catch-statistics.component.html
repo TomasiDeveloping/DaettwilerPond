@@ -13,7 +13,7 @@
   </div>
 
   <div class="d-grid gap-2 col-6 mx-auto mb-3">
-  <button (click)="onDownloadExcel()" class="btn btn-primary">Excel herunterladen</button>
+  <button (click)="onDownloadExcel()" class="btn btn-primary"><i class="bi bi-arrow-down-square"></i> Excel herunterladen</button>
   </div>
 
   <!-- Check if there are monthly detailed catches available -->
@@ -38,7 +38,7 @@
             <!-- Button to view details for the month -->
             <div class="text-center">
               <!-- Disable button if no fishes were caught in the month -->
-              <button [disabled]="!checkCatch(index + 1)" (click)="onMonthDetail(index)" class="btn btn-primary">Details</button>
+              <button [disabled]="!checkCatch(index + 1)" (click)="onMonthDetail(index)" class="btn btn-primary"><i class="bi bi-journals"></i> Details</button>
             </div>
           </div>
         </div>

@@ -206,11 +206,11 @@ namespace Infrastructure.Documents.Excel
                 // Display user's name and SaNa number
                 worksheet.Cell(startRow, 1).SetValue("Name");
                 worksheet.Cell(startRow, 1).Style.Font.SetBold();
-                worksheet.Cell(startRow, 2).SetValue("SaNa Nummer");
+                worksheet.Cell(startRow, 2).SetValue("SaNa-Nummer");
                 worksheet.Cell(startRow, 2).Style.Font.SetBold();
                 startRow++;
                 worksheet.Cell(startRow, 1).Value = $"{userStatistic.FirstName} {userStatistic.LastName}";
-                worksheet.Cell(startRow, 2).Value = "SANA NUMMER";
+                worksheet.Cell(startRow, 2).Value = userStatistic.SaNaNumber;
                 startRow++;
 
                 // Calculate fish dictionary and total hours spent for the user
