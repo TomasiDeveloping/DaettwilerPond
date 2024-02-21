@@ -124,9 +124,11 @@ export class AccountComponent implements OnInit {
   createUserForm(user: User, userId: string): void {
     this.userForm = new FormGroup({
       id: new FormControl<string>(userId),
+      isActive: new FormControl<boolean>(user.isActive),
       firstName: new FormControl<string>(user.firstName, [Validators.required]),
       lastName: new FormControl<string>(user.lastName, [Validators.required]),
-      email: new FormControl<string>(user.email, [Validators.required, Validators.email])
+      email: new FormControl<string>(user.email, [Validators.required, Validators.email]),
+      saNaNumber: new FormControl<string | undefined>(user.saNaNumber)
     });
 
     // Disable the user form initially
@@ -189,7 +191,8 @@ export class AccountComponent implements OnInit {
     this.userForm.patchValue({
       firstName: this.currentUser?.firstName,
       lastName: this.currentUser?.lastName,
-      email: this.currentUser?.email
+      email: this.currentUser?.email,
+      saNaNumber: this.currentUser?.saNaNumber
     });
 
     // Disable the user form

@@ -13,7 +13,7 @@ import {DatePipe} from "@angular/common";
 import {SpinnerInterceptor} from "./interceptors/spinner.interceptor";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {LoginComponent} from './authentication/login/login.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import {ForgotPasswordDialogComponent} from './authentication/forgot-password-dialog/forgot-password-dialog.component';
 import {PasswordResetComponent} from './authentication/password-reset/password-reset.component';
@@ -34,6 +34,7 @@ import { CatchDayEditCatchComponent } from './pages/catchDay/catch-day-edit-catc
 import { CatchStatisticsComponent } from './pages/catch-statistics/catch-statistics.component';
 import { CatchStatisticsMonthDetailComponent } from './pages/catch-statistics/catch-statistics-month-detail/catch-statistics-month-detail.component';
 import { EditCatchDayDialogComponent } from './pages/catch-statistics/catch-statistics-month-detail/edit-catch-day-dialog/edit-catch-day-dialog.component';
+import { OverseerComponent } from './pages/overseer/overseer.component';
 
 
 @NgModule({
@@ -58,9 +59,10 @@ import { EditCatchDayDialogComponent } from './pages/catch-statistics/catch-stat
     CatchStatisticsComponent,
     CatchStatisticsMonthDetailComponent,
     EditCatchDayDialogComponent,
+    OverseerComponent,
   ],
   // Importing necessary Angular modules
-  imports: [
+    imports: [
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
@@ -77,6 +79,7 @@ import { EditCatchDayDialogComponent } from './pages/catch-statistics/catch-stat
             }
         }),
         GermanMonthPipe,
+        FormsModule,
     ],
   // Providers for services and interceptors
   providers: [

@@ -56,6 +56,7 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Role = role.FirstOrDefault(),
+                SaNaNumber = user.SaNaNumber,
                 Address = mapper.Map<AddressDto>(address)
             });
         }

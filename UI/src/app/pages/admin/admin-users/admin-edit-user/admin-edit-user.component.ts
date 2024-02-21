@@ -32,6 +32,7 @@ export class AdminEditUserComponent {
       email: new FormControl<string>(this.currentUser.email, [Validators.required, Validators.email]),
       role: new FormControl<string>(this.currentUser.role ?? ''),
       isActive: new FormControl<boolean>(this.currentUser.isActive),
+      saNaNumber: new FormControl<string | undefined>(this.currentUser.saNaNumber),
       address: new FormGroup({
         street: new FormControl<string>(this.currentUser.address.street),
         houseNumber: new FormControl<string>(this.currentUser.address.houseNumber),

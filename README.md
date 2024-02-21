@@ -20,6 +20,14 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.16.0 (2024-02-21)
+- Overseer area has been implemented.
+- Annual catch statistics available for download as Excel.
+- Member catch statistics available for download as Excel.
+- 3 new guides available for download as PDF.
+- SaNa number can now be recorded.
+- Various icons have been added to buttons.
+- Various bugs have been fixed.
 ### 1.15.4 (2024-02-10)
 - Catch Day and Statistic links it is now visible if the user is an overseer or higher.
 ### 1.15.3 (2024-02-04)

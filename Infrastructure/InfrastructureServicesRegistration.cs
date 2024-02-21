@@ -23,6 +23,7 @@ public static class InfrastructureServicesRegistration
         // Transient services are created every time they are requested.
         services.AddTransient<IPdfService, PdfService>();
         services.AddTransient<ISwissQrBillService, SwissQrBillService>();
+        services.AddTransient<IReportService, ReportService>();
 
         return services;
     }

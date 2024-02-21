@@ -1,0 +1,41 @@
+.total-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 7px;
+  padding: 5px;
+  margin-top: 12px;
+  margin-bottom: 24px;
+}
+
+.member-select {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.year-select {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 12px;
+}
+
+.user-detail-container {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-icon-check {
+  color: green;
+  font-size: larger;
+}
+
+.custom-icon-cancel {
+  color: red;
+  font-size: larger;
+}

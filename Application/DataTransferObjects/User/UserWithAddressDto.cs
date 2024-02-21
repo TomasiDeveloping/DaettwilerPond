@@ -23,6 +23,8 @@ namespace Application.DataTransferObjects.User
         // Role of the user
         public string Role { get; set; }
 
+        public string SaNaNumber { get; set; }
+
         // Address details associated with the user
         public AddressDto Address { get; set; }
     }

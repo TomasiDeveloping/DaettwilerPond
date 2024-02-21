@@ -1,4 +1,6 @@
 ﻿using Application.DataTransferObjects.FishingLicense;
+using Application.DataTransferObjects.Overseer;
+using Application.Models.CatchReport;
 
 namespace Application.Interfaces;
 
@@ -16,6 +18,14 @@ public interface IFishingLicenseRepository
 
     // Get the fishing license for the current year for a specific user
     Task<FishingLicenseDto> GetUserFishingLicenseForCurrentYear(Guid userId);
+
+    Task<CatchDetailsYearDto> GetDetailYearlyCatchAsync(int year);
+
+    Task<List<UserStatistic>> GetDetailYearlyCatchReportAsync(int year);
+
+    Task<UserStatistic> GetYearlyUserCatchReportAsync(Guid userId, int year);
+
+    Task<OverseerMemberDetailsDto> GetOverseerMemberDetailAsync(Guid userId, int year);
 
     // Create a new fishing license with the specified details and issuer
     Task<FishingLicenseDto> CreateFishingLicenseAsync(CreateFishingLicenseDto createFishingLicenseDto,

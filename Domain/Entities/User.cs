@@ -17,6 +17,9 @@ namespace Domain.Entities
         // The timestamp of the user's last activity (nullable)
         public DateTime? LastActivity { get; set; }
 
+        // SaNa number
+        public string SaNaNumber { get; set; }
+
         // Collection of addresses associated with the user
         public ICollection<Address> Addresses { get; set; }
 

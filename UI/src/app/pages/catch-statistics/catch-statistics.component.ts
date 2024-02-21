@@ -6,6 +6,8 @@ import {FishingLicenseService} from "../../services/fishing-license.service";
 import {Router} from "@angular/router";
 import {YearlyCatchModel} from "../../models/yearlyCatch.model";
 import {FishingLicense} from "../../models/fishingLicense.model";
+import {OverseerService} from "../../services/overseer.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-catch-statistics',
@@ -23,6 +25,8 @@ export class CatchStatisticsComponent implements OnInit{
   // Array representing months (0-11)
   public months: number[] = Array(12);
 
+  public currentUserId: string | null = null;
+
   // Variable to store the current fishing license ID
   private currentLicence: string | undefined;
 
@@ -30,16 +34,19 @@ export class CatchStatisticsComponent implements OnInit{
   private readonly _fishCatchService: FishCatchService = inject(FishCatchService);
   private readonly _authService: AuthenticationService = inject(AuthenticationService);
   private readonly _licenceService: FishingLicenseService = inject(FishingLicenseService);
+  private readonly _overseerService: OverseerService = inject(OverseerService);
   private readonly _router: Router = inject(Router);
+  private readonly _toastr: ToastrService = inject(ToastrService);
 
   ngOnInit(): void {
     // Get the user ID from the authentication service
     const userId: string | null = this._authService.getUserIdFromToken();
 
     // Check if the user ID is available
-    if (!userId) {
+    if (userId === null) {
      return;
    }
+    this.currentUserId = userId;
 
     // Fetch the current user's fishing license information
     this._licenceService.getCurrentUserLicence(userId).subscribe({
@@ -95,5 +102,31 @@ export class CatchStatisticsComponent implements OnInit{
   // Navigate to the detailed monthly statistics page for a specific month
   onMonthDetail(month: number): void {
     this._router.navigate(['monatstatistik', this.currentLicence, month]).then();
+  }
+
+  onDownloadExcel() {
+    if (this.currentUserId === null) {
+      this._toastr.warning('Statistik kann nicht heruntergeladen werden', 'Statistik');
+      return;
+    }
+    const currentYear = new Date().getFullYear();
+    this._overseerService.getYearlyMemberExcelReport(currentYear, this.currentUserId).subscribe({
+      next: ((response: {image: Blob, filename: string | null}): void => {
+        const fileUrl: string = URL.createObjectURL(response.image);
+        const anchorElement: HTMLAnchorElement = document.createElement('a');
+        anchorElement.href = fileUrl;
+        anchorElement.target = '_blank';
+        if (typeof response.filename === "string") {
+          anchorElement.download = response.filename;
+        }
+        document.body.appendChild(anchorElement);
+        anchorElement.click();
+        this._toastr.success('Statistik wird heruntergeladen', 'Statistik');
+      }),
+      // Handling errors and displaying toastr messages
+      error: (): void =>{
+        this._toastr.error('Statistik kann nicht heruntergeladen werden', 'Statistik');
+      }
+    })
   }
 }

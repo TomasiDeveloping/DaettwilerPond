@@ -1,4 +1,5 @@
 ﻿using Application.DataTransferObjects.Catch;
+using Application.DataTransferObjects.Overseer;
 using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;

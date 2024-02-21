@@ -30,7 +30,7 @@ import {NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask} from "ngx-mask
     NgxSpinnerModule,
     ToastrModule,
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
   ],
   // Providing configuration for ngx-mask
   providers: [

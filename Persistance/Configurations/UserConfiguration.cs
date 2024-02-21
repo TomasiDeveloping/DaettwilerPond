@@ -14,6 +14,7 @@ namespace Persistence.Configurations
             builder.Property(u => u.FirstName).IsRequired().HasMaxLength(250);
             builder.Property(u => u.LastName).IsRequired().HasMaxLength(250);
             builder.Property(u => u.IsActive).IsRequired();
+            builder.Property(u => u.SaNaNumber).IsRequired(false).HasMaxLength(19);
         }
     }
 }

@@ -31,6 +31,7 @@ public class JwtService(IConfiguration configuration, UserManager<User> userMana
         {
             // Add email and userId claims
             new("email", user.Email!),
+            new("fullName", $"{user.FirstName} {user.LastName}"),
             new("userId", user.Id.ToString().ToUpper())
         };
 
