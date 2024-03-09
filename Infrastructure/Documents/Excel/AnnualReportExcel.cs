@@ -3,7 +3,8 @@ using ClosedXML.Excel;
 
 namespace Infrastructure.Documents.Excel
 {
-    public class AnnualReportExcel
+    
+    public static class AnnualReportExcel
     {
         public static XLWorkbook CreateAnnualReportExcel(List<MonthReport> monthReports, int year, List<UserStatistic> userStatistics)
         {
@@ -145,21 +146,23 @@ namespace Infrastructure.Documents.Excel
 
             // Iterate over each month report
             foreach (var report in monthReports)
-            foreach (var catches in report.MonthCatches)
             {
-                // Updates fish summary data
-                var fishExists = fishDictionary.ContainsKey(catches.FishName);
-                if (fishExists)
+                foreach (var catches in report.MonthCatches)
                 {
-                    // If the fish exists, update its counts
-                    var amountAndCrabs = fishDictionary[catches.FishName];
-                    fishDictionary[catches.FishName] = (amountAndCrabs.Item1 + catches.Amount,
-                        amountAndCrabs.Item2 + catches.CrabsAmount);
-                }
-                else
-                {
-                    // If the fish does not exist, add it to the dictionary with its counts
-                    fishDictionary.Add(catches.FishName, (catches.Amount, catches.CrabsAmount));
+                    // Updates fish summary data
+                    var fishExists = fishDictionary.ContainsKey(catches.FishName);
+                    if (fishExists)
+                    {
+                        // If the fish exists, update its counts
+                        var amountAndCrabs = fishDictionary[catches.FishName];
+                        fishDictionary[catches.FishName] = (amountAndCrabs.Item1 + catches.Amount,
+                            amountAndCrabs.Item2 + catches.CrabsAmount);
+                    }
+                    else
+                    {
+                        // If the fish does not exist, add it to the dictionary with its counts
+                        fishDictionary.Add(catches.FishName, (catches.Amount, catches.CrabsAmount));
+                    }
                 }
             }
 

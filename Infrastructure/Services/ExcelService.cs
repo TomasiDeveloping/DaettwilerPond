@@ -55,25 +55,27 @@ public static class ExcelService
 
             // Iterate over each catch detail for the month
             foreach (var monthCatch in monthCatches)
-            foreach (var catchDetails in monthCatch.CatchDetails)
             {
-                // Updates fish catch details
-                var report = monthReport.MonthCatches.FirstOrDefault(c => c.FishName == catchDetails.FishTypeName);
-                if (report is null)
+                foreach (var catchDetails in monthCatch.CatchDetails)
                 {
-                    // If no catch detail exists for the fish, add a new one
-                    monthReport.MonthCatches.Add(new MonthCatch
+                    // Updates fish catch details
+                    var report = monthReport.MonthCatches.FirstOrDefault(c => c.FishName == catchDetails.FishTypeName);
+                    if (report is null)
                     {
-                        Amount = 1,
-                        CrabsAmount = catchDetails.HadCrabs ? 1 : 0,
-                        FishName = catchDetails.FishTypeName
-                    });
-                }
-                else
-                {
-                    // If catch detail exists, update the counts
-                    report.Amount++;
-                    if (catchDetails.HadCrabs) report.CrabsAmount++;
+                        // If no catch detail exists for the fish, add a new one
+                        monthReport.MonthCatches.Add(new MonthCatch
+                        {
+                            Amount = 1,
+                            CrabsAmount = catchDetails.HadCrabs ? 1 : 0,
+                            FishName = catchDetails.FishTypeName
+                        });
+                    }
+                    else
+                    {
+                        // If catch detail exists, update the counts
+                        report.Amount++;
+                        if (catchDetails.HadCrabs) report.CrabsAmount++;
+                    }
                 }
             }
 
