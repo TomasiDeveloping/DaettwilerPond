@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pb-5">
   <!-- Page title with the current month in German format -->
   <h1>Fangdetail für {{ currentMonth! | germanMonth }}</h1>
 
@@ -7,10 +7,10 @@
     <button (click)="onBack()" class="btn btn-secondary">Zurück</button>
   </div>
 
-  <div class="accordion pd-4" id="accordionExample">
+  <div class="accordion" id="accordionExample">
     <!-- Loop through monthCatches and display each catch as an accordion item -->
     @for (monthCatch of monthCatches; track monthCatch.id; let index = $index) {
-      <div class="accordion-item pb-4">
+      <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                   [attr.data-bs-target]="'#accordion' + index" aria-expanded="false" [attr.aria-controls]="index">
