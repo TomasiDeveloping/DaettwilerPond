@@ -10,7 +10,7 @@
   <div class="accordion pd-4" id="accordionExample">
     <!-- Loop through monthCatches and display each catch as an accordion item -->
     @for (monthCatch of monthCatches; track monthCatch.id; let index = $index) {
-      <div class="accordion-item">
+      <div class="accordion-item pb-4">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                   [attr.data-bs-target]="'#accordion' + index" aria-expanded="false" [attr.aria-controls]="index">
