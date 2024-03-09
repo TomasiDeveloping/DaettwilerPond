@@ -20,6 +20,11 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.17.2 (2024-03-09)
+- Fixed manifest so that the app on the smartphone is not standalone.
+- Cleaned up and outsourced icons.
+- Index.html cleanup.
+- Minor CSS adjustments.
 ### 1.17.0 (2024-03-09)
 - CleanUp
 - NuGet update

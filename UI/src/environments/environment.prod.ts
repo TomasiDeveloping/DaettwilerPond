@@ -4,7 +4,7 @@ export const environment = {
   production: true,
 
   // Application version
-  version: "1.17.1",
+  version: "1.17.2",
 
   // Base URL for API endpoints
   apiBaseUrl: 'https://daettwiler-pond.azurewebsites.net/api/v1',
