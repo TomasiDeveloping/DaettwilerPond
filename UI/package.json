@@ -24,7 +24,7 @@
     "@popperjs/core": "^2.11.8",
     "@syncfusion/ej2-angular-grids": "^21.2.10",
     "@syncfusion/ej2-material-theme": "~21.2.10",
-    "bootstrap": "^5.3.2",
+    "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.2",
     "bootswatch": "^5.3.2",
     "highcharts": "^11.2.0",
