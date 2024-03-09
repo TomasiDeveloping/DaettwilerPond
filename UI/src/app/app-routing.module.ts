@@ -44,12 +44,12 @@ const routes: Routes = [
   },
 
   // Protected route for the catch day component, requiring authentication
-  {path: 'angeltag', component: CatchDayComponent, canActivate:[overseerGuard]},
+  {path: 'angeltag', component: CatchDayComponent, canActivate:[authGuard]},
 
   // Protected route for the catch statistics component, requiring authentication
-  {path: 'fangstatistik', component: CatchStatisticsComponent, canActivate:[overseerGuard]},
+  {path: 'fangstatistik', component: CatchStatisticsComponent, canActivate:[authGuard]},
 
-  {path: 'aufseher', component: OverseerComponent, canActivate:[overseerGuard]},
+  {path: 'aufseher', component: OverseerComponent, canActivate:[authGuard,overseerGuard]},
 
   // Protected route for detailed monthly catch statistics, requiring authentication
   {path: 'monatstatistik/:licenceId/:month', component: CatchStatisticsMonthDetailComponent, canActivate: [authGuard]},

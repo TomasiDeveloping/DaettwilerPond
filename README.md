@@ -20,6 +20,11 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.17.0 (2024-03-09)
+- CleanUp
+- NuGet update
+- Npm packages update
+- Released online catch statistics for users.
 ### 1.16.0 (2024-02-21)
 - Overseer area has been implemented.
 - Annual catch statistics available for download as Excel.
