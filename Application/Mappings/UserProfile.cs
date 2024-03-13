@@ -11,7 +11,10 @@ public class UserProfile : Profile
     public UserProfile()
     {
         // Bidirectional mapping from User entity to UserDto and vice versa
-        CreateMap<User, UserDto>().ReverseMap();
+        CreateMap<User, UserDto>();
+
+        CreateMap<UserDto, User>()
+            .ForMember(des => des.Email, opt => opt.Ignore());
 
         // Mapping from User entity to UserWithAddressDto
         CreateMap<User, UserWithAddressDto>()
@@ -24,6 +27,7 @@ public class UserProfile : Profile
 
         // Reverse mapping from UserWithAddressDto to User entity
         CreateMap<UserWithAddressDto, User>()
+            .ForMember(des => des.Email, opt => opt.Ignore())
             // Custom mapping for Id, mapping it from UserId property of source
             .ForMember(des => des.Id, opt => opt.MapFrom(src => src.UserId));
     }

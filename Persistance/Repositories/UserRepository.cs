@@ -80,6 +80,13 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
         // Retrieve and update user details
         var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
         if (user == null) return null;
+        if (userDto.Email != user.Email)
+        {
+            var changeEmailSuccess = await ChangeUserEmail(user, userDto.Email);
+            if (!changeEmailSuccess) return null;
+            user.UserName = userDto.Email;
+            user.NormalizedUserName = userDto.Email.ToUpper();
+        }
         mapper.Map(userDto, user);
         await context.SaveChangesAsync();
         return await GetUserByIdAsync(userId);
@@ -93,6 +100,13 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
             .Include(u => u.Addresses)
             .FirstOrDefaultAsync(u => u.Id == userWithAddressDto.UserId);
         if (user == null) return null;
+        if (user.Email != userWithAddressDto.Email)
+        {
+            var changeEmailSuccess = await ChangeUserEmail(user, userWithAddressDto.Email);
+            if (!changeEmailSuccess) return null;
+            user.UserName = userWithAddressDto.Email;
+            user.NormalizedUserName = userWithAddressDto.Email.ToUpper();
+        }
         mapper.Map(userWithAddressDto, user);
 
         // Retrieve and update roles
@@ -186,5 +200,13 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
 
         // Return true to indicate successful deletion
         return true;
+    }
+
+    private async Task<bool> ChangeUserEmail(User user, string newEmail)
+    {
+        var mailToken = await userManager.GenerateChangeEmailTokenAsync(user, newEmail);
+        if (string.IsNullOrEmpty(mailToken)) return false;
+        var changeEmailResult = await userManager.ChangeEmailAsync(user, newEmail, mailToken);
+        return changeEmailResult.Succeeded;
     }
 }
