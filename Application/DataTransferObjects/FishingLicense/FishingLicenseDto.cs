@@ -9,6 +9,12 @@
         // Full name of the user associated with the fishing license
         public string UserFullName { get; set; }
 
+        public string UserImageUrl { get; set; }
+
+        public string UserSanaNumber { get; set; }
+
+        public DateTime UserDateOfBirth { get; set; }
+
         // User identifier for whom the fishing license is created
         public Guid UserId { get; set; }
 
