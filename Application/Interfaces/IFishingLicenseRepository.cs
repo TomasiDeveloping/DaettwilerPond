@@ -34,6 +34,10 @@ public interface IFishingLicenseRepository
     // Update an existing fishing license
     Task<FishingLicenseDto> UpdateFishingLicenseAsync(FishingLicenseDto fishingLicenseDto);
 
+    Task<ValidateResponse> ValidateLicenseAsync(Guid licenseId);
+
+    Task<OverseerLicenseValidationDto> OverseerLicenseValidationAsync(Guid licenseId);
+
     // Delete a fishing license by its ID
     Task<bool> DeleteFishingLicenseAsync(Guid fishingLicenseId);
 }

@@ -1,4 +1,5 @@
 ﻿using Application.DataTransferObjects.Catch;
+using Application.DataTransferObjects.Overseer;
 using Application.Interfaces;
 using Asp.Versioning;
 using ClosedXML.Excel;
@@ -130,6 +131,23 @@ public class OverseersController(
             logger.LogError(e, e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError,
                 $"Something went wrong in {nameof(GetYearlyExcelReport)}");
+        }
+    }
+
+    [HttpGet("{licenseId:guid}")]
+    public async Task<ActionResult<OverseerLicenseValidationDto>> ValidateLicense(Guid licenseId)
+    {
+        try
+        {
+            var licenseValidation = await fishingLicenseRepository.OverseerLicenseValidationAsync(licenseId);
+            return Ok(licenseValidation);
+        }
+        catch (Exception e)
+        {
+            // Log and return a generic error response
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(ValidateLicense)}");
         }
     }
 }

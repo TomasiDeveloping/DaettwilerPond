@@ -1,4 +1,5 @@
 ﻿using Application.DataTransferObjects.FishingLicense;
+using Application.DataTransferObjects.Overseer;
 using AutoMapper;
 using Domain.Entities;
 

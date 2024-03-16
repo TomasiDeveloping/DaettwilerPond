@@ -25,6 +25,8 @@ namespace Application.DataTransferObjects.User
 
         public string SaNaNumber { get; set; }
 
+        public string ImageUrl { get; set; }
+
         // Address details associated with the user
         public AddressDto Address { get; set; }
     }

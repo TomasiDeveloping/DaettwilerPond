@@ -4,6 +4,7 @@ using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -57,6 +58,7 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
                 LastName = user.LastName,
                 Role = role.FirstOrDefault(),
                 SaNaNumber = user.SaNaNumber,
+                ImageUrl = user.ImageUrl,
                 Address = mapper.Map<AddressDto>(address)
             });
         }
@@ -179,6 +181,36 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
             IsSuccessful = false,
             ErrorMessage = "Passwort konnte nicht geändert werden"
         };
+    }
+
+    public async Task<bool> UploadImageAsync(Guid userId, IFormFile file)
+    {
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        if (user == null) return false;
+
+        var folderName = Path.Combine("wwwroot", "Resources", "Images");
+        var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+        var fileName = $"{Guid.NewGuid()}.png";
+        var fullPath = Path.Combine(pathToSave, fileName);
+
+        if (!string.IsNullOrEmpty(user.ImageUrl))
+        {
+            var filetToDelete = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", user.ImageUrl);
+            if (File.Exists(filetToDelete))
+            {
+                File.Delete(filetToDelete);
+            }
+        }
+
+        user.ImageUrl = Path.Combine("Resources", "Images", fileName);
+        await using (var stream = new FileStream(fullPath, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+
+        await context.SaveChangesAsync();
+        return true;
     }
 
     // Delete user by user ID

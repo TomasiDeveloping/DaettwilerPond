@@ -88,6 +88,31 @@ public class UsersController(IUserRepository userRepository, ILogger<UsersContro
         }
     }
 
+    [AllowAnonymous]
+    [HttpPost("UploadProfile")]
+    public async Task<ActionResult<bool>> UploadImage([FromForm] UploadUserProfileDto uploadUserProfileDto)
+    {
+        try
+        {
+            if (uploadUserProfileDto.File == null || uploadUserProfileDto.File.Length == 0)
+            {
+                return BadRequest("File is not selected or empty");
+            }
+
+            var uploadResult =
+                await userRepository.UploadImageAsync(uploadUserProfileDto.UserId, uploadUserProfileDto.File);
+
+            return uploadResult ? Ok(true) : BadRequest("Error");
+        }
+        catch (Exception e)
+        {
+            // Log error and return a 500 Internal Server Error
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(UploadImage)}");
+        }
+    }
+
     // Update user with address information
     [HttpPut("Addresses/{userId:guid}")]
     public async Task<ActionResult<UserWithAddressDto>> UpdateUserWithAddress(Guid userId,

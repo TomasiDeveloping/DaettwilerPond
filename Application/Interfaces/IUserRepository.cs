@@ -1,4 +1,5 @@
 ﻿using Application.DataTransferObjects.User;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Interfaces;
 
@@ -28,6 +29,8 @@ public interface IUserRepository
 
     // Change the password for a user
     Task<ChangePasswordResponseDto> ChangeUserPassword(ChangePasswordDto changePasswordDto);
+
+    Task<bool> UploadImageAsync(Guid userId, IFormFile file);
 
     // Delete a user by their user ID
     Task<bool> DeleteUserAsync(Guid userId);

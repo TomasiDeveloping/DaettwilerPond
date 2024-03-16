@@ -5,6 +5,9 @@ using HealthChecks.UI.Client;
 using Infrastructure;
 using Infrastructure.BackgroundJobs;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.FileProviders;
+using MimeKit;
 using Persistence;
 using Quartz;
 using Serilog;
@@ -51,6 +54,13 @@ builder.Services.ConfigureAuthentication(builder.Configuration.GetSection("Jwt")
 // Register custom services to the container (Email configuration)
 builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailSettings"));
 
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.ValueLengthLimit = int.MaxValue;
+    options.MultipartBodyLengthLimit = int.MaxValue;
+    options.MemoryBufferThreshold = int.MaxValue;
+});
+
 // Build the application
 var app = builder.Build();
 
@@ -78,6 +88,8 @@ try
 
     // Map controllers
     app.MapControllers();
+
+    app.UseStaticFiles();
 
     // Map health checks endpoint with UI response
     app.MapHealthChecks("/health", new HealthCheckOptions
