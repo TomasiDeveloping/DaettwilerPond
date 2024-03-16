@@ -47,6 +47,10 @@ export class UserService {
     return this._httpClient.put<User>(this._serviceUrl + userId, user);
   }
 
+  uploadUserProfile(formData: FormData) {
+    return this._httpClient.post(this._serviceUrl + 'UploadProfile', formData, {reportProgress: true, observe: 'events'});
+  }
+
   // Method to delete user
   deleteUser(userId: string): Observable<boolean> {
     return this._httpClient.delete<boolean>(this._serviceUrl + userId);

@@ -9,6 +9,10 @@
     <div><b>{{yearlyDetails?.totalFishCatches}} Fische</b></div>
   </div>
 
+  <div class="d-flex justify-content-center">
+    <button (click)="onValidateLicense()" class="btn btn-primary">E-Fischereipatent Validieren</button>
+  </div>
+
   <div class="year-select">
     <div>Jahr</div>
     <select (change)="onYearChange($event)" class="form-select" aria-label="Default select example">
@@ -20,8 +24,10 @@
 
   <div class="d-flex justify-content-between mb-3">
     <button (click)="onDownloadExcel()" class="btn btn-primary"><i class="bi bi-arrow-down-square"></i> Statistik Exportieren</button>
+
     <button (click)="onSendMail()" class="btn btn-primary"><i class="bi bi-send"></i> Email-Senden</button>
   </div>
+
 
   <div class="member-select">
     <div>Mitglied auswählen für Details</div>

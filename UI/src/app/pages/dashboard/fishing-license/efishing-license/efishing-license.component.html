@@ -1,0 +1,44 @@
+<!-- Dialog title -->
+<h1 class="text-center" mat-dialog-title>E-Fischereipatent</h1>
+
+<!-- Dialog content -->
+<div mat-dialog-content>
+  <div class="e-license-container">
+    <div class="d-flex justify-content-around">
+      <div>
+        <qrcode
+          [qrdata]="environment.licenseValidationUrl + currentFishingLicense.id"
+          [allowEmptyString]="true"
+          [cssClass]="'center'"
+          [colorDark]="'#000000ff'"
+          [colorLight]="'#ffffffff'"
+          [elementType]="'canvas'"
+          [errorCorrectionLevel]="'M'"
+          [margin]="1"
+          [scale]="1"
+          [imageSrc]="'./assets/images/logo.png'"
+          [imageHeight]="60"
+          [imageWidth]="60"
+          [width]="180"
+        ></qrcode>
+      </div>
+      <img [src]="currentFishingLicense.userImageUrl | imageUrl" class="" alt="...">
+    </div>
+    <div><b>Inhaber:</b> {{currentFishingLicense.userFullName}}</div>
+    <div><b>Geburtsdatum:</b> {{currentFishingLicense.userDateOfBirth | date: 'dd.MM.yyyy'}}</div>
+    <div><b>SaNa Nummer:</b> {{currentFishingLicense.userSanaNumber}}</div>
+    <hr>
+    <div><b>Erlaubte Gewässer:</b> Unteren Dättwiler Weiher</div>
+    <div><b>Revier-Nr:</b> 715</div>
+    <hr>
+    <div><b>Lizenznummer:</b></div>
+    <div>{{currentFishingLicense.id}}</div>
+    <div><b>Gütlig bis:</b> {{currentFishingLicense.expiresOn | date : 'dd.MM.yyyy'}}</div>
+    <div><b>Aussgestellt am:</b> {{currentFishingLicense.createdAt | date: 'dd.MM.yyyy'}}</div>
+    <div><b>Ausgestellt durch:</b> {{currentFishingLicense.issuedBy}}</div>
+  </div>
+  <div class="d-flex justify-content-between mt-3">
+    <button ngxPrintItemButton printWindow="true" class="btn btn-secondary">Drucken</button>
+    <button (click)="onClose()" class="btn btn-secondary">Schliessen</button>
+  </div>
+</div>

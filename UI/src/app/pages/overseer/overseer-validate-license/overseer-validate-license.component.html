@@ -1,0 +1,24 @@
+<h1 class="text-center" mat-dialog-title>E-Fischereipatent Validieren</h1>
+
+<div mat-dialog-content>
+  <!-- For camera -->
+  <div class="scanner-container">
+    <ngx-scanner-qrcode (event)="onEvent($event, action)" #action="scanner"></ngx-scanner-qrcode>
+  </div>
+
+  <!-- Loading -->
+  <p class="text-center" *ngIf="action.isLoading">⌛ Startet ...</p>
+
+  <ng-container *ngIf="hasScanError">
+    <div  class="alert alert-danger" role="alert">
+      Fehler. Patent kann nicht validiert werden
+    </div>
+  </ng-container>
+
+  <!-- start -->
+  <div class="d-flex justify-content-center">
+    <button class="btn btn-danger" *ngIf="action.isStart" (click)="onCancel()">Abbrechen</button>
+    <button class="btn btn-warning" *ngIf="!action.isStart && !action.isLoading" (click)="onClose(null)">Schliessen</button>
+  </div>
+
+</div>

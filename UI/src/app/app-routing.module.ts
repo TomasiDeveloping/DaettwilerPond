@@ -17,6 +17,7 @@ import {
 } from "./pages/catch-statistics/catch-statistics-month-detail/catch-statistics-month-detail.component";
 import {overseerGuard} from "./guards/overseer.guard";
 import {OverseerComponent} from "./pages/overseer/overseer.component";
+import {LicenseValidateComponent} from "./pages/license-validate/license-validate.component";
 
 // Defining routes for different components
 const routes: Routes = [
@@ -34,6 +35,9 @@ const routes: Routes = [
 
   // Route for the login component
   {path: 'login', component: LoginComponent},
+
+  {path: 'validate', component: LicenseValidateComponent},
+  {path: 'validate/:id', component: LicenseValidateComponent},
 
   // Protected route for downloads, requiring authentication using authGuard
   {path: 'downloads', component: DownloadComponent, canActivate:[authGuard]},

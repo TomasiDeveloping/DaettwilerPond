@@ -24,6 +24,7 @@ export class AdminFishTypesComponent implements OnInit {
   }
 
   getFishTypes() {
+    this.fishTypes = [];
     this._fishTypeService.getFishTypes().subscribe({
       next: ((response) => {
         if (response) {

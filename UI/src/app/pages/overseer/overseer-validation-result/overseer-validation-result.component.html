@@ -1,0 +1,33 @@
+<h1 class="text-center" mat-dialog-title>E-Fischereipatent</h1>
+
+<div mat-dialog-content>
+  <ng-container *ngIf="!validation.isValid; else valid">
+    <div class="alert alert-danger text-center" role="alert">
+      <h4>E-Fischereipatent ist nicht Gültig</h4>
+      <h5>Grund: {{ validation.errorMessage }}</h5>
+    </div>
+  </ng-container>
+
+  <ng-template #valid>
+    <div class="alert alert-success text-center" role="alert">
+      E-Fischereipatent ist Gültig
+    </div>
+    <div class="license-info-container ">
+      <div>
+        <img alt="{{validation.userName}}" height="100px" src="{{validation.userImageUrl | imageUrl}}" width="100px">
+      </div>
+      <div><b>Inhaber:</b></div>
+      <div>{{ validation.userName }}</div>
+      <div><b>SaNa Nummer:</b></div>
+      <div>{{ validation.userSaNaNumber }}</div>
+      <div><b>Geburtsdatum:</b></div>
+      <div>{{ validation.userBirthDate | date: 'dd.MM.yyyy' }}</div>
+      <div><b>Gültig bis:</b></div>
+      <div>{{ validation.expiryAt | date: 'dd.MM.yyyy' }}</div>
+    </div>
+
+  </ng-template>
+  <div class="text-center mt-3">
+    <button (click)="onClose()" class="btn btn-warning">Schliessen</button>
+  </div>
+</div>

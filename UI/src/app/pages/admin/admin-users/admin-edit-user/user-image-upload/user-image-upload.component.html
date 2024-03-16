@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>{{ isUpdate ? 'Bild bearbeiten' : 'Bild hochladen' }}</h1>
+<div mat-dialog-content>
+  <div class="row text-center" style="margin-bottom:15px;">
+    <form *ngIf="!uploadSuccess" [formGroup]="uploadForm">
+      <input #preview (change)="showPreview($event)" accept="image/*" class="form-control" style="display: none"
+             type="file"/>
+      <div class="d-flex justify-content-center">
+        <button (click)="preview.click()" *ngIf="imageURL === ''" class="btn btn-secondary mb-3">Bild auswählen</button>
+        <button (click)="preview.click()" *ngIf="imageURL !== ''" class="btn btn-secondary mb-3">Bild ändern</button>
+      </div>
+      <!-- Image Preview -->
+      <div *ngIf="imageURL && imageURL !== ''" class="imagePreview">
+        <img [src]="imageURL" alt="user image">
+      </div>
+    </form>
+    <ng-container>
+      <div class="mt-3 text-center">
+    <span *ngIf="progress > 0" class="upload">
+      {{ progress }}%
+    </span>
+        <span *ngIf="message" class="upload">
+      {{ message }}
+    </span>
+        <div>
+          <button (click)="onClose(true)" *ngIf="uploadSuccess" class="btn btn-warning mt-3">Schliessen</button>
+        </div>
+      </div>
+    </ng-container>
+    <div *ngIf="!uploadSuccess" class="d-flex justify-content-evenly mt-5">
+      <button (click)="uploadFile()" *ngIf="imageURL && imageURL !== ''" class="btn btn-success" type="button">Bild
+        hochladen
+      </button>
+      <button (click)="onClose(false)" class="btn btn-warning">Abbrechen</button>
+    </div>
+  </div>
+</div>
+
+

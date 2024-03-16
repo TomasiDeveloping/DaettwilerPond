@@ -4,6 +4,9 @@ import {HttpClient, HttpResponse} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {OverseerCatchDetailsYearModel} from "../models/overseerCatchDetailsYear.model";
 import {OverseerMemberDetailsModel} from "../models/overseerMemberDetails.model";
+import {
+  OverseerValidateLicenseComponent
+} from "../pages/overseer/overseer-validate-license/overseer-validate-license.component";
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +45,9 @@ export class OverseerService {
           filename: response.headers.get('x-file-name')
         }
       }));
+  }
+
+  public validateLicense(licenseId: string): Observable<OverseerValidateLicenseComponent> {
+    return this._httpClient.get<OverseerValidateLicenseComponent>(this._serviceUrl + 'ValidateLicense/' + licenseId);
   }
 }

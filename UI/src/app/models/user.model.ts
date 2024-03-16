@@ -18,4 +18,5 @@ export interface UserWithAddress {
   address: Address;
   role?: string;
   saNaNumber?: string;
+  imageUrl?:string;
 }

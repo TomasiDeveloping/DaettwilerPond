@@ -7,6 +7,10 @@ import {OverseerService} from "../../services/overseer.service";
 import {OverseerCatchDetailsYearModel} from "../../models/overseerCatchDetailsYear.model";
 import {OverseerMemberDetailsModel} from "../../models/overseerMemberDetails.model";
 import {ToastrService} from "ngx-toastr";
+import {OverseerValidateLicenseComponent} from "./overseer-validate-license/overseer-validate-license.component";
+import {FishingLicenseService} from "../../services/fishing-license.service";
+import {FishingLicense} from "../../models/fishingLicense.model";
+import {OverseerValidationResultComponent} from "./overseer-validation-result/overseer-validation-result.component";
 
 @Component({
   selector: 'app-overseer',
@@ -28,6 +32,7 @@ export class OverseerComponent implements OnInit{
   private readonly _overseerService: OverseerService = inject(OverseerService);
   private readonly _dialog: MatDialog = inject(MatDialog);
   private readonly _toastr: ToastrService = inject(ToastrService);
+  private readonly _licenseService: FishingLicenseService = inject(FishingLicenseService);
 
   ngOnInit(): void {
     this.getMembers();
@@ -145,5 +150,37 @@ export class OverseerComponent implements OnInit{
     }
     document.body.appendChild(anchorElement);
     anchorElement.click();
+  }
+
+  onValidateLicense() {
+    const dialogRef = this._dialog.open(OverseerValidateLicenseComponent, {
+      width: '80%',
+      height: 'auto'
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: ((licenseId: string | null) => {
+        if (licenseId) {
+          this.validateLicense(licenseId);
+        }
+      })
+    })
+  }
+
+  private validateLicense(licenseId: string) {
+    this._overseerService.validateLicense(licenseId).subscribe({
+      next: ((response) => {
+        if (response) {
+          this._dialog.open(OverseerValidationResultComponent, {
+            width: '80%',
+            height: 'auto',
+            data: {validation: response}
+          })
+        }
+      }),
+      error: () => {
+        this._toastr.error('E-Patent kann nicht validiert werden', 'E-Patent Validierung');
+      }
+    });
   }
 }

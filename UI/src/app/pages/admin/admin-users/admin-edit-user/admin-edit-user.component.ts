@@ -1,11 +1,12 @@
 import {Component, inject, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UserWithAddress} from "../../../../models/user.model";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {Registration} from "../../../../models/registration.model";
 import {AuthenticationService} from "../../../../services/authentication.service";
 import {UserService} from "../../../../services/user.service";
+import {UserImageUploadComponent} from "./user-image-upload/user-image-upload.component";
 
 @Component({
   selector: 'app-admin-edit-user',
@@ -21,6 +22,7 @@ export class AdminEditUserComponent {
   private readonly _authenticationService: AuthenticationService = inject(AuthenticationService);
   private readonly _userService: UserService = inject(UserService);
   private readonly _toastr: ToastrService = inject(ToastrService);
+  private readonly _dialog: MatDialog = inject(MatDialog);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { isUpdate: boolean, user: UserWithAddress }) {
     this.isUpdate = data.isUpdate;
@@ -103,5 +105,21 @@ export class AdminEditUserComponent {
   onClose(reload: boolean) {
     const result = {reload: reload};
     this._dialogRef.close(result);
+  }
+
+  unUploadImage() {
+    const dialogRef = this._dialog.open(UserImageUploadComponent, {
+      width: '60%',
+      height: 'auto',
+      data: {userId: this.currentUser.userId, imageUrl: this.currentUser.imageUrl}
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: ((reload: boolean) => {
+        if (reload) {
+          this.onClose(reload);
+        }
+      })
+    });
   }
 }

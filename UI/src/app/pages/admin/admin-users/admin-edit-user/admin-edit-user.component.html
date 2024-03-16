@@ -86,8 +86,12 @@
         <input class="form-control" formControlName="mobile" id="mobile" type="text">
       </div>
     </div>
-
   </form>
+
+  <div *ngIf="isUpdate" class="d-flex justify-content-center mt-3">
+    <button (click)="unUploadImage()" class="btn btn-secondary">{{currentUser.imageUrl ? 'Bild anpassen' : 'Bild hochladen'}}</button>
+  </div>
+
 </div>
 <div class="d-flex justify-content-end mt-5 mb-3" mat-dialog-actions>
   <button (click)="onSubmit()" [disabled]="userForm.invalid" class="btn btn-success" type="submit">

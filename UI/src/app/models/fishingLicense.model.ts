@@ -8,5 +8,8 @@ export interface FishingLicense {
   isPaid: boolean
   issuedBy: string;
   isActive: boolean;
-  expiresOn: Date
+  expiresOn: Date;
+  userSanaNumber?: string;
+  userDateOfBirth?: Date;
+  userImageUrl?: string;
 }

@@ -28,6 +28,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
   getUsers() {
+    this.users = [];
     this._userService.getUsersWithAddresses().subscribe({
       next: ((response) => {
         if (response) {

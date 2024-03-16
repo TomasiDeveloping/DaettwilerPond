@@ -5,7 +5,10 @@ import {HighchartsChartModule} from "highcharts-angular";
 import {NgxScrollTopModule} from "ngx-scrolltop";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask} from "ngx-mask";
+import {NgxPrinterModule} from "ngx-printer";
+import {LOAD_WASM, NgxScannerQrcodeModule} from "ngx-scanner-qrcode";
 
+LOAD_WASM().subscribe();
 
 @NgModule({
   declarations: [],
@@ -21,7 +24,9 @@ import {NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask} from "ngx-mask
     }),
     // Importing and configuring ngx-mask for input masking
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
+    NgxPrinterModule.forRoot({printOpenWindow: true, printPreviewOnly: false}),
+    NgxScannerQrcodeModule
   ],
   // Exporting both Angular and third-party modules for use in other modules
   exports: [
@@ -31,6 +36,8 @@ import {NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask} from "ngx-mask
     ToastrModule,
     NgxMaskDirective,
     NgxMaskPipe,
+    NgxPrinterModule,
+    NgxScannerQrcodeModule
   ],
   // Providing configuration for ngx-mask
   providers: [
