@@ -4,41 +4,60 @@
 <!-- Dialog content -->
 <div mat-dialog-content>
   <div class="e-license-container">
+    <!-- QR code and user image -->
     <div class="d-flex justify-content-around">
       <div>
+        <!-- QR code for license validation -->
         <qrcode
-          [qrdata]="environment.licenseValidationUrl + currentFishingLicense.id"
           [allowEmptyString]="true"
-          [cssClass]="'center'"
           [colorDark]="'#000000ff'"
           [colorLight]="'#ffffffff'"
+          [cssClass]="'center'"
           [elementType]="'canvas'"
           [errorCorrectionLevel]="'M'"
-          [margin]="1"
-          [scale]="1"
-          [imageSrc]="'./assets/images/logo.png'"
           [imageHeight]="60"
+          [imageSrc]="'./assets/images/logo.png'"
           [imageWidth]="60"
+          [margin]="1"
+          [qrdata]="environment.licenseValidationUrl + currentFishingLicense.id"
+          [scale]="1"
           [width]="180"
         ></qrcode>
       </div>
-      <img [src]="currentFishingLicense.userImageUrl | imageUrl" class="" alt="...">
+      <!-- User image -->
+      <img [src]="currentFishingLicense.userImageUrl | imageUrl" alt="..." class="">
     </div>
-    <div><b>Inhaber:</b> {{currentFishingLicense.userFullName}}</div>
-    <div><b>Geburtsdatum:</b> {{currentFishingLicense.userDateOfBirth | date: 'dd.MM.yyyy'}}</div>
-    <div><b>SaNa Nummer:</b> {{currentFishingLicense.userSanaNumber}}</div>
+
+    <!-- License details -->
+    <!-- User full name -->
+    <div><b>Inhaber:</b> {{ currentFishingLicense.userFullName }}</div>
+    <!-- User date of birth -->
+    <div><b>Geburtsdatum:</b> {{ currentFishingLicense.userDateOfBirth | date: 'dd.MM.yyyy' }}</div>
+    <!-- User SaNa number -->
+    <div><b>SaNa Nummer:</b> {{ currentFishingLicense.userSanaNumber }}</div>
     <hr>
+
+    <!-- Allowed waters -->
     <div><b>Erlaubte Gewässer:</b> Unteren Dättwiler Weiher</div>
+    <!-- Area number -->
     <div><b>Revier-Nr:</b> 715</div>
     <hr>
+
+    <!-- License number -->
     <div><b>Lizenznummer:</b></div>
-    <div>{{currentFishingLicense.id}}</div>
-    <div><b>Gütlig bis:</b> {{currentFishingLicense.expiresOn | date : 'dd.MM.yyyy'}}</div>
-    <div><b>Aussgestellt am:</b> {{currentFishingLicense.createdAt | date: 'dd.MM.yyyy'}}</div>
-    <div><b>Ausgestellt durch:</b> {{currentFishingLicense.issuedBy}}</div>
-  </div>
-  <div class="d-flex justify-content-between mt-3">
-    <button ngxPrintItemButton printWindow="true" class="btn btn-secondary">Drucken</button>
-    <button (click)="onClose()" class="btn btn-secondary">Schliessen</button>
+    <div>{{ currentFishingLicense.id }}</div>
+    <!-- Expiry date -->
+    <div><b>Gütlig bis:</b> {{ currentFishingLicense.expiresOn | date : 'dd.MM.yyyy' }}</div>
+    <!-- Creation date -->
+    <div><b>Aussgestellt am:</b> {{ currentFishingLicense.createdAt | date: 'dd.MM.yyyy' }}
+      <!-- Issued by -->
+      <div><b>Ausgestellt durch:</b> {{ currentFishingLicense.issuedBy }}</div>
+    </div>
+
+    <!-- Buttons for printing and closing the dialog -->
+    <div class="d-flex justify-content-between mt-3">
+      <button class="btn btn-secondary" ngxPrintItemButton printWindow="true">Drucken</button>
+      <button (click)="onClose()" class="btn btn-secondary">Schliessen</button>
+    </div>
   </div>
 </div>

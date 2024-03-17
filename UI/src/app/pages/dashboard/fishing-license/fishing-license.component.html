@@ -44,9 +44,12 @@
       </div>
     </div>
     <hr>
+
+    <!-- Displaying button for e-fishing license -->
     <div *ngIf="fishingLicence && isAdmin" class="d-flex justify-content-center mt-3">
       <button (click)="onOpenELicense(fishingLicence)" class="btn btn-primary">E-Fischereipatent</button>
     </div>
+
     <!-- Template for displaying a message when no fishing license is available -->
     <ng-template #noLicense>
       <p class="text-center text-danger">Keine aktuelle Lizenz verfügbar</p>

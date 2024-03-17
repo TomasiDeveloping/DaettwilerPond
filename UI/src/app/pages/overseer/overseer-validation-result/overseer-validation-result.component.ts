@@ -11,13 +11,16 @@ export class OverseerValidationResultComponent {
 
   public validation: OverseerLicenseValidationModel;
 
+  // Injecting MatDialogRef for dialog reference
   private readonly _dialogRef: MatDialogRef<OverseerValidationResultComponent> = inject(MatDialogRef<OverseerValidationResultComponent>);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {validation: OverseerLicenseValidationModel}) {
+    // Assigning validation data received through dialog
     this.validation = data.validation;
   }
 
-  onClose() {
+  // Method to close the dialog
+  onClose(): void {
     this._dialogRef.close();
   }
 }

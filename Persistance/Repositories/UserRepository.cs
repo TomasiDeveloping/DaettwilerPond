@@ -59,6 +59,7 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
                 Role = role.FirstOrDefault(),
                 SaNaNumber = user.SaNaNumber,
                 ImageUrl = user.ImageUrl,
+                DateOfBirth = user.DateOfBirth,
                 Address = mapper.Map<AddressDto>(address)
             });
         }
@@ -89,6 +90,8 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
             user.UserName = userDto.Email;
             user.NormalizedUserName = userDto.Email.ToUpper();
         }
+
+        userDto.DateOfBirth = userDto.DateOfBirth.AddDays(1).AddSeconds(-1);
         mapper.Map(userDto, user);
         await context.SaveChangesAsync();
         return await GetUserByIdAsync(userId);
@@ -109,6 +112,8 @@ public class UserRepository(DaettwilerPondDbContext context, IMapper mapper, Use
             user.UserName = userWithAddressDto.Email;
             user.NormalizedUserName = userWithAddressDto.Email.ToUpper();
         }
+
+        userWithAddressDto.DateOfBirth = userWithAddressDto.DateOfBirth.AddDays(1).AddSeconds(-1);
         mapper.Map(userWithAddressDto, user);
 
         // Retrieve and update roles

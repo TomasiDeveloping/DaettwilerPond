@@ -6,6 +6,7 @@ import {ToastrService} from "ngx-toastr";
 import {MatDialog} from "@angular/material/dialog";
 import {EFishingLicenseComponent} from "./efishing-license/efishing-license.component";
 import {AuthenticationService} from "../../../services/authentication.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-fishing-license',
@@ -68,13 +69,21 @@ export class FishingLicenseComponent implements OnChanges {
     });
   }
 
-  onOpenELicense(fishingLicence: FishingLicense) {
-    this._dialog.open(EFishingLicenseComponent, {
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      height: '100%',
-      width: '100%',
-      data: {fishingLicense: fishingLicence}
-    })
+  // Method to open the e-fishing license component
+  onOpenELicense(fishingLicence: FishingLicense): void {
+    // Check if the user has provided a profile image
+    if (!fishingLicence.userImageUrl) {
+      // If the user has not provided a profile image, show a warning message
+      Swal.fire('E-Fischereipatent', 'Ohne Foto ist das E-Fischereipatent nicht verfügbar. Bitte wende Dich an einen Administrator', 'info').then();
+    } else {
+      // If the user has provided a profile image, open the e-fishing license component
+      this._dialog.open(EFishingLicenseComponent, {
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100%',
+        width: '100%',
+        data: {fishingLicense: fishingLicence}
+      })
+    }
   }
 }

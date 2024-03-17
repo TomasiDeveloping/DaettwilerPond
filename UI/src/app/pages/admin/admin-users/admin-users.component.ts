@@ -69,6 +69,7 @@ export class AdminUsersComponent implements OnInit {
       firstName: '',
       isActive: true,
       userId: '',
+      dateOfBirth: new Date(),
       role: 'User',
       address: {
         street: '',

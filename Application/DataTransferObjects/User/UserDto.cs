@@ -19,5 +19,7 @@
         public bool IsActive { get; set; }
 
         public string SaNaNumber { get; set; }
+
+        public DateTime DateOfBirth { get; set; }
     }
 }

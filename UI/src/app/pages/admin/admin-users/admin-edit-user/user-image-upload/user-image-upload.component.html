@@ -1,9 +1,14 @@
+<!-- Dialog title -->
 <h1 mat-dialog-title>{{ isUpdate ? 'Bild bearbeiten' : 'Bild hochladen' }}</h1>
+
+<!-- Dialog content -->
 <div mat-dialog-content>
+  <!-- Image upload form -->
   <div class="row text-center" style="margin-bottom:15px;">
     <form *ngIf="!uploadSuccess" [formGroup]="uploadForm">
-      <input #preview (change)="showPreview($event)" accept="image/*" class="form-control" style="display: none"
-             type="file"/>
+      <!-- Input for selecting image -->
+      <input #preview (change)="showPreview($event)" accept="image/*" class="form-control" style="display: none" type="file"/>
+      <!-- Buttons for selecting or changing image -->
       <div class="d-flex justify-content-center">
         <button (click)="preview.click()" *ngIf="imageURL === ''" class="btn btn-secondary mb-3">Bild auswählen</button>
         <button (click)="preview.click()" *ngIf="imageURL !== ''" class="btn btn-secondary mb-3">Bild ändern</button>
@@ -13,22 +18,25 @@
         <img [src]="imageURL" alt="user image">
       </div>
     </form>
+
+    <!-- Container for progress and message -->
     <ng-container>
       <div class="mt-3 text-center">
-    <span *ngIf="progress > 0" class="upload">
-      {{ progress }}%
-    </span>
-        <span *ngIf="message" class="upload">
-      {{ message }}
-    </span>
+        <!-- Progress bar -->
+        <span *ngIf="progress > 0" class="upload">{{ progress }}%</span>
+        <!-- Upload message -->
+        <span *ngIf="message" class="upload">{{ message }}</span>
+        <!-- Close button -->
         <div>
           <button (click)="onClose(true)" *ngIf="uploadSuccess" class="btn btn-warning mt-3">Schliessen</button>
         </div>
       </div>
     </ng-container>
+
+    <!-- Buttons for uploading or canceling -->
     <div *ngIf="!uploadSuccess" class="d-flex justify-content-evenly mt-5">
-      <button (click)="uploadFile()" *ngIf="imageURL && imageURL !== ''" class="btn btn-success" type="button">Bild
-        hochladen
+      <button (click)="uploadFile()" *ngIf="imageURL && imageURL !== ''" class="btn btn-success" type="button">
+        Bild hochladen
       </button>
       <button (click)="onClose(false)" class="btn btn-warning">Abbrechen</button>
     </div>

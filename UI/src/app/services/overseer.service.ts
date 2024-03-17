@@ -47,7 +47,7 @@ export class OverseerService {
       }));
   }
 
-  public validateLicense(licenseId: string): Observable<OverseerValidateLicenseComponent> {
-    return this._httpClient.get<OverseerValidateLicenseComponent>(this._serviceUrl + 'ValidateLicense/' + licenseId);
+  public validateLicense(licenseId: string): Observable<OverseerMemberDetailsModel> {
+    return this._httpClient.get<OverseerMemberDetailsModel>(this._serviceUrl + 'ValidateLicense/' + licenseId);
   }
 }

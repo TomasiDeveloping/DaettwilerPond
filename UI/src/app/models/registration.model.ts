@@ -6,5 +6,7 @@ export interface Registration {
   email: string;
   role: string;
   isActive: string;
+  dateOfBirth: Date;
+  saNaNumber: string;
   address: Address
 }

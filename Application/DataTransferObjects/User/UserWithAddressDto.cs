@@ -14,6 +14,8 @@ namespace Application.DataTransferObjects.User
         // Last name of the user
         public string LastName { get; set; }
 
+        public DateTime DateOfBirth { get; set; }
+
         // Email address of the user
         public string Email { get; set; }
 

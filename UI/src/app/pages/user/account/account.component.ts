@@ -63,6 +63,10 @@ export class AccountComponent implements OnInit {
     return this.addressForm.get('postalCode');
   }
 
+  get dateOfBirth() {
+    return this.userForm.get('dateOfBirth');
+  }
+
   ngOnInit(): void {
     // Retrieve the current user's ID from the authentication service
     const currentUserId: string | null = this._authenticationService.getUserIdFromToken();
@@ -122,13 +126,16 @@ export class AccountComponent implements OnInit {
 
   // Create user form with initial values
   createUserForm(user: User, userId: string): void {
+    const date = new Date(user.dateOfBirth);
+    const userDateOfBirth = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())).toISOString().substring(0,10);
     this.userForm = new FormGroup({
       id: new FormControl<string>(userId),
       isActive: new FormControl<boolean>(user.isActive),
       firstName: new FormControl<string>(user.firstName, [Validators.required]),
       lastName: new FormControl<string>(user.lastName, [Validators.required]),
       email: new FormControl<string>(user.email, [Validators.required, Validators.email]),
-      saNaNumber: new FormControl<string | undefined>(user.saNaNumber)
+      saNaNumber: new FormControl<string | undefined>(user.saNaNumber),
+      dateOfBirth: new FormControl<string>(userDateOfBirth, [Validators.required])
     });
 
     // Disable the user form initially
@@ -167,6 +174,7 @@ export class AccountComponent implements OnInit {
 
     // Extract user data from the form
     const user: User = this.userForm.value as User;
+    user.dateOfBirth = new Date(user.dateOfBirth);
 
     // Update user data via the user service
     this._userService.updateUser(user.id, user).subscribe({
@@ -187,12 +195,15 @@ export class AccountComponent implements OnInit {
   onCancelEditUser(): void {
     this.isEditUser = false;
 
+    const date = new Date(this.currentUser!.dateOfBirth);
+    const userDateOfBirth = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())).toISOString().substring(0,10);
     // Reset user form with current user's data
     this.userForm.patchValue({
       firstName: this.currentUser?.firstName,
       lastName: this.currentUser?.lastName,
       email: this.currentUser?.email,
-      saNaNumber: this.currentUser?.saNaNumber
+      saNaNumber: this.currentUser?.saNaNumber,
+      dateOfBirth: userDateOfBirth
     });
 
     // Disable the user form

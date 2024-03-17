@@ -1,23 +1,29 @@
+<!-- Dialog Title -->
 <h1 class="text-center" mat-dialog-title>E-Fischereipatent Validieren</h1>
 
+<!-- Dialog Content -->
 <div mat-dialog-content>
-  <!-- For camera -->
+  <!-- QR Code Scanner Container -->
   <div class="scanner-container">
+    <!-- QR Code Scanner Component -->
     <ngx-scanner-qrcode (event)="onEvent($event, action)" #action="scanner"></ngx-scanner-qrcode>
   </div>
 
-  <!-- Loading -->
+  <!-- Loading Indicator -->
   <p class="text-center" *ngIf="action.isLoading">⌛ Startet ...</p>
 
+  <!-- Error Message -->
   <ng-container *ngIf="hasScanError">
     <div  class="alert alert-danger" role="alert">
       Fehler. Patent kann nicht validiert werden
     </div>
   </ng-container>
 
-  <!-- start -->
+  <!-- Action Buttons -->
   <div class="d-flex justify-content-center">
+    <!-- Start/Cancel Button -->
     <button class="btn btn-danger" *ngIf="action.isStart" (click)="onCancel()">Abbrechen</button>
+    <!-- Close Button -->
     <button class="btn btn-warning" *ngIf="!action.isStart && !action.isLoading" (click)="onClose(null)">Schliessen</button>
   </div>
 
