@@ -1,0 +1,29 @@
+<div class="container">
+  <h4 class="text-center mt-5">Dättwiler Weiher E-Fischereipatent Validierung</h4>
+  <ng-container *ngIf="isValid && !isLoading">
+    <div class="alert alert-success text-center" role="alert">
+      <i class="bi bi-check-square-fill"></i>
+      <p>Die Überprüfung des E-Fischereipatents für den Dättwiler Weiher war erfolgreich. Die Lizenz ist gültig</p>
+      <p><b>Inhaber:</b> {{validationResponse?.userName}}</p>
+      <div><b>Lizenznummer: </b></div>
+      <div>{{validationResponse?.licenseId}}</div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!isValid && !isLoading && !isApiError">
+    <div class="alert alert-danger text-center" role="alert">
+      <i class="bi bi-exclamation-square-fill"></i>
+      <p>Die Überprüfung des E-Fischereipatents für den Dättwiler Weiher ergab, dass die Lizenz ungültig ist.</p>
+      <p><b>Grund: </b>{{errorReason}}</p>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isApiError">
+    <div class="alert alert-warning text-center" role="alert">
+      <p>Entschuldigen Sie die Unannehmlichkeiten.</p>
+      <p>Der Server ist derzeit nicht erreichbar, und die Validierung der Lizenzen ist daher nicht verfügbar.</p>
+      <p>Bitte versuchen Sie es später erneut. Wir bitten um Ihr Verständnis. </p>
+    </div>
+  </ng-container>
+</div>
+

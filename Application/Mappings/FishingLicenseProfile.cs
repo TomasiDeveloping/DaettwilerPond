@@ -1,4 +1,5 @@
 ﻿using Application.DataTransferObjects.FishingLicense;
+using Application.DataTransferObjects.Overseer;
 using AutoMapper;
 using Domain.Entities;
 
@@ -12,6 +13,9 @@ public class FishingLicenseProfile : Profile
     {
         // Mapping from FishingLicense entity to FishingLicenseDto
         CreateMap<FishingLicense, FishingLicenseDto>()
+            .ForMember(des => des.UserDateOfBirth, opt => opt.MapFrom(src => src.User.DateOfBirth))
+            .ForMember(des => des.UserSanaNumber, opt => opt.MapFrom(src => src.User.SaNaNumber))
+            .ForMember(des => des.UserImageUrl, opt => opt.MapFrom(src => src.User.ImageUrl))
             // Custom mapping for UserFullName, combining FirstName and LastName from User
             .ForMember(des => des.UserFullName,
                 opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"));

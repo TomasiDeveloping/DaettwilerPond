@@ -156,10 +156,87 @@ public class FishingLicenseRepository(DaettwilerPondDbContext context, IMapper m
 
         // Updating the last modified timestamp and saving changes
         license.UpdatedAt = DateTime.Now;
+        license.ExpiresOn = license.ExpiresOn.AddDays(1).AddSeconds(-1);
         await context.SaveChangesAsync();
 
         // Returning the updated FishingLicense
         return await GetFishingLicenseAsync(license.Id);
+    }
+
+    public async Task<ValidateResponse> ValidateLicenseAsync(Guid licenseId)
+    {
+        var validateResponse = new ValidateResponse();
+
+        var license = await context.FishingLicenses
+            .Include(l => l.User)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(l => l.Id == licenseId);
+
+        if (license is null)
+        {
+            validateResponse.IsValid = false;
+            validateResponse.ErrorMessage = "Lizenz nicht vorhanden";
+            return validateResponse;
+        }
+
+        if (license.ExpiresOn < DateTime.Now)
+        {
+            validateResponse.IsValid = false;
+            validateResponse.ErrorMessage = $"Lizenz ist am {license.ExpiresOn:dd.MM.yyyy} abgelaufen";
+            return validateResponse;
+        }
+
+        if (!license.IsActive)
+        {
+            validateResponse.IsValid = false;
+            validateResponse.ErrorMessage = "Lizenz ist nicht aktiv";
+            return validateResponse;
+        }
+        validateResponse.IsValid = true;
+        validateResponse.LicenseId = license.Id;
+        validateResponse.UserName = $"{license.User.FirstName} {license.User.LastName}";
+
+        return validateResponse;
+    }
+
+    public async Task<OverseerLicenseValidationDto> OverseerLicenseValidationAsync(Guid licenseId)
+    {
+        var licenseValidationDto = await context.FishingLicenses
+            .Select(license => new OverseerLicenseValidationDto()
+            {
+                LicenseId = license.Id,
+                ExpiryAt = license.ExpiresOn,
+                UserBirthDate = license.User.DateOfBirth,
+                UserName = $"{license.User.FirstName} {license.User.LastName}",
+                UserImageUrl = license.User.ImageUrl,
+                UserSaNaNumber = license.User.SaNaNumber,
+                IsActive = license.IsActive,
+                ErrorMessage = string.Empty,
+                IsValid = true
+            })
+            .AsNoTracking()
+            .FirstOrDefaultAsync(l => l.LicenseId == licenseId);
+
+        if (licenseValidationDto is null)
+        {
+            return new OverseerLicenseValidationDto()
+            {
+                ErrorMessage = "Lizenz nicht vorhanden",
+                IsActive = false
+            };
+        }
+
+        if (licenseValidationDto.ExpiryAt < DateTime.Now)
+        {
+            licenseValidationDto.IsValid = false;
+            licenseValidationDto.ErrorMessage = $"Lizenz ist am {licenseValidationDto.ExpiryAt:dd.MM.yyyy} abgelaufen";
+        }
+
+        if (licenseValidationDto.IsActive) return licenseValidationDto;
+
+        licenseValidationDto.IsValid = false;
+        licenseValidationDto.ErrorMessage = "Lizenz ist nicht aktiv";
+        return licenseValidationDto;
     }
 
     // Delete a fishing license by ID

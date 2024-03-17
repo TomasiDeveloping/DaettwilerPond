@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {FishingLicense} from "../models/fishingLicense.model";
+import {ValidateLicenseModel} from "../models/validateLicense.model";
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +45,9 @@ export class FishingLicenseService {
   // Method to delete a fishing license
   deleteFishingLicence(fishingLicenseId: string): Observable<boolean> {
     return this._httpClient.delete<boolean>(this._serviceUrl + fishingLicenseId);
+  }
+
+  validateLicense(licenseId: string): Observable<ValidateLicenseModel> {
+    return this._httpClient.get<ValidateLicenseModel>(this._serviceUrl + 'Validate/' + licenseId);
   }
 }

@@ -21,6 +21,7 @@ public class AuthenticationRepository(
     public async Task<RegistrationResponseDto> Register(RegistrationDto registrationDto)
     {
         // Mapping registrationDto to User entity
+        registrationDto.DateOfBirth = registrationDto.DateOfBirth.AddDays(1).AddSeconds(-1);
         var user = mapper.Map<User>(registrationDto);
         IEnumerable<string> errors;
 

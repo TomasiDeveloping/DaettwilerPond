@@ -25,6 +25,7 @@ export class AdminFishingRegulationComponent implements OnInit {
   }
 
   getFishingRegulations() {
+    this.fishingRegulations = [];
     this._fishingRegulationService.getFishingRegulations().subscribe({
       next: ((response) => {
         if (response) {

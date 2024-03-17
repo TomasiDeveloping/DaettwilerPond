@@ -20,6 +20,10 @@ namespace Domain.Entities
         // SaNa number
         public string SaNaNumber { get; set; }
 
+        public string ImageUrl { get; set; }
+
+        public DateTime DateOfBirth { get; set; }
+
         // Collection of addresses associated with the user
         public ICollection<Address> Addresses { get; set; }
 

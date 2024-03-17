@@ -6,9 +6,13 @@ export const environment = {
   // Application version
   version: "1.17.3",
 
+  serverUrl: 'https://daettwiler-pond.azurewebsites.net/',
+
   // Base URL for API endpoints
   apiBaseUrl: 'https://daettwiler-pond.azurewebsites.net/api/v1',
 
   // URI for resetting passwords
-  resetPasswordUri: 'https://weiher.tomasi-developing.ch/resetPassword'
+  resetPasswordUri: 'https://weiher.tomasi-developing.ch/resetPassword',
+
+  licenseValidationUrl: 'https://weiher.tomasi-developing.ch/validate/'
 };

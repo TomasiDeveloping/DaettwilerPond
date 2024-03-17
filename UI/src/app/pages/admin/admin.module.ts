@@ -21,6 +21,8 @@ import {AdminClubInformationComponent} from './admin-club-information/admin-club
 import {CreateLicenseBillComponent} from './admin-fishing-license/create-license-bill/create-license-bill.component';
 import {ThirdPartyModule} from "../../sharedModules/third-party.module";
 import { AdminSendEmailComponent } from './admin-users/admin-send-email/admin-send-email.component';
+import { UserImageUploadComponent } from './admin-users/admin-edit-user/user-image-upload/user-image-upload.component';
+import {ImageUrlPipe} from "../../pipes/image-url.pipe";
 
 
 @NgModule({
@@ -37,6 +39,7 @@ import { AdminSendEmailComponent } from './admin-users/admin-send-email/admin-se
     AdminClubInformationComponent,
     CreateLicenseBillComponent,
     AdminSendEmailComponent,
+    UserImageUploadComponent,
   ],
   imports: [
     CommonModule,
@@ -47,7 +50,8 @@ import { AdminSendEmailComponent } from './admin-users/admin-send-email/admin-se
     RouterModule.forChild([
       {path: '', component: AdminComponent}
     ]),
-  ]
+  ],
+  providers: [ImageUrlPipe]
 })
 export class AdminModule {
 }

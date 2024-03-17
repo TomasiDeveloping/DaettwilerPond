@@ -110,6 +110,24 @@ public class FishingLicensesController(IFishingLicenseRepository fishingLicenseR
         }
     }
 
+    [AllowAnonymous]
+    [HttpGet("Validate/{fishingLicenseId:guid}")]
+    public async Task<ActionResult<ValidateResponse>> ValidateLicense(Guid fishingLicenseId)
+    {
+        try
+        {
+            var validationResult = await fishingLicenseRepository.ValidateLicenseAsync(fishingLicenseId);
+            return Ok(validationResult);
+        }
+        catch (Exception e)
+        {
+            // Log and return a generic error response
+            logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Something went wrong in {nameof(ValidateLicense)}");
+        }
+    }
+
     // Handle PUT request to update an existing fishing license by ID
     [HttpPut("{fishingLicenseId:guid}")]
     public async Task<ActionResult<FishingLicenseDto>> UpdateFishingLicense(Guid fishingLicenseId,

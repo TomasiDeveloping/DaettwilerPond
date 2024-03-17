@@ -1,47 +1,84 @@
-<h1 mat-dialog-title>Mitglied {{isUpdate ? 'bearbeiten' : 'erstellen'}}</h1>
+<!-- Dialog title dynamically changes based on whether it's an update or creation -->
+<h1 mat-dialog-title>Mitglied {{ isUpdate ? 'bearbeiten' : 'erstellen' }}</h1>
+
 <div mat-dialog-content>
+
+  <!-- Form content -->
   <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
+    <!-- Form group for user information -->
     <div class="row">
+      <!-- First name input field -->
       <div class="col-6">
         <label class="form-label" for="firstName">Vorname</label>
-        <input [ngClass]="{
-        'is-invalid': firstName?.invalid && (firstName?.dirty || firstName?.touched),
-        'is-valid': firstName?.valid
-        }" class="form-control" formControlName="firstName" id="firstName" type="text">
-        <div *ngIf="firstName?.errors && (firstName?.dirty || firstName?.touched)" class="invalid-feedback">
-          <p *ngIf="firstName?.hasError('required')">Vorname ist ein Pflichtfeld</p>
+        <input [ngClass]="{'is-invalid': f['firstName']?.invalid && (f['firstName']?.dirty || f['firstName']?.touched),
+                           'is-valid': f['firstName']?.valid}"
+               class="form-control" formControlName="firstName" id="firstName" type="text">
+        <!-- Error message for first name -->
+        <div *ngIf="f['firstName']?.errors && (f['firstName']?.dirty || f['firstName']?.touched)" class="invalid-feedback">
+          <p *ngIf="f['firstName']?.hasError('required')">Vorname ist ein Pflichtfeld</p>
         </div>
       </div>
+
+      <!-- Last name input field -->
       <div class="col-6">
         <label class="form-label" for="lastName">Nachname</label>
         <input [ngClass]="{
-        'is-invalid': lastName?.invalid && (lastName?.dirty || lastName?.touched),
-        'is-valid': lastName?.valid
+        'is-invalid': f['lastName']?.invalid && (f['lastName']?.dirty || f['lastName']?.touched),
+        'is-valid': f['lastName']?.valid
         }" class="form-control" formControlName="lastName" id="lastName" type="text">
-        <div *ngIf="lastName?.errors && (lastName?.dirty || lastName?.touched)" class="invalid-feedback">
-          <p *ngIf="lastName?.hasError('required')">Nachname ist ein Pflichtfeld</p>
+        <!-- Error message for last name -->
+        <div *ngIf="f['lastName']?.errors && (f['lastName']?.dirty || f['lastName']?.touched)" class="invalid-feedback">
+          <p *ngIf="f['lastName']?.hasError('required')">Nachname ist ein Pflichtfeld</p>
         </div>
       </div>
     </div>
+
+
     <div class="row">
+      <!-- Email input field -->
       <div class="col-6">
-          <label class="form-label" for="email">E-Mail</label>
-          <input [ngClass]="{
-      'is-invalid': email?.invalid && (email?.dirty || email?.touched),
-      'is-valid': email?.valid
+        <label class="form-label" for="email">E-Mail</label>
+        <input [ngClass]="{
+      'is-invalid': f['email']?.invalid && (f['email']?.dirty || f['email']?.touched),
+      'is-valid': f['email']?.valid
       }" class="form-control" formControlName="email" id="email" type="email">
-          <div *ngIf="email?.errors && (email?.dirty || email?.touched)" class="invalid-feedback">
-            <p *ngIf="email?.hasError('required')">E-Mail ist ein Pflichtfeld</p>
-            <p *ngIf="email?.hasError('email')">Ungültige E-Mail Adresse</p>
-          </div>
+        <!-- Error messages for email -->
+        <div *ngIf="f['email']?.errors && (f['email']?.dirty || f['email']?.touched)" class="invalid-feedback">
+          <p *ngIf="f['email']?.hasError('required')">E-Mail ist ein Pflichtfeld</p>
+          <p *ngIf="f['email']?.hasError('email')">Ungültige E-Mail Adresse</p>
         </div>
+      </div>
+
+      <!-- SaNa number input field -->
       <div class="col-6">
-          <div class="form-group">
-            <label class="form-label" for="saNaNumber">SaNa_Nummer</label>
-            <input class="form-control" formControlName="saNaNumber" id="saNaNumber" [dropSpecialCharacters]="false" [showMaskTyped]="true" mask="999-9999-9999/999-9">
+        <div class="form-group">
+          <label class="form-label" for="saNaNumber">SaNa_Nummer</label>
+          <input [dropSpecialCharacters]="false" [showMaskTyped]="true" class="form-control" formControlName="saNaNumber"
+                 id="saNaNumber" mask="999-9999-9999/999-9">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <!-- Date of Birth input field -->
+      <div class="col-6">
+        <div class="form-group">
+          <label class="form-label" for="dateOfBirth">Geburtsdatum</label>
+          <input [ngClass]="{
+          'is-invalid': f['dateOfBirth']?.invalid && (f['dateOfBirth']?.dirty || f['dateOfBirth']?.touched),
+          'is-valid': f['dateOfBirth']?.valid
+          }" class="form-control" formControlName="dateOfBirth" id="dateOfBirth" type="date">
+          <!-- Error message for date of birth -->
+          <div *ngIf="f['dateOfBirth']?.errors && (f['dateOfBirth']?.dirty || f['dateOfBirth']?.touched)"
+               class="invalid-feedback">
+            <div *ngIf="f['dateOfBirth']?.hasError('required')">Geburtsdatum ist ein Pflichtfeld</div>
           </div>
         </div>
+      </div>
     </div>
+
+    <!-- Role selection -->
     <div class="form-group">
       <label class="form-label">Plattform Recht</label>
       <select class="form-select" formControlName="role">
@@ -50,47 +87,74 @@
         <option value="Administrator">Administrator</option>
       </select>
     </div>
+
+    <!-- Active checkbox -->
     <div class="form-check mt-3">
       <input class="form-check-input" formControlName="isActive" id="isActive" type="checkbox">
       <label class="form-check-label" for="isActive">Aktiv</label>
     </div>
+
     <hr>
+
+    <!-- Address section -->
     <h5>Addresse:</h5>
     <div class="row">
+      <!-- Street input field -->
       <div class="col-8" formGroupName="address">
         <label class="form-label" for="street">Strasse</label>
         <input class="form-control" formControlName="street" id="street" type="text">
       </div>
+      <!-- House number input field -->
       <div class="col-4" formGroupName="address">
         <label class="form-label" for="houseNumber">Hasunummer</label>
         <input class="form-control" formControlName="houseNumber" id="houseNumber" type="text">
       </div>
     </div>
+
     <div class="row">
+      <!-- Postal code input field -->
       <div class="col-4" formGroupName="address">
         <label class="form-label" for="postalCode">PLZ</label>
         <input class="form-control" formControlName="postalCode" id="postalCode" type="text">
       </div>
+
+      <!-- City input field -->
       <div class="col-8" formGroupName="address">
         <label class="form-label" for="city">Ort</label>
         <input class="form-control" formControlName="city" id="city" type="text">
       </div>
     </div>
+
     <div class="row">
+
+      <!-- Phone input field -->
       <div class="col-6" formGroupName="address">
         <label class="form-label" for="phone">Telefon</label>
         <input class="form-control" formControlName="phone" id="phone" type="text">
       </div>
+
+      <!-- Mobile input field -->
       <div class="col-6" formGroupName="address">
         <label class="form-label" for="mobile">Natel</label>
         <input class="form-control" formControlName="mobile" id="mobile" type="text">
       </div>
     </div>
-
   </form>
+
+  <!-- Upload image button for updating user -->
+  <div *ngIf="isUpdate" class="d-flex justify-content-center mt-3">
+    <button (click)="unUploadImage()"
+            class="btn btn-secondary">{{ currentUser.imageUrl ? 'Bild anpassen' : 'Bild hochladen' }}
+    </button>
+  </div>
+
+  <!-- Dialog actions -->
 </div>
 <div class="d-flex justify-content-end mt-5 mb-3" mat-dialog-actions>
+  <!-- Submit button -->
   <button (click)="onSubmit()" [disabled]="userForm.invalid" class="btn btn-success" type="submit">
-    Mitglied {{isUpdate ? 'updaten' : 'erstellen'}}</button>
+    Mitglied {{ isUpdate ? 'updaten' : 'erstellen' }}
+  </button>
+  <!-- Cancel button -->
   <button (click)="onClose(false)" class="btn btn-danger ms-3" type="button">Abbrechen</button>
 </div>

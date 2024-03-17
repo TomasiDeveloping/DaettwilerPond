@@ -35,6 +35,11 @@ import { CatchStatisticsComponent } from './pages/catch-statistics/catch-statist
 import { CatchStatisticsMonthDetailComponent } from './pages/catch-statistics/catch-statistics-month-detail/catch-statistics-month-detail.component';
 import { EditCatchDayDialogComponent } from './pages/catch-statistics/catch-statistics-month-detail/edit-catch-day-dialog/edit-catch-day-dialog.component';
 import { OverseerComponent } from './pages/overseer/overseer.component';
+import {QRCodeModule} from "angularx-qrcode";
+import { LicenseValidateComponent } from './pages/license-validate/license-validate.component';
+import { OverseerValidateLicenseComponent } from './pages/overseer/overseer-validate-license/overseer-validate-license.component';
+import { OverseerValidationResultComponent } from './pages/overseer/overseer-validation-result/overseer-validation-result.component';
+import {ImageUrlPipe} from "./pipes/image-url.pipe";
 
 
 @NgModule({
@@ -60,27 +65,32 @@ import { OverseerComponent } from './pages/overseer/overseer.component';
     CatchStatisticsMonthDetailComponent,
     EditCatchDayDialogComponent,
     OverseerComponent,
+    LicenseValidateComponent,
+    OverseerValidateLicenseComponent,
+    OverseerValidationResultComponent,
   ],
   // Importing necessary Angular modules
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        AppRoutingModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        ThirdPartyModule,
-        MaterialModule,
-        SyncfusionModule,
-        JwtModule.forRoot({
-            config: {
-                tokenGetter: () => {
-                    return localStorage.getItem('DaettwilerPondToken')
-                }
-            }
-        }),
-        GermanMonthPipe,
-        FormsModule,
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    ThirdPartyModule,
+    MaterialModule,
+    SyncfusionModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('DaettwilerPondToken')
+        }
+      }
+    }),
+    GermanMonthPipe,
+    FormsModule,
+    QRCodeModule,
+    ImageUrlPipe
+  ],
   // Providers for services and interceptors
   providers: [
     DatePipe,

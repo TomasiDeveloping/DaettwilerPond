@@ -26,6 +26,7 @@ export class AdminFishingLicenseComponent implements OnInit {
   }
 
   getFishingLicenses() {
+    this.licenses = [];
     this._fishingLicenseService.getFishingLicenses().subscribe({
       next: ((response) => {
         if (response) {

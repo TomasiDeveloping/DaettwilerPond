@@ -12,6 +12,8 @@ public class AuthenticationProfile : Profile
     {
         // Creating a mapping from RegistrationDto to User
         CreateMap<RegistrationDto, User>()
+            .ForMember(des => des.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth))
+            .ForMember(des => des.SaNaNumber, opt => opt.MapFrom(src => src.SaNaNumber))
             // Custom mapping for UserName, using Email property from source
             .ForMember(des => des.UserName, opt => opt.MapFrom(src => src.Email))
             // Custom mapping for Id, generating a new Guid for the destination

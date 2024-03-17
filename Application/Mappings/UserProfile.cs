@@ -18,6 +18,7 @@ public class UserProfile : Profile
 
         // Mapping from User entity to UserWithAddressDto
         CreateMap<User, UserWithAddressDto>()
+            .ForMember(des => des.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
             .ForMember(des => des.SaNaNumber, opt => opt.MapFrom(src => src.SaNaNumber))
             // Custom mapping for UserId, mapping it from Id property of source
             .ForMember(des => des.UserId, opt => opt.MapFrom(src => src.Id))

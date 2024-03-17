@@ -3,6 +3,10 @@ import {FishingLicense} from "../../../models/fishingLicense.model";
 import * as moment from "moment";
 import {PdfService} from "../../../services/pdf.service";
 import {ToastrService} from "ngx-toastr";
+import {MatDialog} from "@angular/material/dialog";
+import {EFishingLicenseComponent} from "./efishing-license/efishing-license.component";
+import {AuthenticationService} from "../../../services/authentication.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-fishing-license',
@@ -10,6 +14,9 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./fishing-license.component.scss']
 })
 export class FishingLicenseComponent implements OnChanges {
+  constructor() {
+    this.isAdmin = this._authService.isUserAdministrator();
+  }
 
   // Input property to receive the fishing license data
   @Input() public fishingLicence: FishingLicense | undefined;
@@ -18,9 +25,13 @@ export class FishingLicenseComponent implements OnChanges {
   public expiresInDays: number | undefined;
   public expiresInHours: number | undefined;
 
+  public isAdmin: boolean = false;
+
   // Private properties for PdfService and ToastrService using Angular DI
   private readonly _pdfService: PdfService = inject(PdfService);
   private readonly _toastr: ToastrService = inject(ToastrService);
+  private readonly _dialog: MatDialog = inject(MatDialog);
+  private readonly _authService: AuthenticationService = inject(AuthenticationService);
 
   // OnChanges lifecycle hook to execute logic when input properties change
   ngOnChanges(_: SimpleChanges): void {
@@ -56,5 +67,23 @@ export class FishingLicenseComponent implements OnChanges {
         this._toastr.error('Fehler beim Download', 'PDF Rechnung');
       }
     });
+  }
+
+  // Method to open the e-fishing license component
+  onOpenELicense(fishingLicence: FishingLicense): void {
+    // Check if the user has provided a profile image
+    if (!fishingLicence.userImageUrl) {
+      // If the user has not provided a profile image, show a warning message
+      Swal.fire('E-Fischereipatent', 'Ohne Foto ist das E-Fischereipatent nicht verfügbar. Bitte wende Dich an einen Administrator', 'info').then();
+    } else {
+      // If the user has provided a profile image, open the e-fishing license component
+      this._dialog.open(EFishingLicenseComponent, {
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100%',
+        width: '100%',
+        data: {fishingLicense: fishingLicence}
+      })
+    }
   }
 }

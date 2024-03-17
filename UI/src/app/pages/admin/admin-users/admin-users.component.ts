@@ -28,6 +28,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
   getUsers() {
+    this.users = [];
     this._userService.getUsersWithAddresses().subscribe({
       next: ((response) => {
         if (response) {
@@ -68,6 +69,7 @@ export class AdminUsersComponent implements OnInit {
       firstName: '',
       isActive: true,
       userId: '',
+      dateOfBirth: new Date(),
       role: 'User',
       address: {
         street: '',

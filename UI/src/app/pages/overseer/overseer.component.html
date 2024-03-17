@@ -1,52 +1,77 @@
 <div class="container pb-5">
+  <!-- Page title -->
   <h1 class="text-center">Aufseher</h1>
 
+  <!-- Display yearly details -->
   <div class="total-container">
-    <h4>Jahr {{yearlyDetails?.currentYear}}</h4>
+    <h4>Jahr {{ yearlyDetails?.currentYear }}</h4>
     <div>Gesamte Angelstunden aller Mitglieder</div>
-    <div><b>{{yearlyDetails?.totalHoursSpend}} Stunden</b></div>
+    <div><b>{{ yearlyDetails?.totalHoursSpend }} Stunden</b></div>
     <div>Gesamtzahl der gefangenen Fische</div>
-    <div><b>{{yearlyDetails?.totalFishCatches}} Fische</b></div>
+    <div><b>{{ yearlyDetails?.totalFishCatches }} Fische</b></div>
   </div>
 
+  <!-- Button to validate e-fishing license -->
+  <div class="d-flex justify-content-center">
+    <button (click)="onValidateLicense()" class="btn btn-primary">E-Fischereipatent Validieren</button>
+  </div>
+
+  <!-- Select box to choose year -->
   <div class="year-select">
     <div>Jahr</div>
-    <select (change)="onYearChange($event)" class="form-select" aria-label="Default select example">
+    <select (change)="onYearChange($event)" aria-label="Default select example" class="form-select">
+      <!-- Iterate over available years -->
       @for (year of availableYears; track year) {
-        <option [value]="year">{{year}}</option>
+        <option [value]="year">{{ year }}</option>
       }
     </select>
   </div>
 
+  <!-- Buttons for exporting statistics and sending email -->
   <div class="d-flex justify-content-between mb-3">
-    <button (click)="onDownloadExcel()" class="btn btn-primary"><i class="bi bi-arrow-down-square"></i> Statistik Exportieren</button>
+    <button (click)="onDownloadExcel()" class="btn btn-primary"><i class="bi bi-arrow-down-square"></i>
+      Statistik Exportieren
+    </button>
+
     <button (click)="onSendMail()" class="btn btn-primary"><i class="bi bi-send"></i> Email-Senden</button>
   </div>
 
+  <!-- Select box to choose member for details -->
   <div class="member-select">
     <div>Mitglied auswählen für Details</div>
-    <select (change)="onMemberChange($event)" [(ngModel)]="selectedUserId" class="form-select" aria-label="Default select example">
+    <select (change)="onMemberChange($event)" [(ngModel)]="selectedUserId" aria-label="Default select example"
+            class="form-select">
       <option></option>
+      <!-- Iterate over members -->
       @for (member of members; track member.userId) {
-        <option [value]="member.userId">{{member.fullName}}</option>
+        <option [value]="member.userId">{{ member.fullName }}</option>
       }
     </select>
   </div>
 
+  <!-- Display details of selected member if userSelected is true -->
   @if (userSelected) {
     <div class="user-detail-container">
-      <h5 class="text-center"><b>{{memberDetail?.userFullName}}</b></h5>
-      <div>SaNa-Nummer: {{memberDetail?.saNaNumber}}</div>
-      <div>Anzahl Stunden: <b>{{memberDetail?.totalHours}}</b></div>
-      <div>Anzahl Fische: <b>{{memberDetail?.totalFishes}}</b></div>
-      <div>Aktiv: <i [ngClass]="memberDetail?.isLicenceActive ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'" class="bi"></i></div>
-      <div>Ausgestellt am: {{memberDetail?.licenseIssuedOn | date: 'dd.MM.yyyy'}}</div>
-      <div>Ausgestellt durch: {{memberDetail?.licenseIssuedBy}}</div>
-      <div>Gültig bis: <b>{{memberDetail?.licenseValidUntil | date: 'dd.MM.yyyy'}}</b></div>
-      <div>Bezahlt: <i [ngClass]="memberDetail?.isLicencePaid ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'" class="bi"></i></div>
-      <div>Ist am Angeln: <i [ngClass]="memberDetail?.isFishing ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'" class="bi"></i></div>
-      <button (click)="onDownloadMemberExcel()" class="btn btn-sm btn-primary"><i class="bi bi-arrow-down-square"></i> Statistik für {{memberDetail?.userFullName}} herunterladen</button>
+      <h5 class="text-center"><b>{{ memberDetail?.userFullName }}</b></h5>
+      <div>SaNa-Nummer: {{ memberDetail?.saNaNumber }}</div>
+      <div>Anzahl Stunden: <b>{{ memberDetail?.totalHours }}</b></div>
+      <div>Anzahl Fische: <b>{{ memberDetail?.totalFishes }}</b></div>
+      <div>Aktiv: <i
+        [ngClass]="memberDetail?.isLicenceActive ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'"
+        class="bi"></i></div>
+      <div>Ausgestellt am: {{ memberDetail?.licenseIssuedOn | date: 'dd.MM.yyyy' }}</div>
+      <div>Ausgestellt durch: {{ memberDetail?.licenseIssuedBy }}</div>
+      <div>Gültig bis: <b>{{ memberDetail?.licenseValidUntil | date: 'dd.MM.yyyy' }}</b></div>
+      <div>Bezahlt: <i
+        [ngClass]="memberDetail?.isLicencePaid ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'"
+        class="bi"></i></div>
+      <div>Ist am Angeln: <i
+        [ngClass]="memberDetail?.isFishing ? 'bi-check2 custom-icon-check' : 'bi-x custom-icon-cancel'" class="bi"></i>
+      </div>
+      <!-- Button to download member statistics -->
+      <button (click)="onDownloadMemberExcel()" class="btn btn-sm btn-primary"><i class="bi bi-arrow-down-square"></i>
+        Statistik für {{ memberDetail?.userFullName }} herunterladen
+      </button>
     </div>
   }
-
 </div>

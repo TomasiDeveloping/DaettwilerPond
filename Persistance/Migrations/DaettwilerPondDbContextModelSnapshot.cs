@@ -17,7 +17,7 @@ namespace Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.1")
+                .HasAnnotation("ProductVersion", "8.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -383,6 +383,9 @@ namespace Persistence.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -394,6 +397,10 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -460,7 +467,8 @@ namespace Persistence.Migrations
                         {
                             Id = new Guid("1e59351a-d970-428d-b63e-a141578f0184"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "24ab0d0a-8368-41ed-b4ee-7d12dbaa6f7b",
+                            ConcurrencyStamp = "cab99e6a-a45a-4137-853c-a1247ad2ec95",
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "info@tomasi-developing.ch",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -469,7 +477,7 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "info@tomasi-developing.ch",
                             NormalizedUserName = "INFO@TOMASI-DEVELOPING.CH",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAuuMHoBB7c1VD2cA0PldM2i3JEIT7pWorJtkO9v7wz7VTZGXrWMJP/7fl1m3so45w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHtvvfJ/B6StevlbpLe2H9dLCyhzPmc/bmsdjuyxHnvwBV+B0t8ODpfOSDjDAK+FxA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "info@tomasi-developing.ch"
