@@ -10,12 +10,12 @@
       <!-- First name input field -->
       <div class="col-6">
         <label class="form-label" for="firstName">Vorname</label>
-        <input [ngClass]="{'is-invalid': f['firstName']?.invalid && (f['firstName']?.dirty || f['firstName']?.touched),
-                           'is-valid': f['firstName']?.valid}"
+        <input [ngClass]="{'is-invalid': f['firstName'].invalid && (f['firstName'].dirty || f['firstName'].touched),
+                           'is-valid': f['firstName'].valid}"
                class="form-control" formControlName="firstName" id="firstName" type="text">
         <!-- Error message for first name -->
-        <div *ngIf="f['firstName']?.errors && (f['firstName']?.dirty || f['firstName']?.touched)" class="invalid-feedback">
-          <p *ngIf="f['firstName']?.hasError('required')">Vorname ist ein Pflichtfeld</p>
+        <div *ngIf="f['firstName'].errors && (f['firstName'].dirty || f['firstName'].touched)" class="invalid-feedback">
+          <p *ngIf="f['firstName'].hasError('required')">Vorname ist ein Pflichtfeld</p>
         </div>
       </div>
 
@@ -23,12 +23,12 @@
       <div class="col-6">
         <label class="form-label" for="lastName">Nachname</label>
         <input [ngClass]="{
-        'is-invalid': f['lastName']?.invalid && (f['lastName']?.dirty || f['lastName']?.touched),
-        'is-valid': f['lastName']?.valid
+        'is-invalid': f['lastName'].invalid && (f['lastName'].dirty || f['lastName'].touched),
+        'is-valid': f['lastName'].valid
         }" class="form-control" formControlName="lastName" id="lastName" type="text">
         <!-- Error message for last name -->
-        <div *ngIf="f['lastName']?.errors && (f['lastName']?.dirty || f['lastName']?.touched)" class="invalid-feedback">
-          <p *ngIf="f['lastName']?.hasError('required')">Nachname ist ein Pflichtfeld</p>
+        <div *ngIf="f['lastName'].errors && (f['lastName']?.dirty || f['lastName'].touched)" class="invalid-feedback">
+          <p *ngIf="f['lastName'].hasError('required')">Nachname ist ein Pflichtfeld</p>
         </div>
       </div>
     </div>
@@ -39,13 +39,13 @@
       <div class="col-6">
         <label class="form-label" for="email">E-Mail</label>
         <input [ngClass]="{
-      'is-invalid': f['email']?.invalid && (f['email']?.dirty || f['email']?.touched),
-      'is-valid': f['email']?.valid
+      'is-invalid': f['email'].invalid && (f['email'].dirty || f['email'].touched),
+      'is-valid': f['email'].valid
       }" class="form-control" formControlName="email" id="email" type="email">
         <!-- Error messages for email -->
-        <div *ngIf="f['email']?.errors && (f['email']?.dirty || f['email']?.touched)" class="invalid-feedback">
-          <p *ngIf="f['email']?.hasError('required')">E-Mail ist ein Pflichtfeld</p>
-          <p *ngIf="f['email']?.hasError('email')">Ungültige E-Mail Adresse</p>
+        <div *ngIf="f['email'].errors && (f['email'].dirty || f['email'].touched)" class="invalid-feedback">
+          <p *ngIf="f['email'].hasError('required')">E-Mail ist ein Pflichtfeld</p>
+          <p *ngIf="f['email'].hasError('email')">Ungültige E-Mail Adresse</p>
         </div>
       </div>
 
@@ -66,13 +66,13 @@
         <div class="form-group">
           <label class="form-label" for="dateOfBirth">Geburtsdatum</label>
           <input [ngClass]="{
-          'is-invalid': f['dateOfBirth']?.invalid && (f['dateOfBirth']?.dirty || f['dateOfBirth']?.touched),
-          'is-valid': f['dateOfBirth']?.valid
+          'is-invalid': f['dateOfBirth'].invalid && (f['dateOfBirth'].dirty || f['dateOfBirth'].touched),
+          'is-valid': f['dateOfBirth'].valid
           }" class="form-control" formControlName="dateOfBirth" id="dateOfBirth" type="date">
           <!-- Error message for date of birth -->
-          <div *ngIf="f['dateOfBirth']?.errors && (f['dateOfBirth']?.dirty || f['dateOfBirth']?.touched)"
+          <div *ngIf="f['dateOfBirth'].errors && (f['dateOfBirth'].dirty || f['dateOfBirth'].touched)"
                class="invalid-feedback">
-            <div *ngIf="f['dateOfBirth']?.hasError('required')">Geburtsdatum ist ein Pflichtfeld</div>
+            <div *ngIf="f['dateOfBirth'].hasError('required')">Geburtsdatum ist ein Pflichtfeld</div>
           </div>
         </div>
       </div>

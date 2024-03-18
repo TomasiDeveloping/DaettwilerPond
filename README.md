@@ -20,6 +20,12 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.18.0 (2024-03-18)
+- Implemented e-fishing license
+- Validation of e-fishing license through QR code scan
+- Integrated QR scanner for e-fishing license validation in the overseer section
+- New admin area with image upload for users
+- Added birthdate and adjustment in user account
 ### 1.17.3 (2024-03-13)
 - Bug Fix
 ### 1.17.2 (2024-03-09)
