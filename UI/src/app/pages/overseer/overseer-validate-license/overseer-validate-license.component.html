@@ -3,14 +3,24 @@
 
 <!-- Dialog Content -->
 <div mat-dialog-content>
+  <div class="row">
+    <select class="form-select" (change)="onCameraChange($event)">
+      <option [value]="null">EMPTY</option>
+      <option *ngFor="let camera of cameras" [value]="camera.deviceId">{{camera.label}}</option>
+    </select>
+  </div>
+  <!-- Loading Indicator -->
+  <p class="text-center" *ngIf="isLoading">⌛ Startet ...</p>
+
   <!-- QR Code Scanner Container -->
   <div class="scanner-container">
     <!-- QR Code Scanner Component -->
-    <ngx-scanner-qrcode (event)="onEvent($event, action)" #action="scanner"></ngx-scanner-qrcode>
+<!--    <ngx-scanner-qrcode (event)="onEvent($event, action)" #action="scanner"></ngx-scanner-qrcode>-->
+
+    <zxing-scanner #scanner (scanSuccess)="onScanSuccess($event)" (scanFailure)="onScanFailure($event)"></zxing-scanner>
   </div>
 
-  <!-- Loading Indicator -->
-  <p class="text-center" *ngIf="action.isLoading">⌛ Startet ...</p>
+
 
   <!-- Error Message -->
   <ng-container *ngIf="hasScanError">
@@ -22,9 +32,9 @@
   <!-- Action Buttons -->
   <div class="d-flex justify-content-center">
     <!-- Start/Cancel Button -->
-    <button class="btn btn-danger" *ngIf="action.isStart" (click)="onCancel()">Abbrechen</button>
+    <button class="btn btn-danger" *ngIf="!isLoading" (click)="onCancel()">Abbrechen</button>
     <!-- Close Button -->
-    <button class="btn btn-warning" *ngIf="!action.isStart && !action.isLoading" (click)="onClose(null)">Schliessen</button>
+    <button class="btn btn-warning" *ngIf="!isLoading" (click)="onClose(null)">Schliessen</button>
   </div>
 
 </div>

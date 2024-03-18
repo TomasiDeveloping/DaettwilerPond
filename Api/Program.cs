@@ -91,6 +91,19 @@ try
 
     app.UseStaticFiles();
 
+    var uploadsDirectory = Path.Combine(app.Environment.WebRootPath, "uploads", "images");
+    if (!Directory.Exists(uploadsDirectory))
+    {
+        Directory.CreateDirectory(uploadsDirectory);
+    }
+
+
+    app.UseStaticFiles(new StaticFileOptions()
+    {
+        RequestPath = "/images",
+        FileProvider = new PhysicalFileProvider(uploadsDirectory)
+    });
+
     // Map health checks endpoint with UI response
     app.MapHealthChecks("/health", new HealthCheckOptions
     {

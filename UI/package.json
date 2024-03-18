@@ -24,6 +24,7 @@
     "@popperjs/core": "^2.11.8",
     "@syncfusion/ej2-angular-grids": "^23.2.7",
     "@syncfusion/ej2-material-theme": "~23.2.7",
+    "@zxing/ngx-scanner": "^17.0.1",
     "angularx-qrcode": "^17.0.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.2",

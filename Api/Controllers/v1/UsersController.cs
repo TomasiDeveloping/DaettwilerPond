@@ -94,9 +94,14 @@ public class UsersController(IUserRepository userRepository, ILogger<UsersContro
     {
         try
         {
-            if (uploadUserProfileDto.File == null || uploadUserProfileDto.File.Length == 0)
+            if (!Request.Form.Files.Any())
             {
-                return BadRequest("File is not selected or empty");
+                return BadRequest("No files found in the request");
+            }
+
+            if (Request.Form.Files.Count > 1)
+            {
+                return BadRequest("Cannot upload more than one file at time");
             }
 
             var uploadResult =

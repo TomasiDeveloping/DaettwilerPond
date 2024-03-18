@@ -7,6 +7,7 @@ import {NgxSpinnerModule} from "ngx-spinner";
 import {NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask} from "ngx-mask";
 import {NgxPrinterModule} from "ngx-printer";
 import {LOAD_WASM, NgxScannerQrcodeModule} from "ngx-scanner-qrcode";
+import {ZXingScannerModule} from "@zxing/ngx-scanner";
 
 LOAD_WASM().subscribe();
 
@@ -26,7 +27,8 @@ LOAD_WASM().subscribe();
     NgxMaskDirective,
     NgxMaskPipe,
     NgxPrinterModule.forRoot({printOpenWindow: true, printPreviewOnly: false}),
-    NgxScannerQrcodeModule
+    NgxScannerQrcodeModule,
+    ZXingScannerModule
   ],
   // Exporting both Angular and third-party modules for use in other modules
   exports: [
@@ -37,7 +39,8 @@ LOAD_WASM().subscribe();
     NgxMaskDirective,
     NgxMaskPipe,
     NgxPrinterModule,
-    NgxScannerQrcodeModule
+    NgxScannerQrcodeModule,
+    ZXingScannerModule
   ],
   // Providing configuration for ngx-mask
   providers: [
