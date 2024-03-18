@@ -4,7 +4,7 @@ export const environment = {
   production: false,
 
   // Application version with development indicator
-  version: "1.17.3-DEV",
+  version: "1.18.0-DEV",
 
   serverUrl: 'https://localhost:7005/',
 

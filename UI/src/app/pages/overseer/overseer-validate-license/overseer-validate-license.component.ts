@@ -1,115 +1,165 @@
-import {AfterViewInit, Component, inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, inject, OnDestroy, ViewChild} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {ZXingScannerComponent} from "@zxing/ngx-scanner";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-overseer-validate-license',
   templateUrl: './overseer-validate-license.component.html',
   styleUrl: './overseer-validate-license.component.scss'
 })
-export class OverseerValidateLicenseComponent implements AfterViewInit{
+export class OverseerValidateLicenseComponent implements AfterViewInit, OnDestroy{
 
-  // Flag to indicate if there's a scan error
+  // Flags and variables initialization
   public hasScanError: boolean = false;
   public isLoading: boolean = true;
   public cameras: MediaDeviceInfo[] = [];
+  public errorMessage: string = '';
 
-  // Reference to the dialog
+  // Subscriptions for managing scanner events
+  private permissionResponseSubscription: Subscription | undefined;
+  private cameraFoundSubscription: Subscription | undefined;
+  private hasDeviceSubscription: Subscription | undefined;
+
+  // Injecting MatDialogRef for dialog control
   private readonly _dialogRef: MatDialogRef<OverseerValidateLicenseComponent> = inject(MatDialogRef<OverseerValidateLicenseComponent>);
 
-  // Reference to the QR code scanner component
+  // Accessing ZXingScannerComponent view child
   @ViewChild('scanner', {static: false}) scanner!: ZXingScannerComponent;
 
   ngAfterViewInit(): void {
-    this.scanner.camerasFound.subscribe({
-      next: ((cameras: MediaDeviceInfo[]) => {
-        if (cameras.length === 1) {
-          this.cameras = cameras;
-          this.scanner.device = cameras[0];
-        } else {
-          this.cameras = cameras;
-          this.scanner.device = cameras[0];
-        }
-      }),
-      error: (error: any) => {
-        console.log(error)
-      }
-    })
-
-    this.scanner.hasDevices.subscribe({
-      next: ((device: boolean) => {
-        console.log('HasDevice', device)
-      }),
-      error: (error: any) => {
-        console.log(error);
-      }
-    });
-
-    this.scanner.permissionResponse.subscribe({
-      next: ((permission: boolean) => {
-        if (permission) {
-          this.isLoading = false;
-          console.log('Has Permission')
-        } else {
-          console.log('No Permission')
-        }
-      }),
-      error: (error: any)=> {
-        console.log(error);
-      }
-    })
+    // Initiating event handlers
+    this.onPermissionResponse();
+    this.onCamerasFound();
+    this.onHasDevices();
   }
 
-  // Function to close the dialog
+  // Close dialog and pass licenseId if available
   onClose(licenseId: string | null): void {
     this._dialogRef.close(licenseId);
   }
 
-  // Function to handle cancellation
+  // Cancel scanning process
   onCancel(): void {
-    // Stop the scanner and close the dialog with null
     this.scanner.enable = false;
     this.onClose(null);
   }
 
+  // Handle successful scan
   onScanSuccess(event: string) {
-    // Get the scanned value from the event
     const scannedValue: string = event;
 
-    // Stop the scanner
+    // Disable scanner after successful scan
     this.scanner.enable = false;
 
-    // Check if there's a scanned value
     if (!scannedValue) {
-      // Set the scan error flag and return
+      // Handle empty scan
       this.hasScanError = true;
+      this.errorMessage = 'Keine Daten im QR Code gefunden';
       return;
     }
 
-    // Split the scanned URL to extract the license ID
+    // Extracting licenseId from scanned value
     const splitUrl: string[] = scannedValue.split('/');
     const licenseId: string = splitUrl[splitUrl.length -1];
-    // Check if a valid license ID is obtained
+
     if (!licenseId) {
-      // Set the scan error flag and return
+      // Handle invalid scanned data
       this.hasScanError = true;
+      this.errorMessage = 'Keine Lizenznummer gefunden';
       return;
     }
 
-    // Close the dialog and pass the license ID
+    // Closing dialog and passing licenseId
     this.onClose(licenseId);
   }
 
-  onScanFailure(event: any) {
-
-  }
-
-  onCameraChange(event: any) {
+  // Handle camera change event
+  onCameraChange(event: any): void {
     const deviceId = event.target.value;
-    const device: MediaDeviceInfo | undefined = this.cameras.find(d => d.deviceId === deviceId);
-    if (device === undefined) {
+    const device: MediaDeviceInfo | undefined = this.cameras.find((deviceInfo: MediaDeviceInfo): boolean => deviceInfo.deviceId === deviceId);
+    if (device === undefined || !device) {
       return;
     }
+    // Set scanner device to the selected camera
     this.scanner.device = device;
+  }
+
+  // Subscription to handle permission response
+  private onPermissionResponse(): void {
+    this.permissionResponseSubscription = this.scanner.permissionResponse.subscribe({
+      next: ((permission: boolean): void => {
+        if (permission) {
+          // Handle permission granted
+          this.isLoading = false;
+        } else {
+          // Handle permission denied
+          this.isLoading = false;
+          this.hasScanError = true;
+          this.errorMessage = 'Keine Kamera berechtigung';
+        }
+      }),
+      // Handle error in permission response
+      error: (_: any): void=> {
+        this.isLoading = false;
+        this.hasScanError = true;
+        this.errorMessage = 'Fehler bei Kamera berechtigung';
+      }
+    })
+  }
+
+  // Subscription to handle camera detection
+  private onCamerasFound(): void {
+    this.cameraFoundSubscription = this.scanner.camerasFound.subscribe({
+      next: ((cameras: MediaDeviceInfo[]): void => {
+        if (cameras.length === 1) {
+          // If only one camera found, set it as default
+          this.scanner.device = cameras[0];
+        } else {
+          // If multiple cameras found, populate cameras list and set first as default
+          this.cameras = cameras;
+          this.scanner.device = cameras[0];
+        }
+      }),
+      error: (_: any): void => {
+        // Handle error in camera detection
+        this.hasScanError = true;
+        this.errorMessage = 'Fehler beim Kamera suchen';
+      }
+    })
+  }
+
+  // Subscription to handle device availability
+  private onHasDevices(): void {
+    this.hasDeviceSubscription = this.scanner.hasDevices.subscribe({
+      next: ((device: boolean): void => {
+        if (!device) {
+          // Handle no camera available
+          this.hasScanError = true;
+          this.errorMessage = 'Keine Kamera gefunden';
+        }
+      }),
+      error: (_: any): void => {
+        // Handle error in device availability check
+        this.hasScanError = true;
+        this.errorMessage = 'Keine Kamera gefunden';
+      }
+    });
+  }
+
+  // Lifecycle hook - OnDestroy
+  ngOnDestroy(): void {
+    // Unsubscribe from subscriptions to prevent memory leaks
+    if (this.permissionResponseSubscription) {
+      this.permissionResponseSubscription.unsubscribe();
+    }
+
+    if (this.cameraFoundSubscription) {
+      this.cameraFoundSubscription.unsubscribe();
+    }
+
+    if (this.hasDeviceSubscription) {
+      this.hasDeviceSubscription = undefined;
+    }
   }
 }
