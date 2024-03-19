@@ -68,4 +68,8 @@ export class NavigationComponent implements OnInit {
     this.isShown = false;
     this._authenticationService.logout();
   }
+
+  onVersion(): void {
+    window.open('https://github.com/TomasiDeveloping/DaettwilerPond', '_blank');
+  }
 }
