@@ -5,7 +5,6 @@ import {PdfService} from "../../../services/pdf.service";
 import {ToastrService} from "ngx-toastr";
 import {MatDialog} from "@angular/material/dialog";
 import {EFishingLicenseComponent} from "./efishing-license/efishing-license.component";
-import {AuthenticationService} from "../../../services/authentication.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -14,9 +13,6 @@ import Swal from "sweetalert2";
   styleUrls: ['./fishing-license.component.scss']
 })
 export class FishingLicenseComponent implements OnChanges {
-  constructor() {
-    this.isAdmin = this._authService.isUserAdministrator();
-  }
 
   // Input property to receive the fishing license data
   @Input() public fishingLicence: FishingLicense | undefined;
@@ -25,13 +21,10 @@ export class FishingLicenseComponent implements OnChanges {
   public expiresInDays: number | undefined;
   public expiresInHours: number | undefined;
 
-  public isAdmin: boolean = false;
-
   // Private properties for PdfService and ToastrService using Angular DI
   private readonly _pdfService: PdfService = inject(PdfService);
   private readonly _toastr: ToastrService = inject(ToastrService);
   private readonly _dialog: MatDialog = inject(MatDialog);
-  private readonly _authService: AuthenticationService = inject(AuthenticationService);
 
   // OnChanges lifecycle hook to execute logic when input properties change
   ngOnChanges(_: SimpleChanges): void {

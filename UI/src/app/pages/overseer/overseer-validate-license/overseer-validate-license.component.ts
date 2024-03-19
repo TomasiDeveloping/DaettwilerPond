@@ -15,6 +15,7 @@ export class OverseerValidateLicenseComponent implements AfterViewInit, OnDestro
   public isLoading: boolean = true;
   public cameras: MediaDeviceInfo[] = [];
   public errorMessage: string = '';
+  selectedCamera: string = '';
 
   // Subscriptions for managing scanner events
   private permissionResponseSubscription: Subscription | undefined;
@@ -83,6 +84,7 @@ export class OverseerValidateLicenseComponent implements AfterViewInit, OnDestro
     }
     // Set scanner device to the selected camera
     this.scanner.device = device;
+    this.selectedCamera = device.deviceId;
   }
 
   // Subscription to handle permission response
@@ -119,6 +121,7 @@ export class OverseerValidateLicenseComponent implements AfterViewInit, OnDestro
           // If multiple cameras found, populate cameras list and set first as default
           this.cameras = cameras;
           this.scanner.device = cameras[0];
+          this.selectedCamera = cameras[0].deviceId;
         }
       }),
       error: (_: any): void => {
