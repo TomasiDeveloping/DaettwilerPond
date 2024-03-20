@@ -88,7 +88,6 @@ public class UsersController(IUserRepository userRepository, ILogger<UsersContro
         }
     }
 
-    [AllowAnonymous]
     [HttpPost("UploadProfile")]
     public async Task<ActionResult<bool>> UploadImage([FromForm] UploadUserProfileDto uploadUserProfileDto)
     {

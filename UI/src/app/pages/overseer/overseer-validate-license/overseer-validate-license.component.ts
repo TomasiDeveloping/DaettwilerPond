@@ -2,6 +2,7 @@ import {AfterViewInit, Component, inject, OnDestroy, ViewChild} from '@angular/c
 import {MatDialogRef} from "@angular/material/dialog";
 import {ZXingScannerComponent} from "@zxing/ngx-scanner";
 import {Subscription} from "rxjs";
+import { BarcodeFormat } from '@zxing/library';
 
 @Component({
   selector: 'app-overseer-validate-license',
@@ -15,7 +16,8 @@ export class OverseerValidateLicenseComponent implements AfterViewInit, OnDestro
   public isLoading: boolean = true;
   public cameras: MediaDeviceInfo[] = [];
   public errorMessage: string = '';
-  selectedCamera: string = '';
+  public selectedCamera: string = '';
+  public allowedFormats = [BarcodeFormat.QR_CODE]
 
   // Subscriptions for managing scanner events
   private permissionResponseSubscription: Subscription | undefined;

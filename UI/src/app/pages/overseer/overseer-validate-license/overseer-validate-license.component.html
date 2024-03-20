@@ -20,7 +20,7 @@
 
   <!-- Scanner Component -->
   <div class="scanner-container">
-    <zxing-scanner #scanner (scanSuccess)="onScanSuccess($event)"></zxing-scanner>
+    <zxing-scanner [formats]="allowedFormats" #scanner (scanSuccess)="onScanSuccess($event)"></zxing-scanner>
   </div>
 
   <!-- Error Message Display -->

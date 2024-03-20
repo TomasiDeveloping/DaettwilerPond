@@ -20,6 +20,12 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.18.1 (2024-03-20)
+- Fixed camera select error.
+- Updated Angular and NPM packages for enhanced security.
+- Cleaned up QR scanner.
+- Version is now clickable with navigation to GitHub.
+- E-fishing license made visible to all.
 ### 1.18.0 (2024-03-18)
 - Implemented e-fishing license
 - Validation of e-fishing license through QR code scan
