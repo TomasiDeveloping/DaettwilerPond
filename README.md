@@ -20,6 +20,9 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.18.2 (2024-04-13)
+- All NuGet packages have been updated.
+- Angular and NPM have been updated.
 ### 1.18.1 (2024-03-20)
 - Fixed camera select error.
 - Updated Angular and NPM packages for enhanced security.
