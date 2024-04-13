@@ -7,19 +7,23 @@ using Infrastructure.BackgroundJobs;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.FileProviders;
-using MimeKit;
 using Persistence;
 using Quartz;
 using Serilog;
 
+// Configure Serilog logger
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog for logging
-builder.Host.UseSerilog((context, configuration) =>
+// Add Serilog to services
+builder.Services.AddSerilog(configureLogger =>
 {
-    configuration.WriteTo.Console()
-        .ReadFrom.Configuration(context.Configuration)
-        .Enrich.WithProperty("ApplicationName", "DättwilerWeiher");
+    configureLogger.ReadFrom.Configuration(builder.Configuration);
 });
 
 // Configure Quartz for background jobs
