@@ -4,7 +4,7 @@ export const environment = {
   production: true,
 
   // Application version
-  version: "1.18.2",
+  version: "1.18.3",
 
   serverUrl: 'https://daettwiler-pond.azurewebsites.net/',
 
