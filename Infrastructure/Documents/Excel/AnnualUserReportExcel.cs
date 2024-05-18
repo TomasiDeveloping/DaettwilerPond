@@ -15,7 +15,7 @@ public class AnnualUserReportExcel
 
         // Initialize a new Excel worksheet with specific parameters
         var workSheet = ExcelExtensions.InitializeWorksheet(workbook,
-            $"Statistik {userStatistic.FirstName} {userStatistic.LastName} {year}",
+            $"Statistik - {year}",
             $"Statistik {userStatistic.FirstName} {userStatistic.LastName} {year}", 18);
 
         // Set up the initial row for data entry

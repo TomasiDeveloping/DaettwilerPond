@@ -20,6 +20,9 @@
 # DaettwilerPond
 
 ## Changelog
+### 1.18.3 (2024-05-18)
+- Excel Sheetname bug fix
+- NuGet security update
 ### 1.18.2 (2024-04-13)
 - All NuGet packages have been updated.
 - Angular and NPM have been updated.
