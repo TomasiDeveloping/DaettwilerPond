@@ -54,6 +54,8 @@ public class DaettwilerPondDbContext(DbContextOptions options, IConfiguration co
         // Call the base class implementation for identity-related configurations.
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.HasDefaultSchema("dbo");
+
         // Apply entity configurations from the current assembly.
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 

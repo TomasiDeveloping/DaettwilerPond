@@ -114,6 +114,8 @@ try
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
     });
 
+    app.MapFallbackToFile("index.html");
+
     // Run the application
     app.Run();
 }
