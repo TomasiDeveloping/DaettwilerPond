@@ -1,101 +1,140 @@
 <h3 class="text-center mt-4">Daten</h3>
-<form (ngSubmit)="onSubmit()" *ngIf="fishingClubForm" [formGroup]="fishingClubForm">
-  <div class="form-group">
-    <label class="form-label" for="name">Fischerclub Name</label>
+@if (fishingClubForm) {
+  <form (ngSubmit)="onSubmit()" [formGroup]="fishingClubForm">
+    <div class="form-group">
+      <label class="form-label" for="name">Fischerclub Name</label>
     <input [ngClass]="{
     'is-invalid': f['name'].invalid && (f['name'].dirty || f['name'].touched),
     'is-valid': f['name'].valid
     }" class="form-control" formControlName="name" id="name" type="text">
-    <div *ngIf="f['name'].errors && (f['name'].dirty || f['name'].touched)" class="invalid-feedback">
-      <p *ngIf="f['name'].hasError('required')">Name ist ein Pflichtfeld</p>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="form-label" for="licensePrice">Fischerkarte Preis</label>
+        @if (f['name'].errors && (f['name'].dirty || f['name'].touched)) {
+          <div class="invalid-feedback">
+            @if (f['name'].hasError('required')) {
+              <p>Name ist ein Pflichtfeld</p>
+            }
+          </div>
+        }
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="licensePrice">Fischerkarte Preis</label>
     <input [ngClass]="{
     'is-invalid': f['licensePrice'].invalid && (f['licensePrice'].dirty || f['licensePrice'].touched),
     'is-valid': f['licensePrice'].valid
     }" class="form-control" formControlName="licensePrice" id="licensePrice" type="number">
-    <div *ngIf="f['licensePrice'].errors && (f['licensePrice'].dirty || f['licensePrice'].touched)" class="invalid-feedback">
-      <p *ngIf="f['licensePrice'].hasError('required')">Fischerkarte Preis ist ein Pflichfeld</p>
-    </div>
-  </div>
-  <h4 class="mt-3">Rechnungsadresse:</h4>
-  <div class="form-group">
-    <label class="form-label" for="billAddressName">Inhaber</label>
+          @if (f['licensePrice'].errors && (f['licensePrice'].dirty || f['licensePrice'].touched)) {
+            <div class="invalid-feedback">
+              @if (f['licensePrice'].hasError('required')) {
+                <p>Fischerkarte Preis ist ein Pflichfeld</p>
+              }
+            </div>
+          }
+        </div>
+        <h4 class="mt-3">Rechnungsadresse:</h4>
+        <div class="form-group">
+          <label class="form-label" for="billAddressName">Inhaber</label>
     <input [ngClass]="{
     'is-invalid': f['billAddressName'].invalid && (f['billAddressName'].dirty || f['billAddressName'].touched),
     'is-valid': f['billAddressName'].valid
     }" class="form-control" formControlName="billAddressName" id="billAddressName" type="text">
-    <div *ngIf="f['billAddressName'].errors && (f['billAddressName'].dirty || f['billAddressName'].touched)"
-         class="invalid-feedback">
-      <p *ngIf="f['billAddressName'].hasError('required')">Inhaber ist ein Pflichtfeld</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-8">
-      <label class="form-label" for="billAddress">Adresse</label>
+            @if (f['billAddressName'].errors && (f['billAddressName'].dirty || f['billAddressName'].touched)) {
+              <div
+                class="invalid-feedback">
+                @if (f['billAddressName'].hasError('required')) {
+                  <p>Inhaber ist ein Pflichtfeld</p>
+                }
+              </div>
+            }
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <label class="form-label" for="billAddress">Adresse</label>
       <input [ngClass]="{
     'is-invalid': f['billAddress'].invalid && (f['billAddress'].dirty || f['billAddress'].touched),
     'is-valid': f['billAddress'].valid
     }" class="form-control" formControlName="billAddress" id="billAddress" type="text">
-      <div *ngIf="f['billAddress'].errors && (f['billAddress'].dirty || f['billAddress'].touched)" class="invalid-feedback">
-        <p *ngIf="f['billAddress'].hasError('required')">Adresse ist ein Pflichtfeld</p>
-      </div>
-    </div>
-    <div class="col-4">
-      <label class="form-label" for="billHouseNumber">Hausnummer</label>
+                @if (f['billAddress'].errors && (f['billAddress'].dirty || f['billAddress'].touched)) {
+                  <div class="invalid-feedback">
+                    @if (f['billAddress'].hasError('required')) {
+                      <p>Adresse ist ein Pflichtfeld</p>
+                    }
+                  </div>
+                }
+              </div>
+              <div class="col-4">
+                <label class="form-label" for="billHouseNumber">Hausnummer</label>
       <input [ngClass]="{
       'is-invalid': f['billHouseNumber'].invalid && (f['billHouseNumber'].dirty || f['billHouseNumber'].touched),
       'is-valid': f['billHouseNumber'].valid
       }" class="form-control" formControlName="billHouseNumber" id="billHouseNumber" type="text">
-      <div *ngIf="f['billHouseNumber'].errors && (f['billHouseNumber'].dirty || f['billHouseNumber'].touched)"
-           class="invalid-feedback">
-        <p *ngIf="f['billHouseNumber'].hasError('required')">Hasunummer ist ein Pflichtfeld</p>
-      </div>
-    </div>
-
-  </div>
-  <div class="row">
-    <div class="col-4">
-      <label class="form-label" for="billPostalCode">Postleitzahl</label>
+                  @if (f['billHouseNumber'].errors && (f['billHouseNumber'].dirty || f['billHouseNumber'].touched)) {
+                    <div
+                      class="invalid-feedback">
+                      @if (f['billHouseNumber'].hasError('required')) {
+                        <p>Hasunummer ist ein Pflichtfeld</p>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label class="form-label" for="billPostalCode">Postleitzahl</label>
       <input [ngClass]="{
       'is-invalid': f['billPostalCode'].invalid && (f['billPostalCode'].dirty || f['billPostalCode'].touched),
       'is-valid': f['billPostalCode'].valid
       }" class="form-control" formControlName="billPostalCode" id="billPostalCode" type="text">
-      <div *ngIf="f['billPostalCode'].errors && (f['billPostalCode'].dirty || f['billPostalCode'].touched)"
-           class="invalid-feedback">
-        <p *ngIf="f['billPostalCode'].hasError('required')">Postleitzahl ist ein Pflichtfeld</p>
-      </div>
-    </div>
-    <div class="col-8">
-      <label class="form-label" for="billCity">Ort</label>
+                    @if (f['billPostalCode'].errors && (f['billPostalCode'].dirty || f['billPostalCode'].touched)) {
+                      <div
+                        class="invalid-feedback">
+                        @if (f['billPostalCode'].hasError('required')) {
+                          <p>Postleitzahl ist ein Pflichtfeld</p>
+                        }
+                      </div>
+                    }
+                  </div>
+                  <div class="col-8">
+                    <label class="form-label" for="billCity">Ort</label>
       <input [ngClass]="{
       'is-invalid': f['billCity'].invalid && (f['billCity'].dirty || f['billCity'].touched),
       'is-valid': f['billCity'].valid
       }" class="form-control" formControlName="billCity" id="billCity" type="text">
-      <div *ngIf="f['billCity'].errors && (f['billCity'].dirty || f['billCity'].touched)" class="invalid-feedback">
-        <p *ngIf="f['billCity'].hasError('required')">Ort ist ein Pflichtfeld</p>
-      </div>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="form-label" for="ibanNumber">IBAN Nummer</label>
+                      @if (f['billCity'].errors && (f['billCity'].dirty || f['billCity'].touched)) {
+                        <div class="invalid-feedback">
+                          @if (f['billCity'].hasError('required')) {
+                            <p>Ort ist ein Pflichtfeld</p>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="ibanNumber">IBAN Nummer</label>
     <input [ngClass]="{
     'is-invalid': f['ibanNumber'].invalid && (f['ibanNumber'].dirty || f['ibanNumber'].touched),
     'is-valid': f['ibanNumber'].valid
     }" [showMaskTyped]="true" class="form-control" formControlName="ibanNumber" id="ibanNumber"
-           mask="UU00 AAAA AAAA AAAA AAAA A" type="text">
-    <div *ngIf="f['ibanNumber'].errors && (f['ibanNumber'].dirty || f['ibanNumber'].touched)" class="invalid-feedback">
-      <p *ngIf="f['ibanNumber'].hasError('required')">IBAN Nummer ist ein Pflichfeld</p>
-      <p *ngIf="f['ibanNumber'].hasError('mask')">IBAN Nummer ist Ungültig</p>
-    </div>
-  </div>
-  <div *ngIf="!isEdit" class="d-grid gap-2 col-6 mx-auto mt-4">
-    <button (click)="onEdit()" class="btn btn-primary" type="button">Bearbeiten</button>
-  </div>
-  <div *ngIf="isEdit" class="d-flex mt-4 justify-content-end">
-    <button (click)="onCancel()" class="btn btn-warning me-4" type="button">Abbrechen</button>
-    <button [disabled]="fishingClubForm.invalid" class="btn btn-success" type="submit">Speichern</button>
-  </div>
-</form>
+                      mask="UU00 AAAA AAAA AAAA AAAA A" type="text">
+                      @if (f['ibanNumber'].errors && (f['ibanNumber'].dirty || f['ibanNumber'].touched)) {
+                        <div class="invalid-feedback">
+                          @if (f['ibanNumber'].hasError('required')) {
+                            <p>IBAN Nummer ist ein Pflichfeld</p>
+                          }
+                          @if (f['ibanNumber'].hasError('mask')) {
+                            <p>IBAN Nummer ist Ungültig</p>
+                          }
+                        </div>
+                      }
+                    </div>
+                    @if (!isEdit) {
+                      <div class="d-grid gap-2 col-6 mx-auto mt-4">
+                        <button (click)="onEdit()" class="btn btn-primary" type="button">Bearbeiten</button>
+                      </div>
+                    }
+                    @if (isEdit) {
+                      <div class="d-flex mt-4 justify-content-end">
+                        <button (click)="onCancel()" class="btn btn-warning me-4" type="button">Abbrechen</button>
+                        <button [disabled]="fishingClubForm.invalid" class="btn btn-success" type="submit">Speichern</button>
+                      </div>
+                    }
+                  </form>
+                }

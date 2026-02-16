@@ -2,61 +2,62 @@
 
   <!-- Current Temperature Section -->
   <h1 class="text-center">Temperatur</h1>
-  <p *ngIf="currentMeasurement">Aktuelle Wassertemperatur <span
+  @if (currentMeasurement) {
+    <p>Aktuelle Wassertemperatur <span
     class="fw-semibold">{{currentMeasurement.temperature.toFixed(2)}} °C</span>
     <i [ngClass]="getIcon()"></i>
     <br><span class="text-muted">Messung vom: {{currentMeasurement.receivedAt | date: 'dd.MM.yyyy HH:mm'}}</span>
   </p>
+}
 
-  <!-- Tagesverlauf Section -->
-  <h3 class="text-center">Tagesverlauf</h3>
-  <highcharts-chart *ngIf="loadData"
-                    [Highcharts]="Highcharts"
-                    [options]="chartOptions"
-                    style="width: 100%; height: 400px; display: block;"
+<!-- Tagesverlauf Section -->
+<h3 class="text-center">Tagesverlauf</h3>
+@if (loadData) {
+  <highcharts-chart
+    [Highcharts]="Highcharts"
+    [options]="chartOptions"
+    style="width: 100%; height: 400px; display: block;"
   ></highcharts-chart>
+}
 
-  <!-- Rekordwerte und Durchschnittswerte Section -->
-  <ng-container *ngIf="historyData">
-    <h3 class="mt-3 text-center">Rekordwerte und Durchschnittswerte</h3>
-
-    <!-- Monthly Statistics -->
-    <div class="history-container">
-      <div class="history-box">
-        <h5 class="text-center">Monat {{currentMonth | germanMonth}}</h5>
-        <div>Höchste Temperatur: <span class="warm">{{historyData.maximumTemperatureMonth.toFixed(2)}}</span> °C</div>
-        <div>Niedrigste Temperatur: <span class="cold">{{historyData.minimumTemperatureMonth.toFixed(2)}}</span> °C</div>
-        <div>Durchschnittstemperatur: {{historyData.temperatureAverageMonth.toFixed(2)}} °C</div>
-      </div>
-
-      <!-- Yearly Statistics -->
-      <div class="history-box">
-        <h5 class="text-center">Jahr {{currentYear}}</h5>
-        <div>Höchste Temperatur: <span class="warm">{{historyData.maximumTemperatureYear.toFixed(2)}}</span> °C</div>
-        <div>Niedrigste Temperatur: <span class="cold">{{historyData.minimumTemperatureYear.toFixed(2)}}</span> °C</div>
-        <div>Durchschnittstemperatur: {{historyData.temperatureAverageYear.toFixed(2)}} °C</div>
-      </div>
-
-      <!-- All-time Statistics -->
-      <div class="history-box">
-        <h5 class="text-center">Seit Beginn der Aufzeichnungen</h5>
-        <div>Höchste Temperatur: <span class="warm">{{historyData.maximumTemperature.toFixed(2)}}</span> °C</div>
-        <div>Gemessen am: {{historyData.maximumTemperatureReceivedTime | date: 'dd.MM.yyyy HH:mm:ss'}}</div>
-        <div>Niedrigste Temperatur: <span class="cold">{{historyData.minimumTemperature.toFixed(2)}}</span> °C</div>
-        <div>Gemessen am: {{historyData.minimumTemperatureReceivedTime | date: 'dd.MM.yyyy HH:mm:ss'}}</div>
-      </div>
+<!-- Rekordwerte und Durchschnittswerte Section -->
+@if (historyData) {
+  <h3 class="mt-3 text-center">Rekordwerte und Durchschnittswerte</h3>
+  <!-- Monthly Statistics -->
+  <div class="history-container">
+    <div class="history-box">
+      <h5 class="text-center">Monat {{currentMonth | germanMonth}}</h5>
+      <div>Höchste Temperatur: <span class="warm">{{historyData.maximumTemperatureMonth.toFixed(2)}}</span> °C</div>
+      <div>Niedrigste Temperatur: <span class="cold">{{historyData.minimumTemperatureMonth.toFixed(2)}}</span> °C</div>
+      <div>Durchschnittstemperatur: {{historyData.temperatureAverageMonth.toFixed(2)}} °C</div>
     </div>
-  </ng-container>
-
-  <!-- Weather Widget Section -->
-  <div class="weather-widget-container">
-    <iframe
-      title="Wetter Dättwil"
-      sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
-      src="https://www.meteoblue.com/de/wetter/widget/daily/d%c3%a4ttwil_schweiz_2661043?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&precipunit=MILLIMETER&coloured=coloured&pictoicon=0&pictoicon=1&maxtemperature=0&maxtemperature=1&mintemperature=0&mintemperature=1&windspeed=0&windspeed=1&windgust=0&windgust=1&winddirection=0&winddirection=1&uv=0&uv=1&humidity=0&humidity=1&precipitation=0&precipitation=1&precipitationprobability=0&precipitationprobability=1&spot=0&spot=1&pressure=0&pressure=1&layout=light"
-      style="width: 378px; height: 466px"></iframe>
-    <div><!-- DO NOT REMOVE THIS LINK --><a
-      href="https://www.meteoblue.com/de/wetter/woche/d%c3%a4ttwil_schweiz_2661043?utm_source=weather_widget&utm_medium=linkus&utm_content=daily&utm_campaign=Weather%2BWidget"
-      rel="noopener" target="_blank">meteoblue</a></div>
+    <!-- Yearly Statistics -->
+    <div class="history-box">
+      <h5 class="text-center">Jahr {{currentYear}}</h5>
+      <div>Höchste Temperatur: <span class="warm">{{historyData.maximumTemperatureYear.toFixed(2)}}</span> °C</div>
+      <div>Niedrigste Temperatur: <span class="cold">{{historyData.minimumTemperatureYear.toFixed(2)}}</span> °C</div>
+      <div>Durchschnittstemperatur: {{historyData.temperatureAverageYear.toFixed(2)}} °C</div>
+    </div>
+    <!-- All-time Statistics -->
+    <div class="history-box">
+      <h5 class="text-center">Seit Beginn der Aufzeichnungen</h5>
+      <div>Höchste Temperatur: <span class="warm">{{historyData.maximumTemperature.toFixed(2)}}</span> °C</div>
+      <div>Gemessen am: {{historyData.maximumTemperatureReceivedTime | date: 'dd.MM.yyyy HH:mm:ss'}}</div>
+      <div>Niedrigste Temperatur: <span class="cold">{{historyData.minimumTemperature.toFixed(2)}}</span> °C</div>
+      <div>Gemessen am: {{historyData.minimumTemperatureReceivedTime | date: 'dd.MM.yyyy HH:mm:ss'}}</div>
+    </div>
   </div>
+}
+
+<!-- Weather Widget Section -->
+<div class="weather-widget-container">
+  <iframe
+    title="Wetter Dättwil"
+    sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
+    src="https://www.meteoblue.com/de/wetter/widget/daily/d%c3%a4ttwil_schweiz_2661043?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&precipunit=MILLIMETER&coloured=coloured&pictoicon=0&pictoicon=1&maxtemperature=0&maxtemperature=1&mintemperature=0&mintemperature=1&windspeed=0&windspeed=1&windgust=0&windgust=1&winddirection=0&winddirection=1&uv=0&uv=1&humidity=0&humidity=1&precipitation=0&precipitation=1&precipitationprobability=0&precipitationprobability=1&spot=0&spot=1&pressure=0&pressure=1&layout=light"
+  style="width: 378px; height: 466px"></iframe>
+  <div><!-- DO NOT REMOVE THIS LINK --><a
+    href="https://www.meteoblue.com/de/wetter/woche/d%c3%a4ttwil_schweiz_2661043?utm_source=weather_widget&utm_medium=linkus&utm_content=daily&utm_campaign=Weather%2BWidget"
+  rel="noopener" target="_blank">meteoblue</a></div>
+</div>
 </div>

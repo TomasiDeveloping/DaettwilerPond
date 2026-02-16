@@ -9,34 +9,46 @@
     <div class="row">
       <!-- Hours Selection -->
       <div class="col">
-          <label class="form-label" for="hoursSpent">Stunden</label>
+        <label class="form-label" for="hoursSpent">Stunden</label>
           <select [ngClass]="{
         'is-invalid': f.get('hoursSpent')?.invalid && (f.get('hoursSpent')?.dirty || f.get('hoursSpent')?.touched),
         'is-valid': f.get('hoursSpent')?.valid
         }" class="form-select" id="hoursSpent" formControlName="hoursSpent">
-            <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
-          </select>
+          @for (hour of hours; track hour) {
+            <option [value]="hour">{{ hour }}</option>
+          }
+        </select>
         <!-- Error Message for Hours Selection -->
-        <div *ngIf="f.get('hoursSpent')?.errors && (f.get('hoursSpent')?.dirty || f.get('hoursSpent')?.touched)"
-               class="invalid-feedback">
-            <p *ngIf="f.get('hoursSpent')?.hasError('required')">Stunden ist ein Pflichtfeld</p>
+        @if (f.get('hoursSpent')?.errors && (f.get('hoursSpent')?.dirty || f.get('hoursSpent')?.touched)) {
+          <div
+            class="invalid-feedback">
+            @if (f.get('hoursSpent')?.hasError('required')) {
+              <p>Stunden ist ein Pflichtfeld</p>
+            }
           </div>
-        </div>
+        }
+      </div>
 
       <!-- Minutes Selection -->
       <div class="col">
-          <label class="form-label" for="minutesSpent">Minuten</label>
+        <label class="form-label" for="minutesSpent">Minuten</label>
           <select [ngClass]="{
         'is-invalid': f.get('minutesSpent')?.invalid && (f.get('minutesSpent')?.dirty || f.get('minutesSpent')?.touched)
         }" class="form-select" id="minutesSpent" formControlName="minutesSpent">
-            <option *ngFor="let minute of minutes" [value]="minute">{{ minute }}</option>
-          </select>
+          @for (minute of minutes; track minute) {
+            <option [value]="minute">{{ minute }}</option>
+          }
+        </select>
         <!-- Error Message for Minutes Selection -->
-        <div *ngIf="f.get('minutesSpent')?.errors && (f.get('minutesSpent')?.dirty || f.get('minutesSpent')?.touched)"
-               class="invalid-feedback">
-            <p *ngIf="f.get('minutesSpent')?.hasError('required')">Minuten ist ein Pflichtfeld</p>
+        @if (f.get('minutesSpent')?.errors && (f.get('minutesSpent')?.dirty || f.get('minutesSpent')?.touched)) {
+          <div
+            class="invalid-feedback">
+            @if (f.get('minutesSpent')?.hasError('required')) {
+              <p>Minuten ist ein Pflichtfeld</p>
+            }
           </div>
-        </div>
+        }
+      </div>
     </div>
 
     <!-- Dialog Actions -->

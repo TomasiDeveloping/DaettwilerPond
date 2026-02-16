@@ -13,94 +13,116 @@
             'is-invalid': f.get('catchDate')?.invalid && (f.get('catchDate')?.dirty || f.get('catchDate')?.touched),
       'is-valid': f.get('catchDate')?.valid
       }" class="form-control" id="catchDate" formControlName="catchDate" type="date" min="{{minDateAllowed}}"
-             max="{{maxDateAllowed}}">
-      <div *ngIf="f.get('catchDate')?.errors && (f.get('catchDate')?.dirty || f.get('catchDate')?.touched)"
-           class="invalid-feedback">
-        <p *ngIf="f.get('catchDate')?.hasError('required')">Datum ist ein Pflichtfeld</p>
-        <p *ngIf="f.get('catchDate')?.hasError('catchDayExists')">Angeltag bereits erfasst</p>
+        max="{{maxDateAllowed}}">
+        @if (f.get('catchDate')?.errors && (f.get('catchDate')?.dirty || f.get('catchDate')?.touched)) {
+          <div
+            class="invalid-feedback">
+            @if (f.get('catchDate')?.hasError('required')) {
+              <p>Datum ist ein Pflichtfeld</p>
+            }
+            @if (f.get('catchDate')?.hasError('catchDayExists')) {
+              <p>Angeltag bereits erfasst</p>
+            }
+          </div>
+        }
       </div>
-    </div>
 
-    <!-- Hours and Minutes selection -->
-    <div class="row">
-      <div class="col">
-        <!-- Hours selection -->
-        <label class="form-label" for="hoursSpent">Stunden</label>
+      <!-- Hours and Minutes selection -->
+      <div class="row">
+        <div class="col">
+          <!-- Hours selection -->
+          <label class="form-label" for="hoursSpent">Stunden</label>
         <select [ngClass]="{
         'is-invalid': f.get('hoursSpent')?.invalid && (f.get('hoursSpent')?.dirty || f.get('hoursSpent')?.touched),
         'is-valid': f.get('hoursSpent')?.valid
         }" class="form-select" id="hoursSpent" formControlName="hoursSpent">
-          <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
-        </select>
-        <div *ngIf="f.get('hoursSpent')?.errors && (f.get('hoursSpent')?.dirty || f.get('hoursSpent')?.touched)"
-             class="invalid-feedback">
-          <p *ngIf="f.get('hoursSpent')?.hasError('required')">Stunden ist ein Pflichtfeld</p>
+            @for (hour of hours; track hour) {
+              <option [value]="hour">{{ hour }}</option>
+            }
+          </select>
+          @if (f.get('hoursSpent')?.errors && (f.get('hoursSpent')?.dirty || f.get('hoursSpent')?.touched)) {
+            <div
+              class="invalid-feedback">
+              @if (f.get('hoursSpent')?.hasError('required')) {
+                <p>Stunden ist ein Pflichtfeld</p>
+              }
+            </div>
+          }
         </div>
-      </div>
-      <div class="col">
-        <!-- Minutes selection -->
-        <label class="form-label" for="minutesSpent">Minuten</label>
+        <div class="col">
+          <!-- Minutes selection -->
+          <label class="form-label" for="minutesSpent">Minuten</label>
         <select [ngClass]="{
         'is-invalid': f.get('minutesSpent')?.invalid && (f.get('minutesSpent')?.dirty || f.get('minutesSpent')?.touched)
         }" class="form-select" id="minutesSpent" formControlName="minutesSpent">
-          <option *ngFor="let minute of minutes" [value]="minute">{{ minute }}</option>
-        </select>
-        <div *ngIf="f.get('minutesSpent')?.errors && (f.get('minutesSpent')?.dirty || f.get('minutesSpent')?.touched)"
-             class="invalid-feedback">
-          <p *ngIf="f.get('minutesSpent')?.hasError('required')">Minuten ist ein Pflichtfeld</p>
+            @for (minute of minutes; track minute) {
+              <option [value]="minute">{{ minute }}</option>
+            }
+          </select>
+          @if (f.get('minutesSpent')?.errors && (f.get('minutesSpent')?.dirty || f.get('minutesSpent')?.touched)) {
+            <div
+              class="invalid-feedback">
+              @if (f.get('minutesSpent')?.hasError('required')) {
+                <p>Minuten ist ein Pflichtfeld</p>
+              }
+            </div>
+          }
         </div>
       </div>
-    </div>
 
-    <!-- Catch details form array -->
-    <ng-container formArrayName="catchDetails">
-      <div *ngFor="let f of catchDetails.controls; let i=index">
-        <ng-container [formGroupName]="i">
-
-          <!-- Fish type selection with validation -->
-          <div class="form-group">
-            <label for="fishTypeId" class="form-label">Fischart</label>
+      <!-- Catch details form array -->
+      <ng-container formArrayName="catchDetails">
+        @for (f of catchDetails.controls; track f; let i = $index) {
+          <div>
+            <ng-container [formGroupName]="i">
+              <!-- Fish type selection with validation -->
+              <div class="form-group">
+                <label for="fishTypeId" class="form-label">Fischart</label>
             <select [ngClass]="{
             'is-invalid': catchDetails.controls[i].get('fishTypeId')?.invalid && (catchDetails.controls[i].get('fishTypeId')?.dirty || catchDetails.controls[i].get('fishTypeId')?.touched),
             'is-valid': catchDetails.controls[i].get('fishTypeId')?.valid
             }" class="form-select" id="fishTypeId" formControlName="fishTypeId">
-              <option *ngFor="let fishType of fishTypes" [ngValue]="fishType.id">{{ fishType.name }}</option>
-            </select>
-            <div class="invalid-feedback"
-                 *ngIf="catchDetails.controls[i].get('fishTypeId')?.errors && (catchDetails.controls[i].get('fishTypeId')?.dirty || catchDetails.controls[i].get('fishTypeId')?.touched)">
-              <p *ngIf="catchDetails.controls[i].get('fishTypeId')?.hasError('required')">Fischart ist ein
-                Pflichtfeld</p>
+                  @for (fishType of fishTypes; track fishType) {
+                    <option [ngValue]="fishType.id">{{ fishType.name }}</option>
+                  }
+                </select>
+                @if (catchDetails.controls[i].get('fishTypeId')?.errors && (catchDetails.controls[i].get('fishTypeId')?.dirty || catchDetails.controls[i].get('fishTypeId')?.touched)) {
+                  <div class="invalid-feedback"
+                    >
+                    @if (catchDetails.controls[i].get('fishTypeId')?.hasError('required')) {
+                      <p>Fischart ist ein
+                      Pflichtfeld</p>
+                    }
+                  </div>
+                }
+              </div>
+              <!-- Checkbox for crab content -->
+              <div class="form-check mt-3">
+                <input class="form-check-input" formControlName="hadCrabs" id="hadCrabs" type="checkbox">
+                <label class="form-check-label" for="hadCrabs">Mageninhalt</label>
+              </div>
+              <!-- Button to remove catch details -->
+              <div class="d-flex justify-content-center">
+                <button (click)="onRemoveCatch(i)" class="btn btn-sm btn-danger">Fang entfernen</button>
+              </div>
+              <!-- Horizontal line as a separator between catch details -->
+              <hr>
+              </ng-container>
             </div>
-          </div>
-
-          <!-- Checkbox for crab content -->
-          <div class="form-check mt-3">
-            <input class="form-check-input" formControlName="hadCrabs" id="hadCrabs" type="checkbox">
-            <label class="form-check-label" for="hadCrabs">Mageninhalt</label>
-          </div>
-
-          <!-- Button to remove catch details -->
-          <div class="d-flex justify-content-center">
-            <button (click)="onRemoveCatch(i)" class="btn btn-sm btn-danger">Fang entfernen</button>
-          </div>
-
-          <!-- Horizontal line as a separator between catch details -->
-          <hr>
+          }
         </ng-container>
-      </div>
-    </ng-container>
 
-    <!-- Button to add more catch details -->
-    <div class="d-grid gap-2 mx-auto mt-4">
-      <button class="btn btn-primary" type="button" (click)="onAddCatch()">Fang hinzufügen</button>
-    </div>
+        <!-- Button to add more catch details -->
+        <div class="d-grid gap-2 mx-auto mt-4">
+          <button class="btn btn-primary" type="button" (click)="onAddCatch()">Fang hinzufügen</button>
+        </div>
 
-    <!-- Form submission and cancellation buttons -->
-    <div class="d-flex justify-content-end mt-4" mat-dialog-actions>
-      <button (click)="onSubmit()" [disabled]="manualCatchForm.invalid" class="btn btn-success" type="submit">
-        Hinzufügen
-      </button>
-      <button (click)="onClose()" class="btn btn-danger ms-3" type="button">Abbrechen</button>
+        <!-- Form submission and cancellation buttons -->
+        <div class="d-flex justify-content-end mt-4" mat-dialog-actions>
+          <button (click)="onSubmit()" [disabled]="manualCatchForm.invalid" class="btn btn-success" type="submit">
+            Hinzufügen
+          </button>
+          <button (click)="onClose()" class="btn btn-danger ms-3" type="button">Abbrechen</button>
+        </div>
+      </form>
     </div>
-  </form>
-</div>

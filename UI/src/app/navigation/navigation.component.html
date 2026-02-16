@@ -10,8 +10,8 @@
 
     <!-- Toggle button for collapsed navigation on smaller screens -->
     <button (click)="isShown = !isShown" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"
-            class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse"
-            type="button">
+      class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse"
+      type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -26,34 +26,44 @@
         </li>
 
         <!-- Dashboard link (visible only when user is logged in) -->
-        <li *ngIf="isUserLoggedIn" class="nav-item">
-          <a (click)="isShown = false" class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard
-          </a>
-        </li>
+        @if (isUserLoggedIn) {
+          <li class="nav-item">
+            <a (click)="isShown = false" class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard
+            </a>
+          </li>
+        }
 
         <!-- Show the 'Angeltag' link in the navigation bar only if the user is logged in and has overseer or higher privileges -->
-        <li *ngIf="isUserLoggedIn" class="nav-item">
-          <a (click)="isShown = false" class="nav-link" routerLink="/angeltag" routerLinkActive="active">Angeltag
-          </a>
-        </li>
+        @if (isUserLoggedIn) {
+          <li class="nav-item">
+            <a (click)="isShown = false" class="nav-link" routerLink="/angeltag" routerLinkActive="active">Angeltag
+            </a>
+          </li>
+        }
 
         <!-- Show the 'Fangstatistik' link in the navigation bar only if the user is logged in and has overseer or higher privileges -->
-        <li *ngIf="isUserLoggedIn" class="nav-item">
-          <a (click)="isShown = false" class="nav-link" routerLink="/fangstatistik" routerLinkActive="active">Fangstatistik
-          </a>
-        </li>
+        @if (isUserLoggedIn) {
+          <li class="nav-item">
+            <a (click)="isShown = false" class="nav-link" routerLink="/fangstatistik" routerLinkActive="active">Fangstatistik
+            </a>
+          </li>
+        }
 
         <!-- Show the 'Fangstatistik' link in the navigation bar only if the user is logged in and has overseer or higher privileges -->
-        <li *ngIf="isUserLoggedIn && isOverseerOrHigher" class="nav-item">
-          <a (click)="isShown = false" class="nav-link" routerLink="/aufseher" routerLinkActive="active">Aufseher
-          </a>
-        </li>
+        @if (isUserLoggedIn && isOverseerOrHigher) {
+          <li class="nav-item">
+            <a (click)="isShown = false" class="nav-link" routerLink="/aufseher" routerLinkActive="active">Aufseher
+            </a>
+          </li>
+        }
 
         <!-- Downloads link (visible only when user is logged in) -->
-        <li *ngIf="isUserLoggedIn" class="nav-item">
-          <a (click)="isShown = false" class="nav-link" routerLink="/downloads" routerLinkActive="active">Downloads
-          </a>
-        </li>
+        @if (isUserLoggedIn) {
+          <li class="nav-item">
+            <a (click)="isShown = false" class="nav-link" routerLink="/downloads" routerLinkActive="active">Downloads
+            </a>
+          </li>
+        }
 
         <!-- Other navigation links -->
         <li class="nav-item">
@@ -66,44 +76,49 @@
         </li>
 
         <!-- Admin link (visible only for logged-in admin users) -->
-        <li *ngIf="isUserLoggedIn && isAdminUser" class="nav-item">
-          <a (click)="isShown = false" class="nav-link" routerLink="/admin" routerLinkActive="active">Administrator
-          </a>
-        </li>
+        @if (isUserLoggedIn && isAdminUser) {
+          <li class="nav-item">
+            <a (click)="isShown = false" class="nav-link" routerLink="/admin" routerLinkActive="active">Administrator
+            </a>
+          </li>
+        }
       </ul>
 
       <!-- User menu (visible only when user is logged in) -->
-      <div *ngIf="isUserLoggedIn" class="login">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item dropdown">
-            <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-               href="#"
-               role="button">
-              <i class="bi bi-person-circle"></i>
-              {{currentUser?.firstName}}
-            </a>
-
-            <!-- User dropdown menu -->
-            <div class="dropdown-menu dropdown-menu-end">
-              <a (click)="isShown = false" class="dropdown-item user-menu" routerLink="/konto"><i
+      @if (isUserLoggedIn) {
+        <div class="login">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item dropdown">
+              <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                href="#"
+                role="button">
+                <i class="bi bi-person-circle"></i>
+                {{currentUser?.firstName}}
+              </a>
+              <!-- User dropdown menu -->
+              <div class="dropdown-menu dropdown-menu-end">
+                <a (click)="isShown = false" class="dropdown-item user-menu" routerLink="/konto"><i
                 class="bi bi-person-gear"></i> Konto</a>
-              <a (click)="isShown = false" class="dropdown-item user-menu" routerLink="/password-aendern"><i
+                <a (click)="isShown = false" class="dropdown-item user-menu" routerLink="/password-aendern"><i
                 class="bi bi-key"></i> Passwort ändern</a>
-              <div class="dropdown-divider"></div>
-              <a (click)="onLogout()" class="dropdown-item user-menu"><i class="bi bi-box-arrow-left"></i> Logout</a>
-            </div>
-          </li>
-        </ul>
-      </div>
+                <div class="dropdown-divider"></div>
+                <a (click)="onLogout()" class="dropdown-item user-menu"><i class="bi bi-box-arrow-left"></i> Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      }
 
       <!-- Login button (visible only when user is not logged in) -->
-      <div *ngIf="!isUserLoggedIn" class="d-flex login" routerLink="/login">
-        <button (click)="isShown = false" class="btn btn-secondary" routerLink="/login"><i
+      @if (!isUserLoggedIn) {
+        <div class="d-flex login" routerLink="/login">
+          <button (click)="isShown = false" class="btn btn-secondary" routerLink="/login"><i
           class="bi bi-box-arrow-right"></i> Login
         </button>
       </div>
-    </div>
+    }
   </div>
+</div>
 </nav>
 
 <!-- Router outlet for displaying routed components -->

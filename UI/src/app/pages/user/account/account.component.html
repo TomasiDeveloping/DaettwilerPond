@@ -3,197 +3,237 @@
   <h2 class="text-center mt-3">Konto</h2>
 
   <!-- User Form with Name and Email -->
-  <form (ngSubmit)="onSubmitUser()" *ngIf="userForm" [formGroup]="userForm">
-    <!-- Name Section -->
-    <div class="row">
-      <div class="col">
-        <!-- First Name Input -->
-        <label class="form-label" for="firstName">Vorname</label>
+  @if (userForm) {
+    <form (ngSubmit)="onSubmitUser()" [formGroup]="userForm">
+      <!-- Name Section -->
+      <div class="row">
+        <div class="col">
+          <!-- First Name Input -->
+          <label class="form-label" for="firstName">Vorname</label>
         <input [ngClass]="{
       'is-invalid': firstName?.invalid && (firstName?.dirty || firstName?.touched),
       'is-valid': firstName?.valid
       }" class="form-control" formControlName="firstName" id="firstName" type="text">
-        <!-- First Name Validation -->
-        <div *ngIf="firstName?.errors && (firstName?.dirty || firstName?.touched)" class="invalid-feedback">
-          <p *ngIf="firstName?.hasError('required')">Vorname ist ein Pflichtfeld</p>
-        </div>
-      </div>
-      <div class="col">
-        <!-- Last Name Input -->
-        <label class="form-label" for="lastName">Name</label>
+            <!-- First Name Validation -->
+            @if (firstName?.errors && (firstName?.dirty || firstName?.touched)) {
+              <div class="invalid-feedback">
+                @if (firstName?.hasError('required')) {
+                  <p>Vorname ist ein Pflichtfeld</p>
+                }
+              </div>
+            }
+          </div>
+          <div class="col">
+            <!-- Last Name Input -->
+            <label class="form-label" for="lastName">Name</label>
         <input [ngClass]="{
       'is-invalid': lastName?.invalid && (lastName?.dirty || lastName?.touched),
       'is-valid': lastName?.valid
       }" class="form-control" formControlName="lastName" id="lastName" type="text">
-        <!-- Last Name Validation -->
-        <div *ngIf="lastName?.errors && (lastName?.dirty || lastName?.touched)" class="invalid-feedback">
-          <p *ngIf="lastName?.hasError('required')">Name ist ein Pflichtfeld</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Email Section -->
-    <div class="row">
-      <div class="col">
-        <div class="form-group mt-3">
-          <label class="form-label" for="email">E-Mail</label>
+              <!-- Last Name Validation -->
+              @if (lastName?.errors && (lastName?.dirty || lastName?.touched)) {
+                <div class="invalid-feedback">
+                  @if (lastName?.hasError('required')) {
+                    <p>Name ist ein Pflichtfeld</p>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+          <!-- Email Section -->
+          <div class="row">
+            <div class="col">
+              <div class="form-group mt-3">
+                <label class="form-label" for="email">E-Mail</label>
           <input [ngClass]="{
       'is-invalid': email?.invalid && (email?.dirty || email?.touched),
       'is-valid': email?.valid
       }" class="form-control" formControlName="email" id="email" type="email">
-          <!-- Email Validation -->
-          <div *ngIf="email?.errors && (email?.dirty || email?.touched)" class="invalid-feedback">
-            <p *ngIf="email?.hasError('required')">E-Mail ist ein Pflichtfeld</p>
-            <p *ngIf="email?.hasError('email')">Ungültige E-Mail</p>
-          </div>
-        </div>
-      </div>
-      <!-- SaNa Number -->
-      <div class="col">
-        <div class="form-group mt-3">
-          <label class="form-label" for="saNaNumber">SaNa-Nummer</label>
-          <input class="form-control" formControlName="saNaNumber" id="saNaNumber" type="text" [dropSpecialCharacters]="false" [showMaskTyped]="true" mask="999-9999-9999/999-9">
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-6">
-        <div class="form-group mt-3">
+                  <!-- Email Validation -->
+                  @if (email?.errors && (email?.dirty || email?.touched)) {
+                    <div class="invalid-feedback">
+                      @if (email?.hasError('required')) {
+                        <p>E-Mail ist ein Pflichtfeld</p>
+                      }
+                      @if (email?.hasError('email')) {
+                        <p>Ungültige E-Mail</p>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+              <!-- SaNa Number -->
+              <div class="col">
+                <div class="form-group mt-3">
+                  <label class="form-label" for="saNaNumber">SaNa-Nummer</label>
+                  <input class="form-control" formControlName="saNaNumber" id="saNaNumber" type="text" [dropSpecialCharacters]="false" [showMaskTyped]="true" mask="999-9999-9999/999-9">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group mt-3">
           <label [ngClass]="{
           'is-invalid': dateOfBirth?.invalid && (dateOfBirth?.dirty || dateOfBirth?.touched),
           'is-valid': dateOfBirth?.valid
           }" class="form-label" for="dateOfBirth">Geburtsdatum</label>
-          <input class="form-control" formControlName="dateOfBirth" id="dateOfBirth" type="date">
-          <div *ngIf="dateOfBirth?.errors && (dateOfBirth?.touched || dateOfBirth?.dirty)" class="invalid-feedback">
-            <div *ngIf="dateOfBirth?.hasError('required')">Geburtsdatum ist ein Pflichtfeld</div>
-          </div>
+                  <input class="form-control" formControlName="dateOfBirth" id="dateOfBirth" type="date">
+                  @if (dateOfBirth?.errors && (dateOfBirth?.touched || dateOfBirth?.dirty)) {
+                    <div class="invalid-feedback">
+                      @if (dateOfBirth?.hasError('required')) {
+                        <div>Geburtsdatum ist ein Pflichtfeld</div>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+            <!-- Edit User Buttons -->
+            @if (isEditUser) {
+              <div class="d-flex justify-content-end mt-3">
+                <button (click)="onCancelEditUser()" class="btn btn-warning me-4" type="button">Abbrechen</button>
+                <button [disabled]="userForm.invalid" class="btn btn-success" type="submit">Speichern</button>
+              </div>
+            }
+          </form>
+        }
+
+        <!-- Edit User Button -->
+        <div class="d-grid gap-2 col-6 mx-auto mt-4">
+          @if (!isEditUser) {
+            <button (click)="onEditUser()" class="btn btn-secondary" type="button">Bearbeiten</button>
+          }
         </div>
-      </div>
-    </div>
+        <hr>
 
-    <!-- Edit User Buttons -->
-    <div *ngIf="isEditUser" class="d-flex justify-content-end mt-3">
-      <button (click)="onCancelEditUser()" class="btn btn-warning me-4" type="button">Abbrechen</button>
-      <button [disabled]="userForm.invalid" class="btn btn-success" type="submit">Speichern</button>
-    </div>
-  </form>
+          <!-- Address Section -->
+          <h3 class="text-center">Adresse</h3>
 
-  <!-- Edit User Button -->
-  <div class="d-grid gap-2 col-6 mx-auto mt-4">
-    <button (click)="onEditUser()" *ngIf="!isEditUser" class="btn btn-secondary" type="button">Bearbeiten</button>
-  </div>
-  <hr>
-
-  <!-- Address Section -->
-  <h3 class="text-center">Adresse</h3>
-
-  <!-- Address Form -->
-  <form (ngSubmit)="onSubmitAddress()" *ngIf="addressForm" [formGroup]="addressForm">
-    <!-- Address Inputs -->
-    <div class="row">
-      <div class="col-8">
-        <!-- Street Input -->
-        <label class="form-label" for="street">Strasse</label>
+          <!-- Address Form -->
+          @if (addressForm) {
+            <form (ngSubmit)="onSubmitAddress()" [formGroup]="addressForm">
+              <!-- Address Inputs -->
+              <div class="row">
+                <div class="col-8">
+                  <!-- Street Input -->
+                  <label class="form-label" for="street">Strasse</label>
         <input [ngClass]="{
         'is-invalid': street?.invalid && (street?.dirty || street?.touched),
         'is-valid': street?.valid
         }" class="form-control" formControlName="street" id="street" type="text">
-        <!-- Street Validation -->
-        <div *ngIf="street?.errors && (street?.dirty || street?.touched)" class="invalid-feedback">
-          <p *ngIf="street?.hasError('required')">Strasse ist ein Pflichtfeld</p>
-        </div>
-      </div>
-      <div class="col-4">
-        <!-- House Number Input -->
-        <label class="form-label" for="houseNumber">Hausnummer</label>
+                    <!-- Street Validation -->
+                    @if (street?.errors && (street?.dirty || street?.touched)) {
+                      <div class="invalid-feedback">
+                        @if (street?.hasError('required')) {
+                          <p>Strasse ist ein Pflichtfeld</p>
+                        }
+                      </div>
+                    }
+                  </div>
+                  <div class="col-4">
+                    <!-- House Number Input -->
+                    <label class="form-label" for="houseNumber">Hausnummer</label>
         <input [ngClass]="{
         'is-invalid': houseNumber?.invalid && (houseNumber?.dirty || houseNumber?.touched),
         'is-valid': houseNumber?.valid
         }" class="form-control" formControlName="houseNumber" id="houseNumber" type="text">
-        <!-- House Number Validation -->
-        <div *ngIf="houseNumber?.errors && (houseNumber?.dirty || houseNumber?.touched)" class="invalid-feedback">
-          <p *ngIf="houseNumber?.hasError('required')">Hausnummer ist ein Pflichtfeld</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Postal Code and City Inputs -->
-    <div class="row">
-      <div class="col-4">
-        <!-- Postal Code Input -->
-        <label class="form-label" for="postalCode">Postleitzahl</label>
+                      <!-- House Number Validation -->
+                      @if (houseNumber?.errors && (houseNumber?.dirty || houseNumber?.touched)) {
+                        <div class="invalid-feedback">
+                          @if (houseNumber?.hasError('required')) {
+                            <p>Hausnummer ist ein Pflichtfeld</p>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <!-- Postal Code and City Inputs -->
+                  <div class="row">
+                    <div class="col-4">
+                      <!-- Postal Code Input -->
+                      <label class="form-label" for="postalCode">Postleitzahl</label>
         <input [ngClass]="{
         'is-invalid': postalCode?.invalid && (postalCode?.dirty || postalCode?.touched),
         'is-valid': postalCode?.valid
         }" class="form-control" formControlName="postalCode" id="postalCode" type="text">
-        <!-- Postal Code Validation -->
-        <div *ngIf="postalCode?.errors && (postalCode?.touched || postalCode?.dirty)" class="invalid-feedback">
-          <p *ngIf="postalCode?.hasError('required')">Postleitzahl ist ein Pflichtfeld</p>
-        </div>
-      </div>
-      <div class="col-8">
-        <!-- City Input -->
-        <label class="form-label" for="city">Ort</label>
+                        <!-- Postal Code Validation -->
+                        @if (postalCode?.errors && (postalCode?.touched || postalCode?.dirty)) {
+                          <div class="invalid-feedback">
+                            @if (postalCode?.hasError('required')) {
+                              <p>Postleitzahl ist ein Pflichtfeld</p>
+                            }
+                          </div>
+                        }
+                      </div>
+                      <div class="col-8">
+                        <!-- City Input -->
+                        <label class="form-label" for="city">Ort</label>
         <input [ngClass]="{
         'is-invalid': city?.invalid && (city?.dirty || city?.touched),
         'is-valid': city?.valid
         }" class="form-control" formControlName="city" id="city">
-        <!-- City Validation -->
-        <div *ngIf="city?.errors && (city?.dirty || city?.touched)" class="invalid-feedback">
-          <p *ngIf="city?.hasError('required')">Ort ist ein Pflichtfeld</p>
-        </div>
-      </div>
-    </div>
+                          <!-- City Validation -->
+                          @if (city?.errors && (city?.dirty || city?.touched)) {
+                            <div class="invalid-feedback">
+                              @if (city?.hasError('required')) {
+                                <p>Ort ist ein Pflichtfeld</p>
+                              }
+                            </div>
+                          }
+                        </div>
+                      </div>
+                      <!-- Mobile and Phone Inputs -->
+                      <div class="row">
+                        <div class="col">
+                          <!-- Mobile Input -->
+                          <label class="form-label" for="mobile">Natel</label>
+                          <input class="form-control" formControlName="mobile" id="mobile" type="text">
+                        </div>
+                        <div class="col">
+                          <!-- Phone Input -->
+                          <label class="form-label" for="phone">Telefon</label>
+                          <input class="form-control" formControlName="phone" id="phone" type="text">
+                        </div>
+                      </div>
+                      <!-- Edit Address Buttons -->
+                      @if (isEditAddress) {
+                        <div class="d-flex justify-content-end mt-3">
+                          <button (click)="onCancelEditAddress()" class="btn btn-warning me-4" type="button">Abbrechen</button>
+                          <button [disabled]="addressForm.invalid" class="btn btn-success" type="submit">Speichern</button>
+                        </div>
+                      }
+                    </form>
+                  }
 
-    <!-- Mobile and Phone Inputs -->
-    <div class="row">
-      <div class="col">
-        <!-- Mobile Input -->
-        <label class="form-label" for="mobile">Natel</label>
-        <input class="form-control" formControlName="mobile" id="mobile" type="text">
-      </div>
-      <div class="col">
-        <!-- Phone Input -->
-        <label class="form-label" for="phone">Telefon</label>
-        <input class="form-control" formControlName="phone" id="phone" type="text">
-      </div>
-    </div>
+                  <!-- Edit Address Button -->
+                  <div class="d-grid gap-2 col-6 mx-auto mt-4">
+                    @if (!isEditAddress) {
+                      <button (click)="onEditAddress()" class="btn btn-secondary" type="button">Adresse
+                        bearbeiten
+                      </button>
+                    }
+                  </div>
+                  <hr>
 
-    <!-- Edit Address Buttons -->
-    <div *ngIf="isEditAddress" class="d-flex justify-content-end mt-3">
-      <button (click)="onCancelEditAddress()" class="btn btn-warning me-4" type="button">Abbrechen</button>
-      <button [disabled]="addressForm.invalid" class="btn btn-success" type="submit">Speichern</button>
-    </div>
-  </form>
+                    <!-- Licenses Section -->
+                    <h3 class="text-center">Lizenzen</h3>
 
-  <!-- Edit Address Button -->
-  <div class="d-grid gap-2 col-6 mx-auto mt-4">
-    <button (click)="onEditAddress()" *ngIf="!isEditAddress" class="btn btn-secondary" type="button">Adresse
-      bearbeiten
-    </button>
-  </div>
-  <hr>
-
-  <!-- Licenses Section -->
-  <h3 class="text-center">Lizenzen</h3>
-
-  <!-- Licenses Grid -->
-  <ejs-grid [allowPaging]="true" [allowResizing]="true"
-            [allowSorting]="true"
-            [dataSource]="licenses"
-            [enableColumnVirtualization]="true"
-            [pageSettings]="pageSettings"
-            [toolbar]="toolbarOptions"
-            class="pb-5">
-    <e-columns>
-      <!-- License Columns -->
-      <e-column field="issuedBy" headerText="Ersteller" width="150"></e-column>
-      <e-column [format]="{type: 'date', format: 'dd.MM.yyyy'}" [type]="'dateTime'" field="createdAt" headerText="Erstellt am"
-                width="100"></e-column>
-      <e-column [displayAsCheckBox]="true" field="isPaid" headerText="Bezahlt" textAlign="center" width="80"></e-column>
-      <e-column [format]="{type: 'date', format: 'dd.MM.yyyy'}" [type]="'dateTime'" field="expiresOn" headerText="Gültig bis"
-                width="100"></e-column>
-    </e-columns>
-  </ejs-grid>
-</div>
+                    <!-- Licenses Grid -->
+                    <ejs-grid [allowPaging]="true" [allowResizing]="true"
+                      [allowSorting]="true"
+                      [dataSource]="licenses"
+                      [enableColumnVirtualization]="true"
+                      [pageSettings]="pageSettings"
+                      [toolbar]="toolbarOptions"
+                      class="pb-5">
+                      <e-columns>
+                        <!-- License Columns -->
+                        <e-column field="issuedBy" headerText="Ersteller" width="150"></e-column>
+                        <e-column [format]="{type: 'date', format: 'dd.MM.yyyy'}" [type]="'dateTime'" field="createdAt" headerText="Erstellt am"
+                        width="100"></e-column>
+                        <e-column [displayAsCheckBox]="true" field="isPaid" headerText="Bezahlt" textAlign="center" width="80"></e-column>
+                        <e-column [format]="{type: 'date', format: 'dd.MM.yyyy'}" [type]="'dateTime'" field="expiresOn" headerText="Gültig bis"
+                        width="100"></e-column>
+                      </e-columns>
+                    </ejs-grid>
+                  </div>
