@@ -31,10 +31,12 @@ builder.Services.AddQuartz(options =>
 {
     var jobKey = new JobKey(nameof(CheckFishingDayHasCompleted));
 
-    options.AddJob<CheckFishingDayHasCompleted>(jobKey)
-        .AddTrigger(
-            trigger => trigger.ForJob(jobKey)
-                .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(0, 0)));
+    options.AddJob<CheckFishingDayHasCompleted>(job =>
+        job.WithIdentity(jobKey));
+
+    options.AddTrigger(trigger => trigger
+        .ForJob(jobKey)
+        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(0, 0)));
 });
 
 
@@ -49,7 +51,6 @@ builder.Services.ConfigureInfrastructureServices();
 // Add services to the container.
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.ConfigureSwagger();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureApiVersioning();
 builder.Services.ConfigureHealthChecks(builder.Configuration);
@@ -74,8 +75,8 @@ try
     Log.Logger.Information("Starting web host");
 
     // Enable Swagger and Swagger UI
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    //app.UseSwagger();
+    //app.UseSwaggerUI();
 
     // Enable Cross-Origin Resource Sharing (CORS)
     app.UseCors("CorsPolicy");

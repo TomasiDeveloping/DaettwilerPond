@@ -15,6 +15,8 @@
         // Billing address of the fishing club
         public string BillAddress { get; set; }
 
+        public string BillHouseNumber { get; set; }
+
         // Postal code of the billing address
         public string BillPostalCode { get; set; }
 

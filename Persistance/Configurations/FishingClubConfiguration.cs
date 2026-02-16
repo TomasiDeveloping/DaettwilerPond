@@ -21,6 +21,7 @@ namespace Persistence.Configurations
             builder.Property(fc => fc.IbanNumber).IsRequired().HasMaxLength(50);
             builder.Property(fc => fc.LicensePrice).IsRequired().HasPrecision(8, 2);
             builder.Property(fc => fc.Name).IsRequired().HasMaxLength(250);
+            builder.Property(fc => fc.BillHouseNumber).IsRequired().HasMaxLength(100);
         }
     }
 }
