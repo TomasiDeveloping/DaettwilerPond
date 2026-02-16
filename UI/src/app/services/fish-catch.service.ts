@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {FishCatchModel} from "../models/fishCatch.model";
 import {Observable} from "rxjs";
 import {YearlyCatchModel} from "../models/yearlyCatch.model";

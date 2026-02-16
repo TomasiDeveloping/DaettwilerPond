@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {NavigationComponent} from './navigation/navigation.component';
 import {HomeComponent} from './pages/home/home.component';
 import {CurrentTemperatureComponent} from './pages/temperature/current-temperature/current-temperature.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {TemperatureComponent} from './pages/temperature/temperature.component';
 import {HistoryComponent} from './pages/history/history.component';
 import {DatePipe} from "@angular/common";
@@ -42,63 +42,56 @@ import { OverseerValidationResultComponent } from './pages/overseer/overseer-val
 import {ImageUrlPipe} from "./pipes/image-url.pipe";
 
 
-@NgModule({
-  // Declarations of all the components used in the module
-  declarations: [
-    AppComponent,
-    NavigationComponent,
-    HomeComponent,
-    CurrentTemperatureComponent,
-    TemperatureComponent,
-    HistoryComponent,
-    LoginComponent,
-    ForgotPasswordDialogComponent,
-    PasswordResetComponent,
-    AccountComponent,
-    ChangePasswordComponent,
-    DownloadComponent,
-    CatchDayComponent,
-    CatchDayAddCatchComponent,
-    CatchDayManualRecordingComponent,
-    CatchDayEditCatchComponent,
-    CatchStatisticsComponent,
-    CatchStatisticsMonthDetailComponent,
-    EditCatchDayDialogComponent,
-    OverseerComponent,
-    LicenseValidateComponent,
-    OverseerValidateLicenseComponent,
-    OverseerValidationResultComponent,
-  ],
-  // Importing necessary Angular modules
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    ThirdPartyModule,
-    MaterialModule,
-    SyncfusionModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: () => {
-          return localStorage.getItem('DaettwilerPondToken')
-        }
-      }
-    }),
-    GermanMonthPipe,
-    FormsModule,
-    QRCodeModule,
-    ImageUrlPipe
-  ],
-  // Providers for services and interceptors
-  providers: [
-    DatePipe,
-    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
-  ],
-  // Bootstrap component for the module
-  bootstrap: [AppComponent]
-})
+@NgModule({ 
+    // Declarations of all the components used in the module
+    declarations: [
+        AppComponent,
+        NavigationComponent,
+        HomeComponent,
+        CurrentTemperatureComponent,
+        TemperatureComponent,
+        HistoryComponent,
+        LoginComponent,
+        ForgotPasswordDialogComponent,
+        PasswordResetComponent,
+        AccountComponent,
+        ChangePasswordComponent,
+        DownloadComponent,
+        CatchDayComponent,
+        CatchDayAddCatchComponent,
+        CatchDayManualRecordingComponent,
+        CatchDayEditCatchComponent,
+        CatchStatisticsComponent,
+        CatchStatisticsMonthDetailComponent,
+        EditCatchDayDialogComponent,
+        OverseerComponent,
+        LicenseValidateComponent,
+        OverseerValidateLicenseComponent,
+        OverseerValidationResultComponent,
+    ],
+    // Bootstrap component for the module
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        ThirdPartyModule,
+        MaterialModule,
+        SyncfusionModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: () => {
+                    return localStorage.getItem('DaettwilerPondToken');
+                }
+            }
+        }),
+        GermanMonthPipe,
+        FormsModule,
+        QRCodeModule,
+        ImageUrlPipe], providers: [
+        DatePipe,
+        { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
 }
