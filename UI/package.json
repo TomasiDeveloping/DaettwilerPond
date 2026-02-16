@@ -36,7 +36,7 @@
     "ngx-printer": "^1.9.0",
     "ngx-scrolltop": "^21.0.1",
     "ngx-spinner": "^21.0.0",
-    "ngx-toastr": "^18.0.0",
+    "ngx-toastr": "^20.0.5",
     "qrcode": "^1.5.1",
     "rxjs": "~7.8.1",
     "sweetalert2": "^11.10.7",
