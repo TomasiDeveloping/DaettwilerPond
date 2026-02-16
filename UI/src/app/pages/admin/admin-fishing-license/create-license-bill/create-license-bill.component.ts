@@ -7,9 +7,10 @@ import {ToastrService} from "ngx-toastr";
 import {PdfService} from "../../../../services/pdf.service";
 
 @Component({
-  selector: 'app-create-license-bill',
-  templateUrl: './create-license-bill.component.html',
-  styleUrls: ['./create-license-bill.component.scss']
+    selector: 'app-create-license-bill',
+    templateUrl: './create-license-bill.component.html',
+    styleUrls: ['./create-license-bill.component.scss'],
+    standalone: false
 })
 export class CreateLicenseBillComponent implements OnInit {
 

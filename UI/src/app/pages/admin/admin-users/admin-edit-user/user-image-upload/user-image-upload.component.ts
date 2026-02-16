@@ -7,9 +7,10 @@ import {ImageUrlPipe} from "../../../../../pipes/image-url.pipe";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-user-image-upload',
-  templateUrl: './user-image-upload.component.html',
-  styleUrl: './user-image-upload.component.scss'
+    selector: 'app-user-image-upload',
+    templateUrl: './user-image-upload.component.html',
+    styleUrl: './user-image-upload.component.scss',
+    standalone: false
 })
 export class UserImageUploadComponent {
 

@@ -5,9 +5,10 @@ import {FishTypeService} from "../../../services/fish-type.service";
 import * as moment from "moment/moment";
 
 @Component({
-  selector: 'app-closed-season',
-  templateUrl: './closed-season.component.html',
-  styleUrls: ['./closed-season.component.scss']
+    selector: 'app-closed-season',
+    templateUrl: './closed-season.component.html',
+    styleUrls: ['./closed-season.component.scss'],
+    standalone: false
 })
 export class ClosedSeasonComponent implements OnInit {
 

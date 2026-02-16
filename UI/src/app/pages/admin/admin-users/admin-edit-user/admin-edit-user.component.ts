@@ -9,8 +9,9 @@ import {UserService} from "../../../../services/user.service";
 import {UserImageUploadComponent} from "./user-image-upload/user-image-upload.component";
 
 @Component({
-  selector: 'app-admin-edit-user',
-  templateUrl: './admin-edit-user.component.html'
+    selector: 'app-admin-edit-user',
+    templateUrl: './admin-edit-user.component.html',
+    standalone: false
 })
 export class AdminEditUserComponent {
 

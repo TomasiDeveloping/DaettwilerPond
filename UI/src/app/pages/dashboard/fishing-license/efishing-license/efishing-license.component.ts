@@ -5,9 +5,10 @@ import {environment} from "../../../../../environments/environment";
 
 
 @Component({
-  selector: 'app-efishing-license',
-  templateUrl: './efishing-license.component.html',
-  styleUrl: './efishing-license.component.scss'
+    selector: 'app-efishing-license',
+    templateUrl: './efishing-license.component.html',
+    styleUrl: './efishing-license.component.scss',
+    standalone: false
 })
 export class EFishingLicenseComponent {
 

@@ -10,8 +10,9 @@ import {AdminSendEmailComponent} from "./admin-send-email/admin-send-email.compo
 
 
 @Component({
-  selector: 'app-admin-users',
-  templateUrl: './admin-users.component.html'
+    selector: 'app-admin-users',
+    templateUrl: './admin-users.component.html',
+    standalone: false
 })
 export class AdminUsersComponent implements OnInit {
   public users: UserWithAddress[] = [];

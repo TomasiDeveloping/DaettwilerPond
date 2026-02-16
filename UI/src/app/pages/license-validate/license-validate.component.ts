@@ -4,9 +4,10 @@ import {ValidateLicenseModel} from "../../models/validateLicense.model";
 import {FishingLicenseService} from "../../services/fishing-license.service";
 
 @Component({
-  selector: 'app-license-validate',
-  templateUrl: './license-validate.component.html',
-  styleUrl: './license-validate.component.scss'
+    selector: 'app-license-validate',
+    templateUrl: './license-validate.component.html',
+    styleUrl: './license-validate.component.scss',
+    standalone: false
 })
 export class LicenseValidateComponent implements OnInit{
 

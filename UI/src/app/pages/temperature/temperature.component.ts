@@ -6,9 +6,10 @@ import {TemperatureMeasurement} from "../../models/temperatureMeasurement.model"
 import {TemperatureHistoryModel} from "../../models/temperatureHistory.model";
 
 @Component({
-  selector: 'app-temperature',
-  templateUrl: './temperature.component.html',
-  styleUrls: ['./temperature.component.scss']
+    selector: 'app-temperature',
+    templateUrl: './temperature.component.html',
+    styleUrls: ['./temperature.component.scss'],
+    standalone: false
 })
 export class TemperatureComponent implements OnInit {
 

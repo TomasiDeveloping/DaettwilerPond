@@ -4,8 +4,9 @@ import {FishingRegulationService} from "../../../services/fishing-regulation.ser
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-fishing-regulation',
-  templateUrl: './fishing-regulation.component.html'
+    selector: 'app-fishing-regulation',
+    templateUrl: './fishing-regulation.component.html',
+    standalone: false
 })
 export class FishingRegulationComponent implements OnInit {
 

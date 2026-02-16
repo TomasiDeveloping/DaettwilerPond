@@ -15,9 +15,10 @@ import {AuthenticationService} from "../../services/authentication.service";
 import {FishingLicense} from "../../models/fishingLicense.model";
 
 @Component({
-  selector: 'app-catchDay',
-  templateUrl: './catchDay.component.html',
-  styleUrl: './catchDay.component.scss'
+    selector: 'app-catchDay',
+    templateUrl: './catchDay.component.html',
+    styleUrl: './catchDay.component.scss',
+    standalone: false
 })
 export class CatchDayComponent implements OnInit {
 

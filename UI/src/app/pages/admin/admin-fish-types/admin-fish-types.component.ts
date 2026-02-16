@@ -7,8 +7,9 @@ import Swal from "sweetalert2";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-admin-fish-types',
-  templateUrl: './admin-fish-types.component.html'
+    selector: 'app-admin-fish-types',
+    templateUrl: './admin-fish-types.component.html',
+    standalone: false
 })
 export class AdminFishTypesComponent implements OnInit {
 

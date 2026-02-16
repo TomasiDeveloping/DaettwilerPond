@@ -6,8 +6,9 @@ import {environment} from "../../../environments/environment";
 import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-forgot-password-dialog',
-  templateUrl: './forgot-password-dialog.component.html'
+    selector: 'app-forgot-password-dialog',
+    templateUrl: './forgot-password-dialog.component.html',
+    standalone: false
 })
 export class ForgotPasswordDialogComponent {
 

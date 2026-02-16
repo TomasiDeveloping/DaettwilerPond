@@ -8,9 +8,10 @@ import {EFishingLicenseComponent} from "./efishing-license/efishing-license.comp
 import Swal from "sweetalert2";
 
 @Component({
-  selector: 'app-fishing-license',
-  templateUrl: './fishing-license.component.html',
-  styleUrls: ['./fishing-license.component.scss']
+    selector: 'app-fishing-license',
+    templateUrl: './fishing-license.component.html',
+    styleUrls: ['./fishing-license.component.scss'],
+    standalone: false
 })
 export class FishingLicenseComponent implements OnChanges {
 

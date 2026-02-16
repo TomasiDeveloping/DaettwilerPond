@@ -5,9 +5,10 @@ import {ToastrService} from "ngx-toastr";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-admin-club-information',
-  templateUrl: './admin-club-information.component.html',
-  styleUrls: ['./admin-club-information.component.scss']
+    selector: 'app-admin-club-information',
+    templateUrl: './admin-club-information.component.html',
+    styleUrls: ['./admin-club-information.component.scss'],
+    standalone: false
 })
 export class AdminClubInformationComponent implements OnInit {
   public fishingClub: FishingClub | undefined;

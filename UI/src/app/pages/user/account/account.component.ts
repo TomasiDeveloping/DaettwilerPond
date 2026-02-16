@@ -11,8 +11,9 @@ import {FishingLicense} from "../../../models/fishingLicense.model";
 import {FishingLicenseService} from "../../../services/fishing-license.service";
 
 @Component({
-  selector: 'app-account',
-  templateUrl: './account.component.html'
+    selector: 'app-account',
+    templateUrl: './account.component.html',
+    standalone: false
 })
 export class AccountComponent implements OnInit {
 

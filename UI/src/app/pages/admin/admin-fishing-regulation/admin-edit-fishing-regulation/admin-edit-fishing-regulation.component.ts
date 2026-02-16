@@ -7,8 +7,9 @@ import {FishingRegulation} from "../../../../models/fishingRegulation.model";
 
 
 @Component({
-  selector: 'app-admin-edit-fishing-regulation',
-  templateUrl: './admin-edit-fishing-regulation.component.html'
+    selector: 'app-admin-edit-fishing-regulation',
+    templateUrl: './admin-edit-fishing-regulation.component.html',
+    standalone: false
 })
 export class AdminEditFishingRegulationComponent {
   public isUpdate: boolean;

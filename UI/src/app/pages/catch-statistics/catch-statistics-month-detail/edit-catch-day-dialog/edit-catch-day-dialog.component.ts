@@ -6,8 +6,9 @@ import {FishCatchService} from "../../../../services/fish-catch.service";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-edit-catch-day-dialog',
-  templateUrl: './edit-catch-day-dialog.component.html'
+    selector: 'app-edit-catch-day-dialog',
+    templateUrl: './edit-catch-day-dialog.component.html',
+    standalone: false
 })
 export class EditCatchDayDialogComponent {
 

@@ -8,8 +8,9 @@ import {CatchDetailModel} from "../../../models/catchDetail.model";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-catchDay-add-catch',
-  templateUrl: './catchDay-add-catch.component.html'
+    selector: 'app-catchDay-add-catch',
+    templateUrl: './catchDay-add-catch.component.html',
+    standalone: false
 })
 export class CatchDayAddCatchComponent {
 

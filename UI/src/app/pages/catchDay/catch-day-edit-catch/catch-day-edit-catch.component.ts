@@ -8,8 +8,9 @@ import {CatchDetailService} from "../../../services/catch-detail.service";
 import {FishType} from "../../../models/fishType.model";
 
 @Component({
-  selector: 'app-catch-day-edit-catch',
-  templateUrl: './catch-day-edit-catch.component.html'
+    selector: 'app-catch-day-edit-catch',
+    templateUrl: './catch-day-edit-catch.component.html',
+    standalone: false
 })
 export class CatchDayEditCatchComponent {
 
