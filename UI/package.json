@@ -30,7 +30,7 @@
     "bootstrap-icons": "^1.13.1",
     "bootswatch": "^5.3.8",
     "highcharts": "^12.5.0",
-    "highcharts-angular": "^4.0.0",
+    "highcharts-angular": "^5.4.0",
     "moment": "^2.30.1",
     "ngx-mask": "^17.0.7",
     "ngx-printer": "^1.5.0",
