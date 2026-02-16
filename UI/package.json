@@ -22,7 +22,7 @@
     "@angular/router": "^21.1.4",
     "@auth0/angular-jwt": "^5.2.0",
     "@popperjs/core": "^2.11.8",
-    "@syncfusion/ej2-angular-grids": "^25.1.39",
+    "@syncfusion/ej2-angular-grids": "^32.2.3",
     "@syncfusion/ej2-material-theme": "~25.1.39",
     "@zxing/ngx-scanner": "^17.0.1",
     "angularx-qrcode": "^17.0.0",
