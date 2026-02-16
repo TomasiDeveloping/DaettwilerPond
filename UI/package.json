@@ -25,7 +25,7 @@
     "@syncfusion/ej2-angular-grids": "^32.2.3",
     "@syncfusion/ej2-material-theme": "~32.2.4",
     "@zxing/ngx-scanner": "^21.0.0",
-    "angularx-qrcode": "^17.0.0",
+    "angularx-qrcode": "^21.0.4",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.2",
     "bootswatch": "^5.3.3",
