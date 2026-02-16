@@ -16,7 +16,7 @@ public class Lsn50V2D20Logic(ILsn50V2MeasurementRepository lsn50V2MeasurementRep
         // Create a data transfer object for the new lifecycle data.
         var newLifeCycle = new CreateLsn50V2LifecycleDto
         {
-            BatteryLevel = lifecycle.BatteryLevel,
+            BatteryLevel = (int)lifecycle.BatteryLevel,
             BatteryVoltage = (decimal) lifecycle.BatteryVoltage,
             SensorId = sensorId
         };

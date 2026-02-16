@@ -9,5 +9,5 @@ public class Lifecycle
     [JsonProperty("batteryVoltage")] public double BatteryVoltage { get; set; }
 
     // Battery level of the device
-    [JsonProperty("batteryLevel")] public int BatteryLevel { get; set; }
+    [JsonProperty("batteryLevel")] public double BatteryLevel { get; set; }
 }

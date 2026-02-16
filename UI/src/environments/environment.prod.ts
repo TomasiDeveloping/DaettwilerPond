@@ -4,7 +4,7 @@ export const environment = {
   production: true,
 
   // Application version
-  version: "1.18.3",
+  version: "1.2.0",
 
   serverUrl: 'https://weiher.tomasi-developing.ch/',
 
