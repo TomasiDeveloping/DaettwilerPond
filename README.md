@@ -20,6 +20,9 @@
 # DaettwilerPond
 
 ## Changelog
+### 2.0.0 (2026-02-17)
+- Update Angular to version 21
+- Update Backend to .NET 10
 ### 1.18.3 (2024-05-18)
 - Excel Sheetname bug fix
 - NuGet security update
