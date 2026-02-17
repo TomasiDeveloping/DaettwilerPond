@@ -9,7 +9,7 @@ import {CurrentTemperatureComponent} from './pages/temperature/current-temperatu
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {TemperatureComponent} from './pages/temperature/temperature.component';
 import {HistoryComponent} from './pages/history/history.component';
-import {DatePipe} from "@angular/common";
+import {CommonModule, DatePipe} from "@angular/common";
 import {SpinnerInterceptor} from "./interceptors/spinner.interceptor";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {LoginComponent} from './authentication/login/login.component';
@@ -35,14 +35,14 @@ import { CatchStatisticsComponent } from './pages/catch-statistics/catch-statist
 import { CatchStatisticsMonthDetailComponent } from './pages/catch-statistics/catch-statistics-month-detail/catch-statistics-month-detail.component';
 import { EditCatchDayDialogComponent } from './pages/catch-statistics/catch-statistics-month-detail/edit-catch-day-dialog/edit-catch-day-dialog.component';
 import { OverseerComponent } from './pages/overseer/overseer.component';
-import {QRCodeModule} from "angularx-qrcode";
 import { LicenseValidateComponent } from './pages/license-validate/license-validate.component';
 import { OverseerValidateLicenseComponent } from './pages/overseer/overseer-validate-license/overseer-validate-license.component';
 import { OverseerValidationResultComponent } from './pages/overseer/overseer-validation-result/overseer-validation-result.component';
 import {ImageUrlPipe} from "./pipes/image-url.pipe";
+import {QRCodeComponent} from "angularx-qrcode";
 
 
-@NgModule({ 
+@NgModule({
     // Declarations of all the components used in the module
     declarations: [
         AppComponent,
@@ -67,10 +67,13 @@ import {ImageUrlPipe} from "./pipes/image-url.pipe";
         OverseerComponent,
         LicenseValidateComponent,
         OverseerValidateLicenseComponent,
-        OverseerValidationResultComponent,
+        OverseerValidationResultComponent
     ],
     // Bootstrap component for the module
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    bootstrap: [AppComponent],
+    imports: [
+      CommonModule,
+    BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
         ReactiveFormsModule,
@@ -86,7 +89,7 @@ import {ImageUrlPipe} from "./pipes/image-url.pipe";
         }),
         GermanMonthPipe,
         FormsModule,
-        QRCodeModule,
+        QRCodeComponent,
         ImageUrlPipe], providers: [
         DatePipe,
         { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },

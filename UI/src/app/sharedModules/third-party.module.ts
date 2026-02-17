@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ToastrModule} from "ngx-toastr";
-import {HighchartsChartModule} from "highcharts-angular";
 import {NgxScrollTopModule} from "ngx-scrolltop";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask} from "ngx-mask";
 import {NgxPrinterModule} from "ngx-printer";
 import {ZXingScannerModule} from "@zxing/ngx-scanner";
+import { HighchartsChartComponent } from 'highcharts-angular';
 
 @NgModule({
   declarations: [],
@@ -14,8 +14,8 @@ import {ZXingScannerModule} from "@zxing/ngx-scanner";
     // CommonModule is imported to ensure common directives like *ngFor, *ngIf are available
     CommonModule,
     // Importing third-party UI components and services
-    HighchartsChartModule,
     NgxScrollTopModule,
+    HighchartsChartComponent,
     NgxSpinnerModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
@@ -28,7 +28,7 @@ import {ZXingScannerModule} from "@zxing/ngx-scanner";
   ],
   // Exporting both Angular and third-party modules for use in other modules
   exports: [
-    HighchartsChartModule,
+    HighchartsChartComponent,
     NgxScrollTopModule,
     NgxSpinnerModule,
     ToastrModule,

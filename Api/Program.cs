@@ -49,6 +49,7 @@ builder.Services.ConfigureApplicationServices();
 builder.Services.ConfigureInfrastructureServices();
 
 // Add services to the container.
+builder.Services.ConfigureSwagger();
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureCors();
@@ -75,8 +76,10 @@ try
     Log.Logger.Information("Starting web host");
 
     // Enable Swagger and Swagger UI
-    //app.UseSwagger();
-    //app.UseSwaggerUI();
+    app.MapOpenApi();
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
     // Enable Cross-Origin Resource Sharing (CORS)
     app.UseCors("CorsPolicy");

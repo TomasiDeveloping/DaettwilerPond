@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {FishType} from "../../../models/fishType.model";
 import {ToastrService} from "ngx-toastr";
 import {FishTypeService} from "../../../services/fish-type.service";
-import * as moment from "moment/moment";
+import moment from "moment/moment";
 
 @Component({
     selector: 'app-closed-season',

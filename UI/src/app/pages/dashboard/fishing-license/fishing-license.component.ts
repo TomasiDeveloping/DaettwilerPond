@@ -1,6 +1,6 @@
 import {Component, inject, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {FishingLicense} from "../../../models/fishingLicense.model";
-import * as moment from "moment";
+import moment from "moment";
 import {PdfService} from "../../../services/pdf.service";
 import {ToastrService} from "ngx-toastr";
 import {MatDialog} from "@angular/material/dialog";
