@@ -15,8 +15,10 @@ public class SwissQrBillService : ISwissQrBillService
             Creditor = new Address
             {
                 Name = fishingLicenseBill.CreditorName,
-                AddressLine1 = fishingLicenseBill.CreditorAddress,
-                AddressLine2 = fishingLicenseBill.CreditorCity,
+                HouseNo = fishingLicenseBill.CreditorHouseNumber,
+                PostalCode = fishingLicenseBill.CreditorPostalCode,
+                Street = fishingLicenseBill.CreditorAddress,
+                Town = fishingLicenseBill.CreditorCity,
                 CountryCode = "CH"
             },
 
@@ -28,8 +30,10 @@ public class SwissQrBillService : ISwissQrBillService
             Debtor = new Address
             {
                 Name = fishingLicenseBill.DebtorName,
-                AddressLine1 = string.IsNullOrEmpty(fishingLicenseBill.DebtorAddress) ? null : fishingLicenseBill.DebtorAddress,
-                AddressLine2 = string.IsNullOrEmpty(fishingLicenseBill.DebtorCity) ? null : fishingLicenseBill.DebtorCity,
+                HouseNo = fishingLicenseBill.DebtorHouseNumber,
+                PostalCode = fishingLicenseBill.DebtorPostalCode,
+                Street = fishingLicenseBill.DebtorAddress,
+                Town = fishingLicenseBill.DebtorCity,
                 CountryCode = "CH"
             },
 
@@ -50,9 +54,11 @@ public class SwissQrBillService : ISwissQrBillService
         if (!string.IsNullOrWhiteSpace(fishingLicenseBill.DebtorAddress) &&
             !string.IsNullOrWhiteSpace(fishingLicenseBill.DebtorCity)) return QRBill.Generate(bill);
         bill.Debtor.Name = null;
-        bill.Debtor.AddressLine1 = null;
-        bill.Debtor.AddressLine2 = null;
         bill.Debtor.CountryCode = null;
+        bill.Debtor.HouseNo = null;
+        bill.Debtor.PostalCode = null;
+        bill.Debtor.Street = null;
+        bill.Debtor.Town = null;
 
         return QRBill.Generate(bill);
     }

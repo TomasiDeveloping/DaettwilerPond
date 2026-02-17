@@ -5,9 +5,10 @@ import {ToastrService} from "ngx-toastr";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-admin-club-information',
-  templateUrl: './admin-club-information.component.html',
-  styleUrls: ['./admin-club-information.component.scss']
+    selector: 'app-admin-club-information',
+    templateUrl: './admin-club-information.component.html',
+    styleUrls: ['./admin-club-information.component.scss'],
+    standalone: false
 })
 export class AdminClubInformationComponent implements OnInit {
   public fishingClub: FishingClub | undefined;
@@ -19,32 +20,8 @@ export class AdminClubInformationComponent implements OnInit {
   private readonly _fishingClubService: FishingClubService = inject(FishingClubService);
   private readonly _toastr: ToastrService = inject(ToastrService);
 
-  get name() {
-    return this.fishingClubForm.get('name');
-  }
-
-  get billAddressName() {
-    return this.fishingClubForm.get('billAddressName');
-  }
-
-  get billAddress() {
-    return this.fishingClubForm.get('billAddress');
-  }
-
-  get billPostalCode() {
-    return this.fishingClubForm.get('billPostalCode');
-  }
-
-  get billCity() {
-    return this.fishingClubForm.get('billCity');
-  }
-
-  get ibanNumber() {
-    return this.fishingClubForm.get('ibanNumber');
-  }
-
-  get licensePrice() {
-    return this.fishingClubForm.get('licensePrice');
+  get f() {
+    return this.fishingClubForm.controls;
   }
 
   ngOnInit() {
@@ -74,6 +51,7 @@ export class AdminClubInformationComponent implements OnInit {
       name: new FormControl<string | null>(fishingClub ? fishingClub.name : null, [Validators.required]),
       billAddressName: new FormControl<string | null>(fishingClub ? fishingClub.billAddressName : null, [Validators.required]),
       billAddress: new FormControl<string | null>(fishingClub ? fishingClub.billAddress : null, [Validators.required]),
+      billHouseNumber: new FormControl<string | null>(fishingClub ? fishingClub.billHouseNumber : null, [Validators.required]),
       billPostalCode: new FormControl<string | null>(fishingClub ? fishingClub.billPostalCode : null, [Validators.required]),
       billCity: new FormControl<string | null>(fishingClub ? fishingClub.billCity : null, [Validators.required]),
       ibanNumber: new FormControl<string | null>(fishingClub ? fishingClub.ibanNumber : null, [Validators.required]),

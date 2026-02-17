@@ -6,9 +6,10 @@ import {TemperatureMeasurement} from "../../models/temperatureMeasurement.model"
 import {TemperatureHistoryModel} from "../../models/temperatureHistory.model";
 
 @Component({
-  selector: 'app-temperature',
-  templateUrl: './temperature.component.html',
-  styleUrls: ['./temperature.component.scss']
+    selector: 'app-temperature',
+    templateUrl: './temperature.component.html',
+    styleUrls: ['./temperature.component.scss'],
+    standalone: false
 })
 export class TemperatureComponent implements OnInit {
 
@@ -28,16 +29,16 @@ export class TemperatureComponent implements OnInit {
   // Highcharts chart options for displaying temperature data
   chartOptions: Highcharts.Options = {
     global: {
-      months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
     },
     lang: {
+      locale: 'de-CH',
       loading: 'Daten werden geladen...',
       months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
       weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
       shortMonths: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
     },
     time: {
-      timezoneOffset: new Date().getTimezoneOffset()
+     timezone: 'Europe/Berlin'
     },
     series: [{
       name: 'Wassertemperatur',

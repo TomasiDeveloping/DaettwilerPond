@@ -2,8 +2,9 @@ import {Component, Input} from '@angular/core';
 import {FishType} from "../../../../models/fishType.model";
 
 @Component({
-  selector: 'app-fish-types',
-  templateUrl: './fish-types.component.html'
+    selector: 'app-fish-types',
+    templateUrl: './fish-types.component.html',
+    standalone: false
 })
 export class FishTypesComponent {
 

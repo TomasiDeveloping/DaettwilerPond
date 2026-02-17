@@ -13,8 +13,9 @@ import {catchDayExistsValidator} from "../../../validators/catchDayExistsValidat
 import {FishCatchModel} from "../../../models/fishCatch.model";
 
 @Component({
-  selector: 'app-catchDay-manual-recording',
-  templateUrl: './catchDay-manual-recording.component.html'
+    selector: 'app-catchDay-manual-recording',
+    templateUrl: './catchDay-manual-recording.component.html',
+    standalone: false
 })
 export class CatchDayManualRecordingComponent {
 

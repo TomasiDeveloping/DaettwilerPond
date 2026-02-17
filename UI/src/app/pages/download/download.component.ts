@@ -3,9 +3,10 @@ import {PdfService} from "../../services/pdf.service";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-download',
-  templateUrl: './download.component.html',
-  styleUrls: ['./download.component.scss']
+    selector: 'app-download',
+    templateUrl: './download.component.html',
+    styleUrls: ['./download.component.scss'],
+    standalone: false
 })
 export class DownloadComponent {
 

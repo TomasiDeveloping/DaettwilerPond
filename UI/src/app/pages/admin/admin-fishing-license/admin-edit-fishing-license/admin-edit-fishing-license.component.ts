@@ -8,8 +8,9 @@ import {User} from "../../../../models/user.model";
 import {UserService} from "../../../../services/user.service";
 
 @Component({
-  selector: 'app-admin-edit-fishing-license',
-  templateUrl: './admin-edit-fishing-license.component.html'
+    selector: 'app-admin-edit-fishing-license',
+    templateUrl: './admin-edit-fishing-license.component.html',
+    standalone: false
 })
 export class AdminEditFishingLicenseComponent {
   public isUpdate: boolean;

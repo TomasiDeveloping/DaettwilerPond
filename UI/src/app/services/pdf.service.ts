@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {FishingLicenseCreateBill} from "../models/fishingLicenseCreateBill.model";
 import {MembersEmailModel} from "../models/membersEmail.model";

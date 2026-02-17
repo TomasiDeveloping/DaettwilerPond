@@ -15,12 +15,14 @@
 
     <!-- Paragraph providing general information about fishing regulations -->
     <p class="card-text">Der Inhaber einer Karte ist berechtigt im Dättwilerweiher vom Ufer aus und
-      mit dem Boot zu fischen und hat folgendes zu beachten:</p>
+    mit dem Boot zu fischen und hat folgendes zu beachten:</p>
 
     <!-- Unordered list to display individual fishing regulations -->
     <ul>
       <!-- Iterating through each regulation in the fishingRegulations array -->
-      <li *ngFor="let regulation of fishingRegulations">{{regulation.regulation}}</li>
+      @for (regulation of fishingRegulations; track regulation) {
+        <li>{{regulation.regulation}}</li>
+      }
     </ul>
   </div>
 

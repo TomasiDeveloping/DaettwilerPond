@@ -6,9 +6,10 @@ import {MembersEmailModel} from "../../../../models/membersEmail.model";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-admin-send-email',
-  templateUrl: './admin-send-email.component.html',
-  styleUrl: './admin-send-email.component.scss'
+    selector: 'app-admin-send-email',
+    templateUrl: './admin-send-email.component.html',
+    styleUrl: './admin-send-email.component.scss',
+    standalone: false
 })
 export class AdminSendEmailComponent {
 

@@ -12,6 +12,10 @@ public class FishingLicenseBill
     // Address of the creditor for the bill
     public string CreditorAddress { get; set; }
 
+    public string CreditorHouseNumber { get; set; }
+
+    public string CreditorPostalCode { get; set; }
+
     // City of the creditor for the bill
     public string CreditorCity { get; set; }
 
@@ -23,6 +27,10 @@ public class FishingLicenseBill
 
     // Address of the debtor for the bill
     public string DebtorAddress { get; set; }
+
+    public string DebtorHouseNumber { get; set; }
+
+    public string DebtorPostalCode { get; set; }
 
     // City of the debtor for the bill
     public string DebtorCity { get; set; }

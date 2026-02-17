@@ -12,7 +12,9 @@
       <label class="form-label" for="fishTypeId">Fischart</label>
       <select class="form-select" formControlName="fishTypeId" id="fishTypeId">
         <!-- Loop through fishTypes to create options -->
-        <option *ngFor="let fishType of fishTypes" [value]="fishType.id">{{ fishType.name }}</option>
+        @for (fishType of fishTypes; track fishType) {
+          <option [value]="fishType.id">{{ fishType.name }}</option>
+        }
       </select>
     </div>
 

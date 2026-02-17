@@ -4,7 +4,7 @@ import {CatchDayManualRecordingComponent} from "./catchDay-manual-recording/catc
 import {CatchDayAddCatchComponent} from "./catchDay-add-catch/catchDay-add-catch.component";
 import {FishCatchService} from "../../services/fish-catch.service";
 import {FishCatchModel} from "../../models/fishCatch.model";
-import * as moment from "moment";
+import moment from "moment";
 import {CatchDetailModel} from "../../models/catchDetail.model";
 import {CatchDayEditCatchComponent} from "./catch-day-edit-catch/catch-day-edit-catch.component";
 import Swal, {SweetAlertResult} from "sweetalert2";
@@ -15,9 +15,10 @@ import {AuthenticationService} from "../../services/authentication.service";
 import {FishingLicense} from "../../models/fishingLicense.model";
 
 @Component({
-  selector: 'app-catchDay',
-  templateUrl: './catchDay.component.html',
-  styleUrl: './catchDay.component.scss'
+    selector: 'app-catchDay',
+    templateUrl: './catchDay.component.html',
+    styleUrl: './catchDay.component.scss',
+    standalone: false
 })
 export class CatchDayComponent implements OnInit {
 

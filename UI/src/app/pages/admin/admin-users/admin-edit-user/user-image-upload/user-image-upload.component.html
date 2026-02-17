@@ -5,43 +5,61 @@
 <div mat-dialog-content>
   <!-- Image upload form -->
   <div class="row text-center" style="margin-bottom:15px;">
-    <form *ngIf="!uploadSuccess" [formGroup]="uploadForm">
-      <!-- Input for selecting image -->
-      <input #preview (change)="showPreview($event)" accept="image/*" class="form-control" style="display: none" type="file"/>
-      <!-- Buttons for selecting or changing image -->
-      <div class="d-flex justify-content-center">
-        <button (click)="preview.click()" *ngIf="imageURL === ''" class="btn btn-secondary mb-3">Bild auswählen</button>
-        <button (click)="preview.click()" *ngIf="imageURL !== ''" class="btn btn-secondary mb-3">Bild ändern</button>
-      </div>
-      <!-- Image Preview -->
-      <div *ngIf="imageURL && imageURL !== ''" class="imagePreview">
-        <img [src]="imageURL" alt="user image">
-      </div>
-    </form>
+    @if (!uploadSuccess) {
+      <form [formGroup]="uploadForm">
+        <!-- Input for selecting image -->
+        <input #preview (change)="showPreview($event)" accept="image/*" class="form-control" style="display: none" type="file"/>
+        <!-- Buttons for selecting or changing image -->
+        <div class="d-flex justify-content-center">
+          @if (imageURL === '') {
+            <button (click)="preview.click()" class="btn btn-secondary mb-3">Bild auswählen</button>
+          }
+          @if (imageURL !== '') {
+            <button (click)="preview.click()" class="btn btn-secondary mb-3">Bild ändern</button>
+          }
+        </div>
+        <!-- Image Preview -->
+        @if (imageURL && imageURL !== '') {
+          <div class="imagePreview">
+            <img [src]="imageURL" alt="user image">
+          </div>
+        }
+      </form>
+    }
 
     <!-- Container for progress and message -->
     <ng-container>
       <div class="mt-3 text-center">
         <!-- Progress bar -->
-        <span *ngIf="progress > 0" class="upload">{{ progress }}%</span>
+        @if (progress > 0) {
+          <span class="upload">{{ progress }}%</span>
+        }
         <!-- Upload message -->
         <br>
-        <span *ngIf="message" class="upload">{{ message }}</span>
-        <!-- Close button -->
-        <div>
-          <button (click)="onClose(true)" *ngIf="uploadSuccess" class="btn btn-warning mt-3">Schliessen</button>
+          @if (message) {
+            <span class="upload">{{ message }}</span>
+          }
+          <!-- Close button -->
+          <div>
+            @if (uploadSuccess) {
+              <button (click)="onClose(true)" class="btn btn-warning mt-3">Schliessen</button>
+            }
+          </div>
         </div>
-      </div>
-    </ng-container>
+      </ng-container>
 
-    <!-- Buttons for uploading or canceling -->
-    <div *ngIf="!uploadSuccess" class="d-flex justify-content-evenly mt-5">
-      <button (click)="uploadFile()" *ngIf="imageURL && imageURL !== ''" class="btn btn-success" type="button">
-        Bild hochladen
-      </button>
-      <button (click)="onClose(false)" class="btn btn-warning">Abbrechen</button>
+      <!-- Buttons for uploading or canceling -->
+      @if (!uploadSuccess) {
+        <div class="d-flex justify-content-evenly mt-5">
+          @if (imageURL && imageURL !== '') {
+            <button (click)="uploadFile()" class="btn btn-success" type="button">
+              Bild hochladen
+            </button>
+          }
+          <button (click)="onClose(false)" class="btn btn-warning">Abbrechen</button>
+        </div>
+      }
     </div>
   </div>
-</div>
 
 

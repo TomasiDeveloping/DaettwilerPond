@@ -10,9 +10,10 @@ import {OverseerService} from "../../services/overseer.service";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-catch-statistics',
-  templateUrl: './catch-statistics.component.html',
-  styleUrl: './catch-statistics.component.scss'
+    selector: 'app-catch-statistics',
+    templateUrl: './catch-statistics.component.html',
+    styleUrl: './catch-statistics.component.scss',
+    standalone: false
 })
 export class CatchStatisticsComponent implements OnInit{
 

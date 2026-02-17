@@ -3,9 +3,10 @@ import {TemperatureService} from "../../../services/temperature.service";
 import {TemperatureMeasurement} from "../../../models/temperatureMeasurement.model";
 
 @Component({
-  selector: 'app-current-temperature',
-  templateUrl: './current-temperature.component.html',
-  styleUrls: ['./current-temperature.component.scss']
+    selector: 'app-current-temperature',
+    templateUrl: './current-temperature.component.html',
+    styleUrls: ['./current-temperature.component.scss'],
+    standalone: false
 })
 export class CurrentTemperatureComponent implements OnInit {
 

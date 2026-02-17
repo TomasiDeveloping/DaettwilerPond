@@ -12,9 +12,10 @@ import {CatchDetailService} from "../../../services/catch-detail.service";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-catch-statistics-month-detail',
-  templateUrl: './catch-statistics-month-detail.component.html',
-  styleUrl: './catch-statistics-month-detail.component.scss'
+    selector: 'app-catch-statistics-month-detail',
+    templateUrl: './catch-statistics-month-detail.component.html',
+    styleUrl: './catch-statistics-month-detail.component.scss',
+    standalone: false
 })
 export class CatchStatisticsMonthDetailComponent implements OnInit{
 

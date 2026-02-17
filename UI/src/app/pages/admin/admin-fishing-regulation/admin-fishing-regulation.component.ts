@@ -9,8 +9,9 @@ import {
 import Swal from "sweetalert2";
 
 @Component({
-  selector: 'app-admin-fishing-regulation',
-  templateUrl: './admin-fishing-regulation.component.html'
+    selector: 'app-admin-fishing-regulation',
+    templateUrl: './admin-fishing-regulation.component.html',
+    standalone: false
 })
 export class AdminFishingRegulationComponent implements OnInit {
 

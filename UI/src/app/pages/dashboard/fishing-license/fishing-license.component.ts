@@ -1,6 +1,6 @@
 import {Component, inject, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {FishingLicense} from "../../../models/fishingLicense.model";
-import * as moment from "moment";
+import moment from "moment";
 import {PdfService} from "../../../services/pdf.service";
 import {ToastrService} from "ngx-toastr";
 import {MatDialog} from "@angular/material/dialog";
@@ -8,9 +8,10 @@ import {EFishingLicenseComponent} from "./efishing-license/efishing-license.comp
 import Swal from "sweetalert2";
 
 @Component({
-  selector: 'app-fishing-license',
-  templateUrl: './fishing-license.component.html',
-  styleUrls: ['./fishing-license.component.scss']
+    selector: 'app-fishing-license',
+    templateUrl: './fishing-license.component.html',
+    styleUrls: ['./fishing-license.component.scss'],
+    standalone: false
 })
 export class FishingLicenseComponent implements OnChanges {
 

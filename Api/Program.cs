@@ -21,20 +21,24 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog for logging
 // Add Serilog to services
-builder.Services.AddSerilog(configureLogger =>
+builder.Host.UseSerilog((context, services, loggerConfig) =>
 {
-    configureLogger.ReadFrom.Configuration(builder.Configuration);
+    loggerConfig.ReadFrom.Configuration(context.Configuration)
+        .ReadFrom.Services(services);
 });
+
 
 // Configure Quartz for background jobs
 builder.Services.AddQuartz(options =>
 {
     var jobKey = new JobKey(nameof(CheckFishingDayHasCompleted));
 
-    options.AddJob<CheckFishingDayHasCompleted>(jobKey)
-        .AddTrigger(
-            trigger => trigger.ForJob(jobKey)
-                .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(0, 0)));
+    options.AddJob<CheckFishingDayHasCompleted>(job =>
+        job.WithIdentity(jobKey));
+
+    options.AddTrigger(trigger => trigger
+        .ForJob(jobKey)
+        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(0, 0)));
 });
 
 
@@ -47,9 +51,9 @@ builder.Services.ConfigureApplicationServices();
 builder.Services.ConfigureInfrastructureServices();
 
 // Add services to the container.
+builder.Services.ConfigureSwagger();
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.ConfigureSwagger();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureApiVersioning();
 builder.Services.ConfigureHealthChecks(builder.Configuration);
@@ -74,6 +78,8 @@ try
     Log.Logger.Information("Starting web host");
 
     // Enable Swagger and Swagger UI
+    app.MapOpenApi();
+
     app.UseSwagger();
     app.UseSwaggerUI();
 

@@ -3,9 +3,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {OverseerLicenseValidationModel} from "../../../models/overseerLicenseValidation.model";
 
 @Component({
-  selector: 'app-overseer-validation-result',
-  templateUrl: './overseer-validation-result.component.html',
-  styleUrl: './overseer-validation-result.component.scss'
+    selector: 'app-overseer-validation-result',
+    templateUrl: './overseer-validation-result.component.html',
+    styleUrl: './overseer-validation-result.component.scss',
+    standalone: false
 })
 export class OverseerValidationResultComponent {
 

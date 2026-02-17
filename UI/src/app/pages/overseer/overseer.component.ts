@@ -11,9 +11,10 @@ import {OverseerValidateLicenseComponent} from "./overseer-validate-license/over
 import {OverseerValidationResultComponent} from "./overseer-validation-result/overseer-validation-result.component";
 
 @Component({
-  selector: 'app-overseer',
-  templateUrl: './overseer.component.html',
-  styleUrl: './overseer.component.scss'
+    selector: 'app-overseer',
+    templateUrl: './overseer.component.html',
+    styleUrl: './overseer.component.scss',
+    standalone: false
 })
 export class OverseerComponent implements OnInit {
 

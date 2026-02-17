@@ -1,15 +1,16 @@
 import {Component, Inject, inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {UserService} from "../../../../../services/user.service";
-import {HttpEvent, HttpEventType} from "@angular/common/http";
+import { HttpEvent, HttpEventType } from "@angular/common/http";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ImageUrlPipe} from "../../../../../pipes/image-url.pipe";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-user-image-upload',
-  templateUrl: './user-image-upload.component.html',
-  styleUrl: './user-image-upload.component.scss'
+    selector: 'app-user-image-upload',
+    templateUrl: './user-image-upload.component.html',
+    styleUrl: './user-image-upload.component.scss',
+    standalone: false
 })
 export class UserImageUploadComponent {
 

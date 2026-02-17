@@ -4,7 +4,9 @@
     <div class="form-group">
       <label class="form-label" for="userId">Inhaber</label>
       <select class="form-select" formControlName="userId" id="userId">
-        <option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>
+        @for (user of users; track user) {
+          <option [value]="user.id">{{user.firstName}} {{user.lastName}}</option>
+        }
       </select>
     </div>
     <div class="form-group">
@@ -27,7 +29,7 @@
 </div>
 <div class="d-flex justify-content-end mt-5 mb-3" mat-dialog-actions>
   <button (click)="onSubmit()" [disabled]="licenseForm.invalid" class="btn btn-success" type="submit">
-    Lizenz {{isUpdate ? 'updaten' : 'erstellen'}}</button>
+  Lizenz {{isUpdate ? 'updaten' : 'erstellen'}}</button>
   <button (click)="onClose(false)" class="btn btn-danger ms-3" type="button">Abbrechen</button>
 </div>
 

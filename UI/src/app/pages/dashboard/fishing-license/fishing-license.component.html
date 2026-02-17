@@ -5,54 +5,61 @@
     Fischerlizenz <br>
 
     <!-- Display remaining days if expiresInDays is available -->
-    <span *ngIf="expiresInDays" class="text-muted">Verbleibende Tage: <span
+    @if (expiresInDays) {
+      <span class="text-muted">Verbleibende Tage: <span
       class="text-success fw-bold">{{expiresInDays}}</span></span>
+    }
 
     <!-- Display remaining hours if expiresInHours is available -->
-    <span *ngIf="expiresInHours" class="text-muted">Verbleibende Stunde(n): <span
+    @if (expiresInHours) {
+      <span class="text-muted">Verbleibende Stunde(n): <span
       class="text-success fw-bold">{{expiresInHours}}</span></span>
+    }
   </div>
 
   <!-- Card body containing fishing license details or a message if no license is available -->
   <div class="card-body">
     <!-- Check if fishingLicense is available, else display a message -->
-    <div *ngIf="fishingLicence; else noLicense" class="license-container">
-      <div>
-        <!-- Displaying the owner and issuer of the fishing license -->
-        <div><span class="title">Inhaber: </span> <span class="license-text">{{fishingLicence.userFullName}}</span>
+    @if (fishingLicence) {
+      <div class="license-container">
+        <div>
+          <!-- Displaying the owner and issuer of the fishing license -->
+          <div><span class="title">Inhaber: </span> <span class="license-text">{{fishingLicence.userFullName}}</span>
         </div>
         <div><span class="title">Ausgestellt durch: </span> <span
-          class="license-text">{{fishingLicence.issuedBy}}</span></div>
-      </div>
-
-      <!-- Displaying payment and activation status of the fishing license -->
-      <div class="active-paid">
-        <div><span class="title">Bezahlt: </span> <i
-          [ngClass]="fishingLicence.isPaid ? 'bi-check-square' : 'bi-x-square'" class="bi"><span
-          (click)="onDownloadInvoice(fishingLicence.id)" *ngIf="!fishingLicence.isPaid"
-          class="invoice-text">Rechnung herunterladen</span></i></div>
-        <div><span class="title">Aktiv: </span><i
-          [ngClass]="fishingLicence.isActive ? 'bi-check-square' : 'bi-x-square'" class="bi"></i></div>
-      </div>
-
-      <!-- Displaying issuance and expiration dates of the fishing license -->
-      <div>
-        <div><span class="title">Ausgestellt am: </span> <span
-          class="license-text">{{fishingLicence.createdAt | date: 'dd.MM.yyyy'}}</span></div>
-        <div><span class="title">Gültig bis: </span><span
-          class="license-text">{{fishingLicence.expiresOn | date: 'dd.MM.yyyy'}}</span></div>
-      </div>
+      class="license-text">{{fishingLicence.issuedBy}}</span></div>
     </div>
-    <hr>
+    <!-- Displaying payment and activation status of the fishing license -->
+    <div class="active-paid">
+      <div><span class="title">Bezahlt: </span> <i
+      [ngClass]="fishingLicence.isPaid ? 'bi-check-square' : 'bi-x-square'" class="bi">@if (!fishingLicence.isPaid) {
+      <span
+        (click)="onDownloadInvoice(fishingLicence.id)"
+      class="invoice-text">Rechnung herunterladen</span>
+    }</i></div>
+    <div><span class="title">Aktiv: </span><i
+  [ngClass]="fishingLicence.isActive ? 'bi-check-square' : 'bi-x-square'" class="bi"></i></div>
+</div>
+<!-- Displaying issuance and expiration dates of the fishing license -->
+<div>
+  <div><span class="title">Ausgestellt am: </span> <span
+class="license-text">{{fishingLicence.createdAt | date: 'dd.MM.yyyy'}}</span></div>
+<div><span class="title">Gültig bis: </span><span
+class="license-text">{{fishingLicence.expiresOn | date: 'dd.MM.yyyy'}}</span></div>
+</div>
+</div>
+} @else {
+  <p class="text-center text-danger">Keine aktuelle Lizenz verfügbar</p>
+}
+<hr>
 
-    <!-- Displaying button for e-fishing license -->
-    <div *ngIf="fishingLicence" class="d-flex justify-content-center mt-3">
+  <!-- Displaying button for e-fishing license -->
+  @if (fishingLicence) {
+    <div class="d-flex justify-content-center mt-3">
       <button (click)="onOpenELicense(fishingLicence)" class="btn btn-primary">E-Fischereipatent</button>
     </div>
+  }
 
-    <!-- Template for displaying a message when no fishing license is available -->
-    <ng-template #noLicense>
-      <p class="text-center text-danger">Keine aktuelle Lizenz verfügbar</p>
-    </ng-template>
-  </div>
+  <!-- Template for displaying a message when no fishing license is available -->
+</div>
 </div>

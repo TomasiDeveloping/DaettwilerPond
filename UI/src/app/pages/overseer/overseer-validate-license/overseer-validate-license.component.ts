@@ -5,9 +5,10 @@ import {Subscription} from "rxjs";
 import { BarcodeFormat } from '@zxing/library';
 
 @Component({
-  selector: 'app-overseer-validate-license',
-  templateUrl: './overseer-validate-license.component.html',
-  styleUrl: './overseer-validate-license.component.scss'
+    selector: 'app-overseer-validate-license',
+    templateUrl: './overseer-validate-license.component.html',
+    styleUrl: './overseer-validate-license.component.scss',
+    standalone: false
 })
 export class OverseerValidateLicenseComponent implements AfterViewInit, OnDestroy{
 

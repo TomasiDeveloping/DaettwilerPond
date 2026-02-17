@@ -7,8 +7,9 @@ import {ToastrService} from "ngx-toastr";
 
 
 @Component({
-  selector: 'app-admin-edit-fish-type',
-  templateUrl: './admin-edit-fish-type.component.html'
+    selector: 'app-admin-edit-fish-type',
+    templateUrl: './admin-edit-fish-type.component.html',
+    standalone: false
 })
 export class AdminEditFishTypeComponent {
   public isUpdate: boolean;

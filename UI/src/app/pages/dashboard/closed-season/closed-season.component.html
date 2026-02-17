@@ -11,48 +11,44 @@
     <h5 class="card-title">Fische in der Schonzeit</h5>
 
     <!-- Displaying table if there are fish types with closed season, else show a message -->
-    <ng-container *ngIf="fishTypeWithClosedSeason.length > 0; else noClosedSeasons">
+    @if (fishTypeWithClosedSeason.length > 0) {
       <!-- Table for displaying fish types with closed season -->
       <div class="table-responsive">
         <table class="table">
           <caption></caption>
-
           <!-- Table header with column names -->
           <thead>
-          <tr>
-            <th scope="col">Fischart</th>
-            <th scope="col">vom</th>
-            <th scope="col">bis</th>
-            <th scope="col">Endet in</th>
-          </tr>
+            <tr>
+              <th scope="col">Fischart</th>
+              <th scope="col">vom</th>
+              <th scope="col">bis</th>
+              <th scope="col">Endet in</th>
+            </tr>
           </thead>
-
           <!-- Table body with data from fishTypeWithClosedSeason array -->
           <tbody>
-          <!-- Iterating through each fishType with closed season -->
-          <tr *ngFor="let fishType of fishTypeWithClosedSeason">
-            <!-- Displaying fish name in the first column -->
-            <td>{{fishType.name}}</td>
-
-            <!-- Displaying closed season start date in the second column -->
-            <td>{{("0" + fishType.closedSeasonFromDay).slice(-2)}}
-              .{{("0" + fishType.closedSeasonFromMonth).slice(-2)}}</td>
-
-            <!-- Displaying closed season end date in the third column -->
-            <td>{{("0" + fishType.closedSeasonToDay).slice(-2)}}.{{("0" + fishType.closedSeasonToMonth).slice(-2)}}</td>
-
-            <!-- Displaying the remaining days in the closed season in the fourth column -->
-            <td>{{fishType.closedSeasonsInDays}} Tag(e)</td>
-          </tr>
+            <!-- Iterating through each fishType with closed season -->
+            @for (fishType of fishTypeWithClosedSeason; track fishType) {
+              <tr>
+                <!-- Displaying fish name in the first column -->
+                <td>{{fishType.name}}</td>
+                <!-- Displaying closed season start date in the second column -->
+                <td>{{("0" + fishType.closedSeasonFromDay).slice(-2)}}
+                .{{("0" + fishType.closedSeasonFromMonth).slice(-2)}}</td>
+                <!-- Displaying closed season end date in the third column -->
+                <td>{{("0" + fishType.closedSeasonToDay).slice(-2)}}.{{("0" + fishType.closedSeasonToMonth).slice(-2)}}</td>
+                <!-- Displaying the remaining days in the closed season in the fourth column -->
+                <td>{{fishType.closedSeasonsInDays}} Tag(e)</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
-    </ng-container>
+    } @else {
+      <p>Aktuell haben keine Fische eine Schonzeit</p>
+    }
 
     <!-- Template for displaying a message when there are no fish types with closed season -->
-    <ng-template #noClosedSeasons>
-      <p>Aktuell haben keine Fische eine Schonzeit</p>
-    </ng-template>
   </div>
 </div>
 

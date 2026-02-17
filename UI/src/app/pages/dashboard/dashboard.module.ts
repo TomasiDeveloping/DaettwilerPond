@@ -7,10 +7,10 @@ import {FishingRegulationComponent} from "./fishing-regulation/fishing-regulatio
 import {FishTypesComponent} from "./closed-season/fish-types/fish-types.component";
 import { FishingLicenseComponent } from './fishing-license/fishing-license.component';
 import { EFishingLicenseComponent } from './fishing-license/efishing-license/efishing-license.component';
-import {MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
-import {QRCodeModule} from "angularx-qrcode";
 import {NgxPrinterModule} from "ngx-printer";
 import {ImageUrlPipe} from "../../pipes/image-url.pipe";
+import {QRCodeComponent} from "angularx-qrcode";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -27,9 +27,8 @@ import {ImageUrlPipe} from "../../pipes/image-url.pipe";
     RouterModule.forChild([
       {path: '', component: DashboardComponent}
     ]),
-    MatDialogContent,
-    MatDialogTitle,
-    QRCodeModule,
+    MatDialogModule,
+    QRCodeComponent,
     NgxPrinterModule,
     ImageUrlPipe,
   ]
