@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿#nullable enable
+using Application.Interfaces;
 using Application.Models;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Http;
