@@ -15,11 +15,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" />
     <PackageReference Include="Newtonsoft.Json" />
-    <PackageReference Include="Quartz.Extensions.Hosting"  />
-    <PackageReference Include="Serilog" />
-    <PackageReference Include="Serilog.AspNetCore" />
-    <PackageReference Include="Serilog.Formatting.Compact"  />
-    <PackageReference Include="Serilog.Sinks.Seq" />
+    <PackageReference Include="Quartz.Extensions.Hosting" />
+    <PackageReference Include="Serilog.AspNetCore"  />
+	  <PackageReference Include="Serilog.Sinks.Seq" />
     <PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
@@ -38,6 +36,7 @@
 
 
   <ItemGroup>
+    <Folder Include="logs\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

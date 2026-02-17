@@ -21,10 +21,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog for logging
 // Add Serilog to services
-builder.Services.AddSerilog(configureLogger =>
+builder.Host.UseSerilog((context, services, loggerConfig) =>
 {
-    configureLogger.ReadFrom.Configuration(builder.Configuration);
+    loggerConfig.ReadFrom.Configuration(context.Configuration)
+        .ReadFrom.Services(services);
 });
+
 
 // Configure Quartz for background jobs
 builder.Services.AddQuartz(options =>
